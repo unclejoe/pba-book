@@ -4,6 +4,10 @@ description: More cutting edge cryptography used in blockchain
 duration: 1 hour
 ---
 
+# 奇异原语
+
+---
+
 # 大纲
 
 <pba-flex center>
@@ -15,10 +19,6 @@ duration: 1 hour
 1. [ZK 证明](#zk-proofs)
 
 </pba-flex>
-
----
-
-# 奇异原语
 
 ---
 

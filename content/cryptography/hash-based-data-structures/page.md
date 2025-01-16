@@ -1,4 +1,4 @@
-# Hash Based Data Structures
+# 基于哈希的数据结构
 
 <!-- markdown-link-check-disable -->
 <center>

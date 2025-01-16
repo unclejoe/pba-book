@@ -4,12 +4,6 @@ description: More exotic digital signature methods
 duration: 1 hour
 ---
 
----
-title: 高级数字签名
-description: 更奇特的数字签名方法
-duration: 1小时
----
-
 # 高级数字签名
 
 ---

@@ -1,4 +1,4 @@
-# Exotic Primitives
+# 奇异原语
 
 <!-- markdown-link-check-disable -->
 <center>

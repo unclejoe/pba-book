@@ -4,12 +4,6 @@ description: A lesson on symmetric and asymmetric encryption.
 duration: 1 hour
 ---
 
----
-title: 加密
-description: 关于对称和非对称加密的课程。
-duration: 1 小时
----
-
 # 加密
 
 ---

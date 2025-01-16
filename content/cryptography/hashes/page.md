@@ -1,4 +1,4 @@
-# Hash Functions
+# 哈希函数
 
 <!-- markdown-link-check-disable -->
 <center>

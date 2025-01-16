@@ -1,26 +1,26 @@
 # Summary
 
-[🏠 Start Here](README.md)
-[🪄 Using this Book](./contribute/how-to/page.md)
-[📒 Book Overview](overview.md)
+[🏠 起点](README.md)
+[🪄 如何使用本教程](./contribute/how-to/page.md)
+[📒 教程概览](overview.md)
 
-# 🧰 Core Content
+# 🧰 完整内容
 
 ---
 
-- [🔐 Cryptography](./cryptography/index.md)
+- [🔐 加密学](./cryptography/index.md)
 
-  - [Introduction to Cryptography](./cryptography/intro/page.md)
-  - [Addresses and Keys](./cryptography/addresses/page.md)
-    - [`subkey` Demo](./cryptography/_materials/subkey-demo.md)
-  - [Hash Functions](./cryptography/hashes/page.md)
-  - [Many Time Pad](./cryptography/_materials/many-time-pad.md)
-  - [Encryption](./cryptography/encryption/page.md)
-  - [Digital Signature Basics](./cryptography/basic-signatures/page.md)
-  - [Advanced Digital Signatures](./cryptography/advanced-signatures/page.md)
-  - [Hash Based Data Structures](./cryptography/hash-based-data-structures/page.md)
-  - [Exotic Primitives](./cryptography/exotic-primitives/page.md)
-  - [Cryptography In Context](./cryptography/in-context/page.md)
+  - [加密学简介](./cryptography/intro/page.md)
+  - [地址和密钥](./cryptography/addresses/page.md)
+    - [`subkey` 演示](./cryptography/_materials/subkey-demo.md)
+  - [哈希函数](./cryptography/hashes/page.md)
+  - [破解多次密码本](./cryptography/_materials/many-time-pad.md)
+  - [加密算法](./cryptography/encryption/page.md)
+  - [数字签名基础](./cryptography/basic-signatures/page.md)
+  - [数字签名进阶](./cryptography/advanced-signatures/page.md)
+  - [基于哈希的数据结构](./cryptography/hash-based-data-structures/page.md)
+  - [奇异原语](./cryptography/exotic-primitives/page.md)
+  - [现实环境中的加密学](./cryptography/in-context/page.md)
 
 - [🪙 Economics and Game Theory](./economics/index.md)
 
