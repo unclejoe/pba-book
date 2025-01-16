@@ -1,468 +1,487 @@
 ---
-title: Game Theory Basics
-description: Game Theory Basics for web3 builders
+title: 博弈论基础
+description: Web3 开发者的博弈论基础知识
 duration: 1 hour lesson + 2 hours activities
 ---
 
-# Game Theory Basics
+# 博弈论基础
 
 Notes:
 
-Game theory is a field of study at the intersection of mathematics and economics.
-It consider an economic system to be a game and people to be players.
-According to the rules of the game, it analyzes the players' best strategies and then uses this analysis to explain the observed behavior of the economic system.
+博弈论是一个跨数学和经济学的研究领域。它将经济系统视为一个游戏，将人视为玩家。根据游戏规则，它分析玩家的最佳策略，然后利用这种分析来解释所观察到的经济系统行为。
 
-Game theory is an interesting an powerful tool, because it's fairly simple and intuitive, yet extremely powerful to make predictions.
-Hence, it's a good idea to learn game theoretical principles and keep them in the back of your mind when designing economic systems.
+博弈论是一个有趣且强大的工具，因为它相当简单直观，但却能非常强大地做出预测。因此，学习博弈论原理并在设计经济系统时牢记在心是一个好主意。
 
 ---
 
-# Outline
+# 大纲
 
 <ul>
-    <li class="fragment">Lesson
+    <li class="fragment">课程
         <ul>
-            <li class="fragment">What is Game Theory?</li>
-            <li class="fragment">What is a Game?</li>
-            <li class="fragment">Types of Games</li>
-            <li class="fragment">Common Games</li>
-            <li class="fragment">Nash Equilibrium</li>
-            <li class="fragment">Equilibrium Selection</li>
+            <li class="fragment">什么是博弈论？</li>
+            <li class="fragment">什么是游戏？</li>
+            <li class="fragment">游戏类型</li>
+            <li class="fragment">常见游戏</li>
+            <li class="fragment">纳什均衡</li>
+            <li class="fragment">均衡选择</li>
         </ul>
     </li>
-    <li class="fragment">Workshop & Activities
+    <li class="fragment">研讨会和活动
         <ul>
-            <li class="fragment">Discussions & more games</li>
+            <li class="fragment">讨论和更多游戏</li>
         </ul>
     </li>
 </ul>
 
 ---
 
-## What is Game Theory?
+## 什么是博弈论？
 
-> Game theory studies strategic situations where the outcome for each participant or 'player' depends on the actions of all others. It formulates models to represent these scenarios and predicts the most likely or optimal outcomes.
-
-Notes:
-
-- Game theory is all about the power of incentives.
-- Helps you understand and design systems and guide behavior of participants.
-
----
-
-## Game Theory in Web3
-
-In the context of blockchains, game theoretic reasoning is used for <span style="font-style: italic;">modelling</span> and <span style="font-style: italic;">understanding</span>.
+> 博弈论研究的是参与者或“玩家”的结果取决于所有其他参与者行动的战略情况。它制定模型来代表这些场景，并预测最有可能或最优的结果。
 
 Notes:
 
-- The term is heavily over-used.
-- 9/10 times people using the term they simply mean there is some economic structure behind their protocols.
-- Rarely real game theoretic analysis is done.
+- 博弈论就是关于激励的力量。
+- 帮助你理解和设计系统，并引导参与者的行为。
 
 ---
 
-## Modelling
+## 博弈论在Web3中的应用
+
+在区块链的背景下，博弈论推理用于建模和理解。
+
+Notes:
+
+- 这个术语被严重过度使用。
+- 9/10 次人们使用这个术语时，他们仅指他们的协议背后有一些经济结构。
+- 很少进行真正的博弈论分析。
+
+---
+
+## 建模
 
 <ul>
-<li class="fragment"><strong>Tokenomics:</strong> Macroeconomic design of a token (inflation, utility, etc.).</li>
-<li class="fragment"><strong>Business Logic:</strong> Interaction of the token with different modules of a protocol.</li>
-<li class="fragment"><strong>Consensus:</strong> Providing sufficient incentives to guarantee that participating nodes agree on a distributed state of the network.</li>
-<li class="fragment"><strong>Collaboration:</strong> Nudging (aggregated) human behavior and their interaction with the protocol.</li>
+<li class="fragment">代币经济学：代币的宏观经济设计（通货膨胀、效用等）。</li>
+<li class="fragment">业务逻辑：代币与协议不同模块的交互。</li>
+<li class="fragment">共识：为保证参与节点就网络的分布式状态达成一致提供足够的激励。</li>
+<li class="fragment">协作：推动（聚合）人类行为及其与协议的交互。</li>
 </ul>
 
 ---
 
-## Understanding
+## 理解
 
 <ul>
-<li class="fragment"><strong>Economics:</strong> Interaction between different protocols and how finite resources are allocated among all of them.</li>
-<li class="fragment"><strong>Security:</strong> Testing economic security of protocols against various types of attacks.</li>
+<li class="fragment">经济学：不同协议之间的相互作用，以及有限资源如何在它们之间分配。</li>
+<li class="fragment">安全性：测试协议的经济安全性，以抵御各种类型的攻击。</li>
 </ul>
 
 ---
 
-## History of Game Theory
+## 博弈论的历史
 
 <ul>
-<li class="fragment">Early “game theoretic” considerations going back to ancient times.</li>
-<li class="fragment">“Game theoretic” research early 19th century, still relevant.</li>
-<li class="fragment">The systematic study of games with mathematically and logically sound frameworks started in the 20th century.</li>
-<li class="fragment">Modern game theory is used in economics, biology, sociology, political science, psychology, among others.</li>
-<li class="fragment">In economics, game theory is used to analyze many different strategic situations like auctions, industrial economics, and business administration.</li>
-</ul>
-
-Notes:
-
-- In Plato's texts, Socrates recalls the following considerations of a commentator of the Battle of Delium:
-  - An example is a soldier considering his options in battle: if his side is likely to win, his personal contribution might not be essential, but he risks injury or death.
-    If his side is likely to lose, his risk of injury or death increases, and his contribution becomes pointless.
-  - This reasoning might suggest the soldier is better off fleeing, regardless of the likely outcome of the battle.
-  - If all soldiers think this way, the battle is certain to be lost.
-  - The soldiers' anticipation of each other's reasoning can lead to a self-fulfilling prophecy: they might panic and retreat before the enemy even engages, resulting in a defeat.
-- Spanish conqueror Cortez, when landing in Mexico with a small force who had good reason to fear their capacity to repel attack from the far more numerous Aztecs, removed the risk that his troops might think their way into a retreat by burning the ships on which they had landed
-- Antoine Augustin Cournot, a french mathematician, already described a duopoly game with respective solution in 1844.
-  - We will see this later.
-- Examples:
-  - Biology: Animals fight for resources or are peaceful, why cooperation evolved
-  - Political science: Art of conflict, escalation and de-escalation between nations.
-
----
-
-## Game theory is <span style="font-style: italic;">abstract</span>
-
-<ul>
-<li class="fragment">Game theoretic models aim to get at the essence of a given strategic problem.</li>
-<li class="fragment">This often requires many simplifying assumptions.</li>
-<li class="fragment">Pro: <em>Abstraction</em> makes the problem amenable to analysis and helps to identify the key incentives at work.</li>
-<li class="fragment">Con: A certain lack of realism.</li>
-<li class="fragment">In any case: Modeling a strategic situation always entails a tradeoff between tractability and realism.</li>
+<li class="fragment">早期的“博弈论”考虑可以追溯到古代。</li>
+<li class="fragment">19 世纪早期的“博弈论”研究仍然相关。</li>
+<li class="fragment">对游戏进行系统研究，并使用数学和逻辑上合理的框架，始于 20 世纪。</li>
+<li class="fragment">现代博弈论被用于经济学、生物学、社会学、政治学、心理学等领域。</li>
+<li class="fragment">在经济学中，博弈论被用于分析许多不同的战略情况，如拍卖、产业经济学和企业管理。</li>
 </ul>
 
 Notes:
 
-- Need to explain what we mean by lack of realism:
-- Often people have more choices than we model.
-- Often people take other things into consideration when making choices than the model allows.
-- Often people know more/less than we assume.
-- How to resolve the tradeoff between tractability and realism is often subjective and depends on the taste of the modeler.
+- 在柏拉图的文本中，苏格拉底回忆了一位对德利乌姆战役的评论员的以下考虑：
+  - 一个例子是一名士兵在战斗中考虑他的选择：如果己方可能获胜，他的个人贡献可能不是必要的，但他冒着受伤或死亡的风险。如果己方可能失败，他受伤或死亡的风险增加，他的贡献变得毫无意义。
+  - 这种推理可能表明士兵最好逃跑，无论战斗的结果如何。
+  - 如果所有士兵都这样想，战斗肯定会失败。
+  - 士兵对彼此推理的预期可能导致一个自我实现的预言：他们可能在敌人甚至还没有交战之前就惊慌失措并撤退，导致失败。
+- 西班牙征服者科尔特斯在墨西哥登陆时，他的小部队有充分的理由害怕他们抵御数量远远超过他们的阿兹特克人的能力，他通过烧毁他们登陆的船只来消除他的部队可能会考虑撤退的风险
+- 法国数学家安托万·奥古斯丁·库尔诺特在 1844 年已经描述了一个双头垄断游戏及其相应的解决方案。我们稍后会看到这个。
+- 例子：
+  - 生物学：动物为资源而战或和平相处，为什么合作会进化
+  - 政治学：冲突、升级和降级的艺术
 
 ---
 
-# What is a Game?
-
----
-
-## Definition: (Economic) Game
+## 博弈论是<span style="font-style: italic;">抽象</span>的
 
 <ul>
-<li class="fragment">A game is a strategic interaction among several players, that defines <em>common knowledge</em> about the following properties:</li>
-<li class="fragment">all the possible <em>actions</em> of the players</li>
-<li class="fragment">all the possible <em>outcomes</em></li>
-<li class="fragment">how each combination of actions affects the outcome</li>
-<li class="fragment">how the players value the different outcomes</li>
+<li class="fragment">博弈论模型旨在抓住给定战略问题的本质。</li>
+<li class="fragment">这通常需要许多简化假设。</li>
+<li class="fragment">优点：<em>抽象</em>使问题易于分析，并有助于识别关键的激励因素。</li>
+<li class="fragment">缺点：缺乏一定的现实性。</li>
+<li class="fragment">在任何情况下：对战略形势进行建模总是需要在易处理性和现实性之间进行权衡。</li>
+</ul>
+
+Notes:
+
+- 需要解释我们所说的缺乏现实性是什么意思：
+- 通常人们有比我们模型中更多的选择。
+- 通常人们在做出选择时会考虑模型中未允许的其他因素。
+- 通常人们知道的比我们假设的更多或更少。
+- 如何解决易处理性和现实性之间的权衡往往是主观的，取决于建模者的偏好。
+
+---
+
+# 什么是游戏？
+
+---
+
+## 定义：（经济）游戏
+
+<ul>
+<li class="fragment">游戏是多个参与者之间的战略互动，它定义了关于以下属性的<em>共同知识</em>：</li>
+<li class="fragment">参与者所有可能的<em>行动</em></li>
+<li class="fragment">所有可能的<em>结果</em></li>
+<li class="fragment">每种行动组合如何影响结果</li>
+<li class="fragment">参与者如何评价不同的结果</li>
 </ul>
 
 ---
 
-## Definition: Common Knowledge
+## 定义：共同知识
 
 <ul>
-<li class="fragment">An event $X$ is common knowledge if:</li>
+<li class="fragment">如果一个事件$X$满足以下条件，则它是共同知识：</li>
 <ul>
-<li class="fragment">everyone knows $X$,</li>
-<li class="fragment">everyone knows that everyone knows $X$,</li>
-<li class="fragment">everyone knows that everyone knows that everyone knows $X$,</li>
-<li class="fragment">... and so on ad infinitum.</li>
+<li class="fragment">每个人都知道$X$，</li>
+<li class="fragment">每个人都知道每个人都知道$X$，</li>
+<li class="fragment">每个人都知道每个人都知道每个人都知道$X$，</li>
+<li class="fragment">以此类推，无穷无尽。</li>
 </ul>
 </ul>
 
 ---
 
-### Examples: Common Knowledge
+### 例子：共同知识
 
 <pba-cols>
 <pba-col>
 
-##### Auctions
+##### 拍卖
 
-- Actions: Bids.
-- Outcome: Winner and Payment.
+- 行动：出价。
+- 结果：赢家和支付。
 
 </pba-col>
 <pba-col>
 
-##### Price-competition<br />between firms
+##### 企业间的价格竞争
 
-- Actions: Price charged.
-- Outcome: Demand for each firm, profit of each firm.
+- 行动：收取的价格。
+- 结果：每个企业的需求，每个企业的利润。
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-Crucial feature of a game: outcome not only depends on own actions but also on the actions of the other players.
+游戏的一个关键特征是：结果不仅取决于自己的行动，还取决于其他参与者的行动。
 
 ---
 
-## Types of games
+## 游戏的类型
 
-Game theory distinguishes between:
+博弈论区分以下类型的游戏：
 
 <ul>
-<li class="fragment">static & dynamic games</li>
-<li class="fragment">complete & incomplete information games</li>
+<li class="fragment">静态和动态游戏</li>
+<li class="fragment">完全和不完全信息游戏</li>
 </ul>
 
 ---
 
-## Static and Dynamic Games
+## 静态和动态游戏
 
-|                  | Static Game                                     | Dynamic Game                                                                                           |
+|                  | 静态游戏                                     | 动态游戏                                                                                           |
 | ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
-| Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                             | All bidders submit their bids simultaneously (in a sealed envelope).                                   |
-|                  | English auction.                                | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
-| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
+| 定义       | 所有玩家同时采取行动 | 玩家顺序行动，可能多次行动，（至少部分）观察到之前的行动 |
+| 简单例子   | 石头剪刀布                             | 井字棋                                                                                            |
+| 经济例子 | 密封投标拍卖。                             | 所有投标人同时提交投标（在密封信封中）。                                   |
+|                  | 英式拍卖。                                | 拍卖师公开提价，如果至少有一个投标人接受价格。                             |
+| 表示   | 收益矩阵                                   | 决策树                                                                                          |
 
 Notes:
 
-- Also referred to as simultaneous or sequential games
+- 也称为同时或顺序游戏
 
 ---
 
-## Completeness of Information in Games
+## 信息完整性在游戏中的体现
 
-|                       | Game of Complete Information                          | Game of Incomplete Information                             |
+|                       | 完全信息游戏                          | 不完全信息游戏                             |
 | --------------------- | ----------------------------------------------------- | ---------------------------------------------------------- |
-| Information available | All information relevant to decision-making is known. | Not all information relevant to decision-making is known.  |
-| Simple Example        | Chess                                                 | Poker                                                      |
-| Economic Example      | Sealed auction for seized Bitcoin.                    | Used-car market: the resale value of a used car is opaque. |
+| 信息可用性 | 所有与决策相关的信息都是已知的。 | 并非所有与决策相关的信息都是已知的。  |
+| 简单例子        | 国际象棋                                                 | 扑克                                                      |
+| 经济例子      | 密封拍卖被没收的比特币。                    | 二手车市场：二手车的转售价值不透明。 |
 
 Notes:
 
-- There is also the notion of perfect and imperfect information which we should skip here.
-  More info: <https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information>
+- 这里也有完美和不完美信息的概念，我们应该跳过。
+  更多信息：<https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information>
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Quiz
+# 测验
 
 ---
 
-### Three firms want to hire an engineer...
+### 三家公司想聘请一名工程师...
 
 <pba-cols>
 <pba-col>
 
-- The engineer brings added value to each firm of 300,000 USD per year.
-- The payoff of the firm is known by everyone to be 300,000 USD minus the salary.
-- The payoff to the engineer is salary minus cost of working, which is known to everyone.
-- All firms make a salary offer at the same time.
+- 工程师每年为每家公司带来 300,000 美元的附加值。
+- 公司的收益是众所周知的，即 300,000 美元减去工资。
+- 工程师的收益是工资减去工作成本，这是众所周知的。
+- 所有公司同时提出薪资报价。
 
 </pba-col>
 <pba-col>
 
-### Quiz Questions:
+### 测验问题：
 
-1. Is this game static or dynamic?
-   What would need to change in the description of the game such that it would fall in the other category?
-1. Is this game of complete or incomplete information?
-   What would need to change in the description of the game such that it would fall in the other category?
+1. 这个游戏是静态的还是动态的？
+   游戏描述中需要改变什么才能使其属于另一个类别？
+1. 这个游戏是完全信息的还是不完全信息的？
+   游戏描述中需要改变什么才能使其属于另一个类别？
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-1. The game is static.
-   For it to be dynamic, firms would need to make offers sequentially, _knowing what the firms before had offered_.
+1. 游戏是静态的。
+   要使其成为动态游戏，公司需要顺序提出报价，并且知道之前公司的报价。
 
-2. The game is of complete information.
-   To make information incomplete, we would need to have that the value of hiring the engineer differs between firms and is unknown between firms.
-   Or that the cost of working for the engineer is not known to the firms.
-   The point is that we need to have uncertainty over payoffs.
+2. 游戏是完全信息的。
+   要使其成为不完全信息游戏，我们需要有以下情况之一：雇用工程师的价值在公司之间不同，并且在公司之间未知；或者工程师的工作成本对公司来说是未知的。
+   关键是我们需要对收益有不确定性。
 
-- This lesson focuses on static games of complete information.
-- When we look at auctions in lesson Price finding mechanisms, we will also consider games of incomplete information, both dynamic and static.
+- 本课重点关注完全信息静态游戏。
+- 在价格发现机制课程中，我们还将考虑不完全信息游戏，包括动态和静态游戏。
 
 ---
 
-## Utility
+好的，这段文字是关于博弈论的基础知识介绍，包括效用、常见博弈类型如囚徒困境等。以下是根据要求翻译后的中文内容：
+
+---
+
+## 效用
 
 <ul>
-    <li class="fragment">Core concept of Game Theory.</li>
-    <li class="fragment">Can transform any outcome to some value that is comparable.
+    <li class="fragment">博弈论的核心概念。</li>
+    <li class="fragment">可以将任何结果转化为具有可比性的值。
         <ul>
-            <li class="fragment">For example: What is better? Scenario A: Going for a vacation to France and drink Wine, or Scenario B: going to Germany and drink Beer?</li>
-            <li class="fragment">Those dimensions are only comparable if we give both some value like U(A) = 5, U(B) = 3.</li>
+            <li class="fragment">例如：哪种情况更好？场景 A：去法国度假并喝葡萄酒，还是场景 B：去德国度假并喝啤酒？</li>
+            <li class="fragment">只有当我们给这两种情况赋予一定的值时，比如 U(A) = 5，U(B) = 3，这些维度才具有可比性。</li>
         </ul>
     </li>
-    <li class="fragment">Essential assumption: Agents are utility maximizers.</li>
-    <li class="fragment">Monetary payouts can also be transformed to utility.
+    <li class="fragment">基本假设：参与者是效用最大化者。</li>
+    <li class="fragment">金钱收益也可以转化为效用。
         <ul>
-            <li class="fragment">Simplest assumption U(x) = x.</li>
-            <li class="fragment">But that is likely not true in reality.</li>
+            <li class="fragment">最简单的假设是 U(x) = x。</li>
+            <li class="fragment">但在现实中，这可能并不正确。</li>
         </ul>
     </li>
-    <li class="fragment">Most things have <strong>diminishing rates of returns</strong>.</li>
+    <li class="fragment">大多数事物都具有<strong>边际收益递减</strong>的特性。</li>
 </ul>
 
 Notes:
 
-- Expected Utility is the average utility we get from comparing several outcomes and weigh them with the probability they occur.
-- In the following, we won't need that, because either we deal with money or other dimensions that are comparable.
+- 预期效用是我们通过比较几种结果并根据其发生的概率进行加权平均得到的效用。
+- 在接下来的内容中，我们不需要用到预期效用，因为我们处理的要么是金钱，要么是其他具有可比性的维度。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Common Games
+# 常见博弈
 
 ---
 
-## Prisoners' Dilemma
+## 囚徒困境
 
-A fundamental problem:
+一个基本问题：
 
-> Even though everyone knows there is a socially optimal course of actions, no one will take it because they are rational utility maximizers.
+> 即使每个人都知道存在一个社会最优的行动方案，但由于他们是理性的效用最大化者，没有人会采取这种行动。
 
-It's a static game of complete information.
+这是一个完全信息静态博弈。
 
 Notes:
 
-One of the most famous games studied in game theory.
+囚徒困境是博弈论中最著名的博弈之一。
 
-- Static because both players take their action at the same time.
-- Complete because everybody is aware of all the payouts.
+- 静态博弈是因为两个参与者同时采取行动。
+- 完全信息是因为每个参与者都知道所有的收益。
 
 ---
 
-## Bonnie and Clyde
+## 邦妮和克莱德
 
-Bonnie and Clyde are accused of robbing two banks:
+邦妮和克莱德被指控抢劫了两家银行：
 
 <ul>
-<li class="fragment">The evidence for the first robbery is overwhelming and will certainly lead to a conviction with two years of jail.</li>
-<li class="fragment">The evidence for the second robbery is not sufficient and they will be convicted only if at least one of them confesses to it.</li>
+<li class="fragment">对第一家银行抢劫的证据确凿，他们肯定会被定罪，刑期为两年。</li>
+<li class="fragment">对第二家银行抢劫的证据不足，只有当至少其中一人认罪时，他们才会被定罪。</li>
 </ul>
 
 ---
 
-## Bonnie and Clyde
+## 邦妮和克莱德
 
-In the interrogation they both are offered the following:
+在审讯中，他们都被提供了以下选择：
 
 <ul>
-<li class="fragment">If you both confess you both go to jail for 4 years.</li>
-<li class="fragment">If you do not confess but your partner does, you go to jail for 5 years: 1 extra year for obstruction of justice.</li>
-<li class="fragment">However, if you confess but your partner does not, we reduce your jail time to one year.</li>
+<li class="fragment">如果你们都认罪，你们将被判入狱四年。</li>
+<li class="fragment">如果你不认罪，但你的搭档认罪了，你将被判入狱五年：多一年是因为妨碍司法公正。</li>
+<li class="fragment">然而，如果你认罪，但你的搭档不认罪，我们将把你的刑期减为一年。</li>
 </ul>
 
 Notes:
 
-They are interrogated in different rooms, apart from each other.
+他们被分别审讯，彼此隔离。
 
 ---
 
-## Bonnie and Clyde
+## 邦妮和克莱德
 
-- **Cooperate** ($C$) with each other and not say anything
-- **Defect** ($D$) and confess their crime
+- **合作**（$C$）：彼此合作，什么都不说
+- **背叛**（$D$）：认罪并揭发罪行
 
 <img rounded style="width: 650px; margin-right: 150px;" src="./img/Bonnie-clyde-1.png" />
 
 Notes:
 
-- They can either cooperate or defect
-- First payoff is Clyde, second is Bonnie
+- 他们可以选择合作或背叛
+- 第一个收益是克莱德的，第二个是邦妮的
 
 ---
 
-## Bonnie and Clyde
+## 邦妮和克莱德
 
 <img rounded style="width: 800px; margin-right: 250px;" src="./img/Bonnie-clyde-2.png" />
 
-Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a strategy that is always optimal for a player, regardless of what the other players do.
+选择 D 是一种**占优策略**：无论其他参与者如何行动，对一个参与者来说总是最优的策略。
 
 Notes:
 
-No matter what Clyde does, D is always the best choice.
-So, they end up both defecting, resulting in 4 years each.
-It would be in their best interest to cooperate and not to say anything.
-This would minimize the total jail time for the two.
-However, both Bonnie and Clyde are rational utility maximizers.
-So, they end up in a situation where they not only fare worse _individually_ (4 instead of 2) but also _jointly_ (the total jail time is 8 years rather than 4 years).
+无论克莱德怎么做，D 总是最好的选择。
+所以，他们最终都选择了背叛，每人被判 4 年。
+如果他们合作并保持沉默，这将符合他们的最佳利益。
+这样可以将两人的总刑期降至最低。
+然而，邦妮和克莱德都是理性的效用最大化者。
+因此，他们最终陷入了一种不仅个人处境更糟（4 年而不是 2 年），而且总体处境也更糟的局面（总刑期为 8 年而不是 4 年）。
 
 ---
 
-## Nash-Equilibrium
+## 纳什均衡
 
 <ul>
-<li class="fragment">Fundamental concept in Game Theory</li>
-<li class="fragment">A NE is a set of strategies, one for each player, such that no player can unilaterally improve their outcome by changing their strategy, assuming that the other player's strategy remains the same.</li>
-<li class="fragment">In the Prisoner's Dilemma, D/D is the only NE.</li>
+<li class="fragment">博弈论中的基本概念</li>
+<li class="fragment">纳什均衡是一组策略，每个参与者一个，使得没有参与者可以通过单方面改变自己的策略来提高自己的结果，假设其他参与者的策略保持不变。</li>
+<li class="fragment">在囚徒困境中，D/D 是唯一的纳什均衡。</li>
 </ul>
 
 ---
 
-## Prisoners' Dilemma IRL
+## 现实中的囚徒困境
 
 <ul>
-<li class="fragment"><strong>Nuclear Arms Race:</strong> <a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.</li>
-<li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
-</ul>
-
----
-
-Notes:
-
-OPEC: Organization of the Petroleum Exporting Countries.
-It is something like a cartel that agree on limiting the global oil production and keep the oil price artificially high.
-
-OPEC and Cartels generally seems to overcome the Prisoners' Dilemma...
-More on that later.
-
----
-
-## Ultimatum Game
-
-<ul>
-    <li class="fragment">We played it before.</li>
-    <li class="fragment">Sequential game.</li>
-    <li class="fragment">The Nash Equilibrium can be reasoned by <strong>backwards induction.</strong></li>
-    <li class="fragment">The proposer has the following considerations:
-    <ul>
-        <li class="fragment">What would the recipient accept?</li>
-        <li class="fragment">Answer: every payoff (larger than 0).</li>
-        <li class="fragment">Therefore, I should offer, since I want to maximize my payout, something equal or slightly higher than 0.</li>
-    </ul>
-    </li>
-    <li class="fragment">That means, the proposer offering something small and the recipient always accepting is the only NE.</li>
+<li class="fragment"><strong>核军备竞赛：</strong><a href="https://www.history.com/topics/cold-war/arms-race">北约和俄罗斯</a> 都更倾向于没有军备竞赛，而不是进行军备竞赛。然而，拥有一些武器总比没有武器好，无论对方是否武装。</li>
+<li class="fragment"><strong>欧佩克：</strong><a href="https://www.opec.org/opec_web/en/">限制石油供应</a> 符合所有国家的最佳利益。然而，鉴于由此产生的高油价，每个国家都有动力增加个人石油供应以最大化利润。</li>
 </ul>
 
 Notes:
 
-- We saw that empirically that is not the case.
-- Fairness concerns are too strong in that setting.
+欧佩克：石油输出国组织。
+它是一个类似于卡特尔的组织，同意限制全球石油产量，人为地保持高油价。
+欧佩克和卡特尔似乎总体上克服了囚徒困境...
+更多内容稍后介绍。
 
 ---
 
-## Coordination Game
+## 最后通牒博弈
+
+- 我们之前玩过这个游戏。
+- 这是一个序贯博弈。
+- 纳什均衡可以通过逆向归纳法推理得出。
+- 提议者会考虑以下几点：
+  - 接受者会接受什么？
+  - 答案：任何大于 0 的回报。
+  - 因此，提议者应该提供一个等于或略高于 0 的金额，因为他们想最大化自己的回报。
+- 这意味着，提议者提供少量金额，而接受者总是接受，这是唯一的纳什均衡。
+
+Notes:
+- 我们在实验中看到，实际情况并非如此。
+- 在这种情况下，公平问题过于强烈。
+
+---
+
+## 协调博弈
+
+- 在囚徒困境中，预测结果很容易：双方都会背叛。
+  - 无论对方怎么做，这都是最优选择。
+- 在其他博弈中，预测结果并不那么明确。
+  - 协调博弈就是一个例子。
+
+---
+
+## 协调博弈
+
+> 协调博弈是一种静态博弈，其中玩家选择与其他玩家相同的行动时，会获得更高的回报。
+
+---
+
+## 协调博弈示例
+
+<pba-cols>
+<pba-col>
+
+- 选择 $L$ 或 $R$。
+- 数字代表玩家获得的回报。
+- 只有当玩家协调行动时，他们才能获得效用。
+
+</pba-col>
+<pba-col>
+<img rounded style="width: 550px;" src="./img/Players.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+
+- 协调博弈的例子包括：
+  - 在道路的右侧或左侧行驶。
+  - 货币的采用。
+  - 标准的采用。
+
+---
+
+## 协调博弈示例
+
 
 <ul>
-<li class="fragment">The prediction of play in the Prisoner's Dilemma was easy: both will defect.
+</li>
+<li class="fragment">在其他游戏中，对玩法的预测并不那么清晰。
   <ul>
-  <li class="fragment">This is the optimal thing to do no matter what the other player does.</li>
+  <li class="fragment">一个例子是协调博弈。</li>
   </ul>
 </li>
-<li class="fragment">In other games, predictions of play are not so clear.
-  <ul>
-  <li class="fragment">One instance is the coordination game.</li>
-  </ul>
-</li>
 </ul>
 
 ---
 
-## Coordination Game
-
-> A coordination game is a type of static game in which a player will earn a higher payoff when they select the same course of action as another player.
-
----
-
-## Coordination Game Example
+## 协调博弈示例
 
 <pba-cols>
 <pba-col>
 
-- Choose $L$ or $R$.
-- The numbers represent the payoffs a player receives.
-- The players only obtain utility if they coordinate their actions.
+- 协调博弈有两个突出的结果：$(L,L)$ 和 $(R,R)$。
+- 显然，如果另一个玩家选择 $L$（$R$），那么另一个玩家也选择 $L$（$R$）是最优的。
+- 因此，在结果 $(L,L)$ 和 $(R,R)$ 中，玩家选择了相互最优的行动。
 
 </pba-col>
 <pba-col>
@@ -473,23 +492,20 @@ Notes:
 </pba-cols>
 
 Notes:
-
-Examples:
-
-- Driving on the right/left side of the road.
-- Money adoption.
-- Standard adoption.
+- 对于两个玩家来说，这意味着：
+  - 玩 $L$ 是对另一个玩家玩 $L$ 的最佳反应。
+  - 玩 $R$ 是对另一个玩家玩 $R$ 的最佳反应。
 
 ---
 
-## Coordination Game Example
+## 协调博弈示例
 
 <pba-cols>
 <pba-col>
 
-- The coordination game has two outcomes $(L,L)$ and $(R,R)$ that stand out.
-- Clearly, if the other player chooses $L$ ($R$), then it is optimal for the other to do so also.
-- So, in the outcomes $(L,L)$ and $(R,R)$ the players choose mutually optimal actions.
+- $(L,L)$ 和 $(R,R)$ 都是纳什均衡的例子。
+- 协调博弈的本质是总是有多个均衡。
+- 囚徒困境中的结果 $(D,D)$ 是唯一的纳什均衡。
 
 </pba-col>
 <pba-col>
@@ -500,492 +516,444 @@ Examples:
 </pba-cols>
 
 Notes:
-
-- That is, for both players it holds:
-  - Playing $L$ is a _best response_ to the other player playing $L$.
-  - Playing $R$ is a _best response_ to the other player playing $R$.
-
----
-
-## Coordination Game Example
-
-<pba-cols>
-<pba-col>
-
-- Both $(L,L)$ and $(R,R)$ are instances of Nash equilibrium.
-- By their very nature, coordination games always have multiple equilibria.
-- The outcome $(D,D)$ in the Prisoner's dilemma is the unique Nash equilibrium.
-
-</pba-col>
-<pba-col>
-
-<img rounded style="width: 550px;" src="./img/Players.png" />
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-Nash equilibrium: If other players follows the recommended strategy, then the best response for you is to do the same.
-As the same logic is true for other players, it's reasonable to assume that everybody will indeed follow the recommended strategy.
-
-However, a Nash equilibrium is a weaker notion than a dominant strategy, because if the other players don't follow the recommended strategy, it is not clear what your best response should be.
+- 纳什均衡：如果其他玩家遵循推荐的策略，那么你最好的反应也是遵循该策略。
+- 由于同样的逻辑适用于其他玩家，因此可以合理地假设每个人都会遵循推荐的策略。
+- 然而，纳什均衡是一个比占优策略更弱的概念，因为如果其他玩家不遵循推荐的策略，你最好的反应就不明确了。
 
 ---
 
-## Equilibrium selection
+## 均衡选择
 
-<ul>
-    <li class="fragment">So, which outcome does the theory of Nash equilibrium predict in the coordination game?</li>
-      <ul>
-      <li class="fragment">None? Both?</li>
-      </ul>
-    <li class="fragment">Sometimes people switch between equilibria (if they are made to)...</li>
-</ul>
+- 那么，纳什均衡理论在协调博弈中预测了哪种结果？
+  - 没有？两种都有？
+- 有时候人们会在均衡之间切换（如果他们被迫这样做）...
+
 <div class="fragment">
     <img rounded style="width: 550px;" src="./img/sweden-1967.jpg" /><br />
-    <p>Sweden, 1967.</p>
+    <p>瑞典，1967 年。</p>
 </div>
 
 Notes:
 
-- The NE does not predict any outcome.
-- Sweden switched from left-side driving to right-side.
+- 纳什均衡并不能预测参与者实际采取的策略。
+- 瑞典从左侧行驶改为右侧行驶。
 
 ---
 
-## Schelling Points
+## 谢林点
+
+- 纳什均衡并不能预测参与者实际采取的策略。
+- 这在具有多个均衡的博弈中尤为明显（例如协调博弈）。
+- 有一些理论可以帮助我们理解参与者实际采取的策略。
+
+Notes:
+
+- 20 世纪 50 年代，美国经济学家托马斯·谢林进行了一些非正式实验，他询问学生（幻灯片上的引述）：
+
+---
+
+## 谢林点
+
+> 如果你要在纽约市与一个陌生人见面，但你无法与对方沟通，那么你会选择何时何地见面？
+
+- 实际上，任何时间和地点都是纳什均衡...
+- 然而，大多数人回答：中午在大中央车站的问讯处。
+- 基本思想：在存在多个均衡的情况下，社会规范可能有助于选择其中一个。
+
+Notes:
+
+- 想象一下，你被关在监狱里。
+- 你和你的另一半被要求猜一个数字。
+- 如果你们都猜对了同一个数字，你们就可以自由了。
+- 你有以下选择：0.231、1 或 0.823。
+- 每次猜对同一个数字都是纳什均衡。
+- 你们很有可能会重获自由。
+
+---
+
+# 总结（到目前为止...）
+
+- 博弈的类型：静态/动态，完全/不完全信息。
+- 三个经典博弈：囚徒困境、最后通牒博弈和协调博弈。
+- 囚徒困境有一个独特的纳什均衡，是占优的，而协调博弈有两个纳什均衡。
+- 为了在多个均衡中进行选择，有时会使用“谢林点”的概念。
+
+---
+
+## 为什么均衡理论很重要？
+
+- 纳什均衡用于预测封闭系统中他人的行为。
+- 如果你能在系统中识别出唯一的纳什均衡或谢林点，你就能对用户行为做出强有力的预测。
+- 因此，你可以通过相应地设计激励措施来引导用户行为。
+
+---
+
+## 公共物品
+
+- **非排他性** 没有人可以被排除在消费之外。
+- **非竞争性** 我的消费不会影响你的消费。
+- 例如，烟花、街道照明。
+
+Notes:
+
+- 我们现在将讨论公共物品和公共资源，这些是每个人都可以享受的物品。
+- 这当然是集体中非常重要且非常棘手的一类物品。
+
+---
+
+## 公共物品
 
 <ul>
-<li class="fragment">Nash equilibrium <span style="font-style: italic;">does not</span> predict which strategies the players actually take.</li>
-<li class="fragment">This is especially pronounced in games with multiple equilibria (e.g., coordination games).</li>
-<li class="fragment">There are theories that offer insights into which strategies players actually take.</li>
+<li class="fragment"><strong>非排他性</strong> 没有人可以被排除在消费之外</li>
+<li class="fragment"><strong>竞争性</strong> 我的消费减少了你消费的可能性</li>
+<li class="fragment">例如，一个公园，一个办公室的咖啡机。</li>
 </ul>
 
 Notes:
 
-- In the 1950s American economist Thomas Schelling ran a couple of informal experiments in which he asked his students (quote on slide)
+- 回忆：公共物品是非竞争性的。
+
+例子：
+
+- 公园：任何人都可以去；太多人会破坏体验或杀死草地。
+- 办公室的咖啡机：任何人都可以使用；太多用户可能会导致拥堵或咖啡量有限。
 
 ---
 
-## Schelling Points
-
-> If you are to meet a stranger in New York City, but you cannot communicate with the person, then when and where will you choose to meet?
+## 公共物品与公共资源
 
 <ul>
-<li class="fragment">Literally any point and time is a Nash equilibrium...</li>
-<ul>
-<li class="fragment">However, most people responded: noon at (the information booth at) Grand Central Terminal.</li>
-</ul>
-<li class="fragment">Basic idea: in case of multiple equilibria, social norms may help to choose one.</li>
-</ul>
-
-Notes:
-
-- Imagine you are held in prison.
-- You and your significant other is asked to guess a number.
-- If you both guess the same number, you are set free.
-- You have the following options: 0.231, 1, or 0.823
-- Guessing both the same number is a NE every time.
-- It's highly likely you will walk free.
-
----
-
-# Summary (so far...)
-
-<ul>
-<li class="fragment">Typology of games: static/dynamic, complete/incomplete information.</li>
-<li class="fragment">Three canonical games: Prisoner's Dilemma, Ultimatum-, and Coordination Game.</li>
-<li class="fragment">The Prisoner's Dilemma has a unique Nash equilibrium, which is dominant, whereas the Coordination game has two Nash equilibria.</li>
-<li class="fragment">To select among multiple equilibria, the concept of a <span style="font-style: italic;">Schelling Point</span> is sometimes used.</li>
+<li class="fragment">主要区别在于，在公共资源中，你的消费会降低该物品对他人的价值。</li>
+<li class="fragment">这被称为你强加给他人（他人也强加给你）的消费外部性。</li>
+<li class="fragment">公共资源的悲剧在于，由于你没有考虑到这种外部性，消费会高于社会最优水平。</li>
 </ul>
 
 ---
 
-## Why are theories of equilibrium important?
+## 公共物品博弈的程式化示例：
 
 <ul>
-<li class="fragment">Nash Equilibria are used to predict the behavior of others in a closed system.</li>
-<li class="fragment">If you can identify a unique Nash Equilibrium or the Schelling point in a system, you have a strong prediction of user behavior.</li>
-<li class="fragment">So, you can begin to drive user behavior by designing incentives accordingly.</li>
-</ul>
-
----
-
-## Public Goods
-
+<li class="fragment">N 个玩家每人有 10 美元，假设 N=4。</li>
+<li class="fragment">每个玩家可以选择将多少钱投入到一个项目中。</li>
+<li class="fragment">项目中的资金会神奇地乘以一个因子 α，假设 α=2。</li>
+<li class="fragment">最后，项目中的资金会平均分配给所有玩家。</li>
 <ul>
-<li class="fragment"><strong>Non-excludable</strong> No-one can be excluded from consumption</li>
-<li class="fragment"><strong>Non-rivalrous</strong> My consumption does not affect yours</li>
-<li class="fragment">e.g., fireworks, street-lighting.</li>
-</ul>
-
-Notes:
-
-- We will now talk about public goods and common goods, which are goods enjoyed by everyone.
-- This is, of course, a very important and very tricky class of goods in a collective.
-
----
-
-## Common Goods
-
-<ul>
-<li class="fragment"><strong>Non-excludable</strong> No-one can be excluded from consumption</li>
-<li class="fragment"><strong>Rivalrous</strong> My consumption reduces your possibility to consume</li>
-<li class="fragment">i.e., a public park, an office coffee machine.</li>
-</ul>
-
-Notes:
-
-- Recall: Public good was _non_-rivalrous.
-
-Examples:
-
-- Public park: anyone can go; too many people spoil the experience or kills the grass.
-- Coffee machine in the office: anyone can use it; too many users may cause congestion or the amount of coffee may be limited.
-
----
-
-## Public vs.
-
-<ul>
-<li class="fragment">Main difference is that in a <span style="font-style: italic;">common good</span> your consumption reduces the value of the good to others.</li>
-<li class="fragment">This is called a <span style="font-style: italic;">consumption externality</span> that you impose on others (and others impose on you.)</li>
-<li class="fragment"> The <span style="font-style: italic;">tragedy of the commons</span> is that, because you do not take this externality into account, consumption is higher than would be socially optimal. </li>
-</ul>
-
----
-
-## Stylized Public Good Game:
-
-<ul>
-<li class="fragment">$N$ players have 10 US dollars each, say, $N=4$.</li>
-<li class="fragment">Each player can choose how much to place into a project.</li>
-<li class="fragment">Funds in the project are magically multiplied by a factor $\alpha$, say, $\alpha=2$.</li>
-<li class="fragment">Finally, the funds in the project are split equally among all players.</li>
-<ul>
-  <li class="fragment">What would be best for the individual?</li>
-  <li class="fragment">What would be best for the collective?</li>
+  <li class="fragment">对个人来说，什么是最好的？</li>
+  <li class="fragment">对集体来说，什么是最好的？</li>
 <ul>
 </ul>
 
 Notes:
 
-- As long as $\alpha>1$, it's best for the collective to contribute as much money as possible, because the money in the project increases magically, so we end up with more money that we started with.
-- However, the problem is that everyone benefits from the project funds regardless of their individual contribution (it is a common good). If a player decreases their initial contribution by one dollar, their individual payoff decreases by $\alpha/N$ dollars, so as long as $\alpha<N$, it is best for each individual to contribute zero.
-- As a result, we can expect that no one will contribute anything, and the money-multiplying powers of the project will be unused. This opportunity cost is a tragedy of the commons.
-- Finally, if $\alpha\geq N$ then it would be individually better to contribute everything, and we would not have a tragedy of the commons.
+- 只要 α>1，对集体来说，最好的做法是尽可能多地贡献资金，因为项目中的资金会神奇地增加，所以我们最终会得到比开始时更多的钱。
+- 然而，问题是每个人都从项目资金中受益，而不管他们的个人贡献如何（这是一种公共物品）。如果一个玩家减少一美元的初始贡献，他们的个人收益将减少 α/N 美元，因此只要 α<N，对每个个体来说，最好的做法是贡献零。
+- 结果，我们可以预期没有人会贡献任何东西，项目的资金倍增能力将被闲置。这种机会成本就是公共资源的悲剧。
+- 最后，如果 α≥N，那么对个人来说，最好的做法是贡献所有的钱，我们就不会有公共资源的悲剧。
 
 ---
 
-## Overfishing
+## 过度捕捞
 
 <ul>
-<li class="fragment">Fishing gives private benefit but might destroy the broader ecosystem, which has its own value for everyone (e.g., due to tourism).</li>
-<li class="fragment">Because individual fishermen do not pay for the damage they cause to the broader ecosystem, they will fish too much.</li>
+<li class="fragment">捕鱼给私人带来利益，但可能会破坏更广泛的生态系统，这对每个人都有价值（例如，由于旅游业）。</li>
+<li class="fragment">因为个体渔民不支付他们对更广泛生态系统造成的损害，他们会过度捕捞。</li>
 </ul>
 
 ---
 
-## Air pollution
+## 空气污染
 
 <ul>
-<li class="fragment">Producing a good yields private profit but reduces air quality for everyone.</li>
-<li class="fragment">Because there is no price attached to air quality, the firms do not have to pay for its reduction and, hence, will produce too much.</li>
+<li class="fragment">生产商品会带来私人利润，但会降低每个人的空气质量。</li>
+<li class="fragment">因为没有空气质量的价格，企业不必为其降低支付费用，因此会生产过多。</li>
 </ul>
 
 ---
 
-## But...
+## 但是...
 
 <ul>
-<li class="fragment">There should be fishing/production/mining! After all, there are always benefits to these activities.</li>
-<li class="fragment">The tragedy of the commons is that the externality is not priced into these activities, driving them to inefficiently high levels.</li>
+<li class="fragment">应该有捕鱼/生产/采矿！毕竟，这些活动总是有好处的。</li>
+<li class="fragment">公共资源的悲剧在于，外部性没有被计入这些活动的价格中，导致它们的水平效率低下。</li>
 </ul>
 
 Notes:
 
-To be precise, in the last example the so-called "tragedy" is not that producing a good leads to air pollution; after all, this may be unavoidable if we want to consume the good.
-The tragedy is that even if we agree on the level of production and air pollution that is economically ideal for the collective, we will end up with more pollution.
+准确地说，在最后一个例子中，所谓的“悲剧”并不是生产商品导致空气污染；毕竟，如果我们想要消费这些商品，这可能是不可避免的。
+悲剧在于，即使我们就生产水平和空气污染水平达成经济上对集体最理想的共识，我们最终也会得到更多的污染。
 
 ---
 
 <!-- .slide: data-background-color="#000" -->
 
-# Break (10 minutes)
+# 休息（10 分钟）
 
-Notes:
+### Notes:
 
-- Next up class activities.
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Open Source
-
-> Providing open-source software is like contributing to a public good and the community will therefore sooner or later collapse!
-
-Notes:
-
-- Why it might not fail:
-  - Other incentives:
-    - Intrinsic motivation
-    - Reputation concerns (your github history is part of your CV)
-    - Reciprocity
-    - Direct benefit: Some contributors also use the software and benefit from improvements.
+- 接下来是课堂活动。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Design a 2x2 game
+# 开源
 
-> Jack and Christine are rivals and keep taunting each other in front of others.
-> At one time, Jack challenges Christine to a game of chicken.
-> He proposes that they both get in their cars and drive towards each other on a road.
-> In the middle of the distance between each other, there is a small bridge with a single lane.
-> Whoever swerves away before the bridge <span style="font-style: italic;">chickened out</span>.
-> If both keep straight, there is no way to avoid a strong collision between the two cars.
-> All friends will be present to see the result.
+> 提供开源软件就像是为公共利益做贡献，因此社区迟早会崩溃！
 
-Design this game in a 2x2 matrix and assign payoffs to the different outcomes.
+### Notes:
 
-Notes:
-
-- Need a white board!
-- Give Class about 5 minuets to discuss in small groups on this
-- Then have 10 minutes to ask the class you solve the 2x2 matrix and discuss (on next slide).
+- 为什么它可能不会失败：
+  - 其他激励措施：
+    - 内在动机
+    - 声誉问题（你的 Github 历史是你简历的一部分）
+    - 互惠
+    - 直接利益：一些贡献者也使用该软件，并从改进中受益。
 
 ---
 
-## Design a 2x2 game
+<!--.slide: data-background-color="#4A2439" -->
 
-- What is/are the Nash Equilibrium/Equilibria here?
-- Which type of games does this remind you of?
-- How would you translate this game to real scenarios?
+# 设计一个 2x2 游戏
 
-Notes:
+> 杰克和克里斯汀是竞争对手，他们总是在别人面前互相嘲讽。有一次，杰克向克里斯汀挑战，要玩一个“胆小鬼”游戏。他提议他们各自开车在一条路上相向而行。在他们之间的距离中间，有一座只有一条车道的小桥。谁在到达桥之前转向，谁就“怂了”。如果两个人都不转向，那么两辆车就会发生强烈的碰撞。所有的朋友都会在场见证结果。
 
-- Game of chicken or Hawk-Dove Game
-- "Anti-Coordination Game" with the tension between competition and mutual benefit of compromise.
-- Real-world situations of conflict, where both would prefer not to fight but would actually like to intimidate, leading to a real conflict.
-- Two businesses would be better off not to engage in price war, but it would be good to be the only one to reduce the price to grab some market share.
+设计这个游戏在一个 2x2 矩阵中，并为不同的结果分配收益。
 
----
+### Notes:
 
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Workshop: Games
-
-Notes:
-
-- roughly 70 minutes
+- 需要一个白板！
+- 给全班大约 5 分钟的时间在小组内讨论这个问题
+- 然后有 10 分钟的时间询问全班你是如何解决 2x2 矩阵并进行讨论的（在下一张幻灯片上）。
 
 ---
 
-## Game 1: Guessing Game
+## 设计一个 2x2 游戏
 
-- We divide the classroom into three groups and play a guessing game.
-- The budget for this game is: $250.
-- The game is simple: each player enters a number from 1 to 100.
-- The player who guessed closest to 2/3 of the average number wins.
-- If multiple people win, the payoff is split equally.
-- The game is repeated for ten rounds.
+- 这里的纳什均衡是什么？
+- 这个游戏让你想起了哪种类型的游戏？
+- 你将如何将这个游戏转化为现实场景？
 
----
+### Notes:
 
-<!-- .slide: data-background-color="#4A2439" -->
-
-## Game 1: Questions?
-
-### Don't ask about strategies!
+- 胆小鬼游戏或鹰鸽游戏
+- “反协调博弈”，其中存在竞争与妥协互利之间的张力。
+- 现实世界中的冲突情况，双方都宁愿不战斗，但实际上都想恐吓对方，从而导致真正的冲突。
+- 两家企业最好不要进行价格战，但如果能成为唯一降价以抢占市场份额的企业，那将是有利的。
 
 ---
 
-## Game 1: Guessing Game
+<!--.slide: data-background-color="#4A2439" -->
 
-Link will be distributed!
+# 工作坊：游戏
 
----
+### Notes:
 
-## Game 1: Discussion
-
-- What number did you choose / what was your strategy?
-  (which group were you in?)
-- Did your strategy change over time?
-
-Notes:
-
-- A number above 2/3\*100 does not make sense
-- If everybody believes that, choosing a number above 2/3\*2/3\*100 does not make sense
-- ... it goes to 0
-- But does 0 Win? No!
-- **Question: Who made these considerations?**
-- Empirical results:
-  - Financial Times asked their readers to submit their solution: Winning number was 13 (~1500 participants)
-  - Other news magazine: ~3700 subjects, winning number 16.99, ~2800 subjects, winning number 14.7
-  - There were spikes at 33 (response to randomness), 22 (response to that), and 0 (rationality)
-- Level-k-thinking: 1 or 2 steps most prevalent, seldom more than that.
-- **Question: What would be the NE for multiplication of 1 of the mean?**
-  - It becomes a coordination game where all players choose the same value.
-
-## Game 1: Results!
+- 大约需要 70 分钟。
 
 ---
 
-## Game 2: Prisoner's Dilemma
+## 游戏 1：猜数字游戏
 
-- You play a Prisoner's Dilemma (groups of 2) over 10 rounds.
-- You will be randomly matched to another student in the class.
-- Budget for this game: $500
-- You have the option to chat between rounds.
-- Important: Keep the chat civil and do not reveal any identifying information about yourself.
-- We will read the chat.
+- 我们将教室分成三组，玩一个猜数字游戏。
+- 这个游戏的预算是：250 美元。
+- 游戏很简单：每个玩家输入一个 1 到 100 之间的数字。
+- 猜中平均数字的 2/3 的玩家获胜。
+- 如果有多人获胜，奖金将平均分配。
+- 游戏将重复进行十轮。
 
 ---
 
-## Game 2: Payoffs
+<!--.slide: data-background-color="#4A2439" -->
 
-|           |             | **_The other participant_** |                        |
+## 游戏 1：问题？
+
+### 不要询问策略！
+
+---
+
+## 游戏 1：猜数字游戏
+
+链接将在稍后分发！
+
+---
+
+## 游戏 1：讨论
+
+- 你选择了什么数字/你的策略是什么？
+  （你在哪个组？）
+- 你的策略是否随着时间而改变？
+
+### Notes:
+
+- 选择超过 2/3*100 的数字没有意义。
+- 如果每个人都相信这一点，选择超过 2/3*2/3*100 的数字也没有意义。
+-...以此类推，最终会趋近于 0。
+- 但是 0 会赢吗？不会！
+- **问题：谁考虑了这些因素？**
+- 实证结果：
+  - 《金融时报》邀请读者提交他们的解决方案：获胜数字是 13（约 1500 名参与者）。
+  - 其他新闻杂志：约 3700 名受试者，获胜数字为 16.99，约 2800 名受试者，获胜数字为 14.7。
+  - 出现了峰值在 33（对随机性的反应）、22（对该反应的反应）和 0（理性）。
+- 层级思考：1 或 2 步思考最为普遍，很少有超过这个的。
+- **问题：如果将平均值乘以 1，纳什均衡会是什么？**
+  - 这将变成一个协调博弈，所有玩家选择相同的值。
+
+## 游戏 1：结果！
+
+---
+
+## 游戏 2：囚徒困境
+
+- 你将玩一个囚徒困境游戏（两人一组），共进行 10 轮。
+- 你将被随机匹配到班上的另一名学生。
+- 这个游戏的预算是：500 美元。
+- 你可以在回合之间聊天。
+- 重要提示：保持聊天文明，不要透露任何关于你自己的身份信息。
+- 我们将阅读聊天记录。
+
+---
+
+## 游戏 2：收益
+
+|           |             | **_另一位参与者_** |                        |
 | --------- | ----------- | --------------------------- | ---------------------- |
-|           |             | _Cooperate_                 | _Defect_               |
-| **_You_** | _Cooperate_ | 200 points, 200 points      | 0 points, 300 points   |
-|           | _Defect_    | 300 points, 0 points        | 100 points, 100 points |
+|           |             | _合作_                 | _背叛_               |
+| **_你_** | _合作_ | 200 分，200 分      | 0 分，300 分   |
+|           | _背叛_    | 300 分，0 分        | 100 分，100 分 |
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-## Game 2: Questions?
-
----
-
-## Game 2: Let's go!
-
-Link will be distributed!
+## 游戏 2：问题？
 
 ---
 
-## Game 2: Results!
+## 游戏 2：Let's go!
+
+链接将在稍后分发！
 
 ---
 
-## Game 3: Public Good Game
-
-- We will play a public good game as presented in the lesson.
-- Budget for this game: $500
-- Groups of 4 over 10 periods.
-- Money in the project is multiplied by factor $1.6$.
-- With one additional mechanism: After each round each player sees the contributions of the other players and can decide to deduct points from them (at own costs).
+## 游戏 2：结果！
 
 ---
 
-## Game 3: Instructions
+## 游戏 3：公共物品博弈
+
+- 我们将玩一个公共物品博弈，如课程中所述。
+- 这个游戏的预算是：500 美元。
+- 四人一组，共进行 10 轮。
+- 项目中的钱会乘以 1.6 倍。
+- 增加一个额外机制：每轮结束后，每个玩家可以看到其他玩家的贡献，并可以决定扣除他们的分数（以自己的成本为代价）。
+
+---
+
+## 游戏 3：说明
 
 <img rounded style="width: 1000px;" src="./img/pgg-instructions.png" />
 
 ---
 
-## Game 3: Contribution
+## 游戏 3：贡献
 
 <img rounded style="width: 1000px;" src="./img/pgg-contribution.png" />
 
 ---
 
-## Game 3: Punishment
+## 游戏 3：惩罚
 
 <img rounded style="width: 900px;" src="./img/pgg-punishment.png" />
 
 ---
 
-## Game 3: Payout
+## 游戏 3：支付
 
 <img rounded style="width: 1000px;" src="./img/pgg-result.png" />
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-## Game 3: Questions?
-
----
-
-## Game 3: Let's go!
-
-Link will be distributed!
+## 游戏 3：问题？
 
 ---
 
-## Game 3: Discussion
+## 游戏 3：Let's go!
 
-- What was your strategy?
-- Were your groups able to sustain cooperation?
-- Did you cooperate?
-- Did you punish?
+链接将在稍后分发！
+
+---
+
+## 游戏 3：讨论
+
+- 你的策略是什么？
+- 你的小组是否能够维持合作？
+- 你是否合作？
+- 你是否惩罚？
 
 Notes:
 
-- Additional free rider problem: Punishment was fixed to 100% of the other's points.
-  That means, it was better to hope for other players to punish a player.
-- They cooperate maybe because they did not understand the game.
+- 额外的搭便车问题：惩罚是固定的，为对方点数的 100%。
+  这意味着，最好是希望其他玩家惩罚一个玩家。
+- 他们合作可能是因为他们没有理解游戏。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-## Game 3: Results!
+## 游戏 3：结果！
 
 ---
 
-## Game 3: Discussion
+## 游戏 3：讨论
 
 <ul>
-    <li class="fragment">How could we characterize players to types?
+    <li class="fragment">我们如何将玩家分类？
      <ul>
-            <li class="fragment">Freerider</li>
-            <li class="fragment">Cooperators</li>
-            <li class="fragment">Altruists</li>
+            <li class="fragment">搭便车者</li>
+            <li class="fragment">合作者</li>
+            <li class="fragment">利他主义者</li>
         </ul>
-    <li class="fragment">What do you think happens when playing this ...
+    <li class="fragment">当玩这个游戏时，你认为会发生什么...
         <ul>
-            <li class="fragment">... for one round?</li>
-            <li class="fragment">... for many rounds?</li>
-            <li class="fragment">... when allowing for communication?</li>
-            <li class="fragment">... with different group sizes?</li>
+            <li class="fragment">... 玩一轮？</li>
+            <li class="fragment">... 玩很多轮？</li>
+            <li class="fragment">... 允许交流时？</li>
+            <li class="fragment">... 不同的小组规模？</li>
         </ul>
     </li>
 </ul>
 
 Notes:
 
-What about empirical evidence?
+关于实证证据呢？
 
-- One Round: Little contribution.
-- Many Rounds: Some little contribution but quickly to 0.
-- Some longer and stronger contribution but eventually going to 0 quickly
-- Different group sizes: Larger groups are more prone to freeriding, i.e., cooperation collapses more quickly.
-- **Question: How can we distinguish freerider from those that only freeride because they expect others to freeride?**
-  - Answer: Ask them to provide a "conditional cooperation table" - i.e., they should state how much they contribute given other's /(average) contributions.
-  - Real freeriders have 0 even if others contribute.
-
----
-
-## Summary
-
-- the basics of game theoretic concepts.
-- different types of games.
-- how games can be modeled.
-- how to apply game theoretic thinking in our decision making in certain games.
+- 一轮：贡献很少。
+- 多轮：有一些小贡献，但很快就降到 0。
+- 一些更长时间和更强的贡献，但最终很快降到 0。
+- 不同的小组规模：较大的小组更容易出现搭便车行为，即合作崩溃得更快。
+- **问题：我们如何区分搭便车者和那些只是因为预期别人会搭便车而搭便车的人？**
+  - 答案：要求他们提供一个“有条件的合作表”——即他们应该说明在给定其他人/（平均）贡献的情况下，他们会贡献多少。
+  - 真正的搭便车者即使别人贡献也会贡献 0。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## 总结
 
-# Questions
+- 博弈论概念的基础。
+- 不同类型的游戏。
+- 如何对游戏进行建模。
+- 如何在某些游戏中应用博弈论思维进行决策。
 
 ---
 
-## Further Reading
+<!--.slide: data-background-color="#4A2439" -->
 
-- [Comprehensive introduction to Game Theory](https://plato.stanford.edu/entries/game-theory/)
+# 问题
+
+---
+
+## 进一步阅读
+
+- [博弈论综合介绍](https://plato.stanford.edu/entries/game-theory/)

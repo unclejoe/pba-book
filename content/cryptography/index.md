@@ -1,7 +1,7 @@
-# 🔐 Cryptography
+# 🔐 密码学
 
-> “Cryptography rearranges power: it configures who can do what, from what”
+> “密码学重塑了权力：它赋予了任何人可以立足现实而动”
 >
-> Phillip Rogaway, [The Moral Character of Cryptographic Work](https://eprint.iacr.org/2015/1162.pdf)
+> 菲利普·罗加韦，[密码学工作的道德特征](https://eprint.iacr.org/2015/1162.pdf)
 
-_Applied_ cryptography concepts and introduction to many common tools of the trade for web3 builders.
+为Web3建设者正确 _应用_ 密码学概念并介绍许多常见的实现工具。

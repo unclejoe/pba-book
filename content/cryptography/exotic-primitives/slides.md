@@ -4,234 +4,211 @@ description: More cutting edge cryptography used in blockchain
 duration: 1 hour
 ---
 
-# Exotic Primitives
-
----
-
-# Outline
+# 大纲
 
 <pba-flex center>
 
-1. [Verifiable Random Functions (VRFs)](#verifiable-random-functionsvrfs)
-1. [Erasure coding](#erasure-coding)
-1. [Shamir Secret Sharing](#shamir-secret-sharing)
-1. [Proxy Re-Encryption](#proxy-reencryption)
-1. [ZK Proofs](#zk-proofs)
+1. [可验证随机函数 (VRFs)](#verifiable-random-functionsvrfs)
+1. [擦除编码](#erasure-coding)
+1. [Shamir 秘密共享](#shamir-secret-sharing)
+1. [代理重加密](#proxy-reencryption)
+1. [ZK 证明](#zk-proofs)
 
 </pba-flex>
 
 ---
 
-## Verifiable Random Functions<br />(VRFs)
-
-<widget-center>
-
-- Used to obtain <ins>private randomness</ins>, that is <ins>publicly verifiable</ins>
-
-- A variation on a signature scheme:
-  - still have private/public key pairs, input as message
-  - in addition to signature, we get an output
+# 奇异原语
 
 ---
 
-## VRF Interface
+## 可验证随机函数（VRFs）
+
+<widget-center>
+
+- 用于获取**私有的随机数**，并且该随机数是**可公开验证**的。
+- 是签名方案的一种变体：
+  - 仍然有公私钥对，输入作为消息。
+  - 除了签名，我们还得到一个输出。
+
+---
+
+### VRF 接口
 
 - `sign(sk, input) -> signature`
-
 - `verify(pk, signature) -> option output`
-
 - `eval(sk,input) -> output`
 
 Notes:
 
-The output of verification being an option represents the possibility of an invalid signature
+验证作为选项的输出表示签名无效的可能性。
 
 ---
 
-## VRF Output properties
+### VRF 输出属性
 
-- Output is a deterministic function of _key_ and _input_
-  - i.e. eval should be deterministic
-- It should be pseudo-random
-- But until the VRF is revealed, only the holder<br />of the secret key knows the output
-- Revealing output does not leak secret key
+- 输出是**密钥**和**输入**的确定性函数。
+- 它应该是伪随机的。
+- 但是，在 VRF 被揭示之前，只有私钥持有者知道输出。
+- 揭示输出不会泄露私钥。
 
 ---
 
-## VRF Usage
+### VRF 使用
 
-- Choose input after key, then the key holder cannot influence the output
-- The output then is effectively a random number known only to the key holder
-- But they can later reveal it, by publishing the VRF proof (signature)
+- 在选择输入后选择密钥，这样密钥持有者就无法影响输出。
+- 然后，输出实际上是一个只有密钥持有者知道的随机数。
+- 但是，他们可以通过发布 VRF 证明（签名）来稍后揭示它。
 
 Notes:
 
-The signature proves that this is the output associated to their input and public key.
+签名证明这是与其输入和公钥相关联的输出。
 
 ---
 
-## VRF Example
+## VRF 示例
 
-- Playing a card game in a distributed and trustless way
-- For player A to draw a card, the players agree on a new random number x
-- A's card is determined by
-  `eval(sk_A,x) mod 52`
-- To play the card, A publishes the signature
+- 以分布式和无需信任的方式玩纸牌游戏
+- 当轮到玩家A抽一张牌，所有玩家同意一个新的随机数x
+- A的牌是由
+'eval（sk_A， x）mod 52'决定的
+- 为了出牌，A公布签名
 
 ---
 
-## VRF Extensions
+### VRF 扩展
 
-- Threshold VRFs / Common coin
+- 阈值 VRFs / 共同硬币：如果$t$个人中的$n$个人参与，则生成相同的随机数。
+- RingVRFs：VRF 输出可以来自一组公钥中的任何一个。
 
-  - Generate the same random number if $t$ out of $n$ people participate
+---
 
-- RingVRFs
+## 擦除编码
 
-  - The VRF output could be from any one of a group of public keys.
+_神奇的数据扩展_
+
+- 将数据转换为片段（具有一定的冗余），以便即使某些片段丢失也可以重建数据。
+- 一个由$k$个符号组成的消息被转换为一个由$n$个符号组成的编码消息，并且可以从这$n$个符号中的任意$k$个符号中恢复。
+
+---
+
+### 擦除编码感知
+
+- 擦除编码依赖于双方对有效消息的共同理解。这使得错误能够被注意到并得到纠正。
+- 例如，在餐厅点餐时，即使你说话含糊不清，他们也可能理解你的意思。
 
 Notes:
 
-Common coins were used in consensus before blockchains were a thing.
-Dfinity based their consensus on this.
-But this needs a DKG, and it's unclear if a decentralized protocol can do those easily.
-
-A participant in a RingVRF could still only reveal _one_ random number.
+消息子集有效的概念在现实生活中非常普遍，并且无处不在。
+在餐馆，当他们问你要汤还是沙拉时，即使你喃喃自语，他们也可能会理解你。
 
 ---
 
-## Erasure Coding
+### 擦除编码直觉
 
-_Magical data expansion_
-
-- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
-
-- A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
-
----
-
-## Erasure Coding Intuition
-
-Erasure coding relies on both parties sharing an understanding of what possible messages are valid. This lets mistakes be noticed and corrected.
-
-Imagine you are receiving a message, and you know ahead of time that the only two possible messages you would receive are `file` and `ruin`.
-
-Notes:
-
-This concept of a subset of messages being valid is super common in real life, and occurs all over the place.
-At a restaurant, when they ask you if you want soup or salad, even if you mumble they will probably understand you.
-
----v
-
-## Erasure Coding Intuition
-
-How would you classify each of the following words?
-
+- 如何对以下单词进行分类？
 <span style="color: red;">file</span> pile pale tale tall rule tail rail rain <span style="color: blue;">ruin</span>
 
 ---v
 
-## Erasure Coding Intuition
+### 擦除编码直觉
 
-How would you classify each of the following words?
-
+- 如何对以下单词进行分类？
 <span style="color: red;">file pile pale tale tall</span> <span style="color: purple;">rule</span> <span style="color: blue;"> tail rail rain ruin</span>
 
-You can classify them based on how close they are to a valid input. This also means we can find the errors in these messages.
+- 你可以根据它们与有效输入的接近程度对它们进行分类。这也意味着我们可以发现这些消息中的错误。
 
 Notes:
 
-There is no perfect way to separate these, but one very reasonable one is to do it based on the edit distance of the received word with any valid messsage you could receive.
+没有完美的方法来区分这些，但是一个非常合理的方法是根据接收到的单词的编辑距离和您可以接收到的任何有效消息来做这件事。
 
 ---v
 
-## Erasure Coding Intuition
+### 擦除编码直觉
 
-Now, you are receiving messages that could be `msg1` or `msg2`. Can you apply the same technique? Is it as easy to separate received messages?
+- 现在，你正在接收可能是`msg1`或`msg2`的消息。你能应用同样的技术吗？是否容易区分接收到的消息？
+- 如果你收到`msg3`会怎样？
 
-What if you receive `msg3`?
+如果您收到“msg3”怎么办？
 
 Notes:
 
-If the messages are not far apart, it is impossible to distinguish in many cases. There is not enough "distance" between the two possibilities.
+如果消息相距不远，很多情况下是无法区分的，两种可能性之间没有足够的“距离”。
 
 ---v
 
-## Erasure Coding Intuition
+### 擦除编码直觉
 
-With erasure coding, we extend each message magically so they are different enough. The sender and receiver know the same encoding procedure. These extensions will be very different, even if the messages are similar.
+通过擦除编码，我们神奇地扩展了每个消息，使它们即使在消息相似的情况下也非常不同。发送方和接收方知道相同的编码过程。这些扩展将非常不同，即使消息相似。
 
 `msg1`<span style="color: red;"> `jdf`</span> and `msg2`<span style="color: red;"> `ajk`</span>
 
 Notes:
 
-It is actually always possible to make the extra magic only appended to the message. This is called a _systematic encoding_.
+实际上，总是可以将额外的魔法附加到消息中。这称为_systematic encoding_。
 
-For those curious about how the "magic" works:
+对于那些对“魔法”如何运作感到好奇的人：
 
-The magic here is polynomials, and the fact that a polynomial of degree $n$ is completely determined by $n+1$ points. There are many good explanations online.
+这里的神奇之处在于多项式，事实上，$n$度的多项式完全由$n+1$点决定。网上有很多很好的解释。
 
 ---
 
-## Erasure Coding
+## 擦除编码
 
 <img style="width: 1000px;" src="./img/erasure-code.svg" />
 
 ---
 
-## Erasure Coding Classical use
+## 擦除编码的经典用途
 
-- Used for noisy channels
-- If a few bits of the coded data are randomly flipped,<br /> we can still recover the original data
-- Typically $n$ is not much bigger than $k$
-
----
-
-## Use in Decentralized Systems
-
-- We have data we want to keep publicly available
-
-  - but not have everyone store
-  - but we don't trust everyone who is storing pieces
-
-- Typically we use $n$ much bigger than $k$
+- 用于有噪声的信道
+- 如果编码数据的一些比特被随机翻转，我们仍然可以恢复原始数据
+- 通常 $n$ 不比 $k$ 大很多
 
 ---
 
-## Shamir Secret Sharing
+## 在去中心化系统中的应用
 
-_Redundancy for your secrets_
+- 我们有数据想要公开保存
+  - 但不想让每个人都存储
+  - 而且我们不信任所有存储数据的人
+- 通常我们使用 $n$ 比 $k$ 大很多
 
-- Turn data (typically a secret) into pieces so it can be reconstructed from some subset of the pieces.
+---
+## Shamir 秘密共享
 
-- A secret is turned into $n$ shares, and be recovered by any $k$ of the shares. $k-1$ shares together reveals nothing about the secret.
+_为你的秘密提供冗余_
+
+- 将数据（通常是一个秘密）分成若干部分，以便可以从这些部分的某个子集中重建原始数据。
+
+- 一个秘密被分成 $n$ 个份额，并且可以通过任意 $k$ 个份额恢复。$k-1$ 个份额一起不会泄露关于秘密的任何信息。
 
 ---
 
-## Shamir Secret Sharing
+## Shamir 秘密共享
 
 <img style="height: 600px" src="./img/shamir-secret-sharing.png" />
 
 Notes:
 
-Image source: <https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033>
+图片来源: <https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033>
 
 ---
 
-## Pros and Cons
+## 优缺点
 
-- Can reconstruct a secret if you lose it.
-- So can other people who collect enough shares.
-
----
-
-## Proxy Reencryption
-
-Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+- 如果你丢失了秘密，可以重建它。
+- 同样，收集到足够份额的其他人也可以。
 
 ---
 
-## Proxy Reencryption
+## 代理重加密
+
+- 生成密钥，允许第三方转换加密数据，以便其他人可以读取，而不向第三方透露数据。
+
+---
+
+## 代理重加密
 
 <img rounded style="height: 600px" src="./img/proxy-reencryption.png" />
 
@@ -241,191 +218,169 @@ Notes:
 
 ---
 
-## Proxy Reencryption API
+### 代理重加密 API
 
-- `fn encrypt(pk, msg) -> ciphertext;` <br /> Takes your public key and a message; returns ciphertext.
-- `fn decrypt(sk, ciphertext) -> msg;` <br /> Takes your private key and a ciphertext; returns the message.
-- `fn get_reencryption_key(sk, pk) -> rk;` <br /> Takes your private key, and the recipient's public key; returns a reencryption key.
-- `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br /> Take a reencryption key, and transform ciphertext to be decrypted by new party.
+- `fn encrypt(pk, msg) -> ciphertext;`：使用公钥和消息进行加密，返回密文。
+- `fn decrypt(sk, ciphertext) -> msg;`：使用私钥和解密密文，返回消息。
+- `fn get_reencryption_key(sk, pk) -> rk;`：使用私钥和接收者的公钥获取重加密密钥。
+- `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;`：使用重加密密钥转换密文，使其可以被新的接收者解密。
 
 ---
 
-## ZK Proofs
+## ZK 证明
 
-How do we do private operations on a public blockchain<br />and have everyone know that they were done correctly?
+- 如何在公共区块链上进行私有操作，并让每个人都知道它们是正确执行的？
 
 Notes:
 
-(we are working on substrate support for these and will use them for protocols)
+（我们正在研究相应的substrate支持，并将它们用于协议）
 
 ---
 
-## What is a ZK Proof?
+### 什么是 ZK 证明？
 
-- A prover wants to convince a verifier that something is true without revealing why it is true.
-
-- They can be interactive protocols, but mostly we'll be dealing with the non-interactive variety.
-
----
-
-## What can we show?
-
-- NP relation: `function(statement, witness) -> bool`
-
-- Prover knows a witness for a statement:
-
-  - They want to show that they know it (_a proof of knowledge_)
-
-  - ... Without revealing anything about the witness (_ZK_)
+- 证明者想要说服验证者某件事是真实的，而不透露为什么它是真实的。
+- 它们可以是交互式协议，但我们主要处理非交互式类型。
 
 ---
 
-## ZK Proof Interface
+### 我们可以展示什么？
 
-- NP relation: `function(statement, witness) -> bool`
+- NP 关系：`function(statement, witness) -> bool`
+- 证明者知道一个声明的证人：
+  - 他们想表明他们知道它（_知识证明_）
+  -... 而不透露任何关于证人的信息（_零知识_）
+- 具有小证明，即使证人很大（_简洁性_）
 
+---
+
+### ZK 证明接口
+
+- NP 关系：`function(statement, witness) -> bool`
 - `prove(statement, witness) -> proof`
-
 - `verify(statement, proof) -> bool`
 
 ---
 
-## ZK Proof Example
+### ZK 证明示例
 
-_Example:_ Schnorr signatures are ZK Proofs
-
-- They show that the prover knows the private key (the discrete log of the public key) without revealing anything about it.
-- The statement is the public key and the witness the private key.
+- 示例：Schnorr 签名是 ZK 证明
+- 它们表明证明者知道私钥（公钥的离散对数），而不透露任何关于它的信息。
+- 声明是公钥，证人是私钥。
 
 ---
 
-## zk-SNARK
+### zk-SNARK
 
 **Z**ero-**K**nowledge **S**uccinct **N**on-interactive **Ar**gument of **K**nowledge
 
-- **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
-- **Succinct** - the proof is small
-- **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
+- **零知识**：证明不透露证人的任何信息，除了声明本身所揭示的。
+- **简洁**：证明很小。
+- **知识证明**：如果你能计算出正确的声明证明，你应该能够计算出证人。
 
 ---
 
-## What can we show?
+### 我们可以展示什么？
 
-- NP relation: `function(statement, witness) -> bool`
-
-  - They want to show that they know it (_a proof of knowledge_)
-
-  - ... Without revealing anything about the witness (_ZK_)
-
-- With a small proof even if the witness is large (_succinctness_)
+- 有许多方案可以为每个 NP 关系生成简洁的零知识证明（_ZK-SNARKs_）
 
 ---
 
-## What can we show?
+## ZK 证明扩展
 
-- There are many schemes to produce succinct ZK proofs of knowledge (_ZK-SNARKs_) for every NP relation.
-
----
-
-## ZK Proof Scaling
-
-A small amount of data, a ZK proof, and execution time can be used to show properties of a much larger dataset which the verifier doesn't need to know.
+少量数据、ZK 证明和执行时间可用于展示大量数据集的属性，而验证者不需要知道这些数据。
 
 ---
 
-## Scaling via ZK Proofs in Blockchain
+## 通过区块链中的 ZK 证明扩展
 
-- Large amount of data - a blockchain
-- Verifier is e.g. an app on a mobile phone
+- 大量数据 - 区块链
+- 验证者例如是移动电话上的应用程序
 
 Notes:
 
-e.g. Mina do a blockchain with a constant size proof (of correctness of execution and consensus) using recursive SNARKs.
+例如，Mina 使用递归 SNARK 进行区块链的常量大小证明（执行和共识的正确性）。
 
 ---
 
-## Scaling via ZK Proofs in Blockchain
+## 在区块链中通过 ZK 证明进行扩展
 
-- The verifier is a blockchain: very expensive data and computation costs.
-
-- Layer 2s using ZK rollups
+- 验证者是区块链：数据和计算成本非常昂贵。
+- 使用 ZK 汇总的第 2 层
 
 Notes:
 
-Of which Ethereum has many, ZKsync, ZKEVM etc.
-Polkadot already scales better!
+其中以太坊有很多，ZKsync，ZKEVM 等。
+Polkadot 已经更好地扩展了！
 
 ---
 
-## Privacy
+## 隐私
 
 <pba-flex center>
 
-A user has private data, but we can show<br />publicly that this private data is correctly used.<br />
-An example would a private cryptocurrency:
+用户拥有私人数据，但我们可以公开证明这些私人数据被正确使用。
+一个例子是私人加密货币：
 
-- Keep who pays who secret
-- Keep amounts secret, <br /> _But show they are positive!_
+- 保密谁支付给谁
+- 保密金额，但显示它们是正数！
 
 </pba-flex>
 
 Notes:
 
-You can do some of keeping amounts secret without ZK-SNARKs, but the positive part is difficult.
-To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivatives e.g. Manta.
+您可以在没有 ZK-SNARK 的情况下对金额进行部分保密，但正数部分很难。
+要做好一切，例如 ZCash 及其许多衍生产品（如 Manta）需要 ZK-SNARK。
 
 ---
 
-## Practical Considerations
+### 实际考虑
 
-- Very powerful primitive
-
-- Useful for both scaling and privacy
-
-- One can design many protocols with ZK Proofs that wouldn't otherwise be possible
+- 非常强大的原语。
+- 对扩容和隐私都很有用。
+- 可以设计许多使用 ZK 证明的协议，否则这些协议是不可能的。
 
 ---
 
-## Downside
+### 缺点
 
-- Slow prover time for general computation
-- To be fast, need to hand optimize
-- Very weird computation model:<br />
-  Non-deterministic arithmetic circuits
-
----
-
-## Downsides Conclusion?
-
-- So if you want to use this for a component,<br />expect a team of skilled people to work for at least a year on it...
-- But if you are watching this 5 years later,<br />people have built tools to make it less painful.
+- 通用计算的证明生成时间慢。
+- 要快速，需要手动优化。
+- 非常奇怪的计算模型：非确定性算术电路。
 
 ---
 
-## Succinct Proving<br />with Cryptography?
+### 缺点结论？
+
+- 如果你想在组件中使用这个，预计需要一个熟练的团队至少工作一年。
+- 但是如果你在 5 年后看到这个，人们已经构建了工具来减轻痛苦。
+
+---
+
+## 使用密码学进行简洁证明？
 
 <pba-flex center>
 
-- ZK friendly hashes
-- Non-hashed based data structures
-  - RSA accumulators
-  - Polynomial commitment based<br />
-    (Verkle trees)
+- ZK 友好哈希
+- 非哈希基础数据结构
+  - RSA 累加器
+  - 基于多项式承诺的<br />
+    （Verkle 树）
 
 </pba-flex>
 
 ---
 
-## Summary
+## 总结
 
-- VRF: Private randomness that is later publicly verifiable
-- Erasure Coding: Making data robust against losses with redundancy
-- Shamir Secret Sharing: Redundancy for your secrets.
-- Proxy Re-encryption: Allow access to your data _with cryptography_.
-- ZK Proofs: Just magic, but expensive magic
+- VRF：稍后可公开验证的私有随机性
+- 擦除编码：通过冗余使数据对损失具有鲁棒性
+- Shamir 秘密共享：为您的秘密提供冗余
+- 代理重加密：允许通过密码学访问您的数据
+- ZK 证明：只是魔法，但很昂贵的魔法
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

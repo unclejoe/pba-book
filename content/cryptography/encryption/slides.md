@@ -4,295 +4,298 @@ description: A lesson on symmetric and asymmetric encryption.
 duration: 1 hour
 ---
 
-# Encryption
+---
+title: 加密
+description: 关于对称和非对称加密的课程。
+duration: 1 小时
+---
+
+# 加密
 
 ---
 
-## Goals for this lesson
+## 本课目标
 
 <pba-flex center>
 
-- Learn about the differences between symmetric and asymmetric encryption.
+- 了解对称和非对称加密的区别。
 
 </pba-flex>
 
 ---
 
-## Symmetric Cryptography
+## 对称密码学
 
-Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br />The shared secret can then be used to protect further communications from others who do not know this secret.
+对称加密假设所有参与方都从一些共享的秘密信息开始，这是一个潜在的非常困难的要求。然后，共享的秘密可以用来保护进一步的通信，使其免受不知道这个秘密的其他人的攻击。
 
-In essence, it gives a way of _extending_ a shared secret over time.
+从本质上讲，它提供了一种随着时间的推移扩展共享秘密的方法。
 
 ---
 
-## Symmetric Encryption
+## 对称加密
 
 <img style="width: 1100px" src="./img/Symmetric-Cryptography.png" />
 
-Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
+例子：ChaCha20，Twofish，Serpent，Blowfish，XOR，DES，AES
 
 ---
 
-## Symmetric Encryption API
+## 对称加密 API
 
-Symmetric encryption libraries should generally all expose some basic functions:
+对称加密库通常应该公开一些基本功能：
 
-- `fn generate_key(r) -> k;` <br /> Generate a `k` (secret key) from some input `r`.
-- `fn encrypt(k, msg) -> ciphertext;` <br /> Takes `k` and a message; returns the ciphertext.
-- `fn decrypt(k, ciphertext) -> msg;` <br /> Takes `k` and a ciphertext; returns the original message.
+- `fn generate_key(r) -> k;` <br /> 从某个输入 `r` 生成一个 `k`（密钥）。
+- `fn encrypt(k, msg) -> ciphertext;` <br /> 接受 `k` 和一个消息；返回密文。
+- `fn decrypt(k, ciphertext) -> msg;` <br /> 接受 `k` 和一个密文；返回原始消息。
 
-It always holds that `decrypt(k, encrypt(k, msg)) == msg`.
+总是有 `decrypt(k, encrypt(k, msg)) == msg`。
 
 Notes:
 
-The input `r` is typically a source of randomness, for example the movement pattern of a mouse.
+输入 `r` 通常是一个随机源，例如鼠标的移动模式。
 
 ---
 
-## Symmetric Encryption Guarantees
+## 对称加密保证
 
-Provides:
+提供：
 
-- Confidentiality
-- Authenticity\*
+- 机密性
+- 真实性\*
 
-Does not provide:
+不提供：
 
-- Integrity\*
-- Non-Repudiation
+- 完整性\*
+- 不可否认性
 
 Notes:
 
-- Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
-- Integrity: There is no proper integrity check, however the changed section of the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+- 真实性：消息只能由知道共享密钥的人发送。在大多数情况下，这在功能上是对接收方的认证。
+- 完整性：没有适当的完整性检查，但是如果消息被更改，更改的部分将是乱码。检测乱码可以作为一种形式的完整性检查。
 
 ---
 
-## Non-repudiation for Symmetric Encryption
+## 对称加密的不可否认性
 
-There is cryptographic proof that the secret was known to the producer of the encrypted message.
+存在加密证明，表明秘密密钥的生产者知道该秘密。
 
-<br />
-
-_However_, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must _also_ gain knowledge of the secret.
+然而，秘密的知识并不限于一方：在对称加密通信中的所有各方（或所有各方）都知道这个秘密。此外，为了向任何人证明这一点，他们还必须获得这个秘密的知识。
 
 Notes:
 
-The degree of non-repudiation given by pure symmetric crytography is not very useful.
+仅由纯对称密码学提供的不可否认程度不是很有用。
 
 ---
 
-## Symmetric Encryption
+## 对称加密
 
-#### _Example: XOR Cipher_
+#### _示例：XOR 密码_
 
 <pba-cols>
 <pba-col>
 
-The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
+加密和解密函数是相同的：使用密钥进行按位异或操作。
 
 </pba-col>
 <pba-col style="padding-right: 100px">
 
 ```text
-Plain: 1010  -->Cipher: 0110
-Key:   1100  |          1100
+明文：1010  --> 密文：0110
+密钥：1100  |          1100
        ----  |          ----
        0110--^          1010
 ```
 
 Notes:
 
-A plaintext can be converted to ciphertext, and vice versa, by applying a bitwise XOR operation with a key known to both parties.
+通过使用密钥进行按位异或操作，可以将明文转换为密文，反之亦然。
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## Symmetric Encryption
+## 对称加密
 
-#### ⚠ Warning ⚠
+#### ⚠ 警告 ⚠
 
-We typically expect symmetric encryption to preserve little about the original plaintext.
-We caution however that constructing these protocols remains delicate, even given secure primitives, with two classical examples being unsalted passwords and the [ECB penguin](https://tonybox.net/posts/ecb-penguin/).
+我们通常期望对称加密能保留很少的原始明文信息。然而，我们提醒，即使使用安全的原语构建这些协议仍然很微妙，两个经典的例子是未加盐的密码和 [ECB 企鹅](https://tonybox.net/posts/ecb-penguin/)。
 
 ---
 
-### ECB penguin
+### ECB 企鹅
 
 <pba-cols>
 <pba-col>
 
 <img style="width: 300px" src="./img/ECB-Penguin.png" />
 
-_Original image_
+_原始图像_
 
 </pba-col>
 <pba-col>
 
 <img style="width: 300px" src="./img/ECB-Penguin-Encrypted.png" />
 
-_Encrypted image_
+_加密图像_
 
-(by blocks)
+（按块）
 
 </pba-col>
 <pba-col>
 
 <img style="width: 300px" src="./img/ECB-Penguin-Secure.png" />
 
-_Encrypted image_
+_加密图像_
 
-(all at once)
+（一次全部）
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-The ECB penguin shows what can go wrong when you encrypt a small piece of data, and do this many times with the same key, instead of encrypting data all at once.
+ECB 企鹅展示了当你加密一小块数据，并多次使用相同的密钥进行加密，而不是一次加密所有数据时，可能会出现的问题。
 
-Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> and <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png> and <https://upload.wikimedia.org/wikipedia/commons/5/58/Tux_secure.png>
-
----
-
-## Asymmetric Encryption
-
-- Assumes the sender does not know the recipient's secret "key" 🎉😎
-- Sender only knows a special identifier of this secret
-- Messages encrypted with the special identifier can only be decrypted with knowledge of the secret.
-- Knowledge of this identifier does not imply knowledge of the secret, and thus cannot be used to decrypt messages encrypted with it.
-- For this reason, the identifier may be shared publicly and is known as the _public key_.
+图片来源：<https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> 和 <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png> 和 <https://upload.wikimedia.org/wikipedia/commons/5/58/Tux_secure.png>
 
 ---
 
-## Asymmetric Encryption
+## 非对称加密
+
+- 假设发送者不知道接收者的秘密“密钥”🎉😎
+- 发送者只知道这个秘密的一个特殊标识符
+- 用这个特殊标识符加密的消息只能用知道这个秘密的人才能解密
+- 知道这个标识符并不意味着知道这个秘密，因此不能用来解密用它加密的消息
+- 出于这个原因，这个标识符可以公开共享，被称为_公钥_。
+
+---
+
+## 非对称加密
 
 <img style="height: 600px" src="./img/asymmetric-crypto-flow.svg" />
 
 ---
 
-## Why "Asymmetric"?
+## 为什么“非对称”？
 
-_Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
+_仅使用公钥_，信息可以被转换（“加密”），使得只有那些知道这个秘密的人才能逆向并恢复原始信息。
 
-i.e. Public key is used to encrypt but a different, _secret_, key must be used to decrypt.
+即，公钥用于加密，但必须使用不同的、_秘密的_密钥来解密。
 
 ---
 
-## Asymmetric Encryption API
+## 非对称加密 API
 
-Asymmetric encryption libraries should generally all expose some basic functions:
+非对称加密库通常应该公开一些基本功能：
 
-- `fn generate_key(r) -> sk;` <br /> Generate a `sk` (secret key) from some input `r`.
-- `fn public_key(sk) -> pk;` <br /> Generate a `pk` (public key) from the private key `sk`.
-- `fn encrypt(pk, msg) -> ciphertext;` <br /> Takes the public key and a message; returns the ciphertext.
-- `fn decrypt(sk, ciphertext) -> msg;` <br /> For the inputs `sk` and a ciphertext; returns the original message.
+- `fn generate_key(r) -> sk;` <br /> 从某个输入 `r` 生成一个 `sk`（私钥）。
+- `fn public_key(sk) -> pk;` <br /> 从私钥 `sk` 生成一个 `pk`（公钥）。
+- `fn encrypt(pk, msg) -> ciphertext;` <br /> 接受公钥和一个消息；返回密文。
+- `fn decrypt(sk, ciphertext) -> msg;` <br /> 接受私钥和一个密文；返回原始消息。
 
-It always holds that `decrypt(sk, encrypt(public_key(sk), msg)) == msg`.
+总是有 `decrypt(sk, encrypt(public_key(sk), msg)) == msg`。
 
 Notes:
 
-The input `r` is typically a source of randomness, for example the movement pattern of a mouse.
+输入 `r` 通常是一个随机源，例如鼠标的移动模式。
 
 ---
 
-## Asymmetric Encryption Guarantees
+## 非对称加密保证
 
-Provides:
+提供：
 
-- Confidentiality
+- 机密性
 
-Does not provide:
+不提供：
 
-- Integrity\*
-- Authenticity
-- Non-Repudiation
+- 完整性\*
+- 真实性
+- 不可否认性
 
 Notes:
 
-- Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
-- Integrity: There is no proper integrity check, however the changed section of the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+- 真实性：消息只能由知道共享密钥的人发送。在大多数情况下，这在功能上是对接收方的认证。
+- 完整性：没有适当的完整性检查，但是如果消息被更改，更改的部分将是乱码。检测乱码可以作为一种形式的完整性检查。
 
 ---
 
-## Diffie-Hellman Key Exchange
+## Diffie-Hellman 密钥交换
 
 <img style="height: 500px" src="./img/Diffie-Hellman_Key_Exchange_horizontal.svg" />
 
-Mixing Paint Visualization
+混合油漆可视化
 
 Notes:
 
-Mixing paint example.
-Image Source: <https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg>
+混合油漆示例。
+图片来源：<https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg>
 
 ---
 
-## Authenticated Encryption
+## 认证加密
 
-Authenticated encryption adds a **M**essage **A**uthentication **C**ode to additionally provide an _authenticity_ and _integrity_ guarantee to encrypted data.
+认证加密添加了一个**消息认证码**（MAC），以额外提供加密数据的_真实性_和_完整性_保证。
 
-A reader can check the MAC to ensure the message was constructed by someone knowing the secret.
+读者可以检查 MAC 以确保消息是由知道这个秘密的人构建的。
 
 Notes:
 
-Specifically, this authenticity says that _anyone who does not know the sender's secret_ could not construct the message.
+具体来说，这种真实性表明，_任何不知道发送者秘密的人_都不可能构建这个消息。
 
-Generally, this adds ~16-32 bytes of overhead per encrypted message.
+通常，这会为每个加密消息增加约 16-32 字节的开销。
 
 ---
 
-## AEAD (**A**uthenticated **E**ncryption **A**dditional **D**ata)
+## AEAD（**认证加密附加数据**）
 
-AEAD is authenticated with some extra data which is unencrypted, but does have integrity and authenticity guarantees.
+AEAD 是通过一些未加密但具有完整性和真实性保证的额外数据进行认证的。
 
 Notes:
 
-Authenticated encryption and AEAD can work with both symmetric and asymmetric cryptography.
+认证加密和 AEAD 可以与对称和非对称密码学一起使用。
 
 ---
 
-## AEAD Example
+## AEAD 示例
 
-Imagine a table with encrypted medical records stored in a table, where the data is stored using AEAD. What are the advantages of such a scheme?
+想象一下，在一个表中存储了加密的医疗记录，其中数据是使用 AEAD 存储的。这种方案有什么优点？
 
 ```text
-UserID -> Data (encrypted), UserID (additional data)
+用户 ID -> 数据（加密），用户 ID（附加数据）
 ```
 
 Notes:
-By using this scheme, the data is always associated with the userID. An attacker could not put that entry into another user's entry.
+通过使用这种方案，数据总是与用户 ID 相关联。攻击者无法将该条目放入另一个用户的条目中。
 
 ---
 
-## Hybrid Encryption
+## 混合加密
 
-Hybrid encryption combines the best of all worlds in encryption. Asymmetric encryption establishes a shared secret between the sender and a specific public key, and then uses symmetric encryption to encrypt the actual message. It can also be authenticated.
+混合加密结合了所有加密世界的最佳方案。非对称加密在发送者和特定公钥之间建立一个共享秘密，然后使用对称加密来加密实际消息。它也可以进行认证。
 
 Notes:
 
-In practice, asymmetric encryption is _almost always_ hybrid encryption.
+在实践中，非对称加密_几乎总是_混合加密。
 
 ---
 
-## Cryptographic Properties
+## 加密属性
 
-| Property        | Symmetric | Asymmetric | Authenticated | Hybrid + Authenticated |
+| 属性        | 对称   | 非对称   | 认证   | 混合+认证   |
 | --------------- | --------- | ---------- | ------------- | ---------------------- |
-| Confidentiality | Yes       | Yes        | Yes           | Yes                    |
-| Authenticity    | Yes\*     | No         | Yes\*         | Yes                    |
-| Integrity       | No\*      | No\*       | Yes           | Yes                    |
-| Non-repudiation | No        | No\*       | No            | No\*                   |
+| 机密性        | 是       | 是        | 是           | 是                    |
+| 真实性        | 是\*     | 否         | 是\*         | 是                    |
+| 完整性        | 否\*      | 否\*       | 是           | 是                    |
+| 不可否认性    | 否        | 否\*       | 否            | 否\*                   |
 
 Notes:
 
-- Symmetric-Authentication and Authenticated-Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
-- Symmetric-Integrity and Asymmetric-Integrity: There is no proper integrity check, however the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
-- Non-Repudation: Even though none of these primitives provide non-repudiation on their own, it's very possible to add non-repudation to asymmetric and hybrid schemes via signatures.
-- Note that encryption also, most importantly, makes the data _available_ to everyone who should have access.
+- 对称-认证和认证-真实性：消息只能由知道共享密钥的人发送。在大多数情况下，这在功能上是对接收方的认证。
+- 对称-完整性和非对称-完整性：没有适当的完整性检查，但是如果消息被更改，更改的部分将是乱码。检测乱码可以作为一种形式的完整性检查。
+- 不可否认性：尽管这些原语本身都不提供不可否认性，但通过签名可以很容易地将不可否认性添加到非对称和混合方案中。
+- 请注意，加密还最重要的是使数据对所有应该访问的人都可用。
 
 ---
 

@@ -4,39 +4,36 @@ description: Hash functions in Substrate
 duration: 1 hour
 ---
 
-# Hash Functions
+### 哈希函数
 
 ---
 
-## Introduction
+## 简介
 
-We often want a succinct representation of some data<br />with the expectation that we are referring to the same data.
+我们经常需要一个简洁的数据表示形式，同时期望这个表示形式能够唯一地代表原始数据。这就是哈希函数的作用，它可以将任意长度的数据映射到一个固定长度的输出，这个输出通常被称为哈希值或摘要。
 
-##### A "fingerprint"
-
----
-
-## Hash Function Properties
-
-<pba-flex center>
-
-1. Accept unbounded size input
-1. Map to a bounded output
-1. Be fast to compute
-1. Be computable strictly one-way<br />(difficult to find a pre-image for a hash)
-1. Resist pre-image attacks<br />(attacker controls one input)
-1. Resist collisions<br />(attacker controls both inputs)
-
-</pba-flex>
+##### 一个“指纹”
 
 ---
 
-## Hash Function API
+## 哈希函数的特性
 
-A hash function should:
+一个好的哈希函数应该具备以下特性：
 
-- Accept an unbounded input size (`[u8]` byte array)
-- Return a fixed-length output (here, a 32 byte array).
+1. **接受任意大小的输入**：哈希函数应该能够处理任意长度的数据输入。
+2. **输出固定长度**：无论输入数据的大小如何，哈希函数的输出长度都是固定的。
+3. **快速计算**：哈希函数的计算速度应该非常快，这样才能在实际应用中高效地处理大量数据。
+4. **难以逆向**：从哈希值反推原始数据在计算上是不可行的，这意味着即使知道哈希值，也无法确定原始数据是什么。
+5. **抗碰撞性**：找到两个不同输入数据产生相同哈希值的概率极低。
+
+---
+
+## 哈希函数API
+
+一个哈希函数通常应该：
+
+- 接受一个无界输入大小的字节数组 `[u8]`
+- 返回一个固定长度的输出（例如，一个32字节的数组）。
 
 ```rust
 fn hash(s: &[u8]) -> [u8; 32];
@@ -44,16 +41,16 @@ fn hash(s: &[u8]) -> [u8; 32];
 
 ---
 
-## Example
+## 示例
 
-**Short input (5 bytes):**
+**短输入（5字节）：**
 
 ```text
 hash('hello') =
  0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
 ```
 
-**Large input (1.2 MB):**
+**大输入（1.2MB）：**
 
 ```text
 hash(Harry_Potter_series_as_string) =
@@ -62,9 +59,9 @@ hash(Harry_Potter_series_as_string) =
 
 ---
 
-## Input Sensitivity
+## 输入敏感性
 
-Changing even 1 bit of a hash function _completely_ scrambles the output.
+哈希函数对输入的微小变化非常敏感。即使只改变输入数据的一个比特，哈希值也会完全不同。
 
 ```text
 hash('hello') =
@@ -78,163 +75,150 @@ hash('hellp') =
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Rust Demo
+# Rust演示
 
-## Hashing a Message
+## 哈希消息
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
+请参阅本课的Jupyter笔记本和/或HackMD备忘单。
 
-1. Use a longer message
-1. Hash it
-1. Verify the signature on the hash
-
----
-
-## Speed
-
-Some hash functions are designed to be slow.
-
-These have applications like password hashing, which would slow down brute-force attackers.
-
-For our purposes, we generally want them to be fast.
+1. 使用更长的消息
+1. 对其进行哈希处理
+1. 验证哈希值上的签名
 
 ---
 
-## Famous Hash Algorithms
+## 速度
+
+有些哈希函数设计为慢速，这在密码哈希中很有用，因为它可以减缓暴力攻击的速度。但对于我们的目的，我们通常希望哈希函数快速。
+
+---
+
+## 著名的哈希算法
 
 <pba-flex center>
 
-- xxHash a.k.a TwoX (non-cryptographic)
+- xxHash a.k.a TwoX（非加密）
 - MD5
 - SHA1
 - RIPEMD-160
-- SHA2-256 (aka SHA256) &c.
+- SHA2-256（又名SHA256）等
 - SHA3
 - Keccak
 - Blake2
 
-xxHash64 is about 20x faster than Blake2.
+xxHash64 比 Blake2 快约 20 倍。
 
 </pba-flex>
 
 ---
 
-## Hash Functions in Blockchains
+## 区块链中的哈希函数
 
 <pba-flex center>
 
-- Bitcoin: SHA2-256 & RIPMD-160
-- Ethereum: Keccak-256 (though others supported via EVM)
-- Polkadot: Blake2 & xxHash (though others supported via host functions)
+- 比特币：SHA2-256 和 RIPMD-160
+- 以太坊：Keccak-256（尽管通过EVM支持其他算法）
+- Polkadot：Blake2 和 xxHash（尽管通过主机函数支持其他算法）
 
 </pba-flex>
 
 Notes:
 
-Substrate also implements traits that provide 160, 256, and 512 bit outputs for each hasher.
+Substrate 还实现了为每个哈希器提供 160、256 和 512 位输出的 trait。
 
-Exercise: Write your own benchmarking script that compares the performance of these algorithms with various input sizes.
+练习：编写自己的基准测试脚本，比较这些算法在不同输入大小下的性能。
 
 ---
 
-### Hashing Benchmarks
+### 哈希基准测试
 
 <img rounded style="height: 650px" src="./img/crypto-bench.png" />
 
 Notes:
 
-Benchmarks for the _cryptographic_ hashing algorithms.
-Source: <https://www.blake2.net/>
+加密哈希算法的基准测试。
+来源：<https://www.blake2.net/>
 
 ---
 
-#### XXHash - _Fast_ hashing algorithm
+#### XXHash - 快速哈希算法
 
 <img rounded style="height: 600px" src="./img/Benchmark-XXHash.png" />
 
 Notes:
 
-Benchmarks for the XX-hash algorithms.
-Source: <https://github.com/Cyan4973/xxHash#benchmarks>
+XX-hash 算法的基准测试。
+来源：<https://github.com/Cyan4973/xxHash#benchmarks>
 
 ---
 
-## Non-Cryptographic Hash Functions
+## 非加密哈希函数
 
-Non-cryptographic hash functions provide weaker<br />guarantees in exchange for performance.
+非加密哈希函数在安全性保证方面较弱，但在性能上有所提升。在输入数据不是恶意的情况下，可以使用非加密哈希函数。
 
-They are OK to use when you know that the input is not malicious.
-
-**If in doubt, use a cryptographic hash function.**
+**如果有疑问，请使用加密哈希函数。**
 
 ---
 
-## One Way
+## 单向性
 
-Given a hash, it should be difficult to find an input value (pre-image)<br />that would produce the given hash.
+给定一个哈希值，应该很难找到一个输入值（原像），使得该输入值经过哈希函数处理后得到给定的哈希值。
 
-That is, given `H(x)`, it should be difficult to find `x`.
+也就是说，给定 `H(x)`，应该很难找到 `x`。
 
 Notes:
 
-We sometimes add random bytes to pre-images to prevent guesses based on context (e.g., if you are hashing "rock, paper, scissors", then finding a pre-image is trivial without some added randomness.)
+我们有时会在原像中添加随机字节，以防止基于上下文的猜测（例如，如果你正在哈希“石头、剪刀、布”，那么在没有添加随机数的情况下，找到原像是微不足道的。）
 
 ---
 
-## Second Pre-Image Attacks
+## 第二原像攻击
 
-Given a hash and a pre-image, it should be difficult to find _another_<br />pre-image that would produce the same hash.
+给定一个哈希值和一个原像，应该很难找到另一个原像，使得这两个原像经过哈希函数处理后得到相同的哈希值。
 
-Given `H(x)`, it should be difficult to find any `x'`
-
-such that `H(x) == H(x')`.
+给定 `H(x)`，应该很难找到任何 `x'`，使得 `H(x) == H(x')`。
 
 Notes:
 
-Since most signature schemes perform some internal hashing, this second pre-image would also pass signature verification.
+由于大多数签名方案都会进行某种内部哈希处理，因此这种第二原像也会通过签名验证。
 
 ---
 
-## Collision Resistance
+## 抗碰撞性
 
-It should be difficult for someone to find two messages that<br />hash to the same value.
+应该很难找到两个消息，它们哈希到相同的值。
 
-It should be difficult to find an `x` and `y`
-
-such that `H(x) == H(y)`.
+应该很难找到 `x` 和 `y`，使得 `H(x) == H(y)`。
 
 ---
 
-## Collision Resistance
+## 抗碰撞性
 
-**Difference from second pre-image attack:**
+**与第二原像攻击的区别：**
 
-In a second pre-image attack, the attacker only controls one input.
+在第二原像攻击中，攻击者只控制一个输入。
 
-In a collision, the attacker controls both inputs.
-
-They may attempt to trick someone into signing one message.
+在碰撞攻击中，攻击者控制两个输入。他们可能试图欺骗某人签署一个消息。
 
 Notes:
 
-Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
-single hash collision often results in the hash function being considered unsafe.
+攻击者意图用另一个消息来冒充签名者。一般来说，即使只找到一个哈希碰撞，也通常会导致哈希函数被认为是不安全的。
 
 ---
 
-## Birthday Problem
+## 生日问题
 
 <pba-cols>
 <pba-col style="font-size:smaller">
 
-> With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
+> 有23个人，有6%的机会有人在特定日期出生，但有50%的机会两个人共享生日。
 
-- Must compare each output with every other, not with a single one.<br />
-- Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
+- 必须将每个输出与其他每个输出进行比较，而不是与单个输出进行比较。
+- 随着尝试次数的增加，可能的“命中”数量呈指数增长，从而将预期成功降低到特定目标的平方根。
 
 </pba-col>
 <pba-col>
@@ -246,71 +230,70 @@ single hash collision often results in the hash function being considered unsafe
 
 ---
 
-## Birthday Attack
+## 生日攻击
 
-Thus, with a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{^{\frac{n}{2}}}$, with $\cdot 2^{^{\frac{n}{2}}}$ being the classical preimage resistance security.
+因此，通过生日攻击，可以在 $\sqrt {2^{n}}=2^{^{\frac{n}{2}}}$ 次尝试中找到哈希函数的碰撞，其中 $\cdot 2^{^{\frac{n}{2}}}$ 是经典的原像抵抗安全性。
 
-So, hash function security is only half of the bit space.
+因此，哈希函数的安全性仅为比特空间的一半。
 
 Notes:
 
-e.g., a 256 bit hash output yields 2^128 security
+例如，一个256位的哈希输出提供2^128的安全性。
 
 - <https://en.wikipedia.org/wiki/Birthday_attack>
-
 - <https://en.wikipedia.org/wiki/Birthday_problem>
 
 ---
 
-## Partial Resistance
+## 部分抵抗
 
-It should be difficult for someone to partially (for a substring of the hash output) find a collision or "second" pre-image.
+应该很难找到一个哈希值的部分碰撞或“第二”原像。
 
-- Bitcoin PoW is a partial pre-image attack.
-- Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.
-- Prefix collision resistance important to rationalize costs for some cryptographic data structures.
+- 比特币PoW是一种部分原像攻击。
+- 前缀/后缀原像攻击抵抗减少了地址欺骗的UI攻击机会。
+- 前缀碰撞抵抗对于某些加密数据结构的成本合理化很重要。
 
 ---
 
-## Hash Function Selection
+## 哈希函数选择
 
 <pba-flex center>
 
-When users (i.e. attackers) have control of the input, cryptographic hash functions must be used.
+当用户（即攻击者）可以控制输入时，必须使用加密哈希函数。
 
-When input is not controllable (e.g. a system-assigned index), a non-cryptographic hash function can be used and is faster.
+当输入不可控时（例如，系统分配的索引），可以使用非加密哈希函数，并且速度更快。
 
 Notes:
 
-Only safe when the users cannot select the pre-image, e.g. a system-assigned index.
+只有在用户无法选择原像的情况下才安全，例如系统分配的索引。
 
-Keccak is available for Ethereum compatibility.
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Applications
+Keccak 可用于以太坊兼容性。
 
 ---
 
-## Cryptographic Guarantees
+<!--.slide: data-background-color="#4A2439" -->
 
-Let's see which cryptographic properties apply to hashes.
+# 应用
 
----v
+---
 
-## Confidentiality
+## 加密保证
 
-Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
-
-Both cryptographic and non-cryptographic hashes work for this. _only if the input space is large enough_.
+让我们看看哈希在哪些方面提供了加密保证。
 
 ---v
 
-## Confidentiality Bad Example
+## 机密性
 
-Imagine playing rock, paper, scissors by posting hashes and then revealing. However, if the message is either "rock", "paper", or "scissors", the output will always be either:
+发送或公开哈希值可以保持数据的机密性，因为只有那些已经知道数据的人才能识别哈希值代表的数据。
+
+加密和非加密哈希函数都可以用于此目的。_只有在输入空间足够大的情况下_。
+
+---v
+
+## 机密性反例
+
+想象一下通过发布哈希值来玩石头、剪刀、布，然后再揭示。然而，如果消息是“石头”、“剪刀”或“布”，输出将始终是：
 
 ```text
 hash('rock') = 0x10977e4d68108d418408bc9310b60fc6d0a750c63ccef42cfb0ead23ab73d102
@@ -318,75 +301,74 @@ hash('paper') = 0xea923ca2cdda6b54f4fb2bf6a063e5a59a6369ca4c4ae2c4ce02a147b3036a
 hash('scissors') = 0x389a2d4e358d901bfdf22245f32b4b0a401cc16a4b92155a2ee5da98273dad9a
 ```
 
-The other player doesn't need to undo the hash function to know what you played!
+另一个玩家不需要撤销哈希函数就知道你玩了什么！
 
 Notes:
 
-The data space has to be _sufficiently large_.
-Adding some randomness to input of the hash fixes this. Add x bits of randomness to make it x bits of security on that hash.
+数据空间必须足够大。
+在输入的哈希中添加一些随机性可以解决这个问题。添加 x 位的随机性可以在哈希上提供 x 位的安全性。
 
 ---v
 
-## Authenticity
+## 真实性
 
-Anyone can make a hash, so hashes provide no authenticity guarantees.
-
----v
-
-## Integrity
-
-A hash changes if the data changes, so it does provide integrity.
+任何人都可以制作哈希，因此哈希本身不提供真实性保证。
 
 ---v
 
-## Non-Repudiation
+## 完整性
 
-Hashes on their own cannot provide authenticity, and as such cannot provide non-repudiation.
+哈希值会随着数据的变化而变化，因此它确实提供了完整性保证。
 
-However, if used in another cryptographic primitive that _does_ provide non-repudiation, $H(D)$ provides the same non-repudation as $D$ itself.
+---v
 
-Notes:
+## 不可否认性
 
-This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
+哈希本身不能提供不可否认性，因为它们不能提供真实性。
 
----
-
-## Content-Derived Indexing
-
-Hash functions can be used to generate deterministic<br />and unique lookup keys for databases.
+然而，如果用于其他提供不可否认性的加密原语中，$H(D)$ 提供与 $D$ 本身相同的不可否认性。
 
 Notes:
 
-Given some fixed property, like an ID and other metadata the user knows beforehand, they can always find the database entry with all of the content they are looking for.
+这是数字签名的关键。然而，重要的是要认识到，如果 $D$ 是保密的，$H(D)$ 基本上是没有意义的。
 
 ---
 
-## Data Integrity Checks
+## 内容派生索引
 
-Members of a peer-to-peer network may host and share<br />file chunks rather than large files.
-
-In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is hash identified so peers can<br /> _request and verify_ the chunk is a member of the larger,<br /> _content addressed_ file.
+哈希函数可用于生成数据库的确定性和唯一查找键。
 
 Notes:
 
-The hash of the large file can also serve as a signal to the protocol that transmission is complete.
+给定一些固定的属性，如用户预先知道的 ID 和其他元数据，他们总是可以找到包含他们正在寻找的所有内容的数据库条目。
 
 ---
 
-## Account Abstractions
+## 数据完整性检查
 
-Public keys can be used to authorize actions by signing of instructions.
+在点对点网络中，文件块可以被哈希标识，以便对等方可以请求和验证块是否属于更大的、内容寻址的文件。
 
-The properties of hash functions allow other kinds of representations.
+Notes:
+
+在 [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent) 中，每个文件块都通过哈希进行标识，这样对等方就可以请求和验证块是否属于更大的、内容寻址的文件。
 
 ---
 
-## Public Key Representation
+## 账户抽象
 
-Because hashes serve as unique representations of other data,<br />that other data could include public keys.<br />
-A system can map a plurality of key sizes to a fixed length<br />(e.g. for use as a database key).
+公钥可用于通过签署指令来授权操作。
 
-For example, the ECDSA public key is 33 bytes:
+哈希函数的特性允许使用其他类型的表示。
+
+---
+
+## 公钥表示
+
+由于哈希可以作为其他数据的唯一表示，因此这些数据可以包括公钥。
+
+系统可以将多个密钥大小映射到固定长度（例如，用作数据库键）。
+
+例如，ECDSA 公钥是 33 字节：
 
 ```text
 Public key (hex):
@@ -399,144 +381,141 @@ Hash of pub key:
 
 ---
 
-## Commitment Schemes
+## 承诺方案
 
-It is often useful to commit to some information<br /> without storing or revealing it:
+通常需要在不存储或揭示信息的情况下承诺某些信息：
 
-- A prediction market would want to reveal predictions only after the confirming/refuting event occurred.
-- Users of a system may want to discuss proposals without storing the proposal on the system.
+- 预测市场可能希望在确认/反驳事件发生后才揭示预测。
+- 系统用户可能希望在不将提案存储在系统上的情况下讨论提案。
 
-However, participants should not be able to modify their predictions or proposals.
+然而，参与者不应该能够修改他们的预测或提案。
 
 ---
 
-## Commit-Reveal
+## 承诺-揭示
 
 <pba-flex center>
 
-1. Share a hash of data as a commitment ($c$)
-1. Reveal the data itself ($d$)
+1. 分享数据的哈希值作为承诺（$c$）
+2. 揭示数据本身（$d$）
 
 <pba-flex>
 
-It is normal to add some randomness to the message<br />to expand the input set size:
+通常会在消息中添加一些随机性，以扩展输入集的大小：
 
 $$ hash(message + randomness) => commitment $$
 
 <pba-flex style="font-size: smaller;">
 
-Commitment: `0x97c9b8d5019e51b227b7a13cd2c753cae2df9d3b435e4122787aff968e666b0b`
+承诺：`0x97c9b8d5019e51b227b7a13cd2c753cae2df9d3b435e4122787aff968e666b0b`
 
 ---
 
-## Reveal
+## 揭示
 
-Message with some added randomness:
+带有一些随机性的消息：
 
 <pba-flex style="font-size: smaller;">
 
-> "I predict Boris Johnson will resign on 7 July 2022. facc8d3303c61ec1808f00ba612c680f"
+> "我预测鲍里斯·约翰逊将在2022年7月7日辞职。facc8d3303c61ec1808f00ba612c680f"
 
 ---
 
-## Data Identifiers
+## 数据标识符
 
-Sometimes people want to store information in one place and reference it in another. For reference, they need some "fingerprint" or digest.
+有时候人们希望在一个地方存储信息，并在另一个地方引用它。为了引用，他们需要一些“指纹”或摘要。
 
-As an example, they may vote on executing some privileged instructions within the system.
+例如，他们可能会投票决定在系统内执行一些特权指令。
 
-The hash of the information can succinctly represent the information and commit its creator to not altering it.
+信息的哈希值可以简洁地表示信息，并承诺其创建者不会更改它。
 
 ---
 
-## Data Structures (in Brief)
+## 数据结构（简）
 
-This is the focus of a later lesson.
+这是后面课程的重点。
 
 Notes:
-For now, just a brief introduction.
+
+现在，只是一个简短的介绍。
 
 ---
 
-## Pointer-Based Linked Lists
+## 基于指针的链表
 
-Pointer-based linked lists are a foundation of programming.
+基于指针的链表是编程的基础。
 
-But pointers are independent from the data they reference,<br />so the data can be modified while maintaining the list.
+但是指针独立于它们引用的数据，因此可以在维护列表的同时修改数据。
 
-That is, pointer-based linked lists are not tamper evident.
+也就是说，基于指针的链表不是防篡改的。
 
 <img src="./img/Hash-Chains.png" />
 
 ---
 
-## Hash-Based Linked Lists
+## 基于哈希的链表
 
-Hash-based lists make the reference related to the data they are referencing.<br />
-The properties of hash functions make them a good choice for this application.
+基于哈希的链表使它们引用的数据相关联。哈希函数的特性使其成为此应用的良好选择。
 
-Any change at any point in the list would create downstream changes to all hashes.
+列表中任何一点的任何更改都会导致所有哈希值的下游更改。
 
 ---
 
-## Merkle Trees
+## 默克尔树
 
 <img  src="./img/Merkle-Tree.png" />
 
 Notes:
 
-Each leaf is the hash of some data object and each node is the hash of its children.
+每个叶子是一些数据对象的哈希值，每个节点是其子节点的哈希值。
 
 ---
 
-## Proofs
+## 证明
 
-Merkle trees allow many proofs relevant to the rest of this course,<br />e.g. that some data object is a member of the tree<br />without passing the entire tree.
+默克尔树允许许多与本课程其余部分相关的证明，例如某些数据对象是树的成员，而无需传递整个树。
 
-**_More info in the next lesson._**
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+**_更多信息在下一课中。_**
 
 ---
 
-<!-- TODO: migrate below to Substrate slides? Or...?  -->
+<!--.slide: data-background-color="#4A2439" -->
 
-## Hash Examples in Substrate
+# 问题
+---
 
-**Sr25519 Signatures**
+## 子系统中哈希示例
 
-Sr25519 hashes the message as part of its signing process.
+**Sr25519签名**
 
-**Transactions**
+Sr25519在其签名过程中对消息进行哈希处理。
 
-In transactions in Substrate, key holders sign a<br /> _hash of the instructions_ when the instructions<br />are longer than 256 bytes.
+**交易**
+
+在子系统中，当指令长度超过256字节时，密钥持有者在指令的哈希值上签名。
 
 ---
 
-## Database Keys
+## 数据库键
 
-**TwoX64** is safe to use when users (read: attackers)<br />cannot control the input, e.g. when a<br />database key is a system-assigned index.
+**TwoX64**在用户（即攻击者）无法控制输入时是安全的，例如当数据库键是系统分配的索引时。
 
-**Blake2** should be used for everything else.
+**Blake2**应该用于其他所有情况。
 
-_Again, there is a whole lesson on hash-based data structures._
+_再次强调，有一整节课是关于基于哈希的数据结构的。_
 
 ---
 
-## Other Uses of Hashes in Substrate
+## 子系统中哈希的其他用途
 
-Hashes are also used for:
+哈希还用于：
 
 <pba-flex center>
 
-- Generating multisig accounts
-- Generating system-controlled accounts
-- Generating proxy-controlled accounts
-- Representing proposals
-- Representing claims (e.g. the asset trap)
+- 生成多重签名账户
+- 生成系统控制的账户
+- 生成代理控制的账户
+- 表示提案
+- 表示声明（例如资产陷阱）
 
 </pba-flex>

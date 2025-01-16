@@ -1,9 +1,9 @@
-# Subkey Signature and HDKD (Hierarchical Deterministic Key Derivation) Demo
+# Subkey 签名和 HDKD（分级确定性密钥派生）演示
 
-Here are subkey examples for reference on use.
-Compliments the formal documentation [found here](https://github.com/paritytech/polkadot-sdk/tree/master/substrate/bin/utils/subkey#subkey).
+下面是 subkey 工具使用的例子供参考。
+完整的正式文档参看 [这里](https://github.com/paritytech/polkadot-sdk/tree/master/substrate/bin/utils/subkey#subkey).
 
-## Key Generation
+## 生成 Key
 
 ```sh
 subkey generate
@@ -17,7 +17,7 @@ Secret phrase:       desert piano add owner tuition tail melt rally height faint
   SS58 Address:      5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo
 ```
 
-## Sign
+## 签名
 
 ```sh
 echo -n 'Hello Polkadot Blockchain Academy' | subkey sign --suri 'desert piano add owner tuition tail melt rally height faint thunder immune'
@@ -25,7 +25,7 @@ echo -n 'Hello Polkadot Blockchain Academy' | subkey sign --suri 'desert piano a
 
 > Note, this changes each execution, this is one viable signature: `f261d56b80e4b53c70dd2ba1de6b9384d85a8f4c6d912fd86acab3439a47992aa85ded04ac55c7525082dcbc815001cd5cc94ec1a907bbd8e3138cfc8a382683`
 
-## Verify
+## 验证
 
 ```sh
 echo -n 'Hello Polkadot Blockchain Academy' | subkey verify  '0xf261d56b80e4b53c70dd2ba1de6b9384d85a8f4c6d912fd86acab3439a47992aa85ded04ac55c7525082dcbc815001cd5cc94ec1a907bbd8e3138cfc8a382683' \
@@ -34,7 +34,7 @@ echo -n 'Hello Polkadot Blockchain Academy' | subkey verify  '0xf261d56b80e4b53c
 
 > Expect `Signature verifies correctly.`
 
-## Tamper with the Message
+## 信息篡改
 
 > Last char in `Public key (hex)` - AKA URI - is changed:
 
@@ -45,7 +45,7 @@ echo -n 'Hello Polkadot Blockchain Academy' | subkey verify \
 Error: SignatureInvalid
 ```
 
-## Hard Derivation
+## 硬派生 Hard Derivation
 
 ```sh
 subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot' --network polkadot
@@ -71,7 +71,7 @@ Secret Key URI `desert piano add owner tuition tail melt rally height faint thun
   SS58 Address:      J9753RnTdZJct5RmFQ6gFVdKSyrEjzYwvYUBufMX33PB7az
 ```
 
-## Soft Derivation from Secret
+## 从私钥中软派生 Soft Derivation from Secret
 
 ```sh
 subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/0' --network polkadot
@@ -97,7 +97,7 @@ Secret Key URI `desert piano add owner tuition tail melt rally height faint thun
   SS58 Address:      1242YwUZGBQ84btGSGdSX4swf1ibfSaCDR1sr1ejC9KQ1NbJ
 ```
 
-## Soft Derivation from Public
+## 从公钥中软派生 Soft Derivation from Public
 
 Note: We use addresses here because Subkey does not derive paths from a raw public key (AFAIK).
 

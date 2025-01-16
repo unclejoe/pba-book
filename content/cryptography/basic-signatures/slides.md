@@ -4,57 +4,61 @@ description: Hands-on application of digital signature
 duration: 1 hour
 ---
 
-# Digital Signatures Basics
+# 数字签名基础
 
 ---
 
-## Signature API
+## 签名 API
 
-Signature libraries should generally all expose some basic functions:
+签名库通常会暴露一些基本功能：
 
-- `fn generate_key(r) -> sk;` <br /> Generate a `sk` (secret key) from some input `r`.
-- `fn public_key(sk) -> pk;` <br /> Return the `pk` (public key) from a `sk`.
-- `fn sign(sk, msg) -> signature;` <br /> Takes `sk` and a message; returns a digital signature.
-- `fn verify(pk, msg, signature) -> bool;` <br /> For the inputs `pk`, a message, and a signature; returns whether the signature is valid.
+- `fn generate_key(r) -> sk;` <br /> 从输入 `r` 生成一个 `sk`（私钥）。
+- `fn public_key(sk) -> pk;` <br /> 从 `sk` 返回 `pk`（公钥）。
+- `fn sign(sk, msg) -> signature;` <br /> 接受 `sk` 和消息；返回数字签名。
+- `fn verify(pk, msg, signature) -> bool;` <br /> 对于输入 `pk`、消息和签名；返回签名是否有效。
 
 Notes:
 
-The input `r` could be anything, for example the movement pattern of a mouse.
+输入 `r` 可以是任何东西，例如鼠标的移动模式。
 
-For some cryptographies (ECDSA), the verify might not take in the public key as an input. It takes in the message and signature, and returns the public key if it is valid.
+对于某些密码学（ECDSA），验证可能不接受公钥作为输入。它接受消息和签名，如果有效，则返回公钥。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Subkey Demo
+# 子密钥演示
 
-## Key Generation and Signing
+## 密钥生成和签名
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
+请参阅本课的 Jupyter 笔记本和/或 HackMD 备忘单。
 
-1. Generate a secret key
-1. Sign a message
-1. Verify the signature
-1. Attempt to alter the message
-
----
-
-## Hash Functions
-
-There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.
-
-For now, we only concern ourselves with using Blake2.
+1. 生成一个秘密密钥
+1. 签署一条消息
+1. 验证签名
+1. 尝试更改消息
 
 ---
 
-## Hashed Messages
+## 哈希函数
 
-As mentioned in the introduction,<br />it's often more practical to sign the hash of a message.
+有两节课专门讨论哈希函数。
 
-Therefore, the sign/verify API may be _used_ like:
+但它们被用作所有签名过程的一部分。
+
+目前，我们只关注使用 Blake2。
+
+---
+
+## 哈希消息
+
+如介绍中所述，
+
+通常更实际的做法是对消息的哈希进行签名。
+
+因此，签名/验证 API 可能会被使用：
 
 <pba-flex center>
 
@@ -63,119 +67,121 @@ Therefore, the sign/verify API may be _used_ like:
 
 </pba-flex>
 
-Where `H` is a hash function (for our purposes, Blake2).<br />
-This means the verifier will need to run the correct hash function on the message.
+其中 `H` 是一个哈希函数（对于我们的目的，是 Blake2）。
+
+这意味着验证者需要在消息上运行正确的哈希函数。
 
 ---
 
-## Cryptographic Guarantees
+## 加密保证
 
-Signatures provide many useful properties:
+签名提供了许多有用的属性：
 
-- Confidentiality: Weak, the same as a hash
-- Authenticity: Yes
-- Integrity: Yes
-- Non-repudiation: Yes
+- 机密性：弱，与哈希相同
+- 真实性：是
+- 完整性：是
+- 不可否认性：是
 
 Notes:
 
-If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
+如果一个哈希被签名，你可以证明签名是有效的，而无需告诉任何人实际签署的消息，只需哈希。
 
 ---
 
-## Signing Payloads
+## 签署有效负载
 
-Signing payloads are an important part of system design.<br />
-Users should have credible expectations about how their messages are used.
+签署有效负载是系统设计的重要组成部分。
 
-For example, when a user authorizes a transfer,<br />they almost always mean just one time.
+用户应该对他们的消息如何使用有可信的期望。
+
+例如，当用户授权转账时，他们几乎总是意味着只转一次。
 
 Notes:
 
-There need to be explicit rules about how a message is interpreted. If the same signature can be used in multiple contexts, there is the possibility that it will be maliciously resubmitted.
+需要有明确的规则说明如何解释消息。如果相同的签名可以在多个上下文中使用，则存在被恶意重新提交的可能性。
 
-In an application, this typically looks like namespacing in the signature payload.
+在应用程序中，这通常看起来像签名有效负载中的命名空间。
 
 ---
 
-## Signing and Verifying
+## 签名和验证
 
 <img style="height: 600px" src="./img/sig-verify-flow.svg" />
 
 Notes:
 
-Note that signing and encryption are _not_ inverses.
+签名和加密不是逆操作。
 
 ---
 
-## Replay Attacks
+## 重放攻击
 
-Replay attacks occur when someone intercepts and resends a valid message.<br />
-The receiver will carry out the instructions since the message contains a valid signature.
+重放攻击发生在有人拦截并重发有效消息时。
+
+接收者会执行指令，因为消息包含有效的签名。
 
 <pba-flex center>
 
-- Since we assume that channels are insecure, all messages should be considered intercepted.
-- The "receiver", for blockchain purposes, is actually an automated system.
+- 由于我们假设通道是不安全的，所有消息都应被视为被拦截。
+- 对于区块链目的，“接收者”实际上是一个自动化系统。
 
 </pba-flex>
 
 Notes:
 
-Lack of _context_ is the problem.
-Solve by embedding the context and intent \_within the message being signed.
-Tell the story of Ethereum Classic replays.
+缺乏上下文是问题所在。通过在被签名的消息中嵌入上下文和意图来解决。讲述以太坊经典重放的故事。
 
 ---
 
-## Replay Attack Prevention
+## 重放攻击预防
 
-Signing payloads should be designed so that they can<br />only be used _one time_ and in _one context_.<br />
-Examples:
+签名有效负载的设计应使其只能使用一次，且只能在一个上下文中使用。
+
+示例：
 
 <pba-flex center>
 
-- Monotonically increasing account nonces
-- Timestamps (or previous blocks)
-- Context identifiers like genesis hash and spec versions
+- 单调递增的账户 nonces
+- 时间戳（或之前的区块）
+- 上下文标识符，如创世哈希和规范版本
 
 ---
 
-# Signature Schemes
+# 签名方案
 
 ---
 
 ## ECDSA
 
-- Uses Secp256k1 elliptic curve.
-- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
-- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
-- Nondeterministic
+- 使用 Secp256k1 椭圆曲线。
+- ECDSA（最初在比特币/以太坊中使用）是为了绕过 Schnorr 签名的专利而开发的。
+- ECDSA 使更高级的加密技术（如阈值签名）复杂化。
+- 非确定性
 
 ---
 
 ## Ed25519
 
-- Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
-- Signing is 20-30x faster than ECDSA signatures.
-- Deterministic
+- Schnorr 签名设计用于减少在经典应用程序（如 TLS 证书）中实施和使用时的错误。
+- 签名速度比 ECDSA 快 20-30 倍。
+- 确定性
 
 ---
 
 ## Sr25519
 
-Sr25519 addresses several small risk factors that emerged<br />from Ed25519 usage by blockchains.
+Sr25519 解决了几个从区块链使用 Ed25519 中出现的小风险因素。
 
 ---
 
-## Use in Substrate
+## 在 Substrate 中的使用
 
-- Sr25519 is the default key type in most Substrate-based applications.
-- Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
-- Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
+- Sr25519 是大多数基于 Substrate 的应用程序中的默认密钥类型。
+- 其公钥为 32 字节，通常用于识别密钥持有者（与 ed25519 相同）。
+- Secp256k1 公钥为 33 字节，因此其哈希用于表示其持有者。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

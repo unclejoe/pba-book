@@ -1,450 +1,445 @@
 ---
-title: Introduction to Cryptography
-description: Cryptographic primitives for web3 builders
-duration: 1 hour
+title: 密码学简介
+description: 面向 Web3 构建者的密码学基础
+duration: 1 小时
 ---
 
-# Introduction to Cryptography
+# 密码学简介
 
 ---
 
-## Some Useful Equations
+## 一些有用的公式
 
 <img rounded style="height: 600px" src="./img/scary-equations.png" />
 
 Notes:
 
-Just kidding!
+开玩笑的！
 
 ---
 
-## Goals for this lesson
+## 本课目标
 
 <pba-flex center>
 
-- Understand the goals of cryptography
-- Understand some network and contextual assumptions
-- Learn what expectations cryptography upholds
-- Learn the primitives
+- 理解密码学的目标
+- 理解一些网络和上下文假设
+- 了解密码学所维护的期望
+- 学习密码学的基本原理
 
 </pba-flex>
 
 Notes:
 
-In this first lesson,
+在这第一课中，
 
 ---
 
-## Cryptography Landscape
+## 密码学领域
 
 <img style="height: 700px; padding-left:100px" src="./img/crypto-mind-map.svg" />
 
 Notes:
 
-What is covered in this course is all connected subjects.
-We will not cover any details for hybrid or interactive protocols in the course.
+本课程涵盖的所有主题都是相互关联的。
+我们不会在课程中涵盖任何关于混合或交互式协议的细节。
 
 ---
 
-## Operating Context
+## 操作环境
 
-##### _The internet is a public space._
+##### _互联网是一个公共空间。_
 
-We communicate over public channels.
-Adversaries may want to:
+我们通过公共渠道进行通信。
+对手可能想要：
 
 <pba-flex center>
 
-- Read messages not intended for them
-- Impersonate others
-- Tamper with messages
+- 阅读不是为他们准备的消息
+- 冒充他人
+- 篡改消息
 
 </pba-flex>
 
 Notes:
 
-Use e-mail as an example of an flawed system.
+以电子邮件为例，说明一个有缺陷的系统。
 
-Some examples include:
+一些例子包括：
 
-- An attacker may impersonate your boss, trying to get you to send them money
-- An attacker may change a message sent over a network, e.g. an instruction to transfer 100 EUR to 10000 EUR
+- 攻击者可能冒充你的老板，试图让你给他们汇款
+- 攻击者可能会更改通过网络发送的消息，例如将转账 100 欧元的指令改为转账 10000 欧元
 
-Probably best for the teacher to ask students to participate with examples of application messages,
-not just person-to-person messages.
-
----
-
-## Operating Context
-
-##### _Resources are constrained._
-
-- **Network, storage, computation, etc.**: We don't want to send, store, or operate on the same data, but we want guarantees about it, e.g. that we agree on a message's contents.
-- **Privacy**: We must assume that all channels can be monitored, and thus closed channels are heavily constrained (i.e. assumed to not exist).
+最好让老师让学生参与进来，提供应用程序消息的例子，而不仅仅是人与人之间的消息。
 
 ---
 
-## Open vs. Closed Channels
+## 操作环境
 
-_Cryptography based on public systems is more sound._
+##### _资源是受限的。_
 
-**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br />but rather on secret _information_.
+- **网络、存储、计算等**：我们不想发送、存储或操作相同的数据，但我们希望得到保证，例如我们就消息的内容达成一致。
+- **隐私**：我们必须假设所有渠道都可以被监控，因此封闭渠道受到严格限制（即假设不存在）。
+
+---
+
+## 开放与封闭渠道
+
+_基于公共系统的密码学更加可靠。_
+
+**Kerckhoff 原则**：安全不应该依赖于秘密的 _方法_，而应该依赖于秘密的 _信息_。
 
 Notes:
 
-There is no such thing as a "closed channel" :)
+不存在“封闭渠道”这种东西 :)
 
-- Methods can be reverse engineered.
-  After that, the communication channel is completely insecure.
-  For example, CSS protection for DVDs.
-- We always work with public, open protocols.
+- 方法可以被逆向工程。
+  之后，通信渠道就完全不安全了。
+  例如，DVD 的 CSS 保护。
+- 我们总是使用公开、开放的协议。
 
 ---
 
-## Cryptographic Guarantees\*
+## 密码学保证*
 
 <pba-flex center>
 
-- Data confidentiality
-- Data authenticity
-- Data integrity
-- Non-repudiation
+- 数据保密性
+- 数据真实性
+- 数据完整性
+- 不可否认性
 
 </pba-flex>
 
 Notes:
 
-Cryptography is one of the (most important) tools we have to build tools that are _guaranteed_ to work correctly.
-This is regardless of who (human, machine, or otherwise) is using them and their intentions (good or bad).
-
-Why an asterisk?
-There generally are no perfect & absolute guarantees here, but for most practical purposes the bounds on where these fail are good enough to serve our needs as engineers and users.
-Do note the assumptions and monitor their validity over time (like quantum tech).
+这里通常没有完美和绝对的保证，但对于大多数实际用途来说，这些保证失败的界限已经足够满足我们作为工程师和用户的需求。
+请注意这些假设，并随着时间的推移监控它们的有效性（如量子技术）。
 
 ---
 
-## Important Non-Guarantee
+## 重要的非保证
 
 <pba-flex center>
 
-- Data availability
+- 数据可用性
 
 </pba-flex>
 
 <br />
 
-Cryptography alone cannot make strong guarantees that data is available to people when they want to access it.
+仅靠密码学无法对数据可用性做出强有力的保证。
 
 Notes:
 
-There are many schemes to get around this, and this topic will come up later in the course.
-We will touch on erasure coding, which makes data availability more efficient.
+有许多方案可以解决这个问题，这个话题将在课程后面提到。
+我们将涉及擦除编码，这使得数据可用性更加高效。
 
 ---
 
-## Data Confidentiality
+## 数据保密性
 
-A party may gain access to information<br />if and only if they know some secret (a key).
+只有当一方知道某个秘密（密钥）时，他们才能访问信息。
 
 <br />
 
-Confidentiality ensures that a third party cannot read my confidential data.
+保密性确保第三方无法读取我的机密数据。
 
 Notes:
 
-The ability to decrypt some data and reveal its underlying information directly implies knowledge of some secret, potentially unknown to the originator of the information.
-Supplying the original information (aka plain text message) can be used in a "challenge game" mechanism as one means of proving knowledge of the secret without compromising it.
+解密某些数据并揭示其底层信息的能力直接意味着知道某个秘密，而这个秘密可能是信息的创建者所不知道的。
+提供原始信息（即明文消息）可以用作“挑战游戏”机制中的一种手段，用于在不泄露秘密的情况下证明对秘密的了解。
 
-Mention use of the term "plaintext".
+提到“明文”这个术语。
 
-Allegory: A private document stored on server where sysadmin has _access_ can be subpoenaed, violating assumed Attorney-Client Privilege on the document.
+寓言：存储在服务器上的私人文档，系统管理员有权访问，这可能会违反律师-客户特权。
 
 ---v
 
-<!-- This slide should potentially be pushed into the lecture on encryption. I can see it in either spot. Alternately, could be cut entirely, as encrypted communication is not an emphasized topic. -->
+<!-- 这张幻灯片应该可能被推到关于加密的讲座中。我可以在任何一个地方看到它。或者，可以完全删除，因为加密通信不是一个强调的话题。 -->
 
-## Confidentiality in Communication Channels
+## 通信渠道中的保密性
 
-Suppose Alice and Bob are sending confidential messages back and forth. There are some subtypes of confidentiality here:
+假设 Alice 和 Bob 正在来回发送机密消息。这里有一些保密性子类型：
 
-- **Forward Secrecy**: Even if an adversary temporarily learns Alice's secret, it cannot read future messages after some point.
-- **Backwards Secrecy**: Even if an adversary temporarily learns Alice's secret, it cannot read past messages beyond some previous point.
+- **前向保密性**：即使对手暂时了解了 Alice 的秘密，它也无法读取未来某个点之后的消息。
+- **后向保密性**：即使对手暂时了解了 Alice 的秘密，它也无法读取过去某个点之前的消息。
 
 ---
 
-## Data Authenticity
+## 数据真实性
 
-Users can have the **credible** expectation that the stated origin of a message is authentic.
+用户可以有 **可信** 的期望，即消息的声明来源是真实的。
 
 <br />
 
-Authenticity ensures that a third party cannot pretend I created some data.
+真实性确保第三方无法冒充我创建了某些数据。
 
 Notes:
 
-- Digital signatures should be difficult (practically speaking: impossible) to forge.
-- Digital signatures should verify that the signer knows some secret, without revealing the secret itself.
+- 数字签名应该难以（实际上是不可能）伪造。
+- 数字签名应该验证签名者知道某个秘密，而不泄露秘密本身。
 
 ---
 
-## Data Integrity
+## 数据完整性
 
-If data is tampered with, it is detectable. In other words, it possible to check if the current state of some data is the consistent with when it was created.
+如果数据被篡改，它是可以被检测到的。换句话说，检查某些数据的当前状态是否与创建时一致是可能的。
 
 <br />
 
-Integrity ensures that if data I create is corrupted, it can be detected.
+完整性确保如果我创建的数据被损坏，它可以被检测到。
 
 ---v
 
-## Physical Signatures
+## 物理签名
 
-Physical signatures provide weak authenticity guarantees<br />(i.e. they are quite easy to forge), and no integrity guarantees.
+物理签名提供弱真实性保证<br />(即它们很容易被伪造)，并且没有完整性保证。
 
 ---v
 
-## An Ideal Signature
+## 理想的签名
 
 <img style="width: 900px;" src="./img/Data-Integrity.png" />
 
 Notes:
 
-For example, if you change the year on your university diploma, the dean's signature is still valid.
-Digital signatures provide a guarantee that the signed information has not been tampered with.
+例如，如果你更改大学文凭上的年份，院长的签名仍然有效。
+数字签名提供了一个保证，即签名的信息没有被篡改。
 
 ---
 
-## Non-repudiation
+## 不可否认性
 
-The sender of a message cannot deny that they sent it.
+消息的发送者不能否认他们发送了它。
 
 <br />
 
-Non-repudiation ensures if Bob sends me some data, I can prove to a third party that they sent it.
+不可否认性确保如果 Bob 给我发送了一些数据，我可以向第三方证明他们发送了它。
 
 ---
 
-## One-Way Functions
+## 单向函数
 
-One-way functions form the basis of both<br /> **(cryptographic) hashing** and **asymmetric cryptography**. A function $f$ is one way if:
+单向函数构成了 **(密码学)哈希** 和 **非对称密码学** 的基础。一个函数 $f$ 是单向的，如果：
 
-- it is reasonably fast to compute
-- it is very, very slow to undo
+- 它的计算速度相当快
+- 它的逆运算非常非常慢
 
 Notes:
 
-There are a lot of assumptions about why these functions are hard to invert, but we cannot rigorously prove it.
-We often express inversion problems in terms of mathematical games or oracles.
+有很多关于为什么这些函数难以逆向的假设，但我们无法严格证明它。
+我们经常用数学游戏或预言机来表达逆向问题。
 
 ---
 
-## Hash Functions
+## 哈希函数
 
-**Motivation:** We often want a succinct, yet unique representation of some (potentially large) data.
+**动机**：我们经常想要一个简洁但唯一的表示某些（可能很大）数据的方式。
 
 </br>
 
-A fingerprint, which is much smaller than a person, yet uniquely identifies an individual.
+指纹，它比一个人小得多，但唯一地识别一个人。
 
 Notes:
 
-The following slides serve as an intro.
-Many terms may be glossed over, and covered in detail later.
-There are lessons later in this module dedicated to hashes and hash-based data structures.
+以下幻灯片作为介绍。
+许多术语可能会被忽略，并在后面详细介绍。
+本模块后面有专门针对哈希和基于哈希的数据结构的课程。
 
 ---v
 
-## Hash Function Applications
+## 哈希函数应用
 
-Hashes can be useful for many applications:
+哈希可以用于许多应用：
 
 <pba-flex center>
 
-- Representation of larger data object<br />(history, commitment, file)
-- Keys in a database
-- Digital signatures
-- Key derivation
-- Pseudorandom functions
+- 表示更大的数据对象<br />(历史、承诺、文件)
+- 数据库中的键
+- 数字签名
+- 密钥派生
+- 伪随机函数
 
 </pba-flex>
 
 ---
 
-## Symmetric Cryptography
+## 对称密码学
 
-Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br />The shared secret can then be used to protect further communications from others who do not know this secret.
+对称加密假设所有各方都从一些共享的秘密信息开始，这是一个潜在的非常困难的要求。<br />然后，共享的秘密可以用于保护进一步的通信，使其免受不知道这个秘密的其他人的攻击。
 
-In essence, it gives a way of _extending_ a shared secret over time.
-
-Notes:
-
-Remember that these communications are over an _open channel_, as we assumed that all channels can be monitored.
-
----
-
-## Symmetric Encryption
-
-For example, the Enigma cipher in WW2. A _channel_ was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
-
-However, since the key contained only limited _entropy_ ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
+本质上，它提供了一种随着时间的推移 _扩展_ 共享秘密的方法。
 
 Notes:
 
-When communicating over a channel that is protected with only a certain amount of entropy, it is still possible to extend messages basically indefinitely by introducing _new entropy_ that is used to protect the channel sufficiently often.
+请记住，这些通信是通过一个 _开放通道_ 进行的，因为我们假设所有通道都可以被监控。
 
 ---
 
-## Asymmetric Cryptography
+## 对称加密
 
-- In asymmetric cryptography, we devise a means to transform one value (the "secret") into some corresponding counterpart (the "public" key), preserving certain properties.
+例如，二战中的恩尼格玛密码机。一个 _通道_ 是通过在两个参与者之间共享一个秘密（“密钥”）来启动的。使用密码机，这些参与者可以安全地交换信息。
 
-- We believe that this is a one-way function (that there is no easy/fast inverse of this function).
-
-- Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.
-
----
-
-## Asymmetric Encryption
-
-_Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
-
----
-
-## Digital Signatures
-
-- _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
-
-- Digital signatures provide message authenticity and integrity guarantees.
-
-- _There are two lessons are dedicated to digital signatures,<br />this is strictly an intro._
-
----
-
-## Digital Signatures
-
-**Signing function**: a function which operates on some<br /> _message data_ and some _secret_ to yield a _signature_.
-
-A **signature** _proves_ that the signer had knowledge of the secret,<br />without revealing the secret itself.
-
-The signature cannot be used to create other signatures, and is unique to the message.
+然而，由于密钥只包含有限的 _熵_（“信息”），足够的使用最终会泄露秘密，使盟军能够解码消息。即使每天改变一次也不够。
 
 Notes:
 
-A **signing function** is a pure function which operates on some _message data_ (which may or may not be small, depending on the function) and some _secret_ (a small piece of information known only to the operator).
-The result of this function is a small piece of data called a _signature_.
-
-Pure means that it has no side effects.
-
-It has a special property: it proves (beyond reasonable doubt) that the signer (i.e. operator of the signing function) had knowledge of the secret and utilized this knowledge with the specific _message_ data, yet it does not reveal the secret itself, nor can knowledge of the signature be used to create other signatures (e.g. for alternative message data).
+当通过一个仅受一定量熵保护的通道进行通信时，仍然可以通过引入 _新熵_ 来基本上无限期地扩展消息，这些新熵用于足够频繁地保护通道。
 
 ---
 
-## Non-repudiation for Crypgraphic Signatures
+## 非对称密码学
 
-There is cryptographic proof that the secret was known to the producer of the signature.
+- 在非对称密码学中，我们设计了一种方法来将一个值（“秘密”）转换为某个相应的对应物（“公钥”），同时保留某些特性。
+
+- 我们相信这是一个单向函数（即没有简单/快速的逆函数）。
+
+- 除了保留某些特性外，我们相信这个对应物（“公钥”）不会泄露关于秘密的任何信息。
+
+---
+
+## 非对称加密
+
+_仅使用公钥_，信息可以被转换（“加密”），使得只有那些知道秘密的人才能逆向并恢复原始信息。
+
+---
+
+## 数字签名
+
+- _使用秘密密钥_，信息可以被转换（“签名”），使得任何知道信息和对应公钥的人都能够确认操作。
+
+- 数字签名提供消息真实性和完整性保证。
+
+- _有两节课专门讨论数字签名，<br />这只是一个介绍。_
+
+---
+
+## 数字签名
+
+**签名函数**：一个函数，它操作于某些<br /> _消息数据_ 和某些 _秘密_ 以产生一个 _签名_。
+
+一个 **签名** _证明_ 签名者知道这个秘密，<br />而不泄露秘密本身。
+
+签名不能被用来创建其他签名，并且对于消息是唯一的。
+
+Notes:
+
+一个 **签名函数** 是一个纯函数，它操作于某些 _消息数据_（这可能很小，也可能很大，取决于函数）和某些 _秘密_（一个小的信息片段，只有操作者知道）。
+这个函数的结果是一个小的数据片段，称为 _签名_。
+
+纯意味着它没有副作用。
+
+它有一个特殊的属性：它证明（在合理的怀疑之外）签名者（即签名函数的操作者）知道这个秘密，并且利用这个知识与特定的 _消息_ 数据一起使用，但它不泄露秘密本身，也不能利用签名的知识来创建其他签名（例如，对于替代的消息数据）。
+
+---
+
+## 密码学签名的不可否认性
+
+有密码学证明表明秘密被签名的生产者所知。
 
 <br />
 
-The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br />
+签名者不能声称签名是伪造的，除非他们能够辩护说秘密在签名之前就已经被泄露了。<br />
 
 ---
 
-## Practical Considerations
+## 实际考虑
 
-**Symmetric cryptography** is much faster, but requires more setup (key establishment) and trust (someone else knows the secret).
+**对称密码学** 要快得多，但需要更多的设置（密钥建立）和信任（其他人知道这个秘密）。
 
-**Asymmetric cryptography** is slow, but typically preserves specific algebraic relationships, which then permit more diverse if fragile protocols.
-
----
-
-## Hybrid Cryptography
-
-Hybrid cryptography composes new mechanisms from different cryptographic primitives.
-
-For example:
-
-- Symmetric encryption can provide speed, and often confidentiality,
-- Hash functions can reduce the size of data while preserving identity,
-- Asymmetric cryptography can dictate relations among the participants.
+**非对称密码学** 很慢，但通常保留特定的代数关系，这允许更具多样性但脆弱的协议。
 
 ---
 
-## Certifications
+## 混合密码学
 
-Certifications are used to make attestations about public key relationships.
+混合密码学将不同的密码学原语组合成新的机制。
 
-Typically in the form of a _signature_ on:
+例如：
 
-- One or more cryptographically strong identifiers (e.g. public keys, hashes).
-- Information about its ownership, its use and any other properties that the signer is capable of attesting/authorizing/witnessing.
-- _(Meta-)information_ about this information itself, such as how long it is valid for and external considerations which would invalidate it.
+- 对称加密可以提供速度，并且通常提供保密性，
+- 哈希函数可以减少数据的大小，同时保留身份，
+- 非对称密码学可以决定参与者之间的关系。
+
+---
+
+## 认证
+
+认证用于对公共密钥关系进行证明。
+
+通常以 _签名_ 的形式出现，对以下内容进行签名：
+
+- 一个或多个密码学强标识符（例如，公钥，哈希）。
+- 关于其所有权、使用和任何其他属性的信息，这些信息是签名者能够证明/授权/见证的。
+- _(元-)信息_ 关于这些信息本身，例如它的有效期和会使其无效的外部考虑因素。
 
 Notes:
 
-- Real application is the hierarchy of SSL certs.
-  - Root keys -> State level entities -> Smaller entities.
-- Web of Trust & GPG cross-signing
-- In the case of signature-based certificates, as long as you have the signature, data, and originating public key, you can trust a certificate no matter where it came from. It could be posted on a public message board, sent to you privately, or etched into stone.
+- 实际应用是 SSL 证书的层次结构。
+  - 根密钥 -> 国家级实体 -> 较小的实体。
+- 信任网络和 GPG 交叉签名
+- 在基于签名的证书的情况下，只要你有签名、数据和原始公钥，你就可以信任证书，无论它来自哪里。它可以张贴在公共留言板上，私下发送给你，或者刻在石头上。
 
 ---
 
-## Entropy, Randomness, and Key Size
+## 熵、随机性和密钥大小
 
-- Entropy: Amount of non-redundant information contained within some data.
-- Randomness: Unpredictability of some information. Less random implies lower entropy.
-- Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
-- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
+- 熵：包含在某些数据中的非冗余信息量。
+- 随机性：某些信息的不可预测性。随机性越低，熵就越低。
+- 密钥大小：密钥中可能包含的熵的上限。包含较少随机（更可预测）数据的密钥的熵低于这个上限。
+- 一次性密码本：一个实际上无限大小的密钥。如果它是完全随机的（即具有最大熵），那么这个密码在理论上是不可破解的。
 
 Notes:
 
-Mention the upcoming "many time pad" activity, that exploits using a one time pad multiple times.
+提到即将到来的“多次密码本”活动，它利用一次性密码本多次使用。
 
 ---
 
-## Randomness Generation
+## 随机性生成
 
 ```rust
 fn roll_die() -> u32 {
-  // Guaranteed random: it was achieved through a real-life die-roll.
+  // 保证随机：它是通过真实的骰子滚动实现的。
   4u32
 }
 ```
 
-- Pseudo-random sequences
-- Physical data collection (e.g. cursor movement, LSB of microphone)
-- Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)
+- 伪随机序列
+- 物理数据收集（例如，光标移动，麦克风的最低有效位）
+- 专用硬件（例如，硅门的低级别噪声，量子放大器）
 
 Notes:
 
-LSB := Least Significant Bit
+LSB := 最低有效位
 
 ---
 
-## Summary
+## 总结
 
-Cryptography is much more than encryption.
+密码学不仅仅是加密。
 
 <pba-flex center>
 
-- Communicate on public networks, in the open
-- Access information
-- Have expectations about a message's authenticity and integrity
-- Prove knowledge of some secret information
-- Represent large amounts of data succinctly
+- 在公共网络上公开交流
+- 访问信息
+- 对消息的真实性和完整性有期望
+- 证明对某些秘密信息的了解
+- 简洁地表示大量数据
 
 </pba-flex>
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
 <img style="height: 600px" src="./img/crypto-mind-map.svg" />
 
-##### _What insights did you gain?_
+##### _你有什么收获？_
 
 Notes:
 
-Class discussion.
-Last slide.
+课堂讨论。
+最后一张幻灯片。

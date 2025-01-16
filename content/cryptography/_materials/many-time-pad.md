@@ -1,23 +1,22 @@
-# Activity: Crack the Many Time Pad
+# 活动：破解多次密码本
 
-> Instructors: there is a **_private guide_** associated with this activity to assist with hints and further details, be sure to review this before starting.
+> 指导教师：与本活动相关的**_私人指南_**，以帮助提供提示和进一步的细节，请务必在开始前查看。
 
-## Introduction
+## 介绍
 
-The symmetric [one-time pad](https://en.wikipedia.org/wiki/One-time_pad#Example) is known to be secure when the key is only used once.
-In practice key distribution is not always practical, and users sometimes make the critical mistake of reusing a pre-shared key.
+对称的[一次性密码本](https://en.wikipedia.org/wiki/One-time_pad#Example)在密钥仅使用一次时是安全的。
+实际上，密钥分发并不总是可行的，用户有时会犯重用预共享密钥的严重错误。
+在本次活动中，你将亲身体验为什么重用密钥对安全有害。
 
-In this activity, you will experience first hand why reusing the key is detrimental to security.
+## 挑战
 
-## The Challenge
+以下是在点对点通信通道上截获的几个密文：
 
-The following several ciphertexts were intercepted on a peer-to-peer communication channel:
+- 消息明确发源于美国，目的地为英国。
+- 每一行包含一个完整的十六进制编码消息。
+- 我们相信所有消息都是用相同的密钥加密的。
 
-- Messages definitively originate in the USA, destined for the UK.
-- Each line contains one hex encoded message, in it's entirety.
-- We believe all messages were encrypted with the same key.
-
-Your task is to use [cryptanalysis](https://en.wikipedia.org/wiki/Cryptanalysis) to recover the plaintexts of all messages, as well as the encryption key used for them.
+你的任务是使用[密码分析](https://en.wikipedia.org/wiki/Cryptanalysis)来恢复所有消息的明文，以及用于加密它们的密钥。
 
 ```text
 160111433b00035f536110435a380402561240555c526e1c0e431300091e4f04451d1d490d1c49010d000a0a4510111100000d434202081f0755034f13031600030d0204040e
@@ -31,41 +30,42 @@ Your task is to use [cryptanalysis](https://en.wikipedia.org/wiki/Cryptanalysis)
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 ```
 
-## Instructions
+## 说明
 
-1. Team up with 2-4 students to complete this activity.
-1. Briefly inspect the ciphertext to see if you can identify patterns that may hint some things about their origin.
-1. Research based on what we know bout the messages to find clues to help come up with a theory and game plan to complete your task.
-1. Write a program in Rust that finds the key to generate the plaintext from the provided cipher texts.<br />
-   The general steps are:
+1. 与 2-4 名学生组队完成此活动。
+2. 简要检查密文，看看是否能识别出可能暗示其来源的模式。
+3. 根据我们对消息的了解进行研究，寻找线索，帮助提出理论和完成任务的计划。
+4. 用 Rust 编写一个程序，从提供的密文中找到生成明文的密钥。
 
-   1. Find the length of the longest input cipher text.
-   1. Generate a key of that length.
-   1. Find what the correct key is...
+   一般步骤如下：
 
-Note that this task is _intended_ to be a bit vague, give it your best effort.
-We will be sharing hints as time progresses for everyone.
-Don't hesitate to ask for support if you're feeling stuck, or just ask your peers!
+   1. 找到最长输入密文的长度。
+   1. 生成该长度的密钥。
+   1. 找出正确的密钥...
 
-## Finished?
+请注意，此任务**有意**模糊，请尽力而为。
+随着时间的推移，我们将为每个人分享提示。
+如果您感到困惑，请毫不犹豫地寻求支持，或者询问您的同伴！
 
-**Once complete, let a faculty know!**
+## 完成了？
 
-One last ciphertext using the same key that should prove tricky:
+**完成后，让教师知道！**
+
+最后一个使用相同密钥的密文可能会很棘手：
 
 ```text
 1f3cb1f3e01f3fd1f3ea1f3e61f3e01f3e71f3b31f3a91f3c81f3a91f3f91f3fc1f3fb1f3ec1f3e51f3f01f3a91f3f91f3ec1f3ec526e1b014a020411074c17111b1c071c4e4f0146430d0d08131d1d010707040017091648461e1d0618444f074c010e19594f0f1f1a07024e1d041719164e1c1652114f411645541b004e244f080213010c004c3b4c0911040e480e070b00310213101c4d0d4e00360b4f151a005253184913040e115454084f010f114554111d1a550f0d520401461f3e01f3e71f3e81f3e71f3ea1f3e01f3e81f3e51f3a91f3e01f3e71f3fa1f3fd1f3e01f3fd1f3fc1f3fd1f3e01f3e61f3e71f3a7
 ```
 
-Notice a pattern? why might that be... 🤔
+注意到模式了吗？为什么会这样... 🤔
 
-If you want more to do, find ways to improve your solution, perhaps:
+如果你想做更多，可以想办法改进你的解决方案，例如：
 
-- Create a tool that automates the cipher key generation.
-- Add a way to generate new cipher texts.
-- Create your own cipher texts using other cipher methods.
-- Provide a new set of ciphertexts that were intentionally constructed not to use the most common English words.
+- 创建一个工具，自动生成密码密钥。
+- 添加一种生成新密文的方法。
+- 使用其他密码方法创建自己的密文。
+- 提供一组新的密文，这些密文是故意构造的，不使用最常见的英语单词。
 
-## Citation
+## 引用
 
-This activity is cribbed from Dan Boneh's [Coursera Cryptography I](https://www.coursera.org/learn/crypto/quiz/KZ9js/week-1-programming-assignment-optional/attempt) course.
+本活动改编自 Dan Boneh 的[Coursera 密码学 I](https://www.coursera.org/learn/crypto/quiz/KZ9js/week-1-programming-assignment-optional/attempt)课程。

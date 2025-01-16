@@ -4,221 +4,226 @@ description: More exotic digital signature methods
 duration: 1 hour
 ---
 
-# Advanced Digital Signatures
+---
+title: 高级数字签名
+description: 更奇特的数字签名方法
+duration: 1小时
+---
+
+# 高级数字签名
 
 ---
 
-### Certificates
+### 证书
 
-A certificate is essentially a witness statement concerning one or more public keys. It is a common usage of digital signatures, but _it is not a cryptographic primitive_!
+证书本质上是关于一个或多个公钥的见证声明。它是数字签名的常见用法，但它不是加密原语！
 
 Notes:
 
-A certificate is one issuing key signing a message containing another certified key, which attests to some properties or relationship about the certified key.
+证书是一个发行密钥签署的包含另一个认证密钥的消息，证明了关于被认证密钥的一些属性或关系。
 
-We must already trust the issuing key to give this attestation any significance, traditionally provided under "Certificate Authority" or "Web of Trust" schemes.
+我们必须已经信任发行密钥，才能赋予这种证明任何意义，传统上是在“证书颁发机构”或“信任网络”方案下提供的。
 
 ---
 
-### Certificates
+### 证书
 
-A certification system specified conventions on who is allowed to issue certificates, the rules over their issuance (e.g. time limits and revocation) as well as their format and semantics.
+认证系统规定了谁被允许颁发证书、颁发证书的规则（例如时间限制和撤销）以及证书的格式和语义。
 
-For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.
+例如，TLS证书的证书透明度协议有助于防止受损的证书颁发机构。
 
 Notes:
 
-Certificate transparency: [explanation](https://certificate.transparency.dev/howctworks/) and [dashboard](https://ct.cloudflare.com/)
+证书透明度：[解释](https://certificate.transparency.dev/howctworks/) 和 [仪表板](https://ct.cloudflare.com/)
 
-- Maybe mention PGP web-of-trust style schemes
+- 可能会提到PGP信任网络风格的方案
 
 ---
 
-### Certificates in Web3
+### Web3中的证书
 
-We are building systems that don't have a "Certificate Authority".<br />
-But we can still use certificates in some niche instances.
+我们正在构建的系统没有“证书颁发机构”。
+但我们仍然可以在一些小众情况下使用证书。
 
 Notes:
 
-Potential example to give verbally:
+潜在的例子可以口头给出：
 
-- Session keys are a set of keys that generally run in online infrastructure.
-  An account, whose keys are protected, can sign a transaction to certify all the keys in the set.
-- Session keys are used to sign operational messages, but also in challenge-response type games to prove availability by signing a message.
+- 会话密钥是一组通常在在线基础设施中运行的密钥。一个账户，其密钥受到保护，可以签署一个交易来认证该集合中的所有密钥。
+- 会话密钥用于签署操作消息，但也用于挑战-响应类型的游戏中，通过签署消息来证明可用性。
 
 ---
 
-### Multi-Signatures
+### 多重签名
 
-We often want signatures that must be signed<br />by multiple parties to become valid.
+我们经常需要必须由多方签署才能生效的签名。
 
 <pba-flex center>
 
-- Require some threshold of members to<br />agree to a message
-- Protect against key loss
+- 需要一些成员的阈值来同意一个消息
+- 防止密钥丢失
 
 </pba-flex>
 
 ---
 
-### Types of Multi-Signature
+### 多重签名的类型
 
 <pba-flex center>
 
-- Verifier enforced
-- Cryptographic threshold
-- Cryptographic non-threshold<br />(a.k.a. signature aggregation)
+- 验证者强制执行
+- 密码学阈值
+- 密码学非阈值（也称为签名聚合）
 
 ---
 
-### Verifier Enforced Multiple Signatures
+### 验证者强制执行的多重签名
 
-We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
+我们假设存在某个验证者，他可以检查是否有一定阈值的单个密钥提供了有效的签名。
 
-This could be a trusted company or third party.
-For our purposes, _it's a blockchain_.
+这可以是一个受信任的公司或第三方。
+对于我们的目的，它是一个区块链。
 
 ---
 
-### Verifier Enforced Multiple Signatures
+### 验证者强制执行的多重签名
 
-Multiple signatures enforced by a verifier generally provide a good user experience, as no interaction is required from the participants.
+由验证者强制执行的多重签名通常提供良好的用户体验，因为参与者不需要进行交互。
 
 Notes:
 
-This good experience comes at the cost of using state and more user interactions with the system, but is generally low.
+这种良好的体验是以使用状态和更多用户与系统交互为代价的，但通常成本较低。
 
-Even in a web3 system, the verifier can be _distinct_ from the blockchain. 5 people can entrust a verifier with the identity of "all 5 signed this" associated to a verifier-owned private key.
+即使在Web3系统中，验证者也可以与区块链不同。5个人可以委托一个验证者，用验证者拥有的私钥将“所有5人都签署了此消息”的身份与一个消息相关联。
 
 ---
 
-### Cryptographic Multi-Sigs
+### 密码学多重签名
 
-We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This is achieved purely on the signer side (without support from the verifier).
+我们想要一种简洁的方式来证明来自某个集合的所有各方都签署了一条消息。这是在签名者一方纯粹实现的（不需要验证者的支持）。
 
 <pba-flex center>
 
-_Example: "The five key holders have signed this message."_
+_例如：“五个密钥持有者已经签署了这条消息。”_
 
 ---
 
-### Key Generation for Multi-Sigs
+### 密钥生成 - 多重签名
 
-In regular multi-signatures,<br />signatures from individual public keys are aggregated.
+在常规的多重签名中，来自单个公钥的签名被聚合。
 
-Each participant can choose their own key to use for the multi-signature.
+每个参与者可以选择自己的密钥用于多重签名。
 
 Notes:
 
-In some cases, a security requirement of these systems is that every participant demonstrates ownership of the public key submitted for the multi-signature, otherwise security can be compromised.
+在某些情况下，这些系统的安全要求是每个参与者证明他们拥有提交用于多重签名的公钥，否则安全性可能会受到损害。
 
 ---
 
-### Cryptographic Threshold Multi-Sigs
+### 密码学阈值多重签名
 
-This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a _threshold_ number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
+这使得更紧凑的签名与传统系统兼容。与常规多重签名不同，公钥与一个阈值数量的签名方相关联，因此不需要所有方参与签名过程即可创建有效签名。
 
-This requires MPC protocols and may need multiple rounds of interaction to generate the final signature. They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.
+这需要MPC协议，并且可能需要多轮交互才能生成最终签名。它们可能容易受到来自故障（或恶意）密钥持有者的DoS攻击。
 
 <pba-flex center>
 
-_Example: "5 of 7 key holders have signed this message."_
+_例如：“7个密钥持有者中的5个已经签署了这条消息。”_
 
 Notes:
 
-These require multi-party computation (MPC) protocols, which add some complexity for the signing users.
+这些需要多方计算（MPC）协议，这为签名用户增加了一些复杂性。
 
 ---
 
-### Key Generation - Threshold
+### 密钥生成 - 阈值
 
-Threshold multi-signature schemes require that all signers run a _distributed key generation_ (DKG) protocol that constructs key _shares_.
+阈值多重签名方案要求所有签名者运行一个分布式密钥生成（DKG）协议，该协议构建密钥份额。
 
-The secret encodes the threshold behavior, and signing demands some threshold of signature _fragments_.
+秘密编码了阈值行为，签名需要一些阈值的签名片段。
 
-This DKG protocol breaks other useful things, like hard key derivation.
-
----
-
-### Schnorr Multi-Sigs
-
-Schnorr signatures are primarily used for threshold multi-sig.
-
-- Fit legacy systems nicely, and can reduce fees on blockchains.
-- Reduce verifier costs in bandwidth & CPU time, so great for certificates.
-- Could support soft key derivations.
+这个DKG协议破坏了其他有用的东西，比如硬密钥派生。
 
 ---
 
-### Schnorr Multi-Sigs
+### Schnorr多重签名
 
-However, automation becomes tricky.
+Schnorr签名主要用于阈值多重签名。
 
-We need agreement upon the final signer list and two random nonce contributions from each prospective signer, before constructing the signature fragments.
-
----
-
-### BLS Signatures
-
-BLS signatures are especially useful for aggregated (non-threshold) multi-signatures (but can be used for threshold as well).
-
-Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
-
-Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
-
-(Coming to Substrate soonish.)
+- 很好地适应传统系统，并且可以减少区块链上的费用。
+- 减少验证者在带宽和CPU时间方面的成本，因此非常适合证书。
+- 可以支持软密钥派生。
 
 ---
 
-### BLS Signatures
+### Schnorr多重签名
 
-Allows multiple signatures generated under multiple public keys for multiple messages to be aggregated into a single signature.
+然而，自动化变得棘手。
+
+在构建签名片段之前，我们需要就最终签名者列表和每个潜在签名者的两个随机nonce贡献达成一致。
+
+---
+
+### BLS签名
+
+BLS签名特别适用于聚合（非阈值）多重签名（但也可以用于阈值）。
+
+签名可以在没有事先就签名者列表达成一致的情况下进行聚合，这简化了自动化，使其在共识中非常有用。
+
+验证单个签名很慢，但验证聚合签名相对较快。
+
+（即将在Substrate中推出。）
+
+---
+
+### BLS签名
+
+允许将多个消息的多个公钥生成的多个签名聚合为一个签名。
 
 <pba-flex center>
 
-- Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
-- Very popular for consensus.
+- 使用比ECDSA/Schnorr更重的配对友好椭圆曲线。
+- 在共识中非常流行。
 
 <pba-flex>
 
 ---
 
-### BLS Signatures
+### BLS签名
 
-However...
+然而...
 
-- DKGs remain tricky (for threshold).
-- Soft key derivations are typically insecure for BLS.
-- Verifiers are hundreds of times slower than Schnorr, due to using pairings, for a single signature.
-- But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.
-
----
-
-### Schnorr and BLS Summary
-
-Schnorr & BLS multi-signatures avoid complicating verifier logic,<br />but introduce user experience costs such as:
-
-- DKG protocols
-- Reduced key derivation ability
-- Verification speed
+- DKG仍然很棘手（对于阈值）。
+- 对于BLS，软密钥派生通常不安全。
+- 由于使用配对，验证者对于单个签名的速度比Schnorr慢数百倍。
+- 但是对于数百或数千个相同消息的签名，聚合签名验证可以比Schnorr快得多。
 
 ---
 
-### Ring Signatures
+### Schnorr和BLS总结
 
-- Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
-- Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
-- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+Schnorr和BLS多重签名避免了使验证者逻辑复杂化，但引入了用户体验成本，例如：
+
+- DKG协议
+- 降低的密钥派生能力
+- 验证速度
+
+---
+
+### 环签名
+
+- 环签名证明签名者位于某个签名密钥的“匿名集”中，但隐藏了实际签名的密钥。
+- 环签名有多种大小，有多种方式展示其匿名集。
+- 匿名区块链交易通常使用环签名（Monero，ZCash）。
 
 Notes:
 
-- ZCash uses a ring signature based upon Groth16 zkSNARKs which makes the entire chain history be the anonymity set.
-- Monero uses ring signatures with smaller signer sets.
-- Ring signatures trade some _non-repudation_ for _privacy_.
+- ZCash使用基于Groth16 zkSNARKs的环签名，这使得整个链历史成为匿名集。
+- Monero使用较小签名者集的环签名。
+- 环签名以一些不可否认性换取隐私。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

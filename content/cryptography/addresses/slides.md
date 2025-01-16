@@ -4,43 +4,43 @@ description: Addresses and keys in cryptography
 duration: 30 min
 ---
 
-# Addresses and Keys
+# 地址和密钥
 
 ---
 
-# Outline
+# 大纲
 
 <pba-flex center>
 
-1. Binary Formats
-1. Seed Creation
-1. Hierarchical Deterministic Key Derivation
+1. 二进制格式
+1. 种子创建
+1. 分层确定性密钥派生
 
 </pba-flex>
 
 ---
 
-## Binary Display Formats
+## 二进制显示格式
 
-When representing binary data, there are a few different display formats you should be familiar with.
+在表示二进制数据时，有几种不同的显示格式你应该熟悉。
 
-Hex: 0-9, a-f
+十六进制：0-9，a-f
 
-Base64: A-Z, a-z, 0-9, +, /
+Base64：A-Z，a-z，0-9，+，/
 
-Base58: Base64 without 0/O, I/l, +, and /
+Base58：Base64 去掉 0/O，I/l，+，和 /
 
-Notes:
+**Notes:**
 
-Be very clear that this is a display format that we use to _transmit binary data through text_. The same data can be encoded with any of these formats, it's just important to know which one you're using to decode. Data is not typically stored in these formats unless it has to be transmitted through text.
+这些都是通过文本来传输二进制数据的显示格式。相同的数据可以用这些格式中的任何一种进行编码，重要的是要知道你正在使用哪种格式来解码。数据通常不会以这些格式存储，除非它必须通过文本来传输。
 
 ---
 
-## Binary Display Formats Example
+## 二进制显示格式示例
 
-Every hex character is 4 bits.</br>
-Every base64 character is 6 bits.</br>
-base58 characters are usually _about_ 6 bits.</br>
+每个十六进制字符是 4 位。
+每个 Base64 字符是 6 位。
+Base58 字符通常是 _大约_ 6 位。
 
 ```text
 binary: 10011111 00001010 10011110 10011000 01001100 11010011 10110010 00000101
@@ -53,44 +53,42 @@ base64: nwqemEzTsgU=
 base58: TbuHze3ctkc
 ```
 
-Notes:
+**Notes:**
 
-It turns out that converting from hex/base64 to base58 can in theory take n^2 time!
-
----
-
-# Mnemonics and Seed Creation
-
-Notes:
-
-These are all different _representation_ of a secret. Fundamentally doesn't really change anything.
+事实证明，从十六进制/Base64 转换为 Base58 在理论上可能需要 n^2 时间！
 
 ---
 
-## Seeds are secrets
-
-Recall, both symmetric and asymmetric cryptography require a secret.
-
----
-
-## Mnemonics
-
-Many wallets use a dictionary of words and give people phrases,<br />often 12 or 24 words, as these are easier to back up/recover than byte arrays.
+# 助记词和种子创建
 
 Notes:
-
-High entropy needed.
-People are _bad_ at being random.
-Some people create their own phrases... this is usually stupid.
+这些都是秘密的不同表现形式。从根本上来说，并没有真正改变任何东西。
 
 ---
 
-## Dictionaries
+## 种子是秘密
 
+回想一下，对称和非对称密码学都需要一个秘密。
+
+---
+
+## 助记词
+
+许多钱包使用一个单词字典，并给人们提供短语，通常是 12 或 24 个单词，因为这些比字节数组更容易备份/恢复。
+
+**Notes:**
+
+- 需要高熵。
+- 人们不擅长随机。
+- 有些人创建自己的短语...这通常是愚蠢的。
+
+---
+
+## 字典
 <pba-cols>
 <pba-col>
 
-There are some standard dictionaries to define which words (and character sets) are included in the generation of a phrase. Substrate uses the dictionary from BIP39.
+有一些标准字典来定义在生成短语时包含哪些单词（和字符集）。Substrate 使用 BIP39 中的字典。
 
 </pba-col>
 <pba-col>
@@ -103,61 +101,60 @@ There are some standard dictionaries to define which words (and character sets) 
 | 4   | about   |
 | 5   | above   |
 
-<pba-flex style="font-size: .6em;" center>
+<pba-flex style="font-size:.6em;" center>
 
-_The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt)_
+_BIP39 英语字典的前 5 个单词_
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## Mnemonic to Secret Key
+## 助记词到密钥
 
-Of course, the secret key is a point on an elliptic curve, not a phrase.
+当然，密钥是椭圆曲线上的一个点，而不是一个短语。
 
-BIP39 applies 2,048 rounds of the SHA-512 hash function<br />to the mnemonic to derive a 64 byte key.
+BIP39 应用 2048 轮 SHA-512 哈希函数到助记词来派生一个 64 字节的密钥。
 
-Substrate uses the entropy byte array from the mnemonic.
-
----
-
-## Portability
-
-Different key derivation functions affect the ability to use the same mnemonic in multiple wallets as different wallets may use different functions to derive the secret from the mnemonic.
+Substrate 使用来自助记词的熵字节数组。
 
 ---
 
-## Cryptography Types
+## 可移植性
 
-Generally, you will encounter 3 different modern types of cryptography across most systems you use.
+不同的密钥派生函数会影响在多个钱包中使用相同助记词的能力，因为不同的钱包可能使用不同的函数来从助记词派生密钥。
+
+---
+
+## 密码学类型
+
+通常，你会在大多数系统中遇到三种不同的现代密码学类型。
 
 - Ed25519
 - Sr25519
 - ECDSA
 
-We will go more in depth in future lectures!
+我们将在未来的讲座中更深入地探讨这些！
 
-Notes:
+**Notes:**
 
-You may have learned RSA in school. It is outdated now, and requires _huge_ keys.
-
----
-
-## What is an address?
-
-An address is a representation of a public key, potentially with additional contextual information.
-
-Notes:
-
-Having an address for a symmetric cryptography doesn't actually make any sense, because there is no
-public information about a symmetric key.
+你可能在学校里学过 RSA。它现在已经过时了，并且需要 _巨大数量_ 的密钥。
 
 ---
 
-## Address Formats
+## 什么是地址？
 
-Addresses often include a checksum so that a typo cannot change one valid address to another.
+地址是公钥的一种表示，可能包含额外的上下文信息。
+
+**Notes:**
+
+对于对称密码学，拥有一个地址实际上没有任何意义，因为对称密钥没有公开信息。
+
+---
+
+## 地址格式
+
+地址通常包括一个校验和，这样一个小错误并不会使一个有效的地址变成另一个。
 
 ```text
 Valid address:   5GEkFD1WxzmfasT7yMUERDprkEueFEDrSojE3ajwxXvfYYaF
@@ -166,139 +163,138 @@ Invalid address: 5GEkFD1WxzmfasT7yMUERDprk3ueFEDrSojE3ajwxXvfYYaF
                                           E changed to 3
 ```
 
-Notes:
+**Notes:**
 
-It hasn't been covered yet, but some addresses even go _extra fancy_ and include an error correcting code in the address.
+还没有涉及到，但有些地址甚至更 _花哨_，在地址中包含一个错误纠正码。
 
 ---
 
-## SS58 Address Format
+## SS58 地址格式
 
-SS58 is the format used in Substrate.
+SS58 是 Substrate 中使用的格式。
 
-It is base58 encoded, and includes a checksum and some context information.
-Almost always, it is 2 bytes of context and 2 bytes of checksum.
+它是 base58 编码的，包括一个校验和和一些上下文信息。
+几乎总是 2 字节的上下文和 2 字节的校验和。
 
 ```text
 base58Encode( context | public key | checksum )
 ```
 
-Notes:
-`|` here stands for concatenation.
+**Notes:**
+`|` 在这里表示连接。
 
-For ECDSA, the public key is 33 bytes, so we use the hash of it in place of the public key.
+对于 ECDSA，公钥是 33 字节，所以我们使用它的哈希值来代替公钥。
 
-There are a lot more variants here, but this is by far the most common one.
+这里有很多变体，但这是迄今为止最常见的一种。
 
-[reference](https://docs.substrate.io/reference/address-formats/)
+[参考](https://docs.substrate.io/reference/address-formats/)
 
 ---
 
-## HDKD
+# HDKD
 
-Hierarchical Deterministic Key Derivation
+分级确定性密钥派生
 
 <img style="width: 1100px;" src="./img/HD-Deterministic-Wallet.png" />
 
 ---
 
-## Hard vs. Soft
+## 硬派生与软派生
 
-Key derivation allows one to derive (virtually limitless)<br />child keys from one "parent".
+密钥派生允许从一个“父”密钥派生出（实际上是无限的）子密钥。
 
-Derivations can either be "hard" or "soft".
+派生可以是“硬性”的或“软性”的。
 
 ---
 
-## Hard vs. Soft
+## 硬派生与软派生
 
 <img style="width: 1200px;" src="./img/soft-vs-hard-derivation.png" />
 
 ---
 
-## Hard Derivation
+## 硬派生
 
-Hard derivation requires the secret key and derives new child secret keys.
+硬派生在原始密钥上派生出新的子密钥。
 
-Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
+典型的“安全操作”应该优先考虑使用硬派生而不是软派生，因为硬派生避免了泄露一族密钥里的其他密钥，除非原始密钥被泄露。
 
-Always do hard paths first, then conclude in soft paths.
+总是优先使用硬路径派生，然后考虑软路径派生。
 
 ---
 
-## Hard Derivation in Wallets
+## 硬派生在钱包中的应用
 
-Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
+钱包可以在不同的共识系统中使用同一个密钥，而只需要备份一个秘密和一个用于子派生的模式。
 
 <img style="width: 1000px;" src="./img/Hard-Derivation-in-Wallets.png" />
 
 ---
 
-## Hard Derivation in Wallets
+## 硬派生在钱包中的应用
 
-Let's imagine we want to use this key on multiple networks, but we don't want the public keys to be connected to each other.
+让我们想象一下，我们想在多个网络上使用同一个私钥，但我们不想使用相同的公钥。
 
 <img style="width: 1000px;" src="./img/Hard-Derivation-in-Wallets.png" />
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Subkey Demo
+# 子密钥演示
 
-## Hard Derivation
+## 硬派生
 
-Notes:
+**Notes:**
 
-Hard keys: Take a _path_ (data like a name/index), concatenate with the original key, and hash it for a new key.
-They reveal nothing about keys above them, and only with the _path_ between it and children could they be recovered.
-
----
-
-## Soft Derivation
-
-Soft derivation allows one to create derived addresses from only the public key.
-Contrary to hard derivation, _all_ keys are related.
-
-Notes:
-
-- With any key and the paths to children and. or parents, the public _and_ private keys can be recovered.
-- Soft derivations can break some niche advanced protocols, but our sr25519 crate avoids supporting protocols that conflict with soft derivations.
+硬密钥：取一个 _路径_（如名称/索引），将其与原始密钥连接，然后哈希以获得新密钥。
+它们不会泄露关于它们上面的密钥的任何信息，并且只有通过 _路径_ 才能恢复它们和它们的子密钥。
 
 ---
 
-## Soft Derivation
+## 软派生
 
-- Note that these generate new addresses, but use the same secret seed.
-- We can also use the same paths, but only using the Account ID from `//polkadot`. It generates the same addresses!
+软派生允许从公钥创建派生地址，而不需要私钥。
+与硬派生不同，_所有_ 密钥都是相关的。
 
----
+**Notes:**
 
-## Soft Derivation in Wallets
-
-Wallets can use soft derivation to link all payments controlled by a single private key, without the need to expose the private key for the address derivation.
-
-**Use case:** _A business wants to generate a new address for each payment, but should be able to automatically give customers an address without the secret key owner deriving a new child._
-
-Notes:
-
-On the use case, taking each payment at a different address could help make the association between payment and customer.
-
-See: <https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation>
+- 使用任何密钥和到子密钥和/或父密钥的路径，可以恢复公钥和私钥。
+- 软派生可能会破坏一些基于特殊需求的区块链协议，但我们的 sr25519 crate 避免支持与软派生冲突的协议。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## 软派生
 
-# Subkey Demo
+- 请注意，这些生成新的地址使用的是相同的密钥种子。
+- 我们也可以使用相同的路径，但只使用从 `//polkadot` 派生来的账户 ID。它生成相同的地址！
 
-## Soft Derivation
+---
 
-Notes:
+## 软派生在钱包中的应用
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
+钱包可以使用软派生将所有由单个私钥控制的支付链接起来，而不需要暴露用于地址派生的私钥。
 
-Mention that these derivations create entirely new secret seeds.
+**用例：** _一家企业希望为每笔支付生成一个新地址，能够在不需要私钥所有者派生新子密钥的情况下自动向客户提供新地址。_
+
+**Notes:**
+
+在这个用例中，在不同的地址接收每笔支付可以帮助使支付与客户的关联更加模糊。
+
+参见：<https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation>
+
+---
+
+<!--.slide: data-background-color="#4A2439" -->
+
+# 子密钥演示
+
+## 软派生
+
+**Notes:**
+
+请参阅本课的 Jupyter 笔记本和/或 HackMD 备忘单。
+提到这些派生创建了全新的密钥种子。
 
 ---
 
