@@ -1,4 +1,4 @@
-# Game Theory Basics
+# 博弈论基础
 
 <!-- markdown-link-check-disable -->
 <center>

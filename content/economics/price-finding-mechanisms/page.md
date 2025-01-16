@@ -1,4 +1,4 @@
-# Price Finding Mechanisms
+# 价格发现机制
 
 <!-- markdown-link-check-disable -->
 <center>

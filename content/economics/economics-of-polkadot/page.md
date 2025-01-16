@@ -1,4 +1,4 @@
-# The Economics of Polkadot
+# Polkadot的经济学
 
 <!-- markdown-link-check-disable -->
 <center>

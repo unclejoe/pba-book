@@ -4,152 +4,149 @@ description: Auction Basics for web3 builders
 duration: 1 hour
 ---
 
-# Price Finding Mechanisms
+# 价格发现机制
 
 ---
 
-## Introduction
+## 引言
 
-- A central topic of economics is _price finding_ in markets.
-- How does a buyer and a seller agree on the price of a good?
+- 经济学的一个核心主题是市场中的价格发现。
+- 买家和卖家如何就商品价格达成一致？
 
 ---
 
-## Supply / demand for BIG markets
+## 大市场的供需
 
 <img rounded style="width: 800px; margin-right: 200px;" src="../basics/img/supply-and-demand.png" />
 
 Notes:
 
-- As we saw yesterday, a market price must balance supply and demand.
-- Demand: number of items bought by consumers at a given price.
-- Supply: number of items produced and sold at a given price.
+- 如我们昨天所见，市场价格必须平衡供需。
+- 需求：消费者在给定价格下购买的商品数量。
+- 供给：在给定价格下生产和销售的商品数量。
 
 ---
 
-## Supply-demand for BIG markets
+## 大市场的供需
 
-- Supply-demand model works well for _big_ markets.
-- We have lots of buyers, sellers, lots of info.
-- Predictable _market price_, balancing supply and demand.
-- Only sensible price at which a buyer and seller can trade.
+- 供需模型适用于大型市场。
+- 我们有很多买家、卖家和大量信息。
+- 可预测的市场价格，平衡供需。
+- 这是买家和卖家进行交易的唯一合理价格。
 
 Notes:
 
-- When a particular good has a large number of buyers and sellers, and we have a well established market with lots of real-life trading data, we can develop a supply-demand model.
-- It allows us to accurately predict the price at which the market will converge to for a good, which is the point at which supply and demand balance out.
-- It only makes sense to trade at market price: if lower, the seller can easily find another buyer willing to pay more, if higher, the buyer can easily find another seller willing to charge less.
+- 当特定商品有大量买家和卖家，并且我们有一个完善的市场，有大量的现实交易数据时，我们可以开发一个供需模型。
+- 它允许我们准确预测市场将收敛到的商品价格，这是供需平衡的点。
+- 只在市场价格交易才有意义：如果价格更低，卖家可以轻松找到另一个愿意支付更多的买家；如果价格更高，买家可以轻松找到另一个愿意收取更少费用的卖家。
 
 ---
 
-## What about _difficult_ markets?
+## 那困难的市场呢？
 
 <img rounded style="width: 900px;" src="./img/auction-platform.png" />
 
 Notes:
 
-Image source: <https://funkypriceguide.com/collectible/512-gold-hopper-2018-sdcc-fundays/>
+图片来源：<https://funkypriceguide.com/collectible/512-gold-hopper-2018-sdcc-fundays/>
 
 ---
 
-## What about _difficult_ markets?
+## 那困难的市场呢？
 
-Today we focus on markets with few buyers or sellers,
-few trades, or non-standardized goods.
+今天我们关注买家或卖家较少、交易较少或商品非标准化的市场。
 
 <pba-flex center>
 
-- Gov't sells radio frequencies to broadcasters.
-- A painting by a famous artist trades hands.
-- An oil well goes on sale with unknown amount of oil.
+- 政府向广播公司出售无线电频率。
+- 一幅著名艺术家的画作易手。
+- 一口油井以未知的石油储量出售。
 
 </pba-flex>
 
 Notes:
 
-- The supply-demand model does not work in these examples
-- First example: there is a single buyer
-- Second example: very few buyers and sellers, trades are very infrequent, and goods are not standardized
-- Third example: not enough public data about the good.
-- In second and third cases, buyers may have wildly different personal valuations of the good.
-- A standardized good could be a liter of milk.
-  A less standardized good is a wedding ring, or a painting
+- 供需模型在这些例子中不起作用。
+- 第一个例子：只有一个买家。
+- 第二个例子：买家和卖家非常少，交易非常不频繁，商品也不标准化。
+- 第三个例子：没有足够的关于商品的公开数据。
+- 在第二和第三个例子中，买家对商品的个人估值可能差异很大。
+- 标准化商品可以是一升牛奶。
+  非标准化商品可以是结婚戒指或绘画。
 
 ---
 
-## A simple model
+## 一个简单的模型
 
 <pba-flex center>
 
-- Selena wants to sell one item of a good.
-- Two buyers, Alice and Bob.
-- Each buyer has a secret _valuation_ $v_A$ and $v_B$:<br />
-  how much they are willing to pay for the item.
+- 赛琳娜想出售一件商品。
+- 两个买家，爱丽丝和鲍勃。
+- 每个买家都有一个秘密的估值 $v_A$ 和 $v_B$：他们愿意为该商品支付的金额。
 
 </pba-flex>
 
-How does Selena _optimally_ sell the item?
+赛琳娜如何最优地出售该商品？
 
 Notes:
 
-- We consider the limit case of one single seller and two buyers, to keep things simple.
-- Throughout the talk we assume that a buyer will purchase the item if the price is below or equal to their valuation.
+- 我们考虑一个单一卖家和两个买家的极限情况，以保持简单。
+- 在整个演讲中，我们假设如果价格低于或等于他们的估值，买家将购买该商品。
 
 ---
 
-## Let's assume...
+## 让我们假设...
 
 <pba-flex center>
 
-- All of Selena's income is profit.
-- Alice and Bob each have random valuations between 0 and 1.
-- The valuations are secret but their distribution is well-known.
+- 赛琳娜的所有收入都是利润。
+- 爱丽丝和鲍勃的估值在 0 到 1 之间随机分布。
+- 估值是秘密的，但它们的分布是众所周知的。
 
 </pba-flex>
 
 Notes:
 
-- We saw the notion of an abstraction already in game theory class: we lose a bit in realism, but gain in structure which allows us to make precise statements, and develop a richer theory.
-  The intuition and conclusions still apply in real life.
-- In particular, we are assuming that each of the three characters has a certain amount of information about the valuations of the other players, namely the distribution they are sampled from, and they can use this info to strategize their actions.
-- Assuming that each valuation $v_i$ follows a uniform distribution between 0 and 1 simplifies Selena's life, because she knows that for any value $x\in \[0,1\]$, the probability that a bidder's valuation is below $x$ is exactly $x$, i.e., $P\[v_i\leq x\]=x$.
-- However, assuming a uniform distribution is just for pedagogical reasons: most results in auction theory can be extended to more general distributions.
+- 我们在博弈论课上已经看到了抽象的概念：我们在现实性上有所损失，但在结构上有所收获，这使我们能够做出精确的陈述，并发展出更丰富的理论。
+  直觉和结论仍然适用于现实生活。
+- 特别是，我们假设这三个人物中的每一个都对其他参与者的估值有一定的了解，即他们所抽取的分布，并且他们可以利用这些信息来制定自己的行动策略。
+- 假设每个估值 $v_i$ 遵循 0 到 1 之间的均匀分布，这简化了赛琳娜的生活，因为她知道对于任何值 $x\in \[0,1\]$，一个投标人的估值低于 $x$ 的概率正好是 $x$，即 $P\[v_i\leq x\]=x$。
+- 然而，假设均匀分布只是出于教学原因：拍卖理论中的大多数结果都可以扩展到更一般的分布。
 
 ---
 
-## Price posting
+## 价格发布
 
-- Simplest solution: Selena posts a price $p$, sells item to first taker.
-- What is her _optimal price_ $p$?
-  One maximizing her _expected revenue_.
-- Expected revenue: price $\times$ prob. of making a sale.
-- For price $p$, prob. of making a sale is $(1-p^2)$.
-- Hence her expected revenue is $p \cdot ( 1-p^2)$.
+- 最简单的解决方案：赛琳娜发布一个价格 $p$，将商品卖给第一个接受的人。
+- 她的最优价格 $p$ 是多少？最大化她的预期收入。
+- 预期收入：价格 $\times$ 销售概率。
+- 对于价格 $p$，销售概率是 $(1-p^2)$。
+- 因此，她的预期收入是 $p \cdot ( 1-p^2)$。
 
 Notes:
 
-- If both buyers accept the posted price, we assume the firm selects a random buyer to trade with.
-- The proof of this and all other math formulas can be found in the slides, for anyone interested.
-- Assuming that 100% of the sale price is profit for the seller, this profit is
+- 如果两个买家都接受发布的价格，我们假设卖家随机选择一个买家进行交易。
+- 这个和所有其他数学公式的证明可以在幻灯片中找到，供有兴趣的人参考。
+- 假设 100% 的销售价格是卖家的利润，这个利润是
 
-  - $p$ in case of selling, $0$ otherwise, where
-  - $(1-p^2)$ is the probability of selling the item.
-  - To see this probability, consider conversely that the probability that none of the buyers accepts the price must be $p^2$, because each valuation must be below $p$, and these are two individual events each happening with probability $p$ (recall: valuations are uniformly distributed between 0 and 1).
+  - $p$ 在销售情况下，$0$ 否则，其中
+  - $(1-p^2)$ 是销售商品的概率。
+  - 要看到这个概率，反过来考虑，没有买家接受价格的概率必须是 $p^2$，因为每个估值必须低于 $p$，而这是两个独立事件，每个事件发生的概率都是 $p$（回忆：估值在 0 到 1 之间均匀分布）。
 
-- $Pr\{v_i \leq x\}$ is the probability that the randomly drawn value of valuation $v_i$ is below $x$.
-- Independent values will be important: when is this (not) a sensible assumption?
-  (Example: oil drilling rights auctions, ...)
-- Uniform distribution is just for pedagogical reasons; standard model allows for more general distributions.
+- $Pr\{v_i \leq x\}$ 是随机抽取的估值 $v_i$ 低于 $x$ 的概率。
+- 独立值很重要：什么时候这（不）是一个合理的假设？
+  （例如：石油钻探权拍卖，...）
+- 均匀分布只是出于教学原因；标准模型允许更一般的分布。
 
 ---
 
-## Price posting
+## 价格发布
 
 <pba-cols>
 <pba-col>
 
-- At the optimum point, expected revenue is $\approx 0.38$.
-- We will see that **an auction can do better**.
+- 在最优价格点，预期收入约为 0.38。
+- 我们将看到，**拍卖可以做得更好**。
 
 </pba-col>
 
@@ -162,764 +159,485 @@ Notes:
 
 Notes:
 
-- Prices, valuations, and revenue are given in the same currency unit, say, USD.
-- How do we maximize the expected revenue function $f(p)=p ( 1-p^2)$?
-  The function has a unique peak, so at the maximum, the first derivative must be zero.
-- The function is maximized for a $p$ satisfying $$ f'(p)=1-p^2 - 2p^2 = 0 \implies p = \sqrt{1/3}.$$
-- Expected revenue is then $f(\sqrt{1/3})=\frac{2}{3}\sqrt{1/3}\approx 0.38.$
+- 价格、估值和收入都以相同的货币单位给出，例如美元。
+- 我们如何最大化预期收入函数 $f(p)=p ( 1-p^2)$？
+  函数有一个唯一的峰值，因此在最大值处，一阶导数必须为零。
+- 函数在满足 $$ f'(p)=1-p^2 - 2p^2 = 0 \implies p = \sqrt{1/3}$$ 的 $p$ 处最大化。
+- 预期收入为 $f(\sqrt{1/3})=\frac{2}{3}\sqrt{1/3}\approx 0.38.$
 
 ---
 
-## Auctions
+## 拍卖
 
 <img rounded style="width: 500px;" src="./img/auctioneer.gif" />
 
 ---
 
-## Lesson summary
+## 课程总结
 
 <pba-flex center>
 
-- Auctions can be superior to posting a price.
-- We discuss four important auction formats.
-- How to make buyers reveal their secret valuations.
-- Bid shilling.
-- The revenue-equivalence theorem.
-- Guides on what auction format to use in practice.
+- 拍卖可以优于发布价格。
+- 我们讨论四种重要的拍卖格式。
+- 如何让买家揭示他们的秘密估值。
+- 出价欺诈。
+- 收益等价定理。
+- 关于在实践中使用哪种拍卖格式的指南。
 
 </pba-flex>
 
 Notes:
 
-- Auctions can provide more revenue to the seller, as we will see.
-- In a market with a posted price, buyers never need to reveal their valuation (i.e., how much they would actually be willing to pay for an item).
-  In auctions, the same is generally true, as they may bid values much lower than their valuations, but there is an auction format where they tend to bid their actual valuations (called truthful bidding).
-- There is a specific sense in which, in theory, all four auction formats provide the same revenue for Selena.
-- However, in practice, some formats may be better suited than others, and we will see some such examples.
+- 拍卖可以为卖家提供更多的收入，我们将看到这一点。
+- 在有发布价格的市场中，买家永远不需要透露他们的估值（即他们实际上愿意为一件商品支付多少钱）。
+  在拍卖中，通常也是如此，因为他们可能出价远低于他们的估值，但有一种拍卖格式，他们倾向于出价他们的实际估值（称为真实出价）。
+- 在某种特定意义上，理论上所有四种拍卖格式都为赛琳娜提供了相同的收入。
+- 然而，在实践中，某些格式可能比其他格式更适合，我们将看到一些这样的例子。
 
 ---
 
-## Auctions
+## 拍卖
 
-- Alice and Bob (bidders) submit bids based on own valuations.
-- Selena (auctioneer) selects winner to allocate the item to.
-- The winner's payment is a function of the bids.
+- 爱丽丝和鲍勃（投标人）根据自己的估值提交出价。
+- 赛琳娜（拍卖师）选择获胜者来分配商品。
+- 获胜者的支付是出价的函数。
 
-_An auction is a competitive game for buyers, where the seller makes the rules._
+_拍卖是买家之间的竞争性游戏，卖家制定规则。_
 
 Notes:
 
-- Bidders submit bids to auctioneer, which are a declaration of how much they are willing to pay for the item.
-  In an ideal world, a bid equals the bidder's valuation (this is called a truthful bid), but of course depending on the bidder's strategy they may choose to underbid or overbid.
-- In this lesson we will have some fun analyzing the bidders' best strategies as well as the auctioneer's best strategies.
-- Both the winner and the winner's payment will dependent on the bids and the auction rules.
-  The payment cannot be higher than the winner's bid, but it could be lower.
-- Auctions yield a higher revenue because they create competition among buyers.
+- 投标人向拍卖师提交出价，这是他们愿意为该商品支付的金额的声明。
+  在理想世界中，出价等于投标人的估值（这称为真实出价），但当然，根据投标人的策略，他们可能选择出价低于或高于估值。
+- 在本课中，我们将分析投标人的最佳策略以及拍卖师的最佳策略。
+- 获胜者和获胜者的支付将取决于出价和拍卖规则。
+  支付不能高于获胜者的出价，但可以低于。
+- 拍卖产生更高的收入，因为它们在买家之间创造了竞争。
 
 ---
 
-## Auction formats
+## 拍卖格式
 
 <pba-flex center>
 
-1. There are two broad classes:
-   1. _Static Auctions:_ bidders submit their bids at the same time.
-   1. _Dynamic Auctions:_ bidders submit bids over time.
+1. 有两大类：
+   1. _静态拍卖：_ 投标人同时提交出价。
+   1. _动态拍卖：_ 投标人随着时间提交出价。
 
-- The difference is whether or not bidders can react to the bids of others and adjust their own.
-- Static auctions are also called _sealed-bid auctions_.
+- 区别在于投标人是否可以对他人的出价做出反应并调整自己的出价。
+- 静态拍卖也称为_密封投标拍卖_。
 
 </pba-flex>
 
 Notes:
 
-- In static auctions, bidders give their bids simultaneously and cannot change it later.
-- Static auctions are also called sealed-bid auctions, as many times in practice the bids are submitted in sealed envelopes to the auctioneer.
+- 在静态拍卖中，投标人同时给出他们的出价，并且不能在之后更改。
+- 静态拍卖也称为密封投标拍卖，因为在实践中，出价通常是在密封的信封中提交给拍卖师的。
 
 ---
 
-## Auction formats
+## 拍卖格式
 
-Four auction formats we discuss today:
+我们今天讨论的四种拍卖格式：
 
 <pba-flex center>
 
-- Static auctions
-  - with a first-price payment rule
-  - with a second-price payment rule
-- Dynamic Auctions
-  - with ascending price (a.k.a. English auctions)
-  - with descending price (a.k.a. Dutch auction)
+- 静态拍卖
+  - 采用第一价格支付规则
+  - 采用第二价格支付规则
+- 动态拍卖
+  - 采用升价（也称为英式拍卖）
+  - 采用降价（也称为荷兰式拍卖）
 
 </pba-flex>
 
 Notes:
 
-- Example, Selena auctions off a painting.
-  Suppose in a static auction, Alice bids 1000 and Bob bids 2000.
-  In a first-price format, Bob wins and pays 2000.
-  In a second-price format, Bob still wins but only pays 1000.
-- The English format became popular in England.
-  Selena continuously raises the price as long as at least 2 bidders accept it.
-  As soon as only one bidder remains, they win and pay the current price.
-- The Dutch format became popular in the Netherlands, particularly in the tulip market.
-  Selena starts at a high price and continuously lowers it as long as there are no takers.
-  As soon as a bidder accepts the price, they win and pay the current price.
-- We are gonna analyze each of these four formats, and take the opportunity to discuss relevant notions in auction theory along the way.
-- For me, the second-price auction is the least intuitive format.
-  But it turns out to be one of the nicest and easiest to analyze, so we will start there.
+- 例如，赛琳娜拍卖一幅画。
+  假设在静态拍卖中，爱丽丝出价 1000，鲍勃出价 2000。
+  在第一价格格式中，鲍勃获胜并支付 2000。
+  在第二价格格式中，鲍勃仍然获胜，但只支付 1000。
+- 英式拍卖在英国变得流行。
+  赛琳娜不断提高价格，只要至少有两个投标人接受。
+  一旦只剩下一个投标人，他们就获胜并支付当前价格。
+- 荷兰式拍卖在荷兰变得流行，特别是在郁金香市场。
+  赛琳娜从高价开始，不断降低价格，只要没有接受者。
+  一旦有投标人接受价格，他们就获胜并支付当前价格。
+- 我们将分析这四种格式中的每一种，并借此机会讨论拍卖理论中的相关概念。
+- 对我来说，第二价格拍卖是最不直观的格式。
+  但事实证明，它是最容易分析的格式之一，因此我们将从这里开始。
 
 ---
 
-## Second-price auction
+## 第二价格拍卖
 
-- Why make the winner pay the second highest bid?
-- Least intuitive format, but strategically simplest for bidders.
-- Simply bid your valuation truthfully!
-- A bidder wants to maximize their _expected profit_:
-  - own valuation - price paid, in case they win
-  - zero, otherwise
+- 为什么让获胜者支付第二高的出价？
+- 最不直观的格式，但对投标人来说策略上最简单。
+- 只需诚实地出价你的估值！
+- 投标人希望最大化他们的_预期利润_：
+  - 自己的估值 - 支付的价格，如果他们获胜
+  - 零，否则
 
 Notes:
 
-- Out of the four formats, we start our analysis with second-price static auctions, i.e., Alice and Bob give their bids in sealed envelopes to Selena, and she declares the winner to be the one with the highest bid, but the price to pay is only second highest bid.
-- To analyze the bidders' best strategy, we assume that each bidder wants to maximize their expected profit.
-  Again, this is a sensible but strong assumption, as they could have some other equally sensible objectives.
-  By the end of the lesson we will highlight how this assumption can be a bit unrealistic in practice.
+- 在四种格式中，我们从第二价格静态拍卖开始分析，即爱丽丝和鲍勃将他们的出价密封在信封中交给赛琳娜，她宣布出价最高的人为获胜者，但支付的价格仅为第二高的出价。
+- 为了分析投标人的最佳策略，我们假设每个投标人都希望最大化他们的预期利润。
+  同样，这是一个合理但强有力的假设，因为他们可能有其他同样合理的目标。
+  在课程结束时，我们将强调这个假设在实践中可能有点不现实。
 
 ---
 
-## Second-price auction
-
-- **Truthful equilibrium**: a _dominant strategy_ to bid truthfully.
-- **Dominant strategy**: outcome is at least as good as the outcome of any other strategy, _no matter what the other bidder bids_.
-
+## 第二价格拍卖
+- **真实均衡**：如实出价是一种**占优策略**。
+- **占优策略**：无论其他竞拍者出价多少，该策略的结果至少与任何其他策略的结果一样好。
 <img rounded style="width: 1300px;" src="./img/second-price-auction.svg" />
-
 Notes:
-
-- We can immediately say that you should never overbid (i.e., bid above your valuation), because in that case your profit can only be zero (if you lose) or negative (if you win).
-  So the key question is whether you should ever underbid.
-- In the case that Bob's bid is higher than your valuation, bidding truthfully or underbidding both lead to losing and having a revenue of zero.
-- But if Bob's bid is lower than your valuation, any bid between these two values leads to you winning and having the same profit (namely the difference of these values), hence there is no gain in underbidding.
-  However if you underbid too much, you run the risk of losing and having zero profit.
-- Hence in both cases we see that underbidding does not increase your profit, and can only decrease your chance of winning.
-  So it is better to bid exactly your valuation.
-- The proof can be easily generalized to any number of bidders (to obtain that in a second-price auction, it is a dominant strategy for each bidder to bid truthfully.
-
-TIP: use arrow chars in unicode for style: <https://www.htmlsymbols.xyz/arrow-symbols>
-
+- 我们可以立刻得出，你永远不应该出价过高（即出价高于你的估值），因为在这种情况下，你的利润要么为零（如果你输了竞拍），要么为负（如果你赢了竞拍）。所以关键问题在于你是否应该出价过低。
+- 当鲍勃的出价高于你的估值时，如实出价或出价过低都会导致你竞拍失败，收益为零。
+- 但如果鲍勃的出价低于你的估值，在这两个价格之间的任何出价都会让你赢得竞拍，且获得相同的利润（即两者差值），因此出价过低并无益处。然而，如果你出价过低太多，就有输掉竞拍且利润为零的风险。
+- 因此在这两种情况下，我们都能看出出价过低不会增加你的利润，只会降低你获胜的机会。所以最好如实按照你的估值出价。
+- 这个证明可以很容易推广到任意数量的竞拍者（从而得出在第二价格拍卖中，如实出价对每个竞拍者来说都是占优策略）。
+提示：可使用Unicode中的箭头字符来增添风格：<https://www.htmlsymbols.xyz/arrow-symbols>
 ---
-
-## Second-price auction
-
-**Expected revenue**
-
-- Selena's expected revenue is expected value of 2nd highest valuation.
-- For two independent variables uniformly sampled from $\[0,1\]$,
-  the expected value of the minimum is $1/3\approx 0.33$.
-- This is not quite as good as posting a price
-  (which provided expected revenue $0.38$).
-  Why not?
-
+## 第二价格拍卖
+**预期收益**
+- 赛琳娜的预期收益是第二高估值的期望值。
+- 对于从\([0,1]\)均匀抽取的两个独立变量，最小值的期望值是\(1/3\approx0.33\)。
+- 这不如定价出售的预期收益高（定价出售的预期收益为\(0.38\)）。这是为什么呢？
 Notes:
-
-- Let $F(x)$ be the cumulative density function (CDF) of the lowest of Alice and Bob's valuations, $\min\{v_A, v_B\}$, where $v_A$ and $v_B$ are independent variables sampled uniformly from $\[0,1\]$.
-- By definition, for any $x$ in $\[0,1\]$, $F(x)$ is the probability that the lower valuation is below $x$, or equivalently, $g(x):=1-F(x)$ is the probability that both valuations are above $x$; clearly $g(x)=(1-x)^2$, and hence $F(x)=1-(1-x)^2$.
-- From the CDF, we can compute the probability density function (PDF) by derivation: $f(x)=\frac{d}{dx}F(x)=2(1-x)$.
-- Finally, the expected value is computed from the PDF with the integral formula
-  $$\int_0^1 x\cdot f(x) dx = 2\int_0^1 (x-x^2)dx=2\cdot \left(\frac{1}{2}-\frac{1}{3}\right)=\frac{1}{3}.$$
-
+- 设\(F(x)\)是爱丽丝和鲍勃估值中较低者\(\min\{v_A, v_B\}\)的累积分布函数（CDF），其中\(v_A\)和\(v_B\)是从\([0,1]\)均匀抽取的独立变量 。
+- 根据定义，对于\([0,1]\)中的任意\(x\)，\(F(x)\)是较低估值低于\(x\)的概率，或者等价地，\(g(x): = 1 - F(x)\)是两个估值都高于\(x\)的概率；显然\(g(x) = (1 - x)^2\)，因此\(F(x)=1-(1 - x)^2\)。
+- 从累积分布函数，我们可以通过求导计算概率密度函数（PDF）：\(f(x)=\frac{d}{dx}F(x)=2(1 - x)\)。
+- 最后，期望值由概率密度函数通过积分公式计算：
+\[\int_0^1 x\cdot f(x) dx = 2\int_0^1 (x - x^2)dx = 2\cdot(\frac{1}{2}-\frac{1}{3})=\frac{1}{3}\]
 ---
-
-## Reserve price
-
-- Because the format we considered is not optimal for the auctioneer!
-- The optimal auction involves a _reserve price_ $r>0$:
-  - If no bid is above $r$, nobody wins.
-  - If one bid is above $r$, the payment is $r$.
-  - If both bids are above $r$, the payment is the second-highest bid.
-
+## 保留价
+- 因为我们之前考虑的拍卖形式对拍卖师来说并非最优！
+- 最优拍卖涉及一个**保留价**\(r>0\)：
+  - 如果没有出价高于\(r\)，则无人获胜。
+  - 如果有一个出价高于\(r\)，则支付价格为\(r\)。
+  - 如果两个出价都高于\(r\)，则支付价格为第二高的出价。
 ---
-
-## Reserve price
-
-**Fact:** Under any reserve price $r$, it is still optimal to bid truthfully, and if Selena sets $r=0.5$, her expected revenue is $\approx 0.42$, so it is better than posted price (where expected revenue was $\approx 0.38$).
-
+## 保留价
+**事实**：在任何保留价\(r\)下，如实出价仍然是最优策略。如果赛琳娜将\(r\)设为\(0.5\)，她的预期收益约为\(0.42\)，这比定价出售更好（定价出售时预期收益约为\(0.38\)）。
 ---
-
-## Reserve price
-
+## 保留价
 <img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
-
 Notes:
-
-- The proof idea is that if $r=0.5$, half of the time one valuation is above it and the other is below it, and the reserve price increases the paying price.
-  On the other hand, if both valuations are below $r$ then there is no sale, which decreases Selena's revenue, but this case only happens one quarter of the time.
-  Finally, if both valuations are above $r$, the presence of a reserve price does no affect the result.
-  Overall, there is a positive net gain in Selena's expected revenue.
-  Below we present the formal proof.
-- The probability that both valuations are below $r$ is $r^2$, the prob. that $r$ is in between the valuations is $2r(1-r)$, and the prob.that both valuations are above $r$ is $(1-r)^2$.
-  You can check that these probabilities sum up to one.
-- In the first case Selena's revenue is zero, and in the second case it is $r$.
-  Hence the expected revenue for the first two cases is $2r^2(1-r)$.
-- To compute the expected revenue of the third case, we simply copy the integral formula for the expected value (from a couple of slides ago), but we restrict the integration limits to $\[r, 1\\]$:
-  \begin{align}
-  \int_r^1 x\cdot f(x) dx &= 2\int_r^1 (x-x^2)dx\\
-  &=2\cdot \left\[\frac{x^2}{2}-\frac{x^3} {3}\right\\]\_r^1 \\&=\frac{1}{3} - r^2 + \frac{2}{3}r^3.
-  \end{align}
-- Putting all terms together, we obtain that the expected revenue is
-  $$R(r)=0+2r^2(1-r)+\left(\frac{1}{3} - r^2 + \frac{2}{3}r^3\right)=\frac{1}{3}+r^2-\frac{4}{3}r^3.$$
-- To maximize the auctioneer's expected revenue function $R(r)$ above:
-  - We evaluate the function at all the local extrema (minima and maxima).
-  - Since the function is continuous and differentiable, the local extrema are found at the borders $r=0$ and $r=1$, and at the roots of the derivative $R'(r)=2r-4r^2=0$.
-    These roots are $r=0$ and $r=1/2$.
-  - By inspecting all these points, we find that the global maximum is found at $r=1/2$, with a value of $R(1/2)=5/12\approx 0.42$.
-- Literature: Myerson, Roger B. "Optimal auction design." Mathematics of Operations Research 6, No. 1 (1981): 58-73.
-
+- 证明思路是，如果\(r = 0.5\)，有一半的概率一个估值高于它而另一个低于它，保留价会提高支付价格。另一方面，如果两个估值都低于\(r\)，则无法达成交易，这会减少赛琳娜的收益，但这种情况只发生四分之一的时间。最后，如果两个估值都高于\(r\)，保留价的存在不会影响结果。总体而言，赛琳娜的预期收益有正的净增长。下面我们给出正式证明。
+- 两个估值都低于\(r\)的概率是\(r^2\)，\(r\)在两个估值之间的概率是\(2r(1 - r)\)，两个估值都高于\(r\)的概率是\((1 - r)^2\)。你可以验证这些概率之和为\(1\)。
+- 在第一种情况下，赛琳娜的收益为\(0\)，在第二种情况下收益为\(r\)。因此前两种情况的预期收益为\(2r^2(1 - r)\)。
+- 为计算第三种情况的预期收益，我们直接沿用前面幻灯片中计算期望值的积分公式，但将积分区间限制在\([r, 1]\)：
+\[\begin{align*}
+\int_r^1 x\cdot f(x) dx &= 2\int_r^1 (x - x^2)dx\\
+&=2\cdot\left[\frac{x^2}{2}-\frac{x^3}{3}\right]_r^1\\
+&=\frac{1}{3}-r^2+\frac{2}{3}r^3
+\end{align*}\]
+- 将所有项合并，我们得到预期收益为：
+\[R(r)=0 + 2r^2(1 - r)+\left(\frac{1}{3}-r^2+\frac{2}{3}r^3\right)=\frac{1}{3}+r^2-\frac{4}{3}r^3\]
+- 为求上述拍卖师预期收益函数\(R(r)\)的最大值：
+  - 我们在所有局部极值点（最小值和最大值）处评估该函数。
+  - 由于该函数连续且可导，局部极值点位于边界\(r = 0\)和\(r = 1\)处，以及导数\(R'(r)=2r - 4r^2 = 0\)的根处。这些根是\(r = 0\)和\(r = 1/2\)。
+  - 通过检查所有这些点，我们发现全局最大值在\(r = 1/2\)处取得，\(R(1/2)=\frac{5}{12}\approx0.42\) 。
+- 文献：Myerson, Roger B. “Optimal auction design.” Mathematics of Operations Research 6, No. 1 (1981): 58 - 73.
 ---
-
-## English auction
-
-Recall the rules:
-
+## 英式拍卖
+回顾规则：
 <pba-flex center>
-
-- Selena continually raises the price.
-- At any price, you decide whether to stay or leave.
-- If you leave, you may not return.
-- If you are the last one in the auction you win<br />
-  and pay the price at which the second-to-last<br /> bidder left.
-
+- 赛琳娜不断提高价格。
+- 在任意价格下，你决定是留下还是退出。
+- 一旦退出，你不能再返回。
+- 如果你是拍卖中最后一个留下的人，你获胜，并支付倒数第二个竞拍者退出时的价格。
 </pba-flex>
-
 Notes:
-
-- Next we move to English auctions, which have a very similar analysis.
-- Notice it has a flavor of a second-price auction: the price you pay is decided by another bidder, not you.
-- In a sense, these two auction formats are strategically equivalent!
-
+- 接下来我们讨论英式拍卖，它的分析与第二价格拍卖非常相似。
+- 注意它有点像第二价格拍卖：你支付的价格由另一个竞拍者决定，而不是你自己。
+- 从某种意义上说，这两种拍卖形式在策略上是等价的！
 ---
-
-## English auction
-
-- English auction is **strategically equivalent** to static second-price auction.
-- It is a dominant strategy to stay until the price reaches one's valuation.
-- The expected revenue for Selena is the also the same!
-- Consequently, these two formats are also **revenue equivalent**.
-
+## 英式拍卖
+- 英式拍卖在**策略上等同于**静态第二价格拍卖。
+- 坚持到价格达到自己的估值是一种占优策略。
+- 赛琳娜的预期收益也相同！
+- 因此，这两种拍卖形式也是**收益等价**的。
 Notes:
-
-- Why is staying until the price reaches your valuation a dominant strategy?
-  - If you leave you get zero utility.
-  - If you stay while the price is below your valuation, your eventual utility may be zero or positive, so there is no incentive to leave.
-  - If you stay while the price is above your valuation, your utility is zero or negative, so you should leave immediately.
-
+- 为什么坚持到价格达到你的估值是一种占优策略呢？
+  - 如果你退出，你的效用为零。
+  - 如果价格低于你的估值时你留下，你最终的效用可能为零或为正，所以没有理由退出。
+  - 如果价格高于你的估值时你留下，你的效用为零或为负，所以你应该立即退出。
 ---
-
-## Shill bidding
-
-- Second-price and English auctions popular among theorists, not so popular among practitioners.
-- One reason is that they are prone to _shill-bidding_: bidder that acts on behalf of the auctioneer to drive up the price.
-
+## 托拍行为
+- 第二价格拍卖和英式拍卖在理论家中很受欢迎，但在实际从业者中并非如此。
+- 原因之一是它们容易受到**托拍行为**的影响：即代表拍卖师抬高价格的竞拍者。
 Notes:
-
-- Both second-price auctions and English auctions have the truthful bidding property, which is very satisfactory for theorists.
-  However, as you can probably tell, they are not so popular in practice.
-- A shill bidder has no intention of winning, but just increasing the price that the winner must pay.
-  They do it to benefit the auctioneer.
-- Shill bidding is frowned upon, sometimes illegal, but it is usually hard or impossible to prove and to prevent.
-
+- 第二价格拍卖和英式拍卖都具有如实出价的特性，这让理论家们很满意。然而，正如你可能察觉到的，它们在实际中并不那么受欢迎。
+- 托拍者无意赢得竞拍，只是想提高获胜者必须支付的价格，以此让拍卖师受益。
+- 托拍行为遭人反感，有时甚至是违法的，但通常很难甚至不可能证明和防范。
 ---
-
-## First-price auction
-
+## 第一价格拍卖
 <pba-flex center>
-
-- The winning bidder pays her bid.
-- Other rules same as in the second-price auction; i.e.,
-  - all bidders submit their bids simultaneously,
-  - the highest bid wins.
-
+- 获胜的竞拍者支付其出价。
+- 其他规则与第二价格拍卖相同，即：
+  - 所有竞拍者同时提交出价。
+  - 出价最高者获胜。
 </pba-flex>
-
 Notes:
-
-- New topic, time to wake up!
-- We move on to first-price auction, which as you recall, is a type of sealed auction.
-- Its analysis is more involved, and the resulting optimal bidding strategy is quite different from before.
-
+- 新话题，大家注意啦！
+- 我们接着讨论第一价格拍卖，大家应该还记得，这是一种密封式拍卖。
+- 它的分析更复杂，得出的最优出价策略与之前大不相同。
 ---
-
-## First-price auction
-
-Bidding in the first-price auction is **not** truthful.
-
-- Bidding truthfully can never be optimal:
-  if you win, you earn nothing.
-- Underbidding is strictly better, you win sometimes
-  and when you do you have a positive utility.
-
+## 第一价格拍卖
+在第一价格拍卖中，出价**不会**是如实的。
+- 如实出价永远不是最优策略：如果你赢了，你将一无所获。
+- 出价低于估值要好得多，这样你有时能获胜，而且获胜时你会获得正效用。
 ---
-
-## First-price auction
-
-**Equilibrium strategy:** It is a _Nash equilibrium_ for each bidder to bid **half** their own valuation.
-
-_Nash equilibrium:_ A set of strategies, one per player, where no one has an incentive to change their strategy.
-
+## 第一价格拍卖
+**均衡策略**：每个竞拍者出价为自己估值的**一半**是一种**纳什均衡**。
+**纳什均衡**：是一组策略，每个参与者对应一个策略，在该策略组合下，没有人有改变自己策略的动机。
 Notes:
-
-- Recall Nash equilibrium we already covered.
-- A Nash equilibrium is a "recommended strategy per player", such that if you assume that the other bidder will follow their recommendation, then the best you can do is to follow yours.
-- As the same is true for the other players, it is indeed a reasonable assumption to think the other players will follow their recommendation.
-- However, if the other players picks an unexpected strategy, your recommended strategy may be suboptimal.
-  In this sense, a Nash equilibrium is a weaker concept than a dominant strategy, in which the strategy of the other players is irrelevant.
-
+- 回顾一下我们之前讲过的纳什均衡。
+- 纳什均衡是一种“给每个参与者的推荐策略”，假设其他竞拍者会遵循他们的策略，那么你能做的最好选择就是遵循自己的策略。
+- 由于这对其他参与者同样适用，所以认为其他参与者会遵循他们的策略是合理的假设。
+- 然而，如果其他参与者选择了一个出人意料的策略，你原本的推荐策略可能就不是最优的了。从这个意义上说，纳什均衡是一个比占优策略更弱的概念，占优策略与其他参与者的策略无关。
 ---
-
-## First-price auction
-
-**Intuition:** suppose you are Alice
-
-- If you bid 0, winning prob. is zero.
-- If you bid your valuation, profit is zero.
-- Hence, there is a sweet spot between 0 and your valuation
-  where your expected profit is maximal.
-- It turns out this is bidding half your valuation,
-  at which point you and Bob each wins _half of the time_.
-
+## 第一价格拍卖
+**直观理解**：假设你是爱丽丝
+- 如果你出价为\(0\)，获胜概率为\(0\)。
+- 如果你按自己的估值出价，利润为\(0\)。
+- 因此，在\(0\)和你的估值之间存在一个最佳点，在这个点你的预期利润最大。
+- 事实证明，这个点就是出价为你估值的一半，此时你和鲍勃各有**一半的概率**获胜。
 Notes:
-
-- Unfortunately, the full proof is outside the scope of the presentation, but we provide it here in the lesson notes.
-- Assume you are Alice, with valuation $v_A$ and bid $b_A$.
-- Assuming that Bob's bid $b_B$ equals half his valuation $v_B$, that $v_B$ is sampled uniformly at random between 0 and 1, and that your bid $b_A$ is at most $1/2$, your winning probability is:
-  \begin{align}
-  Pr\[winning\] &= Pr\[b_B\leq b_A\] \\
-  &= Pr\[v_B/2 \leq b_A\] \\
-  &= Pr\[v_B \leq 2b_A\] \\
-  &= 2b_A.
-  \end{align}
-- Your profit in case of winning is $(v_A-b_A)$, hence your expected profit is $2b_A(v_A-b_A)$.
-- It can be checked that this expression is maximized for $b_A=v_A/2$.
-- In summary, if Bob bids half his valuation, it is optimal for Alice to bid has her valuation, and vice versa.
-  Together we have a Nash equilibrium.
-
+- 遗憾的是，完整的证明超出了本次展示的范围，但我们会在课程笔记中提供。
+- 假设你是爱丽丝，你的估值为\(v_A\)，出价为\(b_A\)。
+- 假设鲍勃的出价\(b_B\)等于他的估值\(v_B\)的一半，\(v_B\)在\(0\)到\(1\)之间随机均匀抽取，且你的出价\(b_A\)最多为\(1/2\)，那么你获胜的概率是：
+\[\begin{align*}
+Pr[\text{获胜}]&=Pr[b_B\leq b_A]\\
+&=Pr[v_B/2 \leq b_A]\\
+&=Pr[v_B \leq 2b_A]\\
+&= 2b_A
+\end{align*}\]
+- 如果你获胜，你的利润是\((v_A - b_A)\)，因此你的预期利润是\(2b_A(v_A - b_A)\)。
+- 可以验证，当\(b_A = v_A/2\)时，这个表达式取得最大值。
+- 总之，如果鲍勃出价为他估值的一半，爱丽丝出价为自己估值的一半是最优策略，反之亦然。这样我们就得到了一个纳什均衡。
 ---
-
-## First-price auction
-
-**Expected revenue**
-
-- Reasonable to assume each bidder bids half their valuation.
-- Hence, Selena's revenue is $\frac{1}{2}\max\{v_A, v_B\}$.
-- The expected value of $\max\{v_A, v_B\}$ is $2/3$.
-- Hence, her expected revenue is $1/3$.
-
-The same as in second-price auction!
-
+## 第一价格拍卖
+**预期收益**
+- 合理假设每个竞拍者出价为自己估值的一半。
+- 因此，赛琳娜的收益是\(\frac{1}{2}\max\{v_A, v_B\}\)。
+- \(\max\{v_A, v_B\}\)的期望值是\(2/3\)。
+- 因此，她的预期收益是\(1/3\)。
+与第二价格拍卖的预期收益相同！
 Notes:
-
-- I find this result fascinating.
-  The optimal strategies are so different, but somehow the fact that you underbid is exactly compensated by the fact that you pay more when you win.
-- Is there a deeper connection going on here?
-  Or is it just a coincidence that the expected revenues are all the same so far?
-- Formal proof of the expected revenue: recall that the valuations $v_A$ and $v_B$ are assumed to be independent variables uniformly drawn from $\[0,1\]$.
-- The cumulative density function (CDF) of the higher valuation, $\max\{v_A, v_B\}$, is $F(x)=x^2$.
-  This is because $F(x)$ is lower than $x$ only if both valuations are below $x$, and these are two independent events each happening with probability $x$.
-- Then, the probability density function (PDF) is $f(x)=F'(x)=2x$.
-- And the formula for the expected value of $\max\{v_A, v_B\}$ is
-  $$R = \int\limits_0^1 x\cdot f(x)\mathrm d x = \int\limits_0^1 2x^2 \mathrm d v = \frac{2}{3}.$$
+- 我觉得这个结果很有意思。最优策略截然不同，但不知怎的，你出价低于估值的事实恰好被你获胜时支付更多价格这一事实所抵消。
+- 这背后是否存在更深层次的联系呢？还是到目前为止预期收益相同只是巧合？
+- 预期收益的正式证明：回顾一下，我们假设估值\(v_A\)和\(v_B\)是从\([0,1]\)均匀抽取的独立变量。
+- 较高估值\(\max\{v_A, v_B\}\)的累积分布函数（CDF）是\(F(x)=x^2\)。这是因为只有当两个估值都低于\(x\)时，\(F(x)\)才低于\(x\)，而这是两个独立事件，每个事件发生的概率都是\(x\)。
+- 那么，概率密度函数（PDF）是\(f(x)=F'(x)=2x\)。
+- \(\max\{v_A, v_B\}\)的期望值公式为：
+\[R = \int_0^1 x\cdot f(x)\mathrm{d}x = \int_0^1 2x^2 \mathrm{d}v = \frac{2}{3}\]
 
 ---
 
-## Revenue Equivalence
-
-**Fact:** When valuations are secret and independent,
-there is no reserve price, and item goes to highest bidder,
-then _all auction mechanisms_ are _revenue equivalent_.
-
+## 收益等价
+**事实**：当估值是私密且相互独立的，不存在保留价，并且物品被出价最高者获得时，**所有拍卖机制**的收益是等价的。
 Notes:
-
-- This is a theorem established by Myerson in 1981.
-- Notice all auction formats are **not** strategically equivalent (namely, you should bid truthfully in some formats but not in others), yet they are still _revenue equivalent_ for the auctioneer.
-- This result is very surprising to me, and one of the coolest results in game theory.
-
+- 这是迈尔森在1981年提出的一个定理。
+- 注意，所有拍卖形式在策略上并非等价（也就是说，在某些形式中你应该如实出价，而在其他形式中则不然），但对于拍卖师而言，它们的收益仍然是等价的。
+- 这个结果让我十分惊讶，它是博弈论中最精妙的结论之一。
 ---
-
-## Dutch auctions
-
+## 荷兰式拍卖
 <pba-flex center>
-
-- Selena continually lowers the price.
-- As soon as a bidder accepts the price,<br />
-  they are declared winners and auction is over.
-- Winner pays the price they accepted.
-
+- 赛琳娜持续降低价格。
+- 一旦有竞拍者接受价格，该竞拍者就被宣布为获胜者，拍卖结束。
+- 获胜者支付其接受的价格。
 </pba-flex>
-
 Notes:
-
-- We finally say a few words about the fourth and last auction format.
-- Notice it has a flavor of a first-price auction: you pick the price you pay.
-  So you definitely **do not** want to bid truthfully, but rather underbid.
-
+- 最后，我们来谈谈第四种也是最后一种拍卖形式。
+- 注意，它带有第一价格拍卖的特点：你自己选择支付的价格。所以你肯定**不会**如实出价，而是会压低出价。
 ---
-
-## Dutch Auction
-
-Recall the rules:
-
-- The auctioneer continually lowers the price.
-- At any price, you can decide whether or not to accept the price.
-- If you are the first to accept the price, you win and pay the price you just accepted.
-
+## 荷兰式拍卖
+回顾规则：
+- 拍卖师持续降低价格。
+- 在任何价格下，你可以决定是否接受该价格。
+- 如果你是第一个接受价格的人，你获胜并支付你刚刚接受的价格。
 ---
-
-## Dutch Auction
-
-- It turns out that the Dutch auction is strategically equivalent and revenue equivalent to the static first-price auction.
-- The price that you accept in the Dutch auction corresponds to the price that you'd bid in a static first-price auction.
-- The tradeoffs that the bidders face are very similar: take the current price or wait a bit at the risk of another bidder accepting first.
-  It is an equilibrium to wait till the price is half your valuation.
-
+## 荷兰式拍卖
+- 事实证明，荷兰式拍卖在策略和收益上均等同于静态第一价格拍卖。
+- 你在荷兰式拍卖中接受的价格，相当于在静态第一价格拍卖中你会给出的出价。
+- 竞拍者面临的权衡非常相似：是接受当前价格，还是冒着其他竞拍者先接受价格的风险再等一会儿。等待价格降至你估值的一半是一种均衡策略。
 ---
+## 回顾
 
-## Recap
-
-<pba-cols>
-<pba-col>
-
-**Analyzed important auction formats:**
-
-- Static first-price auction.
-- Static second-price auction.
-- English auction.
-- Dutch auction.
-
-</pba-col>
-<pba-col>
-
-**Learned under standard assumptions:**
-
-- First-price and Dutch auctions are strategy equivalent.
-- Second-price and English auctions are strategy equivalent.
-- All four actions are revenue equivalent.
-- Having a reserve price increases the expected revenue,
-  and it beats posting a price.
-
-</pba-col>
-</pba-cols>
-
+** 分析的重要拍卖形式： **
+- 静态第一价格拍卖
+- 静态第二价格拍卖
+- 英式拍卖
+- 荷兰式拍卖
+** 在标准假设下学到的内容： **
+- 第一价格拍卖和荷兰式拍卖在策略上等价
+- 第二价格拍卖和英式拍卖在策略上等价
+- 这四种拍卖形式收益等价
+- 设置保留价可以增加预期收益，并且比定价出售更优
 ---
-
 <!-- .slide: data-background-color="#000" -->
-
-## Break (10 minutes)
-
+## 休息（10分钟）
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-## Discussion
-
+## 讨论
 ---
-
-## Independence of valuations
-
-In our analysis, it was important to assume that
-bidders' valuations are independent from one another.
-
-_Can you think of examples where this assumption isn't sensible?_
-
+## 估值的独立性
+在我们的分析中，假设竞拍者的估值相互独立非常重要。
+你能想出哪些这个假设不合理的例子？
 ---
-
-## Independence of valuations
-
-_Answer:_
-
-**Sensible:** - a piece of art, where the bidders are final clients.
-
-**Not sensible:** drilling rights to an oil well.
-Bidders will have similar estimates of amount of oil,
-hence valuations are highly correlated.
-
+## 估值的独立性
+**答案**：
+**合理的例子**：一件艺术品拍卖，竞拍者是终端客户。
+**不合理的例子**：油井开采权拍卖。竞拍者对石油储量的估计相似，因此估值高度相关。
 ---
-
-## Common value auctions
-
-Special scenario: there is a unique valuation of item,
-but each bidder only has a private estimate of it.
-
-In these cases, it is observed that sealed-bid auctions
-tend to give higher revenue than dynamic auctions.
-
-_Why do you think this is the case?_
-
+## 共同价值拍卖
+特殊情况：物品有一个真实的唯一估值，但每个竞拍者只有对它的私人估计。
+在这些情况下，观察发现密封投标拍卖往往比动态拍卖产生更高的收益。
+你认为为什么会这样？
 ---
-
-## Common value auctions
-
-_The auction may be used as a means of gathering information from other participants to triangulate a price_
-
-_Answer_: In a dynamic auction, a bidder can use the bids of others as additional signals of the correct valuation.
-If bids so far seem high, my initial estimate must be low, and vice versa, so I can adjust my personal estimate.
-Hence estimates converge.
-
-In a static auction, there is no convergence of estimates, so it is more likely that some bidders keep unusually high estimates.
-As a result, there is a higher chance that the winner ends up paying more than the correct valuation.
-This is known as the _winner's curse_.
-
+## 共同价值拍卖
+**拍卖可能被用作从其他参与者那里收集信息以确定价格的一种手段**
+**答案**：在动态拍卖中，竞拍者可以将其他竞拍者的出价作为物品真实估值的额外信号。如果目前的出价看起来很高，那我最初的估计肯定偏低，反之亦然，所以我可以调整自己的估值。因此，估值会趋于一致。
+在静态拍卖中，估值不会趋于一致，所以一些竞拍者更有可能维持异常高的估值。结果，获胜者最终支付高于真实估值价格的可能性更高。这被称为“赢家的诅咒”。
 ---
-
-## Equivalence of revenues
-
-It is observed in practice that first-price auctions lead to higher revenue than second-price auctions.
-
-This _violates_ the equivalence of revenues, so an assumption in our analysis fails consistently.
-
-_What do you think it is?_
-
+## 收益等价性
+在实践中观察到，第一价格拍卖比第二价格拍卖带来更高的收益。
+这**违背**了收益等价性，说明我们分析中的某个假设始终不成立。
+你认为是哪个假设呢？
 ---
-
-## Equivalence of revenues
-
-_Answer:_ **Risk aversion.** People prefer lower uncertainty games, even if this means lower expected profits.
-
-_Would you rather win a million dollars with a 50% chance, or 300 thousand with a 90% chance?_
-
-In Nash equilibrium analysis for first-price auctions, we claimed that if Bob bids half his valuation, then Alice should bid half hers, so each wins 50% of time.
-But we implicitly assumed that Alice is risk neutral.
-Yet she might prefer to bid more and win more often.
-
+## 收益等价性
+**答案**：**风险厌恶**。人们倾向于不确定性较低的博弈，即使这意味着预期利润较低。
+你更愿意有50%的机会赢得一百万美元，还是有90%的机会赢得三十万美元？
+在第一价格拍卖的纳什均衡分析中，我们认为如果鲍勃出价为其估值的一半，那么爱丽丝也应该出价为她估值的一半，这样双方各有50%的获胜机会。但我们隐含地假设了爱丽丝是风险中性的。然而，她可能更愿意出价更高以增加获胜的频率。
 Notes:
-
-- Of course, Bob may react the same way and also bid more in an attempt to bid more often.
-  As a result, they may still win about 50% of the time each, but both end up bidding too much due to their risk aversion.
-- In contrast, in our analysis for second-price auctions, the bidders' aversion to risk is not a factor.
-- Important: If you want to maximize the auctioneer's revenue and don't mind playing psychological games with the bidders, you should choose first price auctions over second-price auctions.
-
+- 当然，鲍勃可能也会有同样的反应，为了更频繁地获胜而出更高的价。结果，他们各自获胜的概率可能仍保持在50%左右，但由于风险厌恶，双方最终都会出价过高。
+- 相比之下，在我们对第二价格拍卖的分析中，竞拍者的风险厌恶并非影响因素。
+- 重要提示：如果你想最大化拍卖师的收益，且不介意与竞拍者玩心理博弈，你应该选择第一价格拍卖而非第二价格拍卖。
 ---
-
-## Front Running
-
-Computer systems may have _front runners_: special nodes can see an incoming bid, react by creating their own bid, and make it look like their bid was created first.
-
-If you run an auction on a system with front runners, which of the four auctions would you use?
-Why?
-
+## 抢先交易
+计算机系统中可能存在“抢先交易者”：特殊节点能够看到即将到来的出价，通过生成自己的出价做出反应，并使其看起来像是自己的出价先产生。
+如果你在存在抢先交易者的系统上进行拍卖，你会选择四种拍卖形式中的哪一种？为什么？
 Notes:
-
-- Front runners are a known problem in eBay, trading platforms, and blockchain networks, etc.
-- Front runners have a special, faster setup that allows them to see an incoming message from a bidder, react to it by creating their own message, and make their message get registered first in the system.
-
+- 抢先交易是eBay、交易平台和区块链网络等面临的一个已知问题。
+- 抢先交易者拥有特殊、快速的设置，使他们能够看到竞拍者发出的消息，通过生成自己的消息做出反应，并使自己的消息在系统中先被记录。
 ---
-
-## Front Running
-
-_Answer:_ Meet front runner _Fred_.
-
-In a Dutch auction, if Fred is a bidder he waits for first bidder to signal accepting the price, and Fred makes the signal first.
-He's guaranteed to win with least possible price.
-
-In second-price auction, if Fred is auctioneer he can shill bid successfully: when a highest bid arrives, he creates bid slightly under it and makes it appear as if it was created first.
-
+## 抢先交易
+**答案**：假设有抢先交易者弗雷德。
+在荷兰式拍卖中，如果弗雷德是竞拍者，他会等待第一个竞拍者发出接受价格的信号，然后自己抢先发出信号。他肯定能以尽可能低的价格获胜。
+在第二价格拍卖中，如果弗雷德是拍卖师，他可以成功进行托拍：当最高出价到来时，他发出一个略低于该出价的报价，并使其看起来像是最先发出的。
 ---
-
-## Front Running
-
-_Answer:_ Meet front runner _Fred_.
-
-In a first-price auction, if Fred is bidder and if he can "open the seals" he can win by slightly outbidding highest bid.
-(Poor data privacy, a common issue in computer systems)
-
-Hence, it might be best to run an English auction.
-
+## 抢先交易
+**答案**：假设有抢先交易者弗雷德。
+在第一价格拍卖中，如果弗雷德是竞拍者，并且他能够“打开密封出价”，他可以通过略高于最高出价来获胜。（数据隐私性差，这是计算机系统中的常见问题）
+因此，举办英式拍卖可能是最佳选择。
 ---
-
-## Sniping
-
-In a dynamic auction with a fixed bidding time window, _sniping_ is placing a highest bid as late as possible, so other bidders can't react and overbid you.
-The practice leads to low revenue.
-Particularly bad when done by a front runner (microseconds).
-
-How to protect an auction from snipers?
-
+## 狙击出价
+在有固定出价时间窗口的动态拍卖中，“狙击出价”指尽可能晚地给出最高出价，使其他竞拍者无法做出反应并出价超过你。这种做法会导致收益较低。如果是抢先交易者进行狙击出价（在微秒级的时间内），情况会更糟。
+如何保护拍卖免受狙击出价的影响？
 Notes:
-
-- eBay uses such types of auctions, and is infamous for having snipers.
-
+- eBay采用这类拍卖形式，并且因存在狙击出价现象而声名狼藉。
 ---
-
-## Sniping
-
-_Answer:_ **candle auctions.**<br />
-Dynamic first-price auction with _random ending time._
-
+## 狙击出价
+**答案**：**烛光拍卖**。一种具有**随机结束时间**的动态第一价格拍卖。
 <img rounded style="width: 600px;" src="./img/candle-auction-photo.jpg" />
-
 ---
-
-## Sniping
-
-_Answer:_ **candle auctions.**<br />
-Dynamic first-price auction with _random ending time._
-
-- Similar to first-price auction
-- except that ending time is unpredictable.
-- At ending time, current highest bidder wins, pays own bid.
-- Sniping protection: the longer you wait to bid, the higher the chances the auction ends.
-
+## 狙击出价
+**答案**：**烛光拍卖**。一种具有**随机结束时间**的动态第一价格拍卖。
+- 与第一价格拍卖相似，
+- 不同之处在于结束时间不可预测。
+- 结束时，当前出价最高者获胜，并支付自己的出价。
+- 防狙击机制：你等待出价的时间越长，拍卖结束的可能性就越高。
 Notes:
-
-- Fun fact: candle auctions were popular in England in the 17th and 18th centuries.
-- They would use a candle (hence the name).
-  When the flame extinguishes, the auction is over.
-- Fun fact: Polkadot implemented a candle auction for assigning block space to applications.
-
+- 有趣的事实：烛光拍卖在17和18世纪的英国很流行。
+- 他们会使用一根蜡烛（因此得名）。当火焰熄灭时，拍卖结束。
+- 有趣的事实：polkadot（Polkadot）采用烛光拍卖来为应用程序分配区块空间。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Workshop: Auction Games
-
+# 实践环节：拍卖游戏
 ---
-
-## NFT Auction
-
-- You have the chance to bid on one of 25 unique NFTs that are created by a professional artist.
-- Use your budget that you accumulated during the last Academy Games.
-- Everything that you will not use for bidding (or if your bid was lower than your budget), you will receive in cash at the end of the Academy.
-- 100% of the revenue of the auctions goes to the artist.
-- You are randomly assigned to one of three auction formats
-
+## NFT拍卖
+- 你有机会竞拍由一位专业艺术家创作的25个独特NFT中的一个。
+- 使用你在上次学院游戏中积累的预算。
+- 你未用于出价的资金（或者如果你的出价低于预算），将在学院活动结束时以现金形式返还给你。
+- 拍卖的全部收益都将归艺术家所有。
+- 你将被随机分配到三种拍卖形式中的一种。
 ---
-
-# The Artist & NFTs!
-
+# 艺术家与NFT！
 ---
-
-## Jeremy Gluck (Nonceptualism)
-
-- Canadian Artist living in Great Britain.
-- Diverse Practice: Post-digital fine art in NFT, digital art, film, photography, sound and video art, installation, and performance.
-- Exhibitions: Works showcased offline in cities like London, Sydney, Bath, Anglesey, and Swansea, and online in various publications.
-- Art is exhibited in Tides Fine Art Gallery, Mumbles, Wales.
-
+## 杰里米·格鲁克（非概念主义）
+- 加拿大艺术家，现居英国。
+- 创作领域广泛：包括NFT形式的后数字艺术、数字艺术、电影、摄影、声音和视频艺术、装置艺术以及行为艺术。
+- 展览经历：作品在伦敦、悉尼、巴斯、安格尔西和斯旺西等城市线下展出，并在各种线上出版物中展示。
+- 作品在威尔士芒姆斯的潮汐美术馆展出。
 ---
-
 <img rounded style="width:600px" src="./img/collection-preview.jpg" />
-
 ---
-
-### Format 1: Activity Rule Auction
-
-- The initial bidding phase lasts 30 seconds.
-- Every valid bid resets the timer.
-- You need to bid at least 30 cents more than the previous highest bid.
-- Whoever has the highest bid at the end, wins.
-  Winners pay their bids.
-
+### 形式1：活动规则拍卖
+- 初始出价阶段持续30秒。
+- 每次有效出价都会重置计时器。
+- 你的出价需要比之前的最高出价至少高出30美分。
+- 最终出价最高者获胜。获胜者支付其出价金额。
 ---
-
-### Format 2: Candle Auction
-
-- Auction Format from the 16th Century.
-- The auction lasts for exactly 4 minutes.
-- A “candle mechanism” randomly determines, after the auction, when the auction ended
-- Grace-period of 1 minute.
-- Candle Phase of 3 minutes.
-- Whoever had the highest bid when the auction actually ended, wins.
-
+### 形式2：烛光拍卖
+- 起源于16世纪的拍卖形式。
+- 拍卖时长正好4分钟。
+- 拍卖结束后，通过“烛光机制”随机确定拍卖实际结束时间。
+- 有1分钟的宽限期。
+- 3分钟的竞价期。
+- 拍卖实际结束时出价最高者获胜。
 ---
-
-### Format 3: Hard Close Auction
-
-- Similar to eBay auctions.
-- Auction lasts for 4 minutes.
-- Whoever has the highest bid at the end of the auction, wins.
-- Winners pay their bids.
-
+### 形式3：限时结束拍卖
+- 与eBay拍卖类似。
+- 拍卖持续4分钟。
+- 拍卖结束时出价最高者获胜。
+- 获胜者支付其出价金额。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-## Auction 2: Questions?
-
+## 拍卖2：有问题吗？
 ---
-
-## Auction 2: NFT Auction
-
-Link will be distributed!
-
+## 拍卖2：NFT拍卖
+链接将被分发！
 ---
-
-## Auction 2: Discussion
-
+## 拍卖2：讨论
 ---
-
-## Auction 2: Results!
-
+## 拍卖2：结果！
 ---
-
-## Further Reading
-
-Polkadot & Kusama Auctions<br />Data & Background information:
-
+## 延伸阅读
+polkadot（Polkadot）与kusama（Kusama）拍卖<br>数据与背景信息：
 <pba-flex center>
-
-- [Kusama Auctions 1-5](https://www.polkadot.network/blog/making-history-an-overview-of-the-first-five-parachain-slot-auctions-on-kusama/)
-- [Kusama Auctions 6-10](https://www.polkadot.network/blog/kusama-batch-2-auctions-report/)
-- [Polkadot Auctions 1-5](https://www.polkadot.network/blog/making-history-again-polkadot-auctions-1-5/)
-
+- [kusama拍卖1 - 5](https://www.polkadot.network/blog/making-history-an-overview-of-the-first-five-parachain-slot-auctions-on-kusama/)
+- [kusama拍卖6 - 10](https://www.polkadot.network/blog/kusama-batch-2-auctions-report/)
+- [polkadot拍卖1 - 5](https://www.polkadot.network/blog/making-history-again-polkadot-auctions-1-5/)
 </pba-flex>
-
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
-
+# 提问环节
 ---
+## 附加游戏：美元拍卖
 
-## Bonus Game: Dollar Auction
-
-<pba-flex center>
-
-- Each group of five players is bidding on a one dollar note.
-- Minimum bid is 5 cents, bid increments of 5 cents.
-- Auction lasts 90 seconds.
-- Highest bidder gets the prize.
-- **Both** highest and second highest bidders pay respective bids.
-
-</pba-flex>
+- 每五名玩家一组竞拍一美元纸币
+- 最低出价为5美分，出价增量为5美分
+- 拍卖持续90秒
+- 出价最高者获得奖品
+- 出价最高者和第二高者都需支付各自的出价金额
 
 Notes:
-
-- Thought experiment designed by economist Martin Shubik.
-- Serves as analogy for war: it may be apparent for both sides that even winning the war won't make up for the losses, yet both sides are motivated to keep spending money on it.
-- You could get 1 dollar for 5 cents if no one else bids.
-- But if you end up second you have a loss.
-
+- 这是经济学家马丁·舒比克设计的思想实验。
+- 它可类比战争：双方可能都清楚，即使赢得战争也无法弥补损失，但双方仍有动力继续投入资金。
+- 如果无人竞争，你可以用5美分赢得1美元。
+- 但如果你最终出价第二，你就会有损失。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-## Dollar Auction: Questions?
-
+## 美元拍卖：有问题吗？
 ---
-
-# Dollar Auction
-
+# 美元拍卖
 ---
-
-## Discussion
-
-- Would you consider the auction paradoxical?
-- Did you catch yourself acting irrational?
-- Did you observe any phases in the game?
-- Why do you think the game could be considered an analogy for war?
-
+## 讨论
+- 你认为这场拍卖存在矛盾之处吗？
+- 你有没有发现自己的行为不理性？
+- 你在游戏中观察到什么阶段特征了吗？
+- 你觉得为什么这个游戏可以被视为战争的类比？
 ---
-
-## Auction 1: Results!
+## 拍卖1：结果！

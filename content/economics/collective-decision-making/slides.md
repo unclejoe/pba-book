@@ -4,30 +4,30 @@ description: Collective Decision Making for web3 builders
 duration: 1 hour
 ---
 
-# Collective Decision Making
+# 集体决策
 
 ---
 
-## Lesson highlights
+## 课程亮点
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-##### Decision<br />making systems
+##### 决策<br />系统
 
-- Common systems
-- Goals and trade-offs
+- 常见系统
+- 目标和权衡
 
 </pba-flex>
 </pba-col>
 <pba-col>
 <pba-flex center>
 
-##### Voting mechanisms
+##### 投票机制
 
-- Common mechanisms
-- Desirable criteria
+- 常见机制
+- 理想标准
 
 </pba-flex>
 </pba-col>
@@ -35,957 +35,658 @@ duration: 1 hour
 
 Notes:
 
-- This lesson will be markedly less "exact" than the previous ones in the module.
-  It will be less math and more critical thinking.
-- Hence, I encourage class participation.
-- However, many topics may be contentious and we might not be able to agree, especially not within the lesson time.
-  The objective of the lesson is to awaken your curiosity on the topic, and I encourage you to continue the discussions outside the classroom.
-- In the second half of the lesson we'll talk about voting mechanisms, which are widely used within many decision making systems.
+- 这节课将明显不如模块中的前几节课“精确”。这将是更少的数学和批判性思维。
+- 因此，我鼓励课堂参与。
+- 然而，许多话题可能会有争议，我们可能无法达成一致，尤其是在上课时间内。这节课的目的是唤醒你对这个话题的好奇心，我鼓励你在课外继续讨论。
+- 在课程的后半部分，我们将讨论投票机制，这在许多决策系统中被广泛使用。
 
 ---
 
-## Collective decision making
+## 集体决策
 
-An umbrella term that contains voting mechanisms,<br />governance processes, policy making, budget allocation.
+一个包含投票机制、治理流程、政策制定、预算分配的总称。
 
 ---
 
-## Collective decision making
+## 集体决策
 
-- A way to gather the opinions of a heterogenous collective.
-- A way to aggregate their preferences in a concise way.
-- A way to reach a _decision_ over the definition, resources, privilege or authority of a collective.
+- 一种收集异质集体意见的方式。
+- 一种以简洁方式汇总他们偏好的方式。
+- 一种就集体的定义、资源、特权或权威做出决策的方式。
 
 Notes:
 
-- In this lesson we will study some of the different ways in which people can make decisions as a unit.
-- When people think of collective decision making, they usually only think of voting for a representative or representatives, and then letting them make all the decisions.
-  But it is important to remember that this is just one of many possible mechanisms to reach a decision as a collective.
+- 在这节课中，我们将学习人们作为一个整体做出决策的一些不同方式。
+- 当人们想到集体决策时，他们通常只会想到投票给一个或多个代表，然后让他们做出所有的决定。但重要的是要记住，这只是作为一个集体做出决定的许多可能机制之一。
+---
+
+## 为什么？
+
+- 国家、公司、王朝等强大机构形成的先决条件。
+- 敏捷决策有助于集体应对外部变化：战争、贸易、移民。
+- 在内部，它们促进稳定和进步：货币、法律、私有财产。
 
 ---
 
-## Why?
+## 为什么？
 
-- A prerequisite for the formation of countries, companies, dynasties, i.e., _strong institutions_.
-- Agile decision making helps collective react to _external_ changes: war, trade, migration.
-- _Internally_, they enable stability and progress: money, laws, private property.
-
----
-
-## Why?
-
-- Even high tech, highly automated projects remain human collectives at their core.
-- A project's decision-making mechanisms ensure its strength and relevance over time.
-- We should consider these mechanisms along with the project's economics and security.
+- 即使是高科技、高度自动化的项目，其核心仍然是人类集体。
+- 项目的决策机制确保其随着时间的推移保持强大和相关性。
+- 我们应该将这些机制与项目的经济和安全一起考虑。
 
 Notes:
 
-- We use the words "collectives" in a very broad sense, to include not only nations and dynasties, but also modern collectives like tech companies, social networks, and online communities.
-  It is important to remember that these are human collectives, no matter how technical or automated they appear.
-- Only well designed decision-making mechanisms can ensure that a collective stays strong and relevant over time.
-  Otherwise, it will disintegrate due to internal discontent or external changes.
-- Hence, analyzing a project's decision making mechanisms is just as important as analyzing the soundness of its cryptography, economics and security.
+- 我们在非常广泛的意义上使用“集体”一词，不仅包括国家和朝代，还包括科技公司、社交网络和在线社区等现代集体。重要的是要记住，这些是人类的集体，无论它们看起来多么技术性或自动化。
+- 只有设计良好的决策机制才能确保集体在一段时间内保持强大和相关。否则，它会因内部不满或外部变化而瓦解。
+- 因此，分析项目的决策机制与分析其密码学、经济学和安全性的稳健性一样重要。
+
 
 ---
 
-## A more profound interpretation
+## 更深刻的解释
 
-Long you live and high you fly<br />
-Smiles you'll give and tears you'll cry<br />
-**And all you touch and all you see<br />
-Is all your life will ever be**<br />
+你活得长久，飞得高远<br />
+你将给予微笑，你将流下泪水<br />
+你所触及的一切，你所看到的一切<br />
+就是你生命的全部
 
--- Pink Floyd (Breathe)
+-- 平克·弗洛伊德（呼吸）
 
-Any single entity may be identified as the aggregate of _its (inter-)actions with its external environment_. If a system's governance wholly defines these, it may properly be considered to identify the entity.
+任何单个实体都可以被识别为其与外部环境相互作用的总和。如果一个系统的治理完全定义了这些相互作用，那么它可以被恰当地视为识别该实体。
 
 ---
 
-## Common systems
+## 常见系统
 
-- Dictator, unelected or elected.
-- Unelected committee (Zurich guilds).
-- Representative democracy -- elected committee.
-- Political parties
-- Direct democracy -- all participate in all decisions.
+- 独裁者，未经选举或选举产生。
+- 未经选举的委员会（苏黎世行会）。
+- 代议制民主 - 选举产生的委员会。
+- 政党
+- 直接民主 - 所有人参与所有决策。
 
 Notes:
 
-- Can you think of other examples?
-- In the middle ages, the city of Zurich in Switzerland was run by guilds (merchants, farmers, tailors).
-  Women, and anyone outside these guilds, had no say in the decision-making process.
+- 你能想到其他例子吗？
+- 中世纪，瑞士的苏黎世市由行会（商人、农民、裁缝）经营。女性，以及这些行会以外的任何人，在决策过程中没有发言权。
 
 ---
 
-## Goals
+## 目标
 
 <!-- prettier-ignore -->
 |                  |                                                                                 |
 | :--------------: | :-----------------------------------------------------------------------------: |
-|   **Utility**    | - decision maximizes society's welfare<br /> - it reflects people's preferences |
-|  **Legitimacy**  |          - decision is considered fair<br />- people trust the process          |
-| **Practicality** |              - process is fast<br /> - it is simple to understand               |
+|   **效用**    | - 决策最大化社会福利<br /> - 反映人民的偏好 |
+|  **合法性**  |          - 决策被认为是公平的<br />- 人们信任这个过程          |
+| **实用性** |              - 过程快速<br /> - 易于理解               |
 |                  |                                                                                 |
 
 Notes:
 
-- The three key goals of any decision making process are utility, legitimacy and practicality.
-- While _utility_ is about the objective quality of the final result, _legitimacy_ is about the perceived quality of the process.
-  A mechanism is considered legitimate if most people trust the process, agree with it and feel empowered by it, even if they may not personally like the outcome.
-- For instance, if Fifa had decided unilaterally that Argentina wins the world cup, this decision making mechanism would have the same utility but not the same legitimacy as playing the games: everyone would be angry at it.
-- Finally, the _practicality_ goal plays an important role especially if we have a very large population, or a short time window to make a decision, e.g., in an emergency.
+- 任何决策过程的三个关键目标是效用、合法性和实用性。
+- _utility_是关于最终结果的客观质量，_legitimacy_是关于过程的感知质量。如果大多数人信任这一过程，同意这一过程，并感到被赋予了权力，即使他们个人可能不喜欢这一结果，这种机制也被认为是合法的。
+- 例如，如果国际足联单方面决定阿根廷赢得世界杯，这种决策机制将具有与玩游戏相同的效用，但不具有相同的合法性：每个人都会对此感到愤怒。
+- 最后，_practicality_ 目标起着重要作用，特别是如果我们有非常多的人口，或者在很短的时间内做出决定，例如在紧急情况下。
 
 ---
 
-## Goals
+## 目标
 
 <pba-flex center>
 
-- A dictator is practical.
-  Is it legitimate?
-- Direct democracy is legitimate.
-  Why not always use this?
-- Which mechanism maximizes utility?
-- Which is best in case of war?
+- 独裁者是实用的。
+  它合法吗？
+- 直接民主是合法的。
+  为什么不总是使用它？
+- 哪种机制最大化效用？
+- 在战争情况下哪种最好？
 
 </pba-flex>
 
 Notes:
 
-- This is the type of questions we are gonna explore in this lesson.
-- Direct democracy is considered legitimate but is unfortunately slow.
-  If would not be the right mechanism for an emergency, such as war.
-- In the next slides, we look more closely at some of the most common systems.
+- 这是我们将在这节课中探讨的问题类型。
+- 直接民主被认为是合法的，但不幸的是进展缓慢。如果不是紧急情况下的正确机制，比如战争。
+- 在下一张幻灯片中，我们将更仔细地研究一些最常见的系统。
 
 ---
 
-## Dictator
+## 独裁者
 
 <pba-flex center>
 
-- Legitimate?
-- It is _very_ practical.
-- Good in case of an emergency.
-- Only stable as long as the individual is stable (unlikely to be forever!).
+- 合法吗？
+- 非常实用。
+- 在紧急情况下很好。
+- 只有在个人稳定的情况下才稳定（不太可能永远稳定！）。
 
 </pba-flex>
 
 Notes:
 
-- What's wrong with a dictator?
-  We typically think of it as illegitimate, but keep in mind that kings used to be considered legitimate in the past.
-  And even today, the owner of a large tech company may be able to make unilateral decisions that impact millions of lives, and we consider this to be legitimate.
-- It is practical and allows for fast decision making in case of an emergency.
-  For example, in the next pandemic, would you like to have every city vote on whether and when face masks should be mandatory in public spaces?
-  Or would you prefer to have an authority impose it?
-- You could also argue that it leads to stability, as people can expect things to stay the way they are for the foreseeable future, and can plan accordingly.
-  However, we also have several real-life examples where a dictator behaves erratically.
+- 独裁者有什么问题？
+我们通常认为它是非法的，但是请记住，国王在过去被认为是合法的。
+即使在今天，一家大型科技公司的所有者也可能能够做出影响数百万人生活的单方面决定，我们认为这是合法的。
+- 它是实用的，并允许在紧急情况下快速决策。
+例如，在下一次疫情中，你想让每个城市投票决定是否以及何时在公共场所强制佩戴口罩吗？
+还是你更愿意让权威机构强制执行？
+- 你也可以说它会带来稳定，因为人们可以期望在可预见的未来事情保持原样，并可以相应地进行计划。
+然而，我们也有几个现实生活中独裁者行为反复无常的例子。
 
 ---
 
-## Democracy
+## 民主
 
 <img rounded style="width: 900px;" src="./img/democracy-meme.png" />
 
 Notes:
 
-- Lots of different things to lots of different people.
-- Democracy doesn't really exist, only systems which are democratic to a some degree.
+- 不同的人具有不同的特征。
+- 民主并不真正存在，只有某种程度上民主的制度。
 
 ---
 
-## Simple Direct Democracy
+## 简单直接民主
 
 <pba-flex center>
 
-- Every person is consulted on every decision.
-- Considered highly legitimate.
-- Good at revealing the collective's opinions.
-- Leads to progress as anyone can propose ideas.
+- 每个人都对每个决定进行咨询。
+- 被认为是高度合法的。
+- 擅长揭示集体的意见。
+- 允许进步，因为任何人都可以提出想法。
 
 </pba-flex>
 
 Notes:
 
-- Direct democracy represents an extreme where every person is consulted on every decision, for instance via referendums.
-- It is great at revealing the people's opinions, and adapting at evolving opinions.
-- Similarly, if we assume that anyone is free to raise a proposal in direct democracy, then there is a sort of "free market of ideas".
-  This leads to quick progress, because innovative ideas that challenge the status quo are not silenced.
+- 直接民主是一个极端，在这种情况下，每一项决定都要征求每个人的意见，例如通过全民投票。
+- 它擅长揭示人们的意见，并适应不断变化的意见。
+- 同样，如果我们假设任何人都可以在直接民主中自由提出建议，那么就存在一种“思想自由市场”。这导致了快速的进步，因为挑战现状的创新想法不会沉默。
 
 ---
 
-## Simple Direct democracy
+## 简单直接民主
 
 <img rounded style="width: 900px;" src="./img/direct-democracy.png" />
 
-Compare to a two-party system
+与两党制相比
 
 Notes:
 
-- For instance, imagine a two-party system like the US where people are forced to pick one of two parties, instead of directly casting their vote on every decision.
-  Imagine the left party traditionally supports legalizing abortion and banning firearms, while the right party traditionally supports banning abortion and legalizing firearms.
-  Such idiosyncrasy could have made sense in the past, but if there is a shift in preferences whereby more and more people want to legalize both abortions and guns, the system will not have the means to detect these preferences and adapt properly.
-- Similarly, if neither the left party nor the right party supports universal healthcare, then people who support healthcare do not have a voice.
-- Of course, similar issues remain for a multi-party system (more than two political parties), and the issues are even worse in a dictatorship.
+- 例如，想象一下像美国这样的两党制，人们被迫从两党中选择一个，而不是直接投票决定每一个决定。
+想象一下，左翼政党传统上支持堕胎合法化和禁止枪支，而右翼政党传统上支持禁止堕胎和枪支合法化。
+这种特质在过去可能是有道理的，但是如果偏好发生变化，越来越多的人希望堕胎和枪支合法化，这个系统就没有办法发现这些偏好并做出适当的调整。
+- 同样，如果左翼和右翼都不支持全民医疗保健，那么支持医疗保健的人就没有发言权。
+- 当然，多党制（两个以上政党）也存在类似的问题，在独裁政权中，问题更为严重。
 
 ---
 
-## Simple Direct democracy
+## 简单直接民主
 
 <pba-flex center>
 
-- Not very practical:<br />asking everyone to vote.
-- One decision at a time.
-- Not great for emergencies.
+- 不是很实用：<br />询问每个人的投票。
+- 一次一个决定。
+- 不适合紧急情况。
 
 </pba-flex>
 
 Notes:
 
-- On the down side, direct democracy is unfortunately not very practical for two reasons.
-  First, because asking every person to vote very slow.
-  In particular, having a referendum would probably not be wise in an emergency such as war, or a detected vulnerability in a computer network.
+- 不利的一面是，不幸的是，直接民主不是很实际，原因有两个。首先，因为要求每个人投票很慢。特别是，在战争等紧急情况下，或者在计算机网络中检测到漏洞时，举行公投可能不是明智的。
 
 ---
 
-## Voting paradox
+## 投票悖论
 
-Does direct democracy maximize **utility**?
-_Probably not._
+直接民主是否最大化 **效用**？
+_可能不是。_
 
-Example:
-_Option A_: 0 dollars
-_Option B_: 100 dollars
+示例：
+_选项 A_：0 美元
+_选项 B_：100 美元
 
-Prob. that _my vote_ flips the result from A to B: <0.1%.
+_我的投票_ 将结果从 A 翻转到 B 的概率：<0.1%。
 
-So, my expected profit for voting is <10 cents.
+因此，我投票的预期利润 <10 美分。
 
 Notes:
 
-- We saw that direct democracy is legitimate but not practical.
-  How does it fare in terms of utility?
-  Relatively well, but we argue here that it is not ideal, due to something called the voting paradox.
-- Suppose the collective must decide between options A and B, and I personally value option A as worth zero and option B as worth $100 to me.
-- Now, if most people vote for A, then A wins even if I vote for B, and if most people vote for B, then B wins even if I don't vote at all.
-  Hence the most likely event is that my vote does not change the outcome.
-- When the number of voters is in the millions, the likelihood that my vote actually changes the outcome is tiny, well below $0.1\%$.
-  My _expected profit_ for voting is then
-  (my profit for B - myr profit for A)$\times$prob.
-  that my vote flips the result.
-- In this example, my expected profit is less than 10 cents, which probably does not justify the effort of voting.
+- 我们看到直接民主是合法的，但不实用。
+它在效用方面表现如何？
+相对来说是好的，但是我们在这里认为这并不理想，因为有一种叫做投票悖论的东西。
+- 假设集体必须在选项A和B之间做出决定，我个人认为选项A值零，选项B值100美元。
+- 现在，如果大多数人投票给A，那么即使我投票给B，A也会赢，如果大多数人投票给B，那么即使我根本不投票，B也会赢。
+因此，最有可能的事件是我的投票不会改变结果。
+- 当选民人数达到数百万时，我的投票实际改变结果的可能性很小，远低于0.1美元\%$。
+我 _expected profit_ 投票
+（我的B利润-我的A利润）$\乘以$prob。
+我的投票推翻了结果。
+- 在这个例子中，我的预期利润不到10美分，这可能不能证明投票的努力是合理的。
 
 ---
 
-## Voting paradox
+## 投票悖论
 
-**Voting paradox:** For a rational, self-interested voter, voting costs will normally exceed the expected benefits.
+**投票悖论：** 对于理性、自利的选民来说，投票成本通常会超过预期收益。
 
-Minimal chance that single vote changes collective decision, so most of the time the individual voting benefit is zero.
+单个投票改变集体决策的机会最小，因此大多数时候个人投票收益为零。
 
-A _common good_ game: globally optimal if everyone votes, but personally optimal not to vote.
+这是一个 _公共利益_ 游戏：如果每个人都投票，全局最优，但个人最优是不投票。
 
 Notes:
 
-- Voting paradox is a known concept in voting theory: if voters are rational and self interested, they should not vote.
-  The fact that many people vote means that they are either not rational, or not self interested.
+-投票悖论是投票理论中的一个已知概念：如果选民是理性和自私的，他们就不应该投票。许多人投票的事实意味着他们要么不理性，要么不自私。
 
 ---
 
-## Voting paradox
+## 投票悖论
 
-**Voting paradox:** For a rational, self-interested voter, voting costs will normally exceed the expected benefits.
+** 投票悖论：** 对于理性、自利的选民来说，投票成本通常会超过预期收益。
 
-It leads to a low _turnout_, which affects legitimacy.
+它导致 _投票率_ 低，这会影响合法性。
 
-**Turnout:** percentage of people who choose to vote.
+** 投票率：** 选择投票的人口百分比。
 
 Notes:
 
-- Indeed, we see for instance that in Switzerland, where direct democracy is used, the turnout is typically around 30%, and it's even lower in other systems.
-- Only a basic interpretation. Better technology and progressive voting systems (OpenGov!) can mitigate this issue.
+- 事实上，例如，我们看到在使用直接民主的瑞士，投票率通常在30%左右，而在其他系统中甚至更低。
+- 只是一个基本的解释。更好的技术和渐进式投票系统（OpenGov！）可以缓解这个问题。
 
 ---
 
-## Rational ignorance
+## 理性无知
 
-**Rational ignorance:** refraining from learning
-when the cost of educating oneself on an issue
-exceeds the expected potential benefit.
+**理性无知：** 当教育自己了解某个问题的成本超过预期潜在收益时，避免学习。
 
-As a result, most people will not vote _judiciously_.
+因此，大多数人不会 _明智地_ 投票。
 
 Notes:
 
-- A notion related to the voting paradox is that of rational ignorance: when the expected benefit we obtain from voting is minimal, we might not vote judiciously, even when we vote.
-- We have limited time and limited capacity to learn things, so we will give preference to acquiring the knowledge that personally brings us the most expected potential benefit.
-- In the previous example, if our expected benefit for voting at most 10 cents, and it takes us two hours to understand what the best option is, it may be wiser to vote at random even if we vote, and use that time to learn to code, or learn to play guitar, etc.
+- 与投票悖论相关的一个概念是理性无知：当我们从投票中获得的预期利益微乎其微时，我们可能不会明智地投票，即使我们投票。
+- 我们学习东西的时间和能力有限，所以我们会优先选择获得给我们带来最预期潜在利益的知识。
+- 在前面的例子中，如果我们的预期收益最多为10美分，并且我们需要两个小时才能理解最佳选择是什么，那么即使我们投票，随机投票可能更明智，并利用这段时间学习编码，或者学习弹吉他等。
+
 
 ---
 
-## Rational ignorance
+## 理性无知
 
-Whether or not someone votes can be biasable.
+是否有人投票可能是有偏见的。
 
-_40% of the population supports a new proposal,
-while 60% rejects it.
-However, a company
-who will profit from the decision lobbies for the 'aye'.
-50% of supporters and 30% of detractors vote.
-As a result, the proposal passes._
+_40% 的人口支持一项新提案，
+而 60% 的人反对。
+然而，一家
+将从该决定中获利的公司
+游说支持“赞成”。
+50% 的支持者和 30% 的反对者投票。
+结果，该提案通过。
 
 Notes:
 
-- Another consequence of rational ignorance is that someone's vote can be biasable.
-  If you don't have a strong opinion about a vote because you haven't spent the time to learn about the issue deeply, you're more likely to be easily influenceable.
+-理性无知的另一个后果是某人的投票可能是有偏见的。如果你对投票没有强烈的看法，因为你没有花时间深入了解这个问题，你更有可能很容易受到影响。
+
 
 ---
 
-## Solutions to the voting paradox
+## 解决投票悖论的方法
 
-- **Representative democracy**: elect a committee,
-  whose members represent well
-  the preferences of the _passive people_.
+- **代议制民主：** 选举一个委员会，
+  其成员能够很好地代表
+  被动人民的偏好。
 
-- **Delegated voting**: give your voting power
-  to a person who understands the issue well,
-  so you don't have to.
+- **委托投票：** 将你的投票权
+  授予一个理解问题的人，
+  这样你就不必自己投票了。
 
 Notes:
 
-- We saw that a critique of direct democracy is that it's unrealistic to expect everyone in the population to invest their time to understand every issue, and then vote.
-- This leads to low turnout, which raises the question of legitimacy if a majority of the population does not voice their opinion.
+- 我们看到对直接民主的批评是，期望人口中的每个人都投入时间来理解每个问题，然后投票是不现实的。
+- 这导致投票率低，如果大多数人不发表意见，就会产生合法性问题。
 
 ---
 
-## Advanced Forms of Democracy
+## 先进的民主形式
 
-<pba-flex center>
-
-- Liquid democracy/delegation
-- OpenGov/multi-track delegation
-- Quadratic "replacement" voting
-- OpenGov/Optimistic approval
-- ...
-
-</pba-flex>
+- 流动民主/委托制
+- 开放式治理/多轨委托
+- 二次 “替代” 投票
+- 开放式治理/乐观批准
+- ……
 
 ---
 
-## Solutions to the voting paradox
+## 投票悖论的解决方案
+- 这两种解决方案都基于代表集体中每个 “小团体” 的意愿。
+- 委托投票是自然形成的，有助于提高投票率，但仍然缓慢。
+- 委员会会忽略小团体的偏好，但能够快速做出复杂决策。
+Notes:
+- 然而，人们自然倾向于与具有相似偏好的人聚集在一起，形成我们所说的小团体。所以，你往往会被自己所在小团体中的选民很好地代表。这两种制度的理念都是为每个小团体 “抽样” 一些意见。
+- 在我看来，委托投票在精神上与直接民主非常接近，因为每个人仍然可以自由选择直接投票，或者他们可以选择一个能很好代表自己的代表。这样在实用性方面我们有所收获，因为现在需要投票的人变少了，但这个过程仍然缓慢，并且只能做出二元决策。
+- 另一方面，委员会有点类似于独裁者。它在代表集体中最普遍的偏好方面做得很好，但无法代表小团体的偏好。不过，它能够做出微妙的、非二元的决策，而且速度很快。
+- 因此，对于重要的二元决策（例如是否将堕胎合法化）采用委托投票，对于紧急决策（例如在战争情况下该怎么做）由选举产生的委员会来做决策，可能是个好主意。我鼓励你们思考如何设计一个理想的决策系统。
 
-- Both solutions based on desire of
-  representing every _clique_ in the collective.
-- Delegated voting is organic, helps with turnout,
-  but remains slow.
-- A committee ignores preferences of small cliques,
-  but can take complex decisions fast.
+---
+
+## 制度俘获
+独裁能使效用最大化吗？很可能也不能。
+**制度俘获**：在一个决策系统中，某个小团体能够始终强行推行自己的意见。他们将自身特殊利益置于集体利益之上，导致整体福利下降。
+Notes:
+- 此前我们认为，纯粹的直接民主可能无法使效用最大化。现在我们也认为，纯粹的独裁对效用来说也并非理想选择。
+
+---
+
+## 制度俘获
+**示例**：在一个电影俱乐部中，40%的人喜欢喜剧，30%的人喜欢剧情片，30%的人喜欢动作片。他们应该每次都看喜剧吗？如果比例变为60%、20%、20%又该如何？
+Notes:
+- 想象有一群朋友每周聚在一起看电影，40%的成员总是选择喜剧，30%选择剧情片，30%选择动作片。
+- 每次都选喜剧公平吗？或者你会选择什么样的决策系统？
+- 如果比例变为60%、20%、20% ，因为喜剧能让大多数人开心，所以总是选择喜剧就公平吗？
+
+---
+
+## 制度俘获
+
+- 从定义上讲，独裁制度就是被俘获的。
+- 如果少数人的意见一直被忽视，多数决投票也可能导致制度俘获，这就是所谓的 “多数人的暴政”。
+- 这会影响合法性。
 
 Notes:
-
-- However, people naturally tend to congregate with other people with similar preferences, to form what we call cliques.
-  So, you tend to be well represented by voters in your clique.
-  The idea of both systems is to "sample" some opinions for every clique.
-- From my point of view, delegated voting remains very close in spirit to direct democracy, as every individual remains free to vote directly if they choose to do so, or they can choose a representative that represents them very well.
-  We gain in terms of practicality as now fewer people need to vote, but the process is still slow and can only take binary decisions.
-- On the other hand, a committee is a bit closer to a dictator.
-  It does a good job at representing the most common preferences of the collective, but not the preferences of small cliques.
-  On the other hand, it can make subtle, non-binary decisions, and can make them fast.
-- Hence, it could be a good idea to use delegated voting for important, binary decisions (such as whether to make abortions legal), and an elected committee to make emergency decisions (such as what to do in case of war).
-  I encourage you to consider how you would design an ideal decision making system.
+- 虽然独裁显然是一种被俘获的制度，但其他制度也有不同程度的被俘获风险。
+- 例如，正如我们在电影俱乐部的例子中看到的，多数决投票也可能导致制度俘获。
+- 反过来，如果一群人觉得自己的声音总是被忽视，这不仅会对效用目标产生负面影响，还会影响合法性目标。
 
 ---
 
-## System capture
+## 随机独裁者
+每当需要做出决策时，从集体中随机挑选一个人，让他像独裁者一样做出决定。
+Notes:
+- 作为一个有趣的话题，我们提到一种叫做随机独裁者的制度。
+- 这在电影俱乐部的例子中效果很好：每周随机挑选一个人，让他选择要看的电影。
+- 另一方面，让随机独裁者每月决定国家的税收政策则是个糟糕的主意。因为在这种情况下，稳定性比避免多数人的暴政更重要。
 
-Does a dictatorship maximize utility?
-Also **probably not**.
+---
 
-**System capture:** A decision-making system
-in which a clique manages to impose
-its opinion consistently.
+## 随机独裁者
 
-Their special interest is prioritized
-over the interest of the collective,
-leading to a decrease of general welfare.
+- 效率极高。
+- 平均而言，抗俘获能力极强。
+- 稳定性极差。
+- 它应用在哪些地方？
 
 Notes:
-
-- Before we argued that pure direct democracy might not maximize utility.
-  Now we also argue that a pure dictatorship is also not ideal for utility.
+- 随机独裁者制度在短期内可能被 “俘获”，但从长期来看，其抗俘获能力很强。因为每个小团体，即使是非常小的团体，都有机会以与团体规模成正比的频率表达自己的意见。
+- 事实上，大多数基于工作量证明和权益证明的区块链共识协议都采用了一种随机独裁者的变体。我们这样做是为了提高效率，并且因为区块生产的稳定性并非首要任务，而最高优先级是抵御敌对少数派的俘获。
+- 这是因为，如果大多数区块生产者诚实行事，那么当轮到你生产区块时，诚实行事也是一种纳什均衡。但如果少数派在一段时间内成功俘获系统，并随意决定这段时间内生产的大多数区块的内容，那么少数派就有动机为了个人利益攻击网络。
 
 ---
 
-## System capture
+## 抗俘获性与稳定性
 
-_Example:_ in a movie club,
-40% of people like comedy,
-30% like drama, 30% like action.
-
-Should they watch a comedy every time?
-
-What if it was 60%, 20%, 20%?
+- 独裁是 “完全被俘获” 的，但具有稳定性。
+- 直接民主存在 “被俘获的风险”，不过依然稳定。
+- 随机独裁者 “抗俘获能力最强”，但不稳定。
 
 Notes:
-
-- Imagine that a group of friends meet every week to watch a movie, and 40% of members always pick comedy while 30% pick dramas and 30% pick action movies.
-- Would it be fair if a comedy is chosen every time?
-  Or what would decision-making system would you choose?
-- What if the percentages were 60%, 20%, 20%?
-  Is it now fair to always pick a comedy, since it makes a majority of people happy?
+- 在这个图表中，我们考虑小团体或选民群体的规模，并将其与他们对集体决策的预期影响力相对应绘制。
+- 例如，如果存在一个未经选举产生的独裁者，那么无论大小，任何小团体都对决策没有任何影响力。
+- 在两党制中，只有规模相当大的选民群体才有发言权，而小选民群体则没有发言权。
+- 如果我们选举一个更大的委员会，那么较小的选民群体更有可能得到代表，从而对最终决策产生影响。
+- 最后，在随机独裁者制度中，无论选民群体多么小，每个选民群体都有机会按照其规模比例影响最终决策。
+- 总的来说，我们发现抗俘获性和稳定性之间存在权衡。
 
 ---
 
-## System capture
-
-<pba-flex center>
-
-- A dictatorship system is captured by definition.
-- A majority vote can lead to capture<br />if the minority's opinion is consistently ignored.<br />
-  Known as "tyranny of the majority".
-- It can affect legitimacy.
-
-</pba-flex>
-
+## 回顾
+- 目标：效用、合法性和实用性。
+- 在紧急情况下，实用性可能更为关键。
+- 简单直接民主具有合法性，但实用性欠佳。
+- 独裁具有实用性，但缺乏合法性。
+- 这两种极端情况可能都无法实现效用最大化。
+- 借助新技术，我们拥有更好的工具和机制，能让直接民主更有效。
+---
+## 投票机制
+- 在决策系统中广泛应用。
+- 可供选择的“候选人”：人员、政策。
+- 通过“选票”表达偏好的“选民”。
+- 一种机制将这些选票作为输入，输出单一候选人作为“获胜者”。
+- 有许多评判该机制的“标准”。
 Notes:
-
-- Although a dictatorship is obviously a captured system, other systems also have varying degrees of risk of being captured.
-- For instance, as we saw with the movie club example, a majority vote can also lead to capture.
-- In turn, this can not only negatively affect the utility goal but also the legitimacy goal, if a group of people feel that their voice is always ignored.
-
+- 新话题，注意啦！
+- 投票机制是几个世纪以来最受欢迎的集体决策方式之一。
+- 你认为原因是什么？它被用于选举领导人、治理机构内部决策、比赛评选获胜者、朋友间决定去哪家餐厅，甚至家庭中给狗狗取名。
+- 毫无疑问，集体决策机制最理想的标准之一是“简单性”，即大众应易于理解和参与。这或许是投票机制的一大优势。
+- 在接下来的幻灯片中，我们将探讨一些最常见的投票机制，以及一些用于比较它们的常用标准。
+- 你认为哪种标准对一种机制来说最直观且理想？公平性？比例性？效用？你会如何精确定义这些术语呢？
 ---
-
-## Random dictator
-
-Whenever there is a decision to be made,<br />pick a person at random in the collective<br />and let them decide as a dictator.
-
+## 投票机制
+我们将了解以下概念：
+- “单票制机制”：简单多数制、两轮投票制。
+- “排序投票机制”：博尔达计数法、排序对方法。
+- 选票分流、策略性投票。
+- 单调性标准。
 Notes:
-
-- As a curious note, we mention a system called random dictator.
-- It works quite well in the example of the movie club: every week, pick a person at random and let them select the movie to watch.
-- On the other hand, it would be a bad idea for a country to let a random dictator decide on the tax policy every month.
-  This is because in the case stability is more important than avoiding a tyranny of the majority.
-
+- 根据选民表达偏好的方式，主要分为两种类型：在单票制机制中，每位选民选择一名候选人；在排序投票机制中，每位选民对所有候选人进行排序。
 ---
-
-## Random dictator
-
-<pba-flex center>
-
-- _Very_ efficient.
-- _Very_ capture resistant (on average).
-- Terrible for stability.
-- Where is it used?
-
+## 单票制机制
+每位选民挑选一名候选人的机制。
+- **简单多数投票制**：得票最多的候选人获胜，即便其未获得绝对多数选票。
+- **两轮投票制**：得票前两名的候选人进入再次投票。第二轮中得票最多的候选人获胜 。
 Notes:
-
-- A random dictator system is captured in the short term, but it is highly resistant to capture in the long term.
-  This is because every clique, even very small ones, will have their voice heard with a frequency proportional to the clique size.
-- In fact, a version of random dictator is used in most blockchain consensus protocol, both based in proof-of-work and proof-of-stake.
-  We do this for efficiency, and because stability of block production is not a priority, while the highest priority is to resist capture by an adversarial minority.
-- This is because, if most block producers act honestly, then it is a Nash equilibrium to also act honestly when it is your turn to produce a block.
-  But if a minority manages to capture the system for some amount of time, and arbitrarily decide on the content of a majority of blocks produced during this time, then the minority has an incentive to attack the network for personal gain.
-
+- 这些是最受欢迎的投票机制，也无疑是最简单的机制之一。
+- 简单多数制在英国也被称为“得票领先者当选制”，并在当地广泛应用。
+- 也可考虑其推广形式——多轮投票机制。
 ---
+## 单票制机制
 
-## Capture resistance vs. stability
-
-<pba-flex center>
-
-- A dictatorship is _fully captured_ but also stable.
-- Direct democracy is at _risk of capture_, and still stable.
-- A random dictatorship is _most resistant to capture_, but unstable.
-
-</pba-flex>
-
-Notes:
-
-- In this chart we consider the size of a clique or constituent, and plot it against the influence it will have over the collective decision in expectation.
-- For instance, if there is an unelected dictator then no clique, big or small, has any influence on decisions.
-- In a two-party system, only fairly large constituents will have a voice, while small constituents will have no voice.
-- If we elect a larger committee then smaller constituents are more likely to be represented and hence have an influence on the final decision.
-- Finally, in a random dictator system we have that every constituent, no matter how small, has a chance of influencing the final decision in proportion to the constituent size.
-- In general, we see that there is a trade-off between being resistant to capture and being stable.
-
----
-
-## Recap
-
-- Goals: utility, legitimacy and practicality.
-- In emergencies, practicality may be more relevant.
-- Simple direct democracy is legitimate, not so practical.
-- Dictatorship is practical, not legitimate.
-- Probably neither extreme maximizes utility.
-- With new technology, we have better tools & mechanisms to make direct democracy effective
-
----
-
-## Voting mechanisms
-
-- Widely used within decision-making systems.
-- _Candidates_ to choose from: people, policies.
-- _Voters_ who declare preferences through _ballots_.
-- A mechanism takes these ballots as input,
-  and outputs a single candidate as the _winner_.
-- Many _criteria_ to judge the mechanism.
-
-Notes:
-
-- New topic, wake up!
-- Voting mechanisms are some of the most popular ways to make collective decisions, and have been for centuries.
-- Why do you think that is? They are used for the election of leaders, for decision making within a governance body, choosing the winners in contests, among friends to decide on a restaurant, or in a family to name a dog.
-- Without a doubt, one of the most desirable criteria for a collective decision making mechanism is _simplicity_, meaning that it should be easy to understand and participate for the population.
-  This is probably a big pro for voting mechanisms.
-- In the next slides we will explore some of the most popular voting mechanisms, along with some of the most popular criteria used to compare them.
-- What criteria do you think are most intuitive and desirable for a mechanism? Fairness? Proportionality? Utility? How would you define these terms precisely?
-
----
-
-## Voting mechanisms
-
-We will see the following notions:
-
-- _Single-vote mechanisms:_ plurality, two-round.
-- _Ranked-vote mechanisms:_ Borda count, ranked-pairs.
-- Vote splitting, strategic voting.
-- Monotonicity criterion.
-
-Notes:
-
-- Two main types, depending on how the voters declare their preferences: in single-vote mechanisms, each voter selects one candidate, while in ranked-vote mechanisms, each voter ranks all candidates.
-
----
-
-## Single-vote mechanisms
-
-Mechanisms where each voter picks _one_ candidate.
-
-- **Plurality voting:** Candidate with most votes wins,
-  even if they do not receive an absolute majority of votes.
-- **Two-round voting:** Top two candidates are voted on again.
-  The candidate with most votes in second round wins.
-
-Notes:
-
-- These are some of the most popular voting mechanisms.
-  They are certainly among the simplest ones.
-- Plurality is also known as "first past the post" in the UK, where it is widely used.
-- Consider also the generalization - multi-round mechanisms
-
----
-
-## Single-vote mechanisms
-
-<pba-cols>
-<pba-col>
-
-**Plurality:** **8 votes for A,** 5 votes for B, 7 votes for C.
-
-**Two-round:**
-
-- 1st: **8 votes for A,** 5 votes for B, **7 votes for C**.
-- 2nd: 8 votes for A, **12 votes for C**.
-
-</pba-col>
-
-<pba-col>
-
+**简单多数制**： **A获得8票**，B获得5票，C获得7票。
+**两轮投票制**：
+- 第一轮： **A获得8票**，B获得5票， **C获得7票**。
+- 第二轮：A获得8票， **C获得12票**。
 <!-- prettier-ignore -->
-|          | 1st | 2nd | 3rd |
+|          | 首选 | 次选 | 第三选择 |
 | -------- | --- | --- | --- |
-| 8 voters | A   | B   | C   |
-| 7 voters | C   | B   | A   |
-| 5 voters | B   | C   | A   |
-
-</pba-col>
-</pba-cols>
+| 8位选民  | A   | B   | C   |
+| 7位选民  | C   | B   | A   |
+| 5位选民  | B   | C   | A   |
 
 Notes:
-
-- Recall that voters only vote for a single voter per round.
-  But for convenience in what follows we assume we know the full candidate ranking of each voter, so we can analyze what would happen if any two out of the three candidates go head to head in the second round.
-- Are they equivalent?
-  No.
-  Look at the example above where there are three candidates A, B and C, and 20 voters with three types of preferences.
-- In plurality voting, we would only get to see the first column, and elect A with 8 votes.
-- In two-round, candidates A and C would go to second round, where the 5 voters in the last row would change their vote from B to C, and candidate C would win with 12 votes.
-- In general, several seemingly reasonable mechanisms result in different winners for the same collection of voters' preferences.
-  This is why we need to look more closely into what properties we want out of a mechanism.
-
+- 记住，选民每轮只能为一名候选人投票。但为便于后续分析，我们假设知晓每位选民对所有候选人的完整排序，这样就能分析三名候选人中任意两人进入第二轮对决时的情况。
+- 这两种机制效果相同吗？并非如此。看上面的例子，有A、B、C三名候选人，20位选民有三种偏好类型。
+- 在简单多数投票制下，我们只能看到第一列数据，A以8票当选。
+- 在两轮投票制中，A和C进入第二轮，最后一行的5位选民会将选票从B改投给C，C将以12票获胜。
+- 一般来说，对于相同的选民偏好集合，几种看似合理的机制可能产生不同的获胜者。这就是我们需要深入探究期望机制具备哪些特性的原因。
 ---
-
-## Vote splitting
-
+## 选票分流
 <img rounded style="width: 900px;" src="./img/vote-splitting.png" />
-
 Notes:
-
-- Which of these mechanisms is better?
-  Here is an argument against plurality voting.
-- In 2014, Candidate Chandu Sahu, from a political party called BJP in India, was a favorite to win in an election against opponent Ajit Jogi.
-  To his surprise, on the day of the elections there were 10 other independent candidates registered with the same exact name.
-  Apparently most of these candidates had no history in politics, but someone found them and offered them money to run on the elections.
-  Of course, the obvious suspect is the opponent, but it was never proven.
-  Luckily, the original Chandu Sahu still managed to win, but by only a razor-thin margin of 1200 votes, as the other 10 fake candidates accumulated around 70 thousand votes.
-- This technique is known as vote splitting, and plurality voting is well known to be susceptible to it.
-
-Image source: <https://indianexpress.com/article/political-pulse/the-10-other-sahus-how-namesakes-almost-cost-bjps-chandu-lal-sahu-a-win/>
-
+- 这些机制哪种更好呢？下面是一个反对简单多数投票制的观点。
+- 2014年，印度人民党候选人钱杜·萨胡（Chandu Sahu）在与对手阿吉特·乔吉（Ajit Jogi）的选举中原本胜券在握。然而令他惊讶的是，选举当天出现了10位登记名字完全相同的独立候选人。显然，这些候选人大多没有政治背景，是有人找到他们并出钱让他们参加竞选。当然，最大嫌疑人是他的对手，但此事从未得到证实。幸运的是，真正的钱杜·萨胡最终还是成功获胜，但仅以1200票的微弱优势险胜，因为其他10位冒名候选人共获得了约7万张选票。
+- 这种手段被称为选票分流，而简单多数投票制极易受其影响。
+图片来源：<https://indianexpress.com/article/political-pulse/the-10-other-sahus-how-namesakes-almost-cost-bjps-chandu-lal-sahu-a-win/>
 ---
+## 选票分流
 
-## Vote splitting
-
-<pba-cols>
-<pba-col>
-
-- Imagine B and C are similar candidates,
-  and most people prefer either over A.
-- Known issue in plurality.
-  Two-round helps alleviate it.
-
-</pba-col>
-<pba-col>
-
+- 假设B和C是相似的候选人，且大多数人对他们的偏好高于A。
+- 这是简单多数制中存在的已知问题。两轮投票制有助于缓解这一问题。
 <!-- prettier-ignore -->
-|          | 1st | 2nd | 3rd |
+|          | 首选 | 次选 | 第三选择 |
 | -------- | --- | --- | --- |
-| 8 voters | A   | B   | C   |
-| 7 voters | C   | B   | A   |
-| 5 voters | B   | C   | A   |
-
-</pba-col>
-</pba-cols>
+| 8位选民  | A   | B   | C   |
+| 7位选民  | C   | B   | A   |
+| 5位选民  | B   | C   | A   |
 
 Notes:
-
-- Imagine that candidates B and C are very similar, i.e., they have similar points of view (or a similar name!) In the example, we see that a majority of the population prefers either of them to A, but since their votes are split, both candidates would lose out to A in plurality voting.
-- This issue is known as _vote splitting_.
-  Two-round voting helps reduces its effect.
-- In electoral systems that implement plurality voting, vote splitting is sometimes used as a weapon by the less popular party (in our example, A), who strategically nominates a candidate similar to their rival to split their votes.
-- In turn, a common defense against vote splitting is to form alliances among similar candidates.
-
+- 假设候选人B和C非常相似，比如观点相似（或名字相似）！从例子中可以看到，多数人对B或C的偏好高于A，但在简单多数投票制中，由于B和C的选票被分散，他们都会输给A。
+- 这个问题被称为“选票分流”。两轮投票制有助于减轻其影响。
+- 在采用简单多数投票制的选举体系中，选票分流有时会被不太受欢迎的政党（在我们的例子中是A方）当作一种策略，他们会有意提名与对手相似的候选人来分散对手选票。
+- 相应地，应对选票分流的常见办法是相似候选人之间结成联盟。
 ---
-
-## Monotonicity criterion
-
-- A voter raising their rank for the winning candidate,
-  or lowering their rank for a losing candidate,
-  should not change the winner.
-- Plurality is monotonic, _two-round voting is not_.
-
+## 单调性标准
+- 选民提高获胜候选人的排名，或降低落败候选人的排名，不应改变获胜者。
+- 简单多数制具有单调性，而两轮投票制不具有。
 Notes:
-
-- Conversely, here is an argument against two-round voting.
-- Monotonicity is one of the most intuitive criteria that we would expect from a voting rule.
-  It says that the winning candidate should be stable relative to monotonic changes of the voter's preferences.
-  In particular, if a voter raises their preference for the current winner, or lowers their preference for other candidates, then the winner should not change.
-- Failure of this criterion means that the mechanism is susceptible to strategic voting, because a rational voter may be better off hiding their real preferences.
-
+- 相反，这是一个反对两轮投票制的观点。
+- 单调性是我们期望投票规则具备的最直观标准之一。它指获胜候选人应在选民偏好的单调变化下保持稳定。特别是，如果选民提高对当前获胜者的偏好，或降低对其他候选人的偏好，获胜者不应改变。
+- 这一标准的缺失意味着该机制易受策略性投票影响，因为理性选民可能选择隐藏真实偏好以获取更有利的结果。
 ---
+## 单调性标准
 
-## Monotonicity Criterion
-
-<pba-cols>
-<pba-col>
-
-**Two-round:**
-
-- 1st: **8 votes for A**, 6 votes for B, **7 votes for C**.
-- 2nd: **11 votes for A**, 10 votes for C.
-
-</pba-col>
-<pba-col>
-
+**两轮投票制**：
+- 第一轮： **A获得8票**，B获得6票， **C获得7票**。
+- 第二轮： **A获得11票**，C获得10票。
 <!-- prettier-ignore -->
-|          | 1st | 2nd | 3rd |
+|          | 首选 | 次选 | 第三选择 |
 | -------- | --- | --- | --- |
-| 6 voters | A   | B   | C   |
-| 2 voters | A   | C   | B   |
-| 3 voters | B   | A   | C   |
-| 3 voters | B   | C   | A   |
-| 5 voters | C   | B   | A   |
-| 2 voters | C   | A   | B   |
-
-</pba-col>
-</pba-cols>
+| 6位选民  | A   | B   | C   |
+| 2位选民  | A   | C   | B   |
+| 3位选民  | B   | A   | C   |
+| 3位选民  | B   | C   | A   |
+| 5位选民  | C   | B   | A   |
+| 2位选民  | C   | A   | B   |
 
 Notes:
-
-- We will see now that two-round voting is not monotonic.
-- In this example, there are 21 voters, with 6 types of preferences.
-- In two-round voting, A and C go to the second round, where A wins 11 against 10.
-
+- 现在我们来看，两轮投票制不具有单调性。
+- 在这个例子中，有21位选民，存在6种偏好类型。
+- 在两轮投票制中，A和C进入第二轮，A以11票对10票获胜。
 ---
+## 单调性标准
 
-## Monotonicity Criterion
-
-<pba-cols>
-<pba-col>
-
-Bottom-row voters _raise their preference for A_.
-
-**Two-round:**
-
-- 1st: **10 votes for A**, **6 votes for B**, 5 votes for C.
-- 2nd: 10 votes for A, **11 votes for B**.
-
-</pba-col>
-<pba-col>
+最后一行的选民提高对A的偏好。
+**两轮投票制**：
+- 第一轮： **A获得10票**， **B获得6票**，C获得5票。
+- 第二轮：A获得10票， **B获得11票**。
 
 <!-- prettier-ignore -->
-|          | 1st   | 2nd   | 3rd |
-| -------- | ----- | ----- | --- |
-| 6 voters | A | B | C |
-| 2 voters | A | C | B |
-| 3 voters | B | A | C |
-| 3 voters | B | C | A |
-| 5 voters | C | B | A |
-| 2 voters | **A** | **C** | B |
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-- But now suppose the 2 voters in the bottom row raise their preference for A.
-  They simply swap the positions of A and C in their ranking.
-- Now C doesn't make it to the second round.
-  In the second round, now B wins 11 to 10 against A.
-- Hence, two-round voting is not monotonic.
-
-- If the bottom-row voters want candidate A to win, they are better off marking C as their top preference.
-
----
-
-## Strategic voting
-
-A mechanism in which a voter
-increases the chances of a candidate
-by _not voting for them_.
-
-Notes:
-
-- A mechanism that is not monotone is susceptible to strategic voting.
-- This is the case with two-round voting.
-- Indeed, in the previous example, the bottom-row voters want candidate A to win, but are better off marking C as their top preference.
-
----
-
-## Ranked-vote mechanisms
-
-<pba-cols>
-<pba-col>
-
-Mechanisms where each voter ranks _all_ candidates.
-
-- In 1770, Jean-Charles de Borda showed 2-round
-  may elect a candidate that would lose out
-  head-to-head to _every other candidate_.
-
-</pba-col>
-<pba-col>
-
-<!-- prettier-ignore -->
-|          | 1st | 2nd | 3rd |
+|          | 首选 | 次选 | 第三选择 |
 | -------- | --- | --- | --- |
-| 8 voters | A | B | C |
-| 7 voters | C | B | A |
-| 5 voters | B | C | A |
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-- Are there monotonic mechanisms better than plurality voting?Yes!
-- But they require more information from the voters: they need to rank all the candidates.
-- The unfair nature of plurality voting was pointed out in 1770 by French mathematician Jean-Charles de Borda, in a presentation at the French Royal Academy of Sciences.
-- He proved that plurality voting can elect the least favorite candidate: one that would be defeated by every other candidate in a head-to-head election.
-- Going back to our first example, recall that A was the winner in plurality voting, yet if A and B go head-to-head, A loses 8 to 12, and if A and C go head-to-head, again A loses 8 to 12.
-- Finally, if B and C go head-to-head, B would win 15 to 5, so in a sense B is the overall winner of pair-wise elections.
-
----
-
-## Borda count
-
-<pba-flex center>
-
-- Each voter gives a rank of all $k$ candidates
-- Interpreted as if giving $k-1, k-2, \cdots, 1, 0$ points
-- Add up all points, select candidate with most points.
-- Borda count is _monotone_.
-
-</pba-flex>
+| 6位选民  | A | B | C |
+| 2位选民  | A | C | B |
+| 3位选民  | B | A | C |
+| 3位选民  | B | C | A |
+| 5位选民  | C | B | A |
+| 2位选民  | **A** | **C** | B |
 
 Notes:
-
-- Borda proposed a new election mechanism, known today as the Borda count, that can be thought of as a generalization of two-round voting.
-- If there are $k$ candidates, this is interpreted as if the a voter gives $k-1$ points to their favorite candidate, $k-2$ points to their second favorite candidate, and so on until their least favorite candidate gets zero points.
-  Then, we elect the candidate that received the most points overall.
-
+- 但现在假设最后一行的2位选民提高对A的偏好，他们只是在自己的排序中将A和C的位置互换。
+- 现在C未能进入第二轮。在第二轮中，B以11票对10票战胜A获胜。
+- 因此，两轮投票制不具有单调性。
+- 如果最后一行的选民希望候选人A获胜，他们最好将C列为首选。
 ---
+## 策略性投票
+一种选民通过 **不把票投给** 某候选人来增加该候选人获胜机会的机制。
+Notes:
+- 不具有单调性的机制易受策略性投票影响。
+- 两轮投票制就是这种情况。
+- 确实，在前面的例子中，最后一行的选民希望候选人A获胜，但将C列为首选对他们更有利。
+---
+## 排序投票机制
 
-## Borda Count
+每位选民对 **所有** 候选人进行排序的机制。
+- 1770年，让 - 夏尔·德·博尔达（Jean - Charles de Borda）指出，两轮投票制可能选出的候选人在与其他候选人的一对一竞争中会输给 **每一位** 其他候选人。
 
 <!-- prettier-ignore -->
-|          | 2 points | 1 point | 0 points |
-| -------- | -------- | ------- | -------- |
-| 8 voters | A | B | C |
-| 7 voters | C | B | A |
-| 5 voters | B | C | A |
-
-<br />
-
-16 points for A, **25 points for B**, 19 points for C.
+|          | 首选 | 次选 | 第三选择 |
+| -------- | --- | --- | --- |
+| 8位选民  | A | B | C |
+| 7位选民  | C | B | A |
+| 5位选民  | B | C | A |
 
 Notes:
-
-- In our example, we see that B wins, as expected.
-  We highlight that for the exact same example, the winner was A under plurality and C under two-round!
-
+- 有没有比简单多数投票制更好的单调机制呢？有！
+- 但它们需要选民提供更多信息：选民需要对所有候选人进行排序。
+- 1770年，法国数学家让 - 夏尔·德·博尔达在法国皇家科学院的一次演讲中指出了简单多数投票制的不公平性。
+- 他证明简单多数投票制可能选出最不受欢迎的候选人：在一对一的选举中，该候选人会被其他所有候选人击败。
+- 回到我们的第一个例子，回忆一下，在简单多数投票制中A获胜。然而，如果A和B进行一对一竞争，A以8票对12票落败；如果A和C进行一对一竞争，A同样以8票对12票落败。
+- 最后，如果B和C进行一对一竞争，B将以15票对5票获胜，所以从某种意义上说，B是两两竞争中的最终赢家。
 ---
+## 博尔达计数法
 
-## Recap
-
-<pba-flex center>
-
-- Borda count is arguably more fair.
-- But plurality and two-round voting are simpler.
-- Simplicity seems to be important in practice.
-- No voting mechanism is perfect.
-
-</pba-flex>
+- 每位选民对所有k名候选人进行排序
+- 可理解为给候选人分别赋予k - 1、k - 2、……、1、0分
+- 累加所有分数，选出得分最高的候选人。
+- 博尔达计数法具有单调性。
 
 Notes:
-
-- In the area of voting theory, there are many other voting mechanisms known, and many other possible criteria to classify them.
-  Voting theory is a fascinating topic at the intersection between mathematics and political theory.
-- In general, we see that the rules with better properties tend to be more complicated, which is unfortunately why they are not used as much.
-  Hence, we can say that no mechanism is perfect.
-- Still, some mechanisms will be a better fit than others depending on our priorities for a system.
-
+- 博尔达提出了一种新的选举机制，即如今所知的博尔达计数法，可将其视为两轮投票制的推广。
+- 如果有k名候选人，这可以理解为选民给最喜欢的候选人k - 1分，给第二喜欢的候选人k - 2分，以此类推，给最不喜欢的候选人0分。然后，我们选出总得分最高的候选人。
 ---
+## 博尔达计数法
+<!-- prettier-ignore -->
+|          | 2分 | 1分 | 0分 |
+| -------- | ---- | ---- | ---- |
+| 8位选民  | A    | B    | C    |
+| 7位选民  | C    | B    | A    |
+| 5位选民  | B    | C    | A    |
+<br>
+A得16分， **B得25分**，C得19分。
+Notes:
+- 在我们的例子中，正如预期，B获胜。需要强调的是，对于同样的例子，简单多数投票制下的获胜者是A，两轮投票制下的获胜者是C！
+---
+## 回顾
 
+- 博尔达计数法可以说更公平。
+- 但简单多数投票制和两轮投票制更简单。
+- 在实践中，简单性似乎很重要。
+- 没有完美的投票机制。
+
+Notes:
+- 在投票理论领域，还有许多其他已知的投票机制，以及众多可能的分类标准。投票理论是一个位于数学和政治理论交叉点上的迷人话题。
+- 总体而言，我们发现性质更好的规则往往更复杂，这就是它们未被广泛应用的原因。因此，可以说没有一种机制是完美的。
+- 不过，根据我们对系统的优先级设定，某些机制会比其他机制更合适。
+---
 <!-- .slide: data-background-color="#000" -->
-
-# Break
-
+# 休息
 Notes:
-
-10 minutes
-
+10分钟
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Discussion
-
+# 讨论
 ---
-
-## Goals clash
-
+## 目标冲突
 <pba-flex style="padding: 0 3em 0 3em" center>
-
-We mentioned that the main goals of a decision-making system are utility, legitimacy and practicality.
-
-**Can you think of real-life scenarios where these goals clash?**
-
+我们提到决策系统的主要目标是效用、合法性和实用性。
+**你能想到现实生活中这些目标发生冲突的场景吗？**
 </pba-flex>
-
 Notes:
-
-- We saw that ranked-based voting, like Borda count, seems to be more fair (utility), but it is less simple to participate (practicality), which is probably why it's not so popular.
-
+- 我们看到，像博尔达计数法这样基于排序的投票方式似乎更公平（效用方面），但参与过程不够简单（实用性方面），这可能就是它不太受欢迎的原因。
 ---
-
-## Sampling voters
-
+## 选民抽样
 <pba-flex style="padding: 0 3em 0 3em; font-size: smaller;" center>
-
-In a country that runs referendums periodically, the turnout is only 2%, and older people tend to vote much more often than younger people.
-
-The president changes the voting mechanism so that in each referendum, only 5% of the population elected uniformly at random is _allowed_ to vote.
-As a result, every person is allowed to participate in one out of 20 referendums on average.
-
-It is now observed that 80% of the people allowed to vote actually vote, so the global turnout grows from 2% to 4%.
-Moreover, the previously correlation between age and willingness to vote decreases considerably.
-
-**Would you support this new mechanism?**
-
+在一个定期举行公投的国家，投票率仅为2%，而且老年人投票的频率远高于年轻人。总统改变了投票机制，在每次公投中，仅随机选取5%的民众 **有资格** 投票。结果，平均每人大约每20次公投中有一次投票机会。现在观察到，有资格投票的人中有80% 实际参与了投票，因此总体投票率从2%提高到了4%。此外，此前年龄与投票意愿之间的相关性也大幅降低。
+**你会支持这种新机制吗？**
 </pba-flex>
-
 Notes:
-
-- We saw that representative democracy and delegated voting can be seen as sampling opinions from the collective, so that not everyone has to vote.
-  In the exercise we take the sampling idea literally.
-- Is this new mechanism more or less legitimate?
-  Does it have higher utility?
-  I think it has higher utility but less legitimacy.
-- Is it practical?
-  It could be an issue to have a sampling process that is verifiably random and unbiased.
-  This affects practicality and legitimacy.
-
+- 我们知道，代议制民主和委托投票可以看作是从集体中抽样意见，这样就不必让每个人都参与投票。在这个练习中，我们从字面上理解抽样的概念。
+- 这种新机制的合法性更高还是更低？它的效用更高吗？我认为它效用更高，但合法性更低。
+- 它实用吗？确保抽样过程可验证的随机性和无偏性可能是个问题。这会影响实用性和合法性。
 ---
-
-## A holy grail
-
+## 圣杯难题
 <pba-flex style="padding: 0 3em 0 3em" center>
-
-A "holy grails" of voting theory is finding a voting mechanism that simultaneously offers _local privacy_ and _global transparency_: no one should be able to see another person's ballot, but enough aggregate information about the ballots should be public so that everyone can verify the correctness of the result.
-
-Suppose such a mechanism is created using cryptography; however, it requires every voter to use a private key and be trained in the basics of cryptography.
-A nation's president proposes to use such a mechanism, but the feedback from the population is negative, because people don't trust digital voting or cryptography.
-
-**What goals are at odds here?**
-**What would you do as president?**
-
+投票理论的 “圣杯” 是找到一种同时具备 “局部隐私” 和 “全局透明” 的投票机制：任何人都无法看到他人的选票，但应公开足够的选票汇总信息，以便每个人都能验证结果的正确性。假设利用密码学创建了这样一种机制，但它要求每位选民使用私钥，并接受密码学基础知识培训。一位国家总统提议采用这种机制，但民众反馈消极，因为人们不信任数字投票或密码学。
+**这里哪些目标相互冲突？**
+**如果你是总统，会怎么做？**
 </pba-flex>
-
 Notes:
-
-- While there is a lot of active research in this topic, there is no fully satisfactory solution yet.
-- The goals at odds are legitimacy and utility.
-  If people don't trust the process then it is not legitimate, even if it has many advantages in theory.
-- The president could try to educate people about the new system, but should probably not impose it.
-
+- 虽然这一领域有大量研究，但目前仍没有完全令人满意的解决方案。
+- 这里相互冲突的目标是合法性和效用。如果人们不信任这个过程，即使它在理论上有诸多优势，也不具备合法性。
+- 总统可以尝试对民众进行新系统的教育，但或许不应强制推行。
 ---
-
-## Proof of Stake
-
+## 权益证明机制
 <pba-flex style="padding: 0 3em 0 3em" center>
-
-In a Proof-of-stake (PoS) based blockchain network, _validators_ are the nodes that participate in the consensus protocol and produce blocks.
-While it is possible to have a "pure" PoS mechanism where every token holder can participate in consensus directly (imitating PoW), most high-profile projects bound the number of validators that get to be active at any given moment.
-
-Instead, these project opt for "representative democracy" and let token holders express their preferences for the set of active validators.
-Examples of blockchain projects that do this are: Polkadot, Cardano, Cosmos, EOS, Tezos and Tron.
-
-**What do you think are the main reasons behind this choice?**
-
+在基于权益证明（PoS）的区块链网络中，“验证者”是参与共识协议并生成区块的节点。虽然理论上可以设计一种“纯粹”的权益证明机制，让每个代币持有者都能像工作量证明（PoW）机制那样直接参与共识，但大多数知名项目都会限制在任何给定时刻活跃验证者的数量。
+相反，这些项目选择“代议制民主”模式，让代币持有者表达他们对活跃验证者集合的偏好。采用这种做法的区块链项目有波卡（Polkadot）、卡尔达诺（Cardano）、宇宙（Cosmos）、EOS、特所思（Tezos）和波场（Tron）等。
+**你认为做出这种选择背后的主要原因是什么？**
 </pba-flex>
-
 Notes:
-
-- Mostly for operational reasons
-- As the validator set size increases, the communication costs grow quickly (superlinearly), while the increase in security grows slowly past a certain point.
-- It is not sensible to run nodes for only sporadic participation.
-  Validators would naturally tend to form pools anyway, to decrease the variance of their revenue, and profit from economies of scale.
-
+- 主要是出于运营方面的考量。
+- 随着验证者集合规模的扩大，通信成本会迅速（超线性）增长，而超过一定节点后，安全性的提升却很缓慢。
+- 仅为偶尔参与而运行节点是不明智的。无论如何，验证者自然倾向于组成验证者池，以减少收益的波动，并从规模经济中获利。
 ---
-
-## Secure Validators
-
-We saw that it's critically important for security to ensure that the set of validators is not captured by an adversary.
-Suppose we succeed, so that a super majority of validators participate in consensus honestly.
-
-A priori, the mechanism for electing validators can be completely independent of the mechanism for deciding on upgrades.
-However, some projects merge them together.
-In particular, consider a project that on any referendum, delegates the voting power of all the passive stakeholders to the set of validators.
-
-**Does this constitute _capture_ of the governance body?**
-
-**Can you think of examples where the interests of validators are markedly different from the interests of the collective?**
-
+## 安全的验证者
+我们知道，确保验证者群体不被攻击者控制对于网络安全至关重要。假设我们成功做到这一点，使得绝大多数验证者诚实地参与共识。
+从理论上讲，选举验证者的机制与决定网络升级的机制可以完全相互独立。然而，有些项目将这两者结合在一起。特别地，设想有一个项目，在任何公投中，将所有被动利益相关者的投票权委托给验证者群体。
+**这是否构成对治理机构的“俘获”？**
+**你能想到验证者利益与集体利益明显不同的例子吗？**
 Notes:
-
-- Yes, for instance if we vote to increase the staking rewards, all validators would support it, but this negatively affects stakeholders who are using their tokens in other ways (such as in financial applications like lending).
+- 是的，例如如果我们投票决定提高质押奖励，所有验证者都会支持，但这会对以其他方式使用代币的利益相关者（如将代币用于借贷等金融应用）产生负面影响 。 

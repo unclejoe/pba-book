@@ -1,4 +1,4 @@
-# Collective Decision Making
+# 集体决策
 
 <!-- markdown-link-check-disable -->
 <center>

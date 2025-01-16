@@ -22,13 +22,13 @@
   - [奇异原语](./cryptography/exotic-primitives/page.md)
   - [现实环境中的加密学](./cryptography/in-context/page.md)
 
-- [🪙 Economics and Game Theory](./economics/index.md)
+- [🪙 经济学与博弈论](./economics/index.md)
 
-  - [Basics](./economics/basics/page.md)
-  - [Game Theory](./economics/game-theory/page.md)
-  - [Price Finding Mechanisms](./economics/price-finding-mechanisms/page.md)
-  - [Collective Decision Making](./economics/collective-decision-making/page.md)
-  - [The Economics of Polkadot](./economics/economics-of-polkadot/page.md)
+  - [基础知识](./economics/basics/page.md)
+  - [博弈论](./economics/game-theory/page.md)
+  - [价格发现机制](./economics/price-finding-mechanisms/page.md)
+  - [集体决策](./economics/collective-decision-making/page.md)
+  - [Polkadot 经济学](./economics/economics-of-polkadot/page.md)
 
 - [⛓️ Blockchains and Smart Contracts](./blockchain-contracts/index.md)
 

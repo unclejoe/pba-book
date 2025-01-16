@@ -1,4 +1,4 @@
-# Economics Basics
+# 经济学基础
 
 <!-- markdown-link-check-disable -->
 <center>
