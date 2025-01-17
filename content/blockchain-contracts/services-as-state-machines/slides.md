@@ -3,407 +3,396 @@ title: Digital Services as State Machines
 description: Digital Services approximate smart contracts; both are modeled as state machines.
 ---
 
-# Digital Services as State Machines
+# 数字服务即状态机
 
 ---
 
 ## Web0
 
-Telegraph, Telephone
+电报、电话
 
-Users transmit information peer-to-peer.
+用户进行点对点信息传输。
 
-Crypto not typically used except by military, but upheld guarantees when used.
+除了军方，通常不使用加密技术，但使用时能保证信息安全。
 
 <img src="./img/Web0.png" />
 
 Notes:
 
-I want to go through a brief history of the web.
-This is not a history course, but it is important to understand the context of the web and how we got to where we are today.
-I will be using the term "web" to refer to the internet, but I will also be using it to refer to the world wide web.
-The internet is the physical infrastructure that allows computers to communicate with each other.
-The world wide web is one of the several utilizes including e-mail, File Transfer Protocol (FTP), Internet Relay Chat (IRC), Telnet, and Usenet that form the Internet.
-Okay so let's back up before all of that though - The term web0 isn't a common nomenclature - but basically this is old school Telegraph and telephones and in this era users transmitted information peer-to-peer.
-There was no intermediary.
-There was no service provider.
-There was no web server.
-There was no database.
-I would call up a friend - be connected via a wire - and we would talk, end to end.
-sure there are switchboard operators, but you could think of it as one really long wire connecting me to my friend I'm calling.
-Which is actually a perfect scenario for cryptography to uphold its guarantees.
-Once I talk to the switchboard operator and get routed to you, then we can just talk over our Cipher.
-It's really peer to peer, which is great!
-However, people were not really aware of the threat model and cryptography was not really used except by the military.
-But when it was used, it was used to uphold its guarantees.
-So this is like a property that we want to try to restore in web3.
+我想简要回顾一下互联网的历史。
+这不是一门历史课程，但了解互联网的背景以及我们是如何发展到今天的很重要。
+我将使用“网络”一词来指代互联网，但也会用它来指代万维网。
+互联网是允许计算机相互通信的物理基础设施。
+万维网是构成互联网的几种应用之一，包括电子邮件、文件传输协议（FTP）、互联网中继聊天（IRC）、远程登录（Telnet）和Usenet。
+好的，让我们回溯到这些应用出现之前——“Web0”这个术语并不是一个常见的命名方式——但基本上它指的是老式的电报和电话，在这个时代，用户进行点对点的信息传输。
+没有中间人。
+没有服务提供商。
+没有网络服务器。
+没有数据库。
+我会打电话给朋友——通过电线连接——然后我们就可以进行端到端的通话。
+当然，有总机接线员，但你可以把它想象成一根很长的电线将我和我要通话的朋友连接起来。
+这实际上是加密技术保证信息安全的完美场景。
+一旦我与总机接线员通话并被转接给你，我们就可以通过加密方式进行交流。
+这真的是点对点的，太棒了！
+然而，人们并没有真正意识到威胁模型的存在，除了军方，加密技术并没有得到广泛应用。
+但当使用加密技术时，它确实能保证信息安全。
+所以这是我们希望在Web3中恢复的一个特性。
 
 ---
 
 ## Web1
 
-Introduction of always-on servers.
+引入了始终在线的服务器。
 
-Still mostly peer-to-peer.
+仍然主要是点对点的。
 
-Cryptography more often, but still not ubiquitous.
+加密技术使用得更频繁，但仍然没有普及。
 
 <img style="width: 300px;" src="./img/Web1.png" />
 
 Notes:
 
-Web 1 brings us to the 70s and 80s (maybe early 90s).
-This is an introduction to always-on servers.
-so with web0, with the telephone - I pick up my phone when I'm calling someone or when someone calls me and then I put it down and I'm offline the rest of the time.
-But in web1, we have these always on servers but it's still mostly peer-to-peer because people, at least two kind of a first order approximation had their own servers so in the clipart, we've got users and their servers - these pink lines are a connection to your own server.
-So this user has her own server and these two users maybe share a server - I don't know, they work for the same company or go to the same University or something and then this user doesn't have her own, maybe she's just consuming information and she's more of a casual user.
-So web1 is pretty similar to web0 and cryptography did start to become used a little bit more, but it still was not very ubiquitous and it's basically just because of the kinds of applications that people were using web1 for - it was mostly just for sharing information.
-Classic example is publishing - you would publish your paper or your data set and the whole idea is if you're publishing something, you really don't need to be keeping it secret, and in fact you're actually trying to NOT have it be secret.
-You're trying to put it out there for everyone to use and read.
-Now authenticity guarantees for sure would have still been great here - to know that your data didn't get tampered with along the wire...
-but again the threat model just wasn't in practice quite so bad and so like people got away without cryptography.
+Web1将我们带到了20世纪70年代和80年代（可能还有90年代初）。
+这是始终在线服务器的引入。
+在Web0时代，使用电话时，我在给别人打电话或者别人给我打电话时才会拿起电话，然后放下电话，其余时间我就处于离线状态。
+但在Web1时代，我们有了这些始终在线的服务器，但仍然主要是点对点的，因为至少在一阶近似的情况下，人们有自己的服务器。所以在剪贴画中，我们看到了用户和他们的服务器——这些粉色的线表示与你自己的服务器的连接。
+所以这个用户有她自己的服务器，这两个用户可能共享一个服务器——我不知道，他们可能在同一家公司工作或者在同一所大学上学之类的，而这个用户没有自己的服务器，也许她只是在消费信息，是一个比较随意的用户。
+所以Web1和Web0非常相似，加密技术确实开始得到更多的应用，但仍然不是很普及，这主要是因为人们使用Web1的应用类型——主要是为了共享信息。
+经典的例子是发布——你会发布你的论文或数据集，整个想法是，如果你要发布某些东西，你真的不需要对其保密，事实上，你实际上是想让它公开。
+你想把它发布出来供大家使用和阅读。
+当然，真实性保证在这里仍然很重要——要知道你的数据在传输过程中没有被篡改……
+但同样，威胁模型在实际中并没有那么严重，所以人们在没有加密技术的情况下也能应付。
 
 ---
 
 ## Web2
 
-Introduction of **Digital Services** with **Rich State**.
+引入了具有丰富状态的**数字服务**。
 
-Administered by service providers: "Send _us_ your information."
+由服务提供商管理：“把你的信息发送给**我们**。”
 
-However, users must place faith in the service provider.
+然而，用户必须信任服务提供商。
 
-Cryptographic guarantees are about interactions with the service provider, not peers.
+加密保证是关于与服务提供商的交互，而不是与对等方的交互。
 
 <img style="width: 300px;" src="./img/Web2.png" />
 
 Notes:
 
-So that brings us to web2.
-1999 or 2004, wherever you want to put it really.
-Web2 brings the introduction of Digital Services with Rich state - so we're talking about web apps.
-Who here remembers Myspace? I was obsessed with curating my top 8.
-And then of course Facebook or whatever social media platform and beyond.
-But it's not just media either, there's eBay and Amazon and you can register to vote online and there's all these Services where you just go online you fill some data into a web form - maybe you don't even have to do a page reload - and that basically submits a transaction to some back-end server somewhere!
-So we begin to get these really really useful Digital Services.
-You can even think about things like Google search for example, that hardly existed in web1.
-Notice that there are no more pink lines in the diagram - people don't have their own servers - they're all connected to this one Central server.
-Obviously in reality it isn't a single Central server, but the the point kind of remains - it's a small number of centralized service providers.
+这就把我们带到了Web2时代。
+可以说是1999年或2004年，具体时间取决于你怎么看。
+Web2带来了具有丰富状态的数字服务——我们说的是网络应用程序。
+这里有谁记得Myspace吗？我曾经痴迷于精心挑选我的“八大好友”。
+然后当然还有Facebook或其他社交媒体平台等等。
+但不仅仅是媒体，还有eBay和亚马逊，你可以在线注册投票，还有所有这些服务，你只需上网，在网页表单中填写一些数据——也许你甚至不需要刷新页面——这基本上就向某个后端服务器提交了一个事务！
+所以我们开始有了这些非常有用的数字服务。
+你甚至可以想想像谷歌搜索这样的东西，在Web1时代几乎不存在。
+注意，图中不再有粉色的线了——人们没有自己的服务器——他们都连接到这个中央服务器。
+显然，在现实中，它不是一个单一的中央服务器，但要点仍然是——这是少数几个集中式服务提供商。
 
 ---v
 
-## Digital Services
+## 数字服务
 
-People rely on digital services every day.
-They are inescapable and valuable.
+人们每天都依赖数字服务。
+它们无处不在且非常有价值。
 
-- Game Servers (AOE or Minecraft)
-- Twitter, Instagram, Facebook, etc.
-- Journalism and sources
-- Banks
-- Lawyers, notaries, regulators
+- 游戏服务器（《帝国时代》或《我的世界》）
+- 推特、Instagram、Facebook等
+- 新闻业和信息来源
+- 银行
+- 律师、公证人、监管机构
 
 Notes:
 
-I should note - Digital services are not bad in and of themselves.
-They are very valuable.
-We use all of these every day.
-We are even using some to administer this course.
-But they are also hard to escape.
-What are other examples? I have some listed here - online banking, what else?
+我应该说明的是——数字服务本身并不是坏事。
+它们非常有价值。
+我们每天都在使用这些服务。
+我们甚至使用其中一些来管理这门课程。
+但它们也很难摆脱。
+还有其他例子吗？我这里列出了一些——网上银行，还有别的吗？
 
-And the key thing here is that they're all administered by these service providers and the model is - don't call your friend on the phone and communicate directly with them anymore - instead send us your information -
+这里的关键是，它们都由这些服务提供商管理，模式是——不要再打电话给你的朋友并直接与他们交流了——而是把你的信息发送给我们——
 
 ---v
 
-## Trust Example
+## 信任示例
 
-Two users on Twitter:
+推特上的两个用户：
 
-- Trust that we are seeing information from the same database\*
-- Trust that if a tweet is from X, then X wrote that tweet\*
-- Trust that others see our messages as from us\*
-- Trust that the messages we see are the messages the users wrote\*
-- Trust that we're interacting with the application as equals
+- 相信我们看到的信息来自同一个数据库*
+- 相信如果一条推文来自X，那么就是X写的那条推文*
+- 相信其他人看到的我们的消息是来自我们的*
+- 相信我们看到的消息就是用户所写的消息*
+- 相信我们在与应用程序进行平等交互
 
 Notes:
 
-Or rather, send your Tweet directly to Twitter server and then we'll publish it and then when your friend comes to us, we'll tell them that this is what you tweeted.
-trust me bro, this is what lauren tweeted, it's real.
-So this is asking you to place trust in the service provider.
-Once web2 became popular, cryptography became a bit more widespread.
-Look at the icon at the top of your browser - let's use github for example - That is ensuring me that I'm communicating over SSL to GitHub and they're encrypting all the communication and I am too, which is awesome! Because suddenly we're using this really cool cryptography that we've been developing over decades!
-But here's the thing - say if you go to pull my repo, you're not pulling it from me anymore, you're pulling it from github.
-So GitHub knows that nothing was corrupted between me and them and you know that nothing was corrupted between GitHub and you.
-But the thing is, github's right there - they could change my repo if they wanted to or they could maybe even have the power to take my repo offline.
-But here, the slide reminds us that we all essentially accept a trusting relationship with the service provider.
-We trust that we're seeing information from the same database, we trust that if a tweet is from Aaron, then Aaron wrote that tweet, we trust that others see our messages as from us, we trust that the messages we see are the messages the users wrote, and we trust that we're interacting with the application as equals.
-Cryptography actually provides a lot of these guarantees, but not when an intermediary has stepped in between users.
+或者更确切地说，将你的推文直接发送到推特服务器，然后我们会发布它，当你的朋友访问我们时，我们会告诉他们这是你发的推文。
+相信我，兄弟，这是劳伦发的推文，是真的。
+所以这要求你信任服务提供商。
+Web2流行起来后，加密技术变得更加普及。
+看看你浏览器顶部的图标——我们以GitHub为例——这确保了我正在通过SSL与GitHub进行通信，他们对所有通信进行了加密，我也进行了加密，这太棒了！因为突然间我们使用了几十年来开发的这种非常酷的加密技术！
+但问题是——比如说，如果你要拉取我的代码仓库，你不再是从我这里拉取，而是从GitHub拉取。
+所以GitHub知道在我和他们之间没有数据被篡改，你也知道在GitHub和你之间没有数据被篡改。
+但问题是，GitHub就在那里——如果他们想的话，他们可以更改我的代码仓库，或者甚至有权让我的代码仓库下线。
+但这里，幻灯片提醒我们，我们基本上都接受了与服务提供商的信任关系。
+我们相信我们看到的信息来自同一个数据库，我们相信如果一条推文来自亚伦，那么就是亚伦写的那条推文，我们相信其他人看到的我们的消息是来自我们的，我们相信我们看到的消息就是用户所写的消息，我们相信我们在与应用程序进行平等交互。
+加密技术实际上提供了很多这样的保证，但当有中间人介入用户之间时就不行了。
 
 ---v
 
-## God Mode Enabled
+## 上帝模式已启用
 
-In web 2, service providers can perform abuses:
+在Web2中，服务提供商可能会进行滥用行为：
 
-- Censoring user interaction
-- Restricting users interaction
-- Failing to produce requested data
-- Mutating state opaquely
+- 审查用户交互
+- 限制用户交互
+- 未能提供所请求的数据
+- 不透明地更改状态
 
 Notes:
 
-Okay in summary, these are the problems that trusted service providers can do to us.
-They can censor our interactions, they can restrict our interactions, they can fail to produce requested data, and they can mutate state opaquely.
+好的，总结一下，这些就是受信任的服务提供商可能对我们做的事情。
+他们可以审查我们的交互，限制我们的交互，未能提供我们请求的数据，还可以不透明地更改状态。
 
 ---v
 
-## Thought experiment: Digital Currency
+## 思想实验：数字货币
 
-Bitcoin's application was digital currency - a trivially simple application.
+比特币的应用是数字货币——一个极其简单的应用。
 
-Could this be built with Web2 technology?
+这个应用可以用Web2技术构建吗？
 
 Notes:
 
-Let's do a thought experiment.
-Bitcoin came out 2009, it's a trivially simple application.
-n Bitcoin's application was digital currency.
-When you think about just the money thing - sending money from one person to another.
-How many of you think that if I give you like a weekend hackathon project, you could develop some kind of web2 style service and deploy it to AWS or digitalocean or wherever - that would basically act like a currency where I could log in and send my peers money.
-Could you build this with web2 technology?
-Yep you absolutely could.
-This is the kind of simple app you might build in a Freshman year course.
-You just need to maintain a set of bank notes and their owners (or alternatively a set of accounts and their balances.)
-So why didn't this exist in web 2? I hope this is pretty obvious.
-Because the provider could print money.
-Or steal money.
-Right? The moment somebody pisses me off I can go and freeze their funds or whatever.
-So even though coding the cryptocurrency application is like super simple it's totally useless because there's no incredible way to build trust in it.
-And that's what the blockchain is about.
-And that's what Joshy is going to speak to very soon.
+让我们做一个思想实验。
+比特币于2009年出现，这是一个极其简单的应用。
+比特币的应用是数字货币。
+当你只考虑货币方面——把钱从一个人转给另一个人。
+你们中有多少人认为，如果我给你一个周末的黑客马拉松项目，你可以开发某种Web2风格的服务并将其部署到亚马逊网络服务（AWS）或DigitalOcean或其他地方——它基本上可以像一种货币一样，我可以登录并给我的同行转账。
+你能用Web2技术构建这个应用吗？
+是的，你绝对可以。
+这是你可能在大一课程中构建的那种简单应用。
+你只需要维护一组钞票及其所有者（或者换一种方式，维护一组账户及其余额）。
+那么为什么这个应用在Web2中不存在呢？我希望这很明显。
+因为服务提供商可以印钱。
+或者偷钱。
+对吧？一旦有人惹我生气，我就可以去冻结他们的资金或做其他事情。
+所以，尽管编写加密货币应用程序非常简单，但它完全没用，因为没有可靠的方法来建立对它的信任。
+而这就是区块链的意义所在。
+乔希很快就会详细讲解这个问题。
 
 ---v
 
-## Distributed Applications in Web 2
+## Web2中的分布式应用
 
-Providers run redundant data centers to prevents accidents.
+服务提供商运行冗余的数据中心以防止意外情况。
 
-But it still assumes benevolent participants and some trusted leader.
+但它仍然假设参与者是善意的，并且有一些可信的领导者。
 
 Notes:
 
-Something we should call out - there are some distributed applications in web2, but it's a little bit different than what we're talking about here.
-It's not like AWS folks are noobs and they have all their stuff in one Data Center and the moment that there's an earthquake or a fire or whatever everything that hosted on AWS goes down.
-They're better than that, they have data centers all over the world.
-But the difference there is that all of those data centers are operating as trusted peers.
-So one of them will lead and those changes will be synced to the others and the moment one goes down it fails back to the next one to keep the services live.
-Which is for sure a good thing, I'm not hating on that aspect of it, but the point that I'm making is that it doesn't make it trustless just because it's geographically distributed.
-It just makes it more resistant to accidents.
-AWS could still cut it down.
-Ultimately, the point is that in web2, the masses become beholden to the service providers who were free to extract value and manipulate the users.
+我们应该指出的是——Web2中有一些分布式应用，但与我们这里讨论的有所不同。
+不是说AWS的人是新手，他们把所有东西都放在一个数据中心，一旦发生地震、火灾或其他情况，托管在AWS上的所有东西都会下线。
+他们比这做得好，他们在世界各地都有数据中心。
+但不同之处在于，所有这些数据中心都是作为可信的对等方运行的。
+所以其中一个数据中心会充当领导者，这些更改会同步到其他数据中心，一旦一个数据中心出现故障，就会切换到下一个数据中心以保持服务运行。
+这肯定是一件好事，我并不是在批评这一点，但我想说的是，仅仅因为它在地理上是分布式的，并不意味着它是无需信任的。
+它只是更能抵御意外情况。
+AWS仍然可以关闭它。
+最终的要点是，在Web2中，大众受制于服务提供商，而服务提供商可以自由地获取价值并操纵用户。
 
 ---
 
 ## Web3
 
-A provision of digital services without the need to trust a service _provider_.
+提供数字服务而无需信任服务**提供商**。
 
-Providers do not need to be trusted; they are economically incentivized to behave honestly.
+不需要信任服务提供商；他们在经济上有动力诚实行事。
 
 Notes:
 
-Okay so web3 - We want to maintain the value, versatility, and richness of Web2, but remove the trust, and possibility of extractive behavior.
-Here I have: It's a provision of digital services without the need to trust a service provider.
-At an abstract level, the way that we make people trustworthy is that we give them economic incentives to behave honestly.
-So throughout this course we're going to design protocols and we're going to say things like, as long as two-thirds of the operators in this protocol are following the protocol, then all these guarantees I talked about are upheld! That's great.
-But then the glaring question is: well okay - how do you make sure that two-thirds of the operators are following the protocol? It always come back to economic incentives.
-Hence why you had econ and tokenomics last week.
-Because that's how we're going to get all of these mutually distrusting, not otherwise incentive aligned parties to agree to follow the protocol - by creating the incentive such that following the protocol is the best strategy: they can maximize their own utility by following the protocol.
+好的，Web3——我们希望保留Web2的价值、多功能性和丰富性，但消除信任以及可能的剥削行为。
+这里我要说：它是一种提供数字服务而无需信任服务提供商的方式。
+从抽象层面来说，我们让人们值得信任的方式是给予他们诚实行事的经济激励。
+所以在整个课程中，我们将设计协议，我们会说，只要这个协议中三分之二的操作者遵循协议，那么我提到的所有保证都能得到维护！这很棒。
+但随后一个明显的问题是：好吧——你如何确保三分之二的操作者遵循协议呢？这总是归结到经济激励。
+这就是为什么上周有经济学和代币经济学的课程。
+因为这就是我们如何让所有这些相互不信任、原本没有利益一致的各方同意遵循协议的方法——通过创造一种激励机制，使得遵循协议是最佳策略：他们可以通过遵循协议来最大化自己的效用。
 
 ---v
 
-## Desired Approach
+## 期望的方法
 
-Allow users to interact with a common system without trusting any intermediaries.
+允许用户在不信任任何中间人的情况下与一个共同的系统进行交互。
 
-Opens the door to new application stacks:
+这为新的应用程序栈打开了大门：
 
-- Shared state and state change rules
-- Custom rendering, moderation, interfaces
+- 共享状态和状态变更规则
+- 自定义渲染、审核、界面
 
 Notes:
 
-We want to allow users to interact with the system without having to trust intermediaries who might stand in the middle between the users.
-If we can do that, it opens the door to this new application stack where we disentangle all the layers.
+我们希望允许用户在不必信任可能介于用户之间的中间人的情况下与系统进行交互。
+如果我们能做到这一点，就为这个新的应用程序栈打开了大门，在这个栈中，我们可以将所有层解耦。
 
-OKAY - so we're at the halfway point within this lecture, let's check in.
-At this point, we've been through the history of the web and hopefully understand the evolution from simple peer to pee communications to straight up digital services.
+好了——我们现在讲到这堂课的一半了，让我们检查一下进度。
+到目前为止，我们已经回顾了互联网的历史，希望大家理解了从简单的点对点通信到成熟的数字服务的演变。
 
-Adding to that, from my from first lecture, we ALSO understand that both software and contracts are solutions to expressing agreements, and during Aaron's activity, we practiced building a simple web2 style smart contract.
+除此之外，从我的第一堂课中，我们还了解到软件和合同都是表达协议的解决方案，在亚伦的活动中，我们练习了构建一个简单的Web2风格的智能合约。
 
-Now I want to start formalizing the semantics of how we actually build a smart contract.
+现在我想开始正式确定我们实际构建智能合约的语义。
 
-It turns out there is a mathematical (or computer science maybe?) term called a state machine.
-And it maps really well to what we just built and the kinds of interactions we want to build.
+事实证明，有一个数学（或者可能是计算机科学？）术语叫做状态机。
+它与我们刚刚构建的东西以及我们想要构建的那种交互非常契合。
 
 ---
 
-## State Machines
+## 状态机
 
 <img width="800px" src="./img/state-machine-general.svg" />
 
 Notes:
 
-What's interesting is that most systems, maybe all of them, but definitely most that we care about can be modeled as state machines.
-So State machine, it's not a real machine that you can build and touch and operate and stuff like that.
-It's a model comprised of a set of states and a set of rules about how to transition between the states.
-Looking at the diagram, maybe my state machine starts in state one over here and then somebody pokes it in some particular way, or to use more blockchain-y lingo, they send a transaction and that puts the state machine into into State-two.
-And so, what we're going to be doing with the blockchain is tracking a complete history of all of these transitions and if we know the history of all the transitions, then we should know what state we're in right now
+有趣的是，大多数系统，或许是所有系统，但肯定是我们所关注的大多数系统，都可以用状态机来建模。
+所以，状态机并不是一个你可以建造、触摸和操作之类的真实机器。
+它是一个由一组状态和一组关于如何在这些状态之间进行转换的规则所组成的模型。
+看这个图，也许我的状态机从这里的状态 1 开始，然后有人以某种特定的方式对它进行操作，或者用更具区块链风格的术语来说，他们发送一个交易，这就使状态机进入状态 2。
+所以，我们使用区块链要做的就是跟踪所有这些转换的完整历史记录，如果我们知道所有转换的历史，那么我们就应该知道我们现在处于什么状态。
 
 ---v
 
-## Labelled Transition Systems
+## 标记转换系统
 
-Sometimes you can map the entire state space as an LTS.
-
-Other times it is too big.
+有时你可以将整个状态空间映射为一个标记转换系统（LTS）。
+其他时候，这个状态空间可能太大了。
 
 <img src="./img/state-machine-arbitrary-history.png" />
 
 Notes:
 
-There's this notion of a labelled transition system.
-Sometimes if your state machine is simple enough you can actually map the entire State space as a labeled transition system.
-Most of the times when we're building real world applications, it's a little too big.
-But labeled transition systems are a really good model to keep in your mind when you're thinking about designing your state machines.
-Consider if we tried to map all possible states of a social media app or a digital currency.
-Sometimes an LTS drawing like this is useful, other times it would be too large or even infinite.
-Even still, sometimes drawing part of it can help you think about what the states and transitions might be.
+有一个标记转换系统的概念。
+有时候，如果你的状态机足够简单，你实际上可以将整个状态空间映射为一个标记转换系统。
+大多数时候，当我们构建现实世界的应用程序时，这个状态空间可能会有点大。
+但在你设计状态机时，标记转换系统是一个非常好的模型，值得你牢记在心。
+想象一下，如果我们试图绘制出一个社交媒体应用程序或数字货币的所有可能状态。
+有时候，像这样的 LTS 图是有用的，而其他时候，它可能会太大，甚至是无限大。
+即便如此，有时候绘制出它的一部分可以帮助你思考可能存在的状态和转换。
 
 ---v
 
-## Example: Light Switch
+## 示例：电灯开关
 
-Simple Switch: 2 States, 1 Transition
+简单开关：2 个状态，1 个转换
 
-**Labelled Transition System** <!-- .element: class="fragment" data-fragment-index="2" -->
+**标记转换系统** <!-- .element: class="fragment" data-fragment-index="2" -->
 
 <img src="./img/light-switch-lts.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-**History** <!-- .element: class="fragment" data-fragment-index="3" -->
+**历史记录** <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <img src="./img/light-switch-history.svg" /> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
-Let's look at a simple example.
-A light switch.
-CLICK
-It has two states: on and off.
-And one transition: flipping the switch.
-We can draw this as a labeled transition system.
-CLICK
-And we can also draw a history of the transitions that have happened.
-So if we know the history of all the transitions, then we should know what state we're in right now.
-So we start in some State down here for example where the light is on and then when a transition comes in it's we already know what kind of transition it's going to be.
-There's only one - it's the toggle transition that turns the light off and Etc and Etc and this could go on forever.
-Right now this is such a simple State machine that like this isn't going to be a very interesting history it's just going to be toggle toggle toggle toggle forever.
-But with that information, if if for some reason knowing whether this light was on or off is like super important to your Society or your community, you've now achieved it - or at least we know a way to start achieving it.
+让我们看一个简单的例子：电灯开关。
+点击
+它有两个状态：开和关。
+并且有一个转换：拨动开关。
+我们可以将其绘制成一个标记转换系统。
+点击
+我们还可以绘制出已经发生的转换的历史记录。
+所以，如果我们知道所有转换的历史，那么我们就应该知道我们现在处于什么状态。
+例如，我们从这里的某个状态开始，此时灯是亮着的，然后当一个转换发生时，我们已经知道这会是哪种转换。
+只有一种转换，那就是切换转换，它会把灯关掉，如此反复。
+现在，这是一个非常简单的状态机，所以这个历史记录不会很有趣，它只会是不断地切换、切换、切换……
+但有了这些信息，如果出于某种原因，知道这个灯是开着还是关着对你的社会或社区来说非常重要，那么你现在就已经实现了这个目标——或者至少我们知道了一种开始实现它的方法。
 
 ---v
 
-## State Machine Example: Digital Cash
+## 状态机示例：数字现金
 
-Each state is a set of bank notes.
-Where a bank note has an amount and an owner.
-A transition involves a user consuming (spending) some bank notes and creating new ones.
+每个状态都是一组钞票。
+其中一张钞票有一个金额和一个所有者。
+一个转换涉及用户消费（花费）一些钞票并创建新的钞票。
 
 <img width="800px" src="./img/state-machine-cash.svg" />
 
 Notes:
 
-Let's look at a more interesting example.
-Digital cash.
-This is one where I can't draw the entire label transition system because it's way too huge.
-But I can draw a little bit of it.
-Each state is a set of bank notes.
-Where a bank note has an amount and an owner.
-A transition involves a user consuming (spending) some bank notes and creating new ones.
-Not all conceivable transitions are valid.
-Imagine a user consuming a bank note worth 5 coins, and creating two new ones each worth 3 coins.
-That's not allowed.
-So we have to be careful about what transitions are allowed and what transitions are not allowed.
-And again, if we know the history of all the transitions, then we should know what state we're in right now.
+让我们看一个更有趣的例子：数字现金。
+在这个例子中，我无法绘制出整个标记转换系统，因为它太大了。
+但我可以绘制出它的一小部分。
+每个状态都是一组钞票。
+其中一张钞票有一个金额和一个所有者。
+一个转换涉及用户消费（花费）一些钞票并创建新的钞票。
+并不是所有可以想象到的转换都是有效的。
+想象一下，一个用户消费了一张价值 5 个硬币的钞票，然后创建了两张新的钞票，每张价值 3 个硬币。
+这是不允许的。
+所以我们必须小心哪些转换是允许的，哪些是不允许的。
+同样，如果我们知道所有转换的历史，那么我们就应该知道我们现在处于什么状态。
 
 ---v
 
-## Sate Machine Example: Social Media
+## 状态机示例：社交媒体
 
-Each state is a set of posts and their associated comments and emoji reaction counts.
-A transition involves, making a new post, or reacting to someone elses, or commenting
+每个状态都是一组帖子以及它们相关的评论和表情反应计数。
+一个转换涉及发布新帖子、对他人的帖子做出反应或发表评论。
 
 <img src="./img/state-machine-social.svg" />
 
 Notes:
 
-state is a set of posts and their associated comments and emoji reaction counts.
-A transition involves, making a new post, or reacting to someone elses, or commenting
-There is not a single model here.
-Some state machines will allow deleting or editing posts, while others will not.
-Some will allow disliking posts while others only allow liking.
-Here the diagram basically we see - if the state starts out simple with this one Post in it and then someone makes a new post (and there would have to be more details in here about who's posting and what they're posting)But then we get to this new state and then maybe the next transition is that somebody likes post number one and so now the state contains a record that this thing is liked.
-Just to drive the point home the idea is that if you know the starting State and you know the history of the transitions, then you know the the current state and so you can sit and watch as every transition comes in you can validate them yourselves and say this one's good we're adding it to our history or this one's bad we're chucking it's invalid transition.
-And then therefore you can know the final state
+状态是一组帖子以及它们相关的评论和表情反应计数。
+一个转换涉及发布新帖子、对他人的帖子做出反应或发表评论。
+这里没有单一的模型。
+有些状态机允许删除或编辑帖子，而有些则不允许。
+有些状态机允许对帖子点踩，而有些则只允许点赞。
+在这里的图中，基本上我们可以看到——如果状态一开始很简单，只有这一个帖子，然后有人发布了一个新帖子（这里还需要有更多关于谁在发帖以及他们发了什么的细节），然后我们进入一个新的状态，也许下一个转换是有人给帖子 1 点赞，那么现在这个状态就包含了一个记录，表明这个帖子被点赞了。
+为了强调这一点，关键在于，如果你知道起始状态并且知道转换的历史，那么你就知道当前状态，所以你可以坐着观察每一个转换的到来，你可以自己验证它们，然后说这个转换是有效的，我们把它添加到我们的历史记录中，或者这个转换是无效的，我们把它丢弃。
+这样你就可以知道最终的状态。
 
 ---v
 
-## More State Machine Examples:
+## 更多状态机示例：
 
 <pba-flex center>
 
-- Ride sharing platform
-- Voting system
-- Blackjack table
-- The app you just built
+- 乘车共享平台
+- 投票系统
+- 二十一点牌桌
+- 你刚刚构建的应用程序
 
 </pba-flex>
 
 Notes:
 
-There are all kinds of these - uber, polkadot's governance, and gambling!
-Take a moment to brainstorm with your table about each of these three examples as well as the app you built in the previous activity.
-For each example, write out what are the state transitions and the the states.
-If possible, draw a complete LTS.
-If that is not possible, draw a partial LTS.
+有各种各样的例子——优步、波卡的治理系统，还有赌博！
+花点时间和你的同桌一起头脑风暴一下这三个例子以及你在之前的活动中构建的应用程序。
+对于每个例子，写出状态转换和状态分别是什么。
+如果可能的话，绘制一个完整的标记转换系统（LTS）。
+如果不可能，就绘制一个部分的 LTS。
 
 ---v
 
-## Garage Door Lock
+## 车库门锁
 
 <img rounded width="60%" src="./img/garage-door-keypad.jpg" />
 
 Notes:
 
-One more team exercise.
-Draw a state transition diagram for a garage door lock keypad.
-
-If the user enters the correct 4 digits, the door opens (or closes if it was already open).
-The thing is, you could enter some random digits before you enter the correct code, and it would still open after the correct code.
-As you sketch your states, be sure to handle that correctly.
-
-This example is drawn from https://eng.libretexts.org/Under_Construction/Book%3A_Discrete_Structures/09%3A_Finite-State_Automata/9.02%3A_State_Transition_Diagrams which has many other excellent examples
-
+再来一个团队练习。
+为车库门锁的键盘绘制一个状态转换图。
+如果用户输入正确的4位数字，门就会打开（如果门原本是开着的，则会关闭）。
+问题在于，在输入正确密码之前，你可能会输入一些随机数字，但输入正确密码后门仍然会打开。
+在绘制状态图时，请确保正确处理这一点。
+这个例子来自[这里](https://eng.libretexts.org/Under_Construction/Book%3A_Discrete_Structures/09%3A_Finite-State_Automata/9.02%3A_State_Transition_Diagrams)，该网页还有许多其他出色的例子。
 ---
-
-## Build Some State Machines
-
-Blockchain From Scratch Activity
-
-Chapter 1 State Machines
-
+## 构建一些状态机
+从头开始构建区块链活动
+第1章 状态机
 Notes:
-
-This activity is going to run over the next four days.
-We will have a good amount of time to work on it in class.
-We will also set some minimum completion goals each evening.
+这项活动将持续接下来的四天。
+我们在课堂上会有充足的时间来完成它。
+我们还会在每晚设定一些最低完成目标。 

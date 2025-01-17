@@ -3,149 +3,148 @@ title: The Quest for Infrastructure
 description: Summary and review Smart Contract principles, and observation that we have not yet thwarted the tyrannical server operator
 ---
 
-# The Quest for Infrastructure
+# 对基础设施的探求
 
-OR
+或者
 
-Where can I actually run these things!?
-
----
-
-# Quick Review of Smart Contracts
-
----v
-
-## Expression
-
-Write code instead of long confusing legalese
-
----v
-
-## Execution
-
-Let the computer run it instead of the judge interpreting it.
+我到底可以在哪里运行这些东西！？
 
 ---
 
-# Quick Review of Service Providers
+# 智能合约快速回顾
 
-They are the technicians that keep the infra running.
+---v
 
-They are the technicians that keep the infra running.
+## 表达
 
-They don't have any particular morals, certainly not the same ones you have.
+编写代码，而不是冗长且令人困惑的法律术语
 
-Notes:
+---v
 
-We need people to keep the computers online and replace broken hardware and make sure the data is backed up etc.
-But those people should be just that, technicians.
-They are not elected officials or Judges or anything like that.
-So we don't want to accidentally let them fil that role.
+## 执行
 
-Many, probably even most, data center workers are perfectly good people not trying to scam anyone.
-The point is that any individual server operator could be evil and it will be easier to coordinate voluntarily if people don't have to trust the server operator to do it.
+让计算机来运行它，而不是让法官来解释它。
 
 ---
 
-# Where to Run the Contracts?
+# 服务提供商快速回顾
+
+他们是维持基础设施运行的技术人员。
+
+他们是维持基础设施运行的技术人员。
+
+他们没有任何特别的道德准则，肯定和你的不一样。
 
 Notes:
 
-We know we need somewhere to run these things with no back door or trusted party.
+我们需要有人让计算机保持在线状态，更换损坏的硬件，并确保数据得到备份等等。
+但这些人就应该只是技术人员。
+他们不是选举产生的官员，也不是法官或类似的角色。
+所以我们不想不小心让他们扮演那样的角色。
 
-We have seen some hints so far.
-Let's check them out.
-
----v
-
-## Diversity and Redundancy
-
-- Geographical - for natural disasters and terrorist attacks
-- Jurisdictional - to resist the incumbent governments - they are the ultimate server operators
-- Moral - so all compasses are represented in the network, and no group can impose hegemony
-- Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
-
-Notes:
-
-Web2 gets a lot of this right.
-At least they are good at the first two and preventing accidental data loss etc.
-There is a lot to be kept from web 2.
-Some digital services, or subsystems of digital services may never even need web3 upgrades.
-
-But indeed there is also some to be thrown out or improved.
-
----v
-
-## P2P Networking
-
-Replace the operator with a system where peers all have power.
-
-Notes:
-
-We saw well how this worked out well in the file sharing and anonymous browsing domains (bit torrent,)
-
----v
-
-## Reproducible Execution
-
-- Computers are better than courts
-- PABs make distributed code execution practical
-
-Notes:
-
-We saw even back in the early 2000s with java web applets that allowing more people to run the same program is hugely useful.
-
-A few decades later we have much better tech for this, and it is even more valuable.
-
-PABs make it practical for diverse parties all over the world to run the same software deterministically on their bespoke hardware in their unique environments.
+许多，甚至可能是大多数数据中心的工作人员都是非常好的人，不会试图欺骗任何人。
+关键在于，任何一个服务器运营商都可能是邪恶的，如果人们不必信任服务器运营商就能做到，那么自愿协调就会更容易。
 
 ---
 
-# Blockchain
+# 在哪里运行合约？
 
-## Solves ALL Your Problems
+Notes:
+
+我们知道我们需要一个没有后门或可信方的地方来运行这些东西。
+
+到目前为止，我们已经看到了一些线索。
+让我们来看看。
+
+---v
+
+## 多样性和冗余性
+
+- 地理上的 - 应对自然灾害和恐怖袭击
+- 司法管辖上的 - 抵抗现任政府 - 他们是最终的服务器运营商
+- 道德上的 - 这样网络中就代表了所有的观点，没有任何一个群体可以强加霸权
+- 计算硬件方面的 - 以防某些硬件存在漏洞、被植入后门或价格过高
+
+Notes:
+
+Web2 在很多方面做得不错。
+至少他们擅长前两点，并且能够防止意外的数据丢失等等。
+Web2 有很多值得借鉴的地方。
+一些数字服务，或者数字服务的子系统可能永远都不需要进行 Web3 升级。
+
+但确实也有一些需要摒弃或改进的地方。
+
+---v
+
+## 点对点网络
+
+用一个所有节点都有权力的系统来取代运营商。
+
+Notes:
+
+我们已经清楚地看到，这种方式在文件共享和匿名浏览领域（如比特洪流）中取得了很好的效果。
+
+---v
+
+## 可重现执行
+
+- 计算机比法院更可靠
+- 可编程抽象机（PABs）使分布式代码执行变得可行
+
+Notes:
+
+早在 2000 年代初，我们就看到了 Java 网络小程序，允许更多的人运行同一个程序是非常有用的。
+
+几十年后，我们有了更好的技术来实现这一点，而且它的价值也更高了。
+可编程抽象机（PABs）使得世界各地不同的各方能够在他们定制的硬件和独特的环境中确定性地运行相同的软件。
+
+---
+
+# 区块链
+
+## 解决你所有的问题
 
 <img rounded src="./img/moses-blockchain.png" />
 
 ---v
 
-## Solves Some Specific Problems
+## 解决一些特定的问题
 
-Allows us to replace the central server operator with a P2P network and Consensus System
+允许我们用点对点网络和共识系统来取代中央服务器运营商
 
 Notes:
 
-Actually it is a fallacy that blockchain solves all our problems.
-It actually solves some very specific coordination problems.
-It also brings some efficiency improvements to modern bureaucracies.
-It does not automatically make everyone believe the same things or magically arrive in happy unicorn bunny land.
-Tomorrow and Thursday will dig in on how the blockchain and its P2P network work together.
+实际上，认为区块链可以解决我们所有问题是一种谬论。
+它实际上解决了一些非常具体的协调问题。
+它还为现代官僚机构带来了一些效率上的提升。
+它并不能自动让每个人都相信同样的事情，也不会神奇地让我们进入一个幸福的独角兽兔子乐园。
+明天和周四我们将深入探讨区块链及其点对点网络是如何协同工作的。
 
 ---v
 
-## Blockchain Data structure
+## 区块链数据结构
 
 <img width="60%" src="../structure/img/forks.svg">
 
 Notes:
 
-We'll discuss two new blockchain related topics.
-First is the blockchain data structure which you can see here.
-This one is forked which is when things get really interesting, and when you need to invoke the second part
+我们将讨论两个与区块链相关的新话题。
+第一个是区块链数据结构，你可以在这里看到。
+这个结构是分叉的，这时候事情就变得非常有趣了，你就需要调用第二部分了。
 
 ---v
 
-## Blockchain Consensus
+## 区块链共识
 
 <img width="60%" src="../finality/img/byzantine-generals.png">
 
 Notes:
 
-Consensus deals with how we agree which version of the data structure is real.
-It is an interesting and complex topic, but we first need to learn a bit more about how the data structure allows us to track a shared story.
+共识涉及到我们如何确定数据结构的哪个版本是真实的。
+这是一个有趣且复杂的话题，但我们首先需要更多地了解数据结构是如何让我们跟踪一个共享的故事的。
 
 ---v
 
-## Reading Assignment
+## 阅读作业
 
-For tomorrow please read the bitcoin whitepaper
+请在明天阅读比特币白皮书

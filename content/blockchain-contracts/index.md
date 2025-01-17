@@ -1,3 +1,3 @@
-# ⛓️ Blockchains and Smart Contracts
+# ⛓️ 区块链和智能合约
 
-Blockchain and applications built on them covered in depth conceptually and hands-on operation and construction.
+深入从概念层面以及实际操作和构建方面介绍区块链及其上构建的应用程序。

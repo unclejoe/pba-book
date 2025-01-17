@@ -1,82 +1,82 @@
-# Start Your Own Blockchain
+# 启动你自己的区块链
 
-<!-- FIXME this is _mostly_ faculty facing, adapted to "you" as the reader (student). We want these to be student facing? faculty guide can pull these in. -->
+<!-- FIXME 这主要是面向教师的内容，已调整为以“你”（学生）作为读者。我们希望这些内容面向学生吗？教师指南可以引用这些内容。 -->
 
-In this activity, you will get hands on experience operating a blockchain node and seeing it interact with other blockchain nodes.
+在这个活动中，你将获得实际操作区块链节点并观察其与其他区块链节点交互的经验。
 
-## 📥 Clone to start: <a target="_blank" href="https://github.com/Polkadot-Blockchain-Academy/Academy-PoW">Academy PoW Node</a>
+## 📥 克隆以开始： <a target="_blank" href="https://github.com/Polkadot-Blockchain-Academy/Academy-PoW">Academy PoW 节点</a>
 
-See the README included in the repository for further instructions.
+请参阅存储库中包含的 README 文件以获取更多说明。
 
-## Learning objectives:
+## 学习目标：
 
-1. How to run a node
-1. What the log messages mean
-1. Preview: How to configure a network with a chain spec
-1. Experience peer connections coming and going
-1. Practice checking for common not-peering issues (different genesis, firewall)
+1. 如何运行一个节点
+1. 日志消息的含义是什么
+1. 预览：如何使用链规范配置网络
+1. 体验对等节点连接的建立和断开
+1. 练习检查常见的非对等连接问题（不同的创世块、防火墙）
 
-## Outline
+## 大纲
 
-### Clone & Compile
+### 克隆 & 编译
 
-> ⏰ **Because the compile time is quite long, this should be done in advance of class.**
+> ⏰ **由于编译时间相当长，应该在上课前完成。**
 
-Ideally, compilation will be given to you as as homework on the day before to run (at worst) over night.
-The faculty may also have a docker image ready to go, please request this if needed.
+理想情况下，编译作业会在前一天作为家庭作业布置给你（最坏的情况是）让你在夜间运行。
+教师可能也准备好了 Docker 镜像，如有需要请提出请求。
 
-### Generate User Keys
+### 生成用户密钥
 
-With Polkadot JS
+使用 Polkadot JS
 
-### Get Tokens
+### 获取代币
 
-You request tokens from the teacher by sharing your address with the teachers in a public channel.
-After the first five you have tokens, we pass them on to your peers.
-This manual approach allows you to get familiar with sending and receiving tokens in your wallet.
+你通过在公共频道中向教师分享你的地址来向教师请求代币。
+在最初的五个人获得代币后，我们将代币分发给你的同伴。
+这种手动方法可以让你熟悉在钱包中发送和接收代币。
 
-Optionally, we may install a faucet or UBI pallet in the chain to allow you to self service _after_ the initial manual distribution.
+可选地，我们可能会在链中安装一个水龙头或通用基本收入（UBI）模块，以便在初始手动分发之后你可以自助获取代币。
 
-### Optional Treasure Hunt
+### 可选的寻宝活动
 
-You could have tokens stored at eg the Alice key or other leaked keys and challenge you to find and recover the tokens.
-Make up a story/myth about some mysterious figure who lost your key and left clues, etc.
+可能有代币存储在例如 Alice 密钥或其他泄露的密钥中，你需要找到并取回这些代币。
+编造一个关于某个神秘人物丢失了你的密钥并留下线索等的故事或神话。
 
-### Run Nodes
+### 运行节点
 
-You start your own nodes and join the network
+你启动自己的节点并加入网络
 
-### Start Mining
+### 开始挖矿
 
-Node runners can contribute PoW hashrate to the network in exchange for tokens.
+节点运行者可以为网络贡献工作量证明（PoW）算力以换取代币。
 
-### Fork the Network
+### 分叉网络
 
-In BA we forked the difficulty, but maybe there is something more compelling.
-Maybe fork to adjust max block size.
-Nice because it happened for real in bitcoin.
-Maybe hard because I believe max block size is controlled in the runtime.
+在区块链学院（BA）中，我们对难度进行了分叉，但也许有更吸引人的做法。
+也许可以分叉以调整最大区块大小。
+这很不错，因为比特币中确实发生过这种情况。
+也许会有困难，因为我认为最大区块大小是由运行时控制的。
 
-Another idea:
-When we launch the chain, we allow PoW block to have either of two valid kinds of seals.
-For example, one based on `sha3` and another based on `keccak`.
-Then we pretend there is a cultural war and some people like one function or the other hand some people don't care.
-When the time comes to fork, we have three different versions of the node available: 1 only accepts `sha3`, 2 only accepts `keccak`, 3 is the original that accepts either.
-In this way we can see that there will be at least two viable chains (the sha 3 chain and the `keccak` chain).
-If there are a lot of nodes that still run the old version and accept either hash, we will form a third chain.
-But if there are only a few such nodes, we will re-org into one of the other two chains, and potentially reorg back and forth between them.
+另一个想法：
+当我们启动链时，我们允许 PoW 区块有两种有效的封印类型。
+例如，一种基于 `sha3`，另一种基于 `keccak`。
+然后我们假设发生了一场文化战争，有些人喜欢其中一个函数，而另一些人则无所谓。
+当到了分叉的时候，我们有三种不同版本的节点可用：1 只接受 `sha3`，2 只接受 `keccak`，3 是原始版本，两种都接受。
+这样我们就可以看到至少会有两条可行的链（`sha3` 链和 `keccak` 链）。
+如果有很多节点仍然运行旧版本并接受任何一种哈希，我们将形成第三条链。
+但如果只有少数这样的节点，我们将重组到其他两条链中的一条，并且可能在它们之间来回重组。
 
 <!--
-### Light Clients
+### 轻客户端
 
 TODO
 
-### Other Infrastructure
+### 其他基础设施
 
-Like block explorer or indexer?
+比如区块浏览器或索引器？
 -->
 
-### Smart Contracts
+### 智能合约
 
-The Smart Contracts module has an activity about launching smart contracts on a running chain.
-When these modules are run back-to-back, it makes an excellent learning experience to use this same chain we just launched to also launch the smart contracts.
+智能合约模块有一个关于在运行的链上启动智能合约的活动。
+当这些模块连续运行时，使用我们刚刚启动的同一条链来启动智能合约将是一次非常好的学习体验。

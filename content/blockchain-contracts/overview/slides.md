@@ -4,144 +4,144 @@ description: Initial look at web history and the problems blockchain and web3 ar
 duration: 30 - 45 minutes
 ---
 
-# Blockchains and Smart Contracts Overview
+# 区块链和智能合约概述
 
 ---
 
-## Upholding Expectations
+## 秉承的期望
 
-What is the core problem we want to solve?
+我们想要解决的核心问题是什么？
 
-Trustless provisioning of infrastructure.
+无需信任的基础设施
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Something kind of like a server, that doesn't rely on a server operator, and has strong guarantees like Cryptography has to offer.
+有点类似服务器功能，但它不依赖于具体的服务器运营商，并且具有像加密技术所能提供的强大保障。
 
-One framing: Coming to a shared understanding of a common history, and therefore a common state, of a system.
+一种说法是：对一个系统的共同历史，进而对其共同状态达成共识。
 
 ---
 
-## Comparison with Cryptography
+## 与加密技术的比较
 
-Cryptography provides strong guarantees about _messages_ without a trusted party, regardless of the conduit over which a message was transported.
+加密技术在没有可信第三方的情况下，对_信息_提供强大的保障，无论信息是通过何种渠道传输的。
 
 Notes:
 
-Crypto guarantees:
+加密保障包括：
 
-- No tampering
-- No eavesdropping
-- Authorship
+- 无篡改
+- 无窃听
+- 作者身份验证
 
 ---
 
-## Application Disentanglement
+## 应用解耦
 
-Removing trust allows us to unpackage applications.
+消除信任使我们能够将应用程序按功能解耦。
 
 <img rounded style="width: 800px; padding-right: 2em" src="./img/application-disentanglement.png" />
 
 Notes:
 
-The idea here is to discuss how applications are often seen as an entire bundle: e.g.
-Instagram is the database, the algorithms, the UX.
-But when we have credible expectations that we're interacting with the same system, rules, data, it's possible to build lots of ways to access and interact with the system.
-It also removes the need for a central authority to deal with all appeals/complaints from various users.
+这里的想法是讨论应用程序通常如何被视为一个整体：例如，
+Instagram包含数据库、算法和用户体验。
+但当我们有可信的预期，即我们正在与相同的生态系统、规则和数据进行交互时，就有可能构建多种访问和与系统交互的方式。
+这也消除了对中心化机构来处理各种用户的申诉/投诉的需求。
 
 ---
 
-# Desired Properties
+# 期望具备哪些属性？
 
 ---v
 
-## Permissionless access
+## 无许可访问
 
-Anyone should be able to access and interact with the system.
-
----v
-
-## Privacy
-
-Users should have credible expectations about what information they give up about themselves.
+任何人都应该能够访问和与系统进行交互。
 
 ---v
 
-## Authenticity
+## 隐私
 
-Users should have credible expectations about the messages they see, regardless of the platform the messages are on.
-
----v
-
-## Finality
-
-Users should be able to form credible expectations about when a state transition is final.
+用户期望对他们透露的关于自己的信息具备隐私保护。
 
 ---v
 
-## Behavior
+## 真实性
 
-The system should behave as expected, even if system operators do not.
+用户期望对他们看到的消息是真实可考的，无论这些消息是在哪个平台上。
 
 ---v
 
-## _Unstoppability_
+## 终局性
 
-No individual actor, company, state, or coalition should be able to degrade any of these properties.
+用户期望能够对系统的状态转换何时最终确定形成预期。
+
+---v
+
+## 行为
+
+即使系统运营商没有做到，系统也应该按预期运行。
+
+---v
+
+## _不可阻挡性_
+
+任何个人、公司、国家或联盟都不能够削弱这些属性中的任何一个。
 
 ---
 
-## A Shared History
+## 一段共同的人类历史
 
 <img style="height: 500px;" src="./img/sapiens.jpg" />
 
 Notes:
 
-So now we understand the goals of web3.
-How do we achieve them? The key is allowing users to agree on a shared history.
-The simplest blockchains do nothing more than timestamp and attest to a stream of historical records.
-In Web 2 users have no visibility into the history of the app.
-They must trust the provider to accurately represent the current state.
-By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.
+现在我们了解了Web3的目标。
+我们如何实现这些目标呢？关键是让用户就共同的历史达成共识。
+最简单的区块链无非是对历史记录流进行时间戳标记和证明。
+在Web 2中，用户无法看到应用程序的历史。
+他们必须信任中心化提供商准确呈现当前状态。
+通过赋予服务提供商改变故事的权力，我们赋予了他们塑造我们对现实的理解，进而塑造我们行为的权力。
 
 ---v
 
-## A Shared History
+## 一段共同的人类历史
 
-> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
+> 任何大规模的运作——无论是现代国家、中世纪的教会，还是古代部落——都植根于只存在于人们集体想象中的共同故事。
 
-> Telling effective stories is not easy.
-> The difficulty lies ... in convincing everyone else to believe it.
-> Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
+> 讲述有效的故事并不容易。
+> 困难在于……说服其他人相信它。
+> 历史很大部分都在围绕着这个问题：一个人如何说服数百万人相信关于神、国家或有限责任公司的特定故事？
 
 <!-- .element: class="fragment" -->
 
-_-- Yuval Noah Harari, Sapiens --_
+_——尤瓦尔·诺亚·赫拉利，《人类简史》_
 
 ---v
 
-## Shared Story of a State Machine
+## 状态机的共享故事
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-If we agree on:
+如果我们就以下方面达成共识：
 
-- The starting state<br />(aka genesis state)
-- The history of transitions
+- 起始状态<br />(即创世状态)
+- 状态转换的历史
 
 </pba-col>
 <pba-col>
 </pba-flex>
 
-Then we _MUST_ agree on:
+那么我们_必须_就以下方面达成共识：
 
 <pba-flex center>
 
-- The current state
+- 当前状态
 
 </pba-flex>
 
@@ -150,36 +150,36 @@ Then we _MUST_ agree on:
 
 Notes:
 
-Now that we have a formal math-y model of systems that we care about, we can see that the notion of shared stories being powerful is more than slick language of philosophical mumbo jumbo.
-Even the term genesis state (or genesis block) is taken straight from mythology.
-We aren't newly discovering or inventing the idea that having a shared understanding of our past is important.
-It dates back to pre-history.
-We are just formalizing it and applying it to digital services.
+现在我们有了一个我们关心的系统的正式数学模型，我们可以看到，共享故事具有强大影响力的观点不仅仅是哲学废话的花言巧语。
+甚至“创世状态”（或“创世区块”）这个术语都是直接取自神话。
+我们并不是新发现或发明了“拥有对过去的共同理解很重要”这个观点。
+它可以追溯到史前时代。
+我们只是将其形式化并应用于数字服务。
 
 ---
 
-## Blockchains (Finally)
+## 终于说到区块链了
 
-A blockchain can be thought of in three parts
+区块链可以从三个部分来理解
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-**State Machine**
+**状态机**
 
-What does the state hold?
+状态包含什么？
 
-What are the _rules_ to change it?
+改变它的_规则_是什么？
 
 </pba-flex>
 </pba-col>
 <pba-col>
 <pba-flex center>
 
-**Shared History** (data structure)
+**共同历史**（数据结构）
 
-Which potential histories exist?
+存在哪些可能的历史？
 
 </pba-flex>
 </pba-col>
@@ -187,11 +187,11 @@ Which potential histories exist?
 
 <pba-flex center>
 
-**Consensus**
+**共识**
 
-Which history is the real one?
+哪个历史是真实的？
 
-What part of history is final?
+历史的哪一部分是最终确定的？
 
 </pba-flex>
 </pba-col>
@@ -199,89 +199,88 @@ What part of history is final?
 
 Notes:
 
-First, each blockchain tracks some state machine.
-We've discussed several examples of what that might be already, we'll code some simple examples shortly, and we'll spend all of module 5 digging into how to create a blockchain-friendly production-ready state machine.
+首先，每个区块链都跟踪某个状态机。
+我们已经讨论了几个可能的例子，我们很快会编写一些简单的示例，并且在模块5中，我们将深入研究如何创建一个适合区块链的生产就绪状态机。
 
-Next is the Blockchain Data structure.
-This data structure is basically a linked list of state transitions.
-But unlike the linked lists you studied in your data structures course, it isn't just linked by memory addresses or any other malleable thing.
-Instead it is cryptographically linked so that if anyone presents a different history, you can tell right away that you don't agree on a shared history.
-We'll dive into this data structure in the next lesson.
+接下来是区块链数据结构。
+这个数据结构基本上是一个状态转换的链表。
+但与你在数据结构课程中学习的链表不同，它不仅仅是通过内存地址或任何其他可篡改的东西进行链接。
+相反，它是通过加密方式进行链接的，这样如果有人提出不同的历史，你可以立即发现你们对共同历史没有达成共识。
+我们将在下一课中深入研究这个数据结构。
 
-Finally, is a consensus mechanism.
-Defining a state machine alone does not uniquely define a history.
-There are many possible valid histories.
-Just like the many worlds interpretation of quantum mechanics.
-To really agree on the current state, we need to agree on which of the possible histories is the real one.
-
----v
-
-## Short History of Blockchains
+最后是共识机制。
+仅仅定义一个状态机并不能唯一地确定一个历史。
+有许多可能的有效历史。
+就像量子力学的多世界诠释一样。
+为了真正就当前状态达成共识，我们需要就哪个可能的历史是真实的达成共识。
 
 ---v
 
-## Bitcoin
+## 区块链的简短历史
+
+---v
+
+## 比特币
 
 <img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
 
-Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
+使用未花费交易输出（UTXO）模型和工作量证明（PoW）共识机制。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Who knows where the figure is from?
+有谁知道这张图来自哪里吗？
 
-CLICK
+点击
 
-Bitcoin was first.
-It was a money app.
-The first app chain.
-It hosts a smart contract in the broad definition.
+比特币是第一个。
+它是一个货币应用程序。
+第一个应用链。
+从广义上来说，它承载了一个智能合约。
 
-It was the first time most people considered a digital service that was not run by a particular person.
+这是大多数人第一次考虑一个不由特定主体运营的数字服务。
 
-Figure source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
+图片来源：[比特币白皮书](https://bitcoin.org/en/bitcoin-paper)
 
 ---v
 
-## Litecoin, Monero, Dogecoin
+## 莱特币、门罗币、狗狗币
 
 <img rounded src="./img/altcoins.png" />
 
 Notes:
 
-Only a few year later people realized they could fork the code and make small changed and improvements.
-Some changes were trivial.
-Some were interesting: monero and privacy.
+仅仅几年后，人们就意识到他们可以分叉代码并进行一些小的更改和改进。
+有些更改微不足道。
+有些则很有趣：比如门罗币和隐私。
 
-For me personally, this was a small crisis.
-I thought bitcoin was the one global one.
-Aren't these other coins undermining the narrative?
-NO! The point is that anytime you don't like the system or have an idea for a better one, you can do it!
-If you don't like bitcoin, build your own coin and make it better.
-Let the market decide.
-
----v
-
-## Ethereum
-
-- Generalization of Bitcoin: provides a quasi-Turing-complete VM
-- Uses an account-based system
-- Accounts can store balances, but can also store executable code (smart contracts)
-- Each contract can have its own internal state and API
+就我个人而言，这是一个小危机。
+我以为比特币是全球唯一的一个。
+这些其他的加密货币不是在破坏这种说法吗？不！关键是，只要你不喜欢这个系统或者有一个更好的系统的想法，你就可以去做！
+如果你不喜欢比特币，那就创建你自己的加密货币并把它做得更好。
+让市场来决定。
 
 ---v
 
-## Smart contracts - Two Definitions
+## 以太坊
+
+- 比特币的泛化：提供一个准图灵完备的虚拟机
+- 使用基于账户的系统
+- 账户可以存储余额，也可以存储可执行代码（智能合约）
+- 每个合约可以有自己的内部状态和应用程序编程接口（API）
+
+---v
+
+## 智能合约 - 两种定义
 
 <br />
 <br />
 
-#### Broad Definition <small style="margin-top:20px;"> _"Szabo definition"_</small>
+#### 广义定义 <small style="margin-top:20px;"> _“萨博定义”_</small>
 
-<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
+<blockquote>一个机器程序，其规则本可以在合同中定义，但现在由机器来执行或验证执行情况。</blockquote>
 
-#### Narrow Definition <small style="margin-top:20px;"> _"web3 definition"_</small>
+#### 狭义定义 <small style="margin-top:20px;"> _“Web3定义”_</small>
 
-<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote>
+<blockquote>一个程序，它规定了用户如何与状态机进行交互，并被无许可地部署到区块链网络上。</blockquote>

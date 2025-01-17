@@ -1,4 +1,4 @@
-# Adding Privacy to the UTXO model
+# 为UTXO模型添加隐私性
 
 <!-- markdown-link-check-disable -->
 <center>

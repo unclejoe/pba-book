@@ -1,4 +1,4 @@
-# Light Clients and Bridges
+# 轻客户端与跨链桥
 
 <!-- markdown-link-check-disable -->
 <center>

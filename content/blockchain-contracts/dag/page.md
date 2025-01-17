@@ -1,4 +1,4 @@
-# Designing DAG-based consensus
+# 基于有向无环图（DAG）的共识设计
 
 <!-- markdown-link-check-disable -->
 <center>

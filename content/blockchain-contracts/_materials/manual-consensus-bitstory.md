@@ -1,10 +1,10 @@
-# Manual Consensus (aka BitStory)
+# 手动共识（又名比特故事）
 
-In this activity students will encounter and explore blockchain consensus mechanisms such as PoW, PoA, and PoS by acting them out manually.
+在这个活动中，学生们将通过手动模拟的方式来接触和探索区块链共识机制，如工作量证明（PoW）、权威证明（PoA）和权益证明（PoS）。
 
-Students will collaborate in telling a shared story.
-The shared story is represented by a blockchain with one word in each block.
-To add a word to the story, a student must create a valid block, and draw that block on the community whiteboard\*
+学生们将合作讲述一个共同的故事。
+这个共同的故事由一个区块链来表示，每个区块中包含一个单词。
+要给故事添加一个单词，学生必须创建一个有效的区块，并将该区块画在社区白板上*
 
 <pba-flex center>
 
@@ -12,102 +12,102 @@ To add a word to the story, a student must create a valid block, and draw that b
 
 </pba-flex>
 
-- If no whiteboard is available, you may be able to substitute; a paper, online drawing tool, or even a chalkboard if you are desperate.
+- 如果没有白板，你可以考虑用纸张、在线绘图工具来替代；实在没办法的话，甚至可以用黑板。
 
-## Proof of Work
+## 工作量证明
 
-The PoW phase is the original, and a working hasher tool is available here: <https://joshorndorff.github.io/BitStory/bitStoryLive.html>
+工作量证明阶段是最初的阶段，这里有一个可用的哈希工具：<https://joshorndorff.github.io/BitStory/bitStoryLive.html>
 
-To begin we'll explore the Nakamoto style Proof of Work.
-To add a block a student must:
+首先，我们将探索中本聪式的工作量证明。
+要添加一个区块，学生必须：
 
-- Choose a parent block hash to build on
-- Choose a word to add to the story
-- Find a nonce so that the block's hash meets the required difficulty
+- 选择一个父区块哈希来构建新的区块
+- 选择一个要添加到故事中的单词
+- 找到一个随机数（nonce），使得该区块的哈希值满足所需的难度
 
-The process of finding a nonce is accomplished by entering the parent hash and word into [the hasher](https://joshorndorff.github.io/BitStory/bitStoryLive.html) and repeatedly mashing the `increment nonce` button until you find a valid one.
-In this way students are manually performing the preimage search.
+找到随机数的过程是通过将父哈希和单词输入到[哈希工具](https://joshorndorff.github.io/BitStory/bitStoryLive.html)中，并反复点击“增加随机数”按钮，直到找到一个有效的随机数。
+通过这种方式，学生们手动进行原像搜索。
 
-The game ends at a pre-determined time.
-The winner is the person who authors the most blocks in the longest chain at the end of the game.
+游戏在预定的时间结束。
+获胜者是在游戏结束时，在最长链中创作最多区块的人。
 
-### Attacks
+### 攻击
 
-The instructor can encourage student groups to perform various attacks on the PoW network.
+教师可以鼓励学生小组对工作量证明网络进行各种攻击。
 
-- Censor specific words or plot points by forking around them.
-- Publish invaild blocks to trick other miners into wasting their hash rate on invalid chains.
-- Perform a hard fork where your block start to have two words each.
-  Some students will like the two-words-per-block rule and keep building on them.
-  Other students (ideally ones who don't know the instructor is in on the shenanigans) may think the two-word blocks are not following the rules, and choose to ignore them.
-  Welcome to bitstory cash.
+- 通过分叉来审查特定的单词或情节要点。
+- 发布无效区块，以诱使其他矿工在无效链上浪费他们的哈希算力。
+- 进行硬分叉，使你的区块开始每个包含两个单词。
+  有些学生可能会喜欢每个区块包含两个单词的规则，并继续在这些区块上构建新的内容。
+  其他学生（理想情况下是那些不知道教师参与了这些恶作剧的学生）可能会认为两个单词的区块不符合规则，从而选择忽略它们。
+  欢迎来到比特故事现金世界。
 
-## Formalize the Language
+## 形式化语言
 
-Our previous story had basically no structure.
-Let's change it to specifically allow a small set of "transaction types".
-From here on each block will contain a very short sentence (can be abbreviated on the whiteboard) The following is an _example_ and your group is encouraged to make modifications if you like.
-The degree of formalization is up to you.
-The more formal it gets, the more it starts to look like real world blockchains.
+我们之前的故事基本上没有结构。
+让我们将其改为专门允许一小部分“交易类型”。
+从现在开始，每个区块将包含一个非常简短的句子（可以在白板上缩写）。以下是一个_示例_，如果你的小组愿意，可以进行修改。
+形式化的程度由你决定。
+它越正式，就越开始看起来像现实世界中的区块链。
 
-- Choose a fixed cast of max 3 or 4 characters
-- Choose a fixed set of a few locations
-- Allow one simple action in each block (a character moves, or does one simple thing)
-- Consider letting your characters affect your "real world" by letting them change the difficulty necessary for a block to be valid.
-  You now have a difficulty adjustment algorithm.
+- 选择一个最多由3或4个角色组成的固定角色阵容
+- 选择一组固定的地点
+- 每个区块中只允许有一个简单的动作（一个角色移动，或做一件简单的事情）
+- 考虑让你的角色影响“现实世界”，让他们改变一个区块有效的所需难度。
+  现在你有了一个难度调整算法。
 
-Play a few more games.
-This time each miner write down a few goals that they want to accomplish in-story (eg, bob and alice have a fight, charlie is elected mayor).
-This time the winners are whoever best accomplishes their in-story goals.
-Notice that in some cases the goals may al lbe mutually compatible, and in other cases they may not.
-In subsequent rounds, establish goals together.
-Try to play at least one round where there are incompatible goals.
-Miners may choose to form alliances (pools) and censor blocks that don't build on their allies' in-story goals.
+再玩几轮游戏。
+这次，每个矿工写下他们在故事中想要实现的几个目标（例如，鲍勃和爱丽丝打架，查理当选市长）。
+这次的获胜者是那些最能实现他们在故事中的目标的人。
+注意，在某些情况下，这些目标可能都是相互兼容的，而在其他情况下则可能不兼容。
+在后续的轮次中，一起确定目标。
+尝试至少玩一轮有不兼容目标的游戏。
+矿工们可以选择组成联盟（矿池），并审查那些不符合他们盟友在故事中的目标的区块。
 
-## Proof of Authority (Aura)
+## 权威证明（Aura）
 
-In this phase, students will choose some authorities to act as block authors and a slot duration and they will take turns authoring in order.
-They should observe that this method is much simpler and less chaotic.
-It does indeed take less work.
+在这个阶段，学生们将选择一些权威人士作为区块的创作者，并确定一个时隙持续时间，然后他们将按顺序轮流创作区块。
+他们应该观察到，这种方法要简单得多，也不那么混乱。
+确实需要的工作量也更少。
 
-## Attacks
+## 攻击
 
-- You can skip your slots to slow the progress of the story once it isn't going your way.
-- Censor plot points.
-- Publish blocks in slots in which they are not valid to try to trick other miners.
-  This may be particularly convincing when the correct author is skipping their slot.
-- Polarize the authorities to work on two different forks
+- 当故事的发展不符合你的意愿时，你可以跳过你的时隙来减缓故事的进展。
+- 审查情节要点。
+- 在你无权发布区块的时隙中发布区块，试图欺骗其他矿工。
+  当正确的创作者跳过他们的时隙时，这种做法可能特别具有欺骗性。
+- 使权威人士分化，在两个不同的分叉上工作
 
-## Discussion
+## 讨论
 
-What attacks worked best in PoW vs PoA.
-What strengths and weaknesses does each have.
+在工作量证明和权威证明中，哪些攻击最有效？
+每种方法有哪些优点和缺点？
 
-## Proof of Stake
+## 权益证明
 
-One weakness of PoA is that only some of the participants are authors.
-We can improve this situation by allowing the authority set to rotate.
-Challenge the students to consider ways in which the authority set might change.
-What if the story itself is about who is elected as authorities?
+权威证明的一个弱点是，只有部分参与者是创作者。
+我们可以通过允许权威集合轮换来改善这种情况。
+挑战学生们思考权威集合可能发生变化的方式。
+如果故事本身是关于谁被选举为权威人士呢？
 
-Notice that this is the foundation of proof of stake.
-The on-chain story is about people bonding and unbonding their security deposits.
-Formalize a new language around this story.
+注意，这是权益证明的基础。
+链上故事是关于人们质押和解除质押他们的保证金。
+围绕这个故事形式化一种新的语言。
 
-### Mixed PoW PoA
+### 混合工作量证明和权威证明
 
-Some early PoS designs envisioned interleaving PoS and PoW blocks.
-Invent such a scheme, and try it out.
+一些早期的权益证明设计设想了将权益证明和工作量证明的区块交错排列。
+设计这样一个方案，并尝试一下。
 
-## Grandpa and finality
+## Grandpa和最终性
 
-This one is a little different.
-Here we assume an external block production method.
-At first this can just be one student who is not playing grandpa, but instead being the sole block producer.
+这个有点不同。
+在这里，我们假设一种外部的区块生成方法。
+一开始，这可以只是一个不扮演Grandpa角色的学生，而是作为唯一的区块生产者。
 
-The other students use a shared whiteboard to post their pre-votes and pre-commits and personal paper to track which blocks they have finalized.
+其他学生使用共享白板来发布他们的预投票和预提交，并使用个人纸张来跟踪他们已经最终确定的区块。
 
-## Hybrid Consensus
+## 混合共识
 
-If there is time in the activity slot, we can combine any of the block production methods with grandpa.
-My personal favorite is PoW + Grandpa.
+如果活动时间允许，我们可以将任何一种区块生成方法与Grandpa结合。
+我个人最喜欢的是工作量证明 + Grandpa。

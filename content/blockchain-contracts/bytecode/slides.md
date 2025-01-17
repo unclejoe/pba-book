@@ -4,45 +4,45 @@ description: What are PABs and why they exist?
 duration: 1 hour
 ---
 
-# Platform Agnostic Bytecode
+# 平台无关字节码
 
 ---
 
-## Review of Compilers
+## 编译器回顾
 
 <img src="./img/compiling.png" />
 
-🤯 Fun Side Reading: <!-- .element: class="fragment" data-fragment-index="1" -->
-[Reflections on Trusting Trust](https://www.cs.cmu.edu/~rdriley/487/papers/Thompson_1984_ReflectionsonTrustingTrust.pdf) <!-- .element: class="fragment" data-fragment-index="1" -->
+🤯 有趣的拓展阅读： <!-- .element: class="fragment" data-fragment-index="1" -->
+[关于信任的反思](https://www.cs.cmu.edu/~rdriley/487/papers/Thompson_1984_ReflectionsonTrustingTrust.pdf) <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-Just a very quick reminder of how compilers work.
-Humans write programs in some human readable language like Lauren talked about.
-Then the compiler translates the semantics of that program into an equivalent program in a much lower more machine-readable language called a bytecode.
+只是快速回顾一下编译器的工作原理。
+人们用像劳伦提到的那种人类可读的语言编写程序。
+然后编译器将该程序的语义翻译成一种更低级、更易于机器读取的等效程序，称为字节码。
 
-CLICK
+点击
 
-Whenever I show this diagram or talk about compilers, I always like to mention one of my favorite essays ever.
-Ken Thompson's 1984 Turing Award lecture.
+每当我展示这个图表或谈论编译器时，我总是喜欢提到我最喜欢的一篇文章。
+肯·汤普森（Ken Thompson）1984年的图灵奖演讲。
 
 ---
 
-## Definition
+## 定义
 
-A PAB is a bytecode that follows two main principles:
+平台无关字节码（PAB）是一种遵循两个主要原则的字节码：
 
-- Turing Completeness, as a standard bytecode would respect
+- 图灵完备性，就像标准字节码所具备的那样
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Support for tooling that makes it executable on every machine
+- 支持使它能在每台机器上运行的工具
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns.
+理想情况下，像这样的字节码被设计为在遵循通用已知模式的虚拟机上执行。
 
 ---
 
@@ -51,7 +51,7 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 <pba-flex center>
 
-###### High Level Languages
+###### 高级语言
 
 <img style="width: 30%" src="./img/rust_logo.png" />
 
@@ -66,7 +66,7 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 <pba-col center>
 <pba-flex center>
 
-###### PABs
+###### 平台无关字节码（PABs）
 
 <img style="width: 30%" src="./img/jvm_logo.png" />
 <img style="width: 30%" src="./img/wasm_logo.png" />
@@ -80,7 +80,7 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 <pba-col right>
 <pba-flex center>
 
-###### Architecture's bytecode
+###### 架构的字节码
 
 <img style="width: 30%" src="./img/intel_logo.png" />
 <img style="width: 30%" src="./img/arm_logo.jpg" />
@@ -94,137 +94,137 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 Notes:
 
-From left to right you can see different levels of abstraction over the program that will ultimately be run on some machine.
-Generally, from a high level language you need two compilation step if you want to pass through a PAB.
+从左到右，你可以看到最终将在某台机器上运行的程序的不同抽象层次。
+一般来说，如果你想通过平台无关字节码（PAB），从高级语言开始需要两个编译步骤。
 
-Other examples of PABs used right now:
+目前使用的平台无关字节码（PAB）的其他示例：
 
-- Inside the Linux Kernel -> eBPF
-- Inside browsers -> Wasm
-- Inside Blockchains -> Wasm
-  - Full nodes
-  - Light nodes (Wasm inside Wasm)
-- LLVM Toolchain -> LLVM IR
+- 在Linux内核中 -> eBPF
+- 在浏览器中 -> WebAssembly（Wasm）
+- 在区块链中 -> WebAssembly（Wasm）
+  - 全节点
+  - 轻节点（Wasm嵌套在Wasm中）
+- LLVM工具链 -> LLVM中间表示（LLVM IR）
 
 ---v
 
-## Compiling in a PAB
+## 在平台无关字节码（PAB）中编译
 
 <img src="./img/compiling_twice.png" />
 
 Notes:
 
-So when we are using a PAB, we need to compile twice.
-This is, of course, the cost to using a PAB.
-In this lesson we'll also explore the advantages.
+所以当我们使用平台无关字节码（PAB）时，我们需要编译两次。
+当然，这就是使用平台无关字节码（PAB）的代价。
+在本课程中，我们还将探讨其优势。
 
 ---
 
-#### What a PAB allows is:
+#### 平台无关字节码（PAB）允许的是：
 
 <pba-flex center>
 
-- Portability
+- 可移植性
   <!-- .element: class="fragment" data-fragment-index="1" -->
-      - Avoid Hardware Centralization
+      - 避免硬件集中化
   <!-- .element: class="fragment" data-fragment-index="3" -->
-- Determinism
+- 确定性
   <!-- .element: class="fragment" data-fragment-index="2" -->
-      - Make consensus possible
+      - 使共识成为可能
   <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
 Notes:
 
-The main goal of a PAB is to make the code **portable**, you should be able to compile it once and then share it around without caring about the architecture on which will be executed.
-Of course in a decentralized network we want that different nodes, with different architectures came up to the same result if the input are the same, that's called **determinism**, if a PAB would not have determinism then reaching consensus is impossible.
+平台无关字节码（PAB）的主要目标是使代码具有**可移植性**，你应该能够编译一次，然后随意分享，而无需关心它将在何种架构上执行。
+当然，在去中心化网络中，我们希望不同架构的节点在输入相同的情况下能得到相同的结果，这就是所谓的**确定性**，如果平台无关字节码（PAB）没有确定性，那么达成共识是不可能的。
 
 ---v
 
-##### That's why PABs are so important
+##### 这就是为什么平台无关字节码（PAB）如此重要
 
 ---
 
-## Desireable Features
+## 理想特性
 
-- Hardware Independence
+- 硬件独立性
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Efficiency
+- 效率
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- Tool Simplicity
+- 工具简单性
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-- Support as Compilation Target
+- 作为编译目标的支持
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-- Sandboxing
+- 沙盒化
 
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
-- Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
-- Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
-- Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages
-- Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
+- 硬件独立性：它不应与特定架构紧密相关，否则在不同机器上的执行可能会很复杂。
+- 效率：平台无关字节码（PAB）的执行应该是高效的，平台无关字节码（PAB）面临的问题是，在执行时还需要考虑“翻译”成机器字节码或进行解释的过程。
+- 作为编译目标的支持：平台无关字节码（PAB）应该能够被尽可能多的高级语言编译。
+- 工具简单性：如果使平台无关字节码（PAB）可执行的工具极其复杂，那么就没人会使用它。
 
 ---v
 
-### Sandboxing?
+### 沙盒化？
 
-An environment for running untrusted code without affecting the host.
+一个用于运行不受信任的代码而不影响主机的环境。
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <img style="height: 300px" src="./img/sandbox.jpg" />
 
-A SmartContract is _Arbitrary Code_ that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed
+智能合约是在他人基础设施上可能被执行的**任意代码**，我们不希望智能合约能够破坏其运行所在的节点。
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-CLICK read definition
+点击阅读定义
 
-The term sandbox is an analogy to kids playing in a sandbox.
-The parent puts the kid in the sandbox and tells them they can play in the sandbox and they are safe as long as they stay in.
-Don't go in the woods and get bitten by a snake or in the road and get hit by a car.
-Just stay in the sandbox.
+“沙盒”这个术语类似于孩子们在沙箱里玩耍。
+父母把孩子放在沙箱里，告诉他们可以在沙箱里玩耍，只要他们待在里面就是安全的。
+不要走进树林被蛇咬，或者走到马路上被车撞。
+就待在沙箱里。
 
-Of course the analogy isn't perfect.
-The children in the sandbox stay there because the parent asked them to.
-They could leave anytime they wanted to.
-For actual untrusted code, a better analogy would be a walled garden or a Jail
+当然，这个类比并不完美。
+沙箱里的孩子待在那里是因为父母要求他们这样做。
+他们随时都可以离开。
+对于实际的不受信任的代码，一个更好的类比是封闭式花园或“监狱”。
 
 ---v
 
-### Sandboxing?
+### 沙盒化？
 
 <img src="./img/jail.jpg" /> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-A sandboxed environment must be created by the executor of the PAB.
+沙盒化环境必须由平台无关字节码（PAB）的执行器创建。
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-Of course the security can be seen by various point of view and some examples are:
+当然，安全性可以从不同的角度来看，一些例子包括：
 
-- Compilation takes too much time -> compiling bomb
-- Access to the environment -> "buffer overflow" techniques
+- 编译花费时间过长 -> 编译炸弹
+- 访问环境 -> “缓冲区溢出”技术
 
-Those things can't be addressed by the PAB itself but they can give good guidelines and code design to make an 100% secure implementation of the executor possible.
+这些问题本身无法由平台无关字节码（PAB）解决，但它们可以提供良好的指导方针和代码设计，使执行器能够实现100%的安全实现。
 
 ---
 
-## PAB's lifecycle example
+## 平台无关字节码（PAB）的生命周期示例
 
 <div class="r-stack">
 <img style="width: 70%" src="./img/pab_path_1.svg" />
@@ -265,27 +265,27 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 ---
 
-## Wasm's key points
+## WebAssembly的关键点
 
 <pba-flex center>
 
-- Hardware-independent
+- 硬件无关
   <!-- .element: class="fragment" data-fragment-index="1" -->
-  - Binary instruction format for a stack-based virtual machine
+  - 基于栈的虚拟机的二进制指令格式
   <!-- .element: class="fragment" data-fragment-index="1" -->
-- Supported as compilation target by many languages
+- 被许多语言支持作为编译目标
   <!-- .element: class="fragment" data-fragment-index="2" -->
-  - Rust, C, C++ and many others
+  - Rust、C、C++ 以及许多其他语言
   <!-- .element: class="fragment" data-fragment-index="2" -->
-- Fast (with near-native performance)
+- 快速（具有接近原生的性能）
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-- Safe (executed in a sandboxed environment)
+- 安全（在沙盒化环境中执行）
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-- Open (programs can interoperate with their environment)
+- 开放（程序可以与它们的环境进行互操作）
 
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
@@ -293,16 +293,16 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 Notes:
 
-Wasm seems to respect every rating points we defined before
+WebAssembly似乎符合我们之前定义的所有评分要点。
 
 ---
 
-## Stack-Based Virtual Machine Example
+## 基于栈的虚拟机示例
 
 <pba-cols>
 <pba-col center>
 
-Adding two number in wasm text representation (.wat)
+在WebAssembly文本表示（.wat）中进行两数相加
 
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
 
@@ -310,12 +310,12 @@ Adding two number in wasm text representation (.wat)
 (module
   (import "console" "log" (func $log (param i32)))
   (func $main
-    ;; load `10` and `3` onto the stack
+    ;; 把 `10` 和 `3` 压入栈中
     i32.const 10
     i32.const 3
 
-    i32.add ;; add up both numbers
-    call $log ;; log the result
+    i32.add ;; 把两个数字相加
+    call $log ;; 记录结果
   )
   (start $main)
 )
@@ -323,7 +323,7 @@ Adding two number in wasm text representation (.wat)
 
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-</pba-col>
+</pba-col center>
 <pba-col center>
 
 <div class="r-stack">
@@ -346,347 +346,224 @@ Adding two number in wasm text representation (.wat)
 
 Notes:
 
-Wasm has also a text representation,
-Wat has some features that allow for better readability:
+WebAssembly也有文本表示形式，
+WebAssembly文本格式（Wat）有一些特性可以提高可读性：
 
-- Stack push operations can be grouped to its consuming instruction.
-- Labels can be applied to elements.
-- Blocks can enclosed with parenthesis instead of explicit start/end instructions.
+- 栈推送操作可以与其消耗指令分组。
+- 标签可以应用于元素。
+- 块可以用括号括起来，而不是使用显式的开始/结束指令。
 
-Instructions push results to the stack and use values on the stack as arguments, the compilation process generally translate this stack-based bytecode to register based, where registers are used to pass values to instructions as a primary mechanism.
-The compilation will try to elide the wasm stack and work with only the architecture registers.
+指令将结果压入栈中，并使用栈中的值作为参数，编译过程通常会将这种基于栈的字节码转换为基于寄存器的字节码，其中寄存器用于将值传递给指令作为主要机制。
+编译将尝试省略WebAssembly栈，只使用架构寄存器。
 
-There is another type of stack used in wasm and that's called: shadow stack, resource to learn more: <https://hackmd.io/RNp7oBzKQmmaGvssJDHxrw>
+WebAssembly中还有另一种栈，称为影子栈，了解更多信息的资源：<https://hackmd.io/RNp7oBzKQmmaGvssJDHxrw>
 
 ---
 
-## Wasm seems to be a perfect PAB, but
+## WebAssembly似乎是一个完美的平台无关字节码（PAB），但是
 
-- How does communication with the environment work?
+- 它是如何与环境进行通信的？
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- How the memory is managed?
+- 内存是如何管理的？
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- How is it executed?
+- 它是如何执行的？
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
-Assuming all the things we said before wasm seems to be perfect but how those things really works?
+假设我们之前所说的都成立，WebAssembly似乎是完美的，但这些事情到底是如何运作的呢？
 
 ---
-
-## Communication with the Environment
-
-Let's call **Embedder** the program that will take the wasm blob as input and execute it
-
+### 与环境通信
+我们把接收WebAssembly二进制文件作为输入并执行它的程序称为**嵌入器**。
 <!-- .element: class="fragment" data-fragment-index="0" -->
-
-- the wasm blob may expect parameters from the embedder
-  - embedder -> wasm
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- the embedder may act on a return value from the wasm
-  - wasm -> embedder
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
+- WebAssembly二进制文件可能期望从嵌入器获取参数
+  - 嵌入器 -> WebAssembly
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+- 嵌入器可能会根据WebAssembly的返回值采取行动
+  - WebAssembly -> 嵌入器
+  <!-- .element: class="fragment" data-fragment-index="2" -->
 ---v
-
-### Problem
-
-**Wasm has no ambient access to the computing environment in which code is executed**
-
-</br>
-
-### Solution
-
+### 问题
+**WebAssembly无法直接访问代码执行所在的计算环境**。
+<br>
+### 解决方案
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
 <img src="./img/env_communication.svg" style="width: 70%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
 Notes:
-
-- Every interaction with the environment can be done only by a set of functions, called **Host Functions**, provided by the embedder and imported in wasm
-- The embedder is able to call the functions defined in wasm blob, called **Runtime API**, and pass arguments through a shared memory
-
+- 与环境的所有交互只能通过一组由嵌入器提供并在WebAssembly中导入的函数来实现，这些函数被称为**宿主函数**。
+- 嵌入器能够调用WebAssembly二进制文件中定义的函数，即**运行时应用程序编程接口（Runtime API）**，并通过共享内存传递参数。
 ---
-
-## Memory
-
-In addition to the stack Wasm has also access to memory provided by the embedder, the **Linear Memory**.
-
+## 内存
+除了栈，WebAssembly还可以访问嵌入器提供的**线性内存**。
 <!-- .element: class="fragment" data-fragment-index="0" -->
-
-</br>
-
-- This area will be used also used as a frontier for data sharing
-- To make everything secure the Embedder is doing incredibly convoluted things
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
+<br>
+- 该区域也将用作数据共享的边界
+- 为确保安全，嵌入器会采取极为复杂的操作
+  <!-- .element: class="fragment" data-fragment-index="1" -->
 Notes:
-
-From Wasm the Linear Memory is byte addressable
-Linear Memory can be manipulated using functions called 'store' and 'load'
-
-The Rust compiler uses for dynamic/heap memory and to pass non primitives values to functions by emulating an additional stack within the linear memory, this emulated stack (the shadow stack) is what we would understand as stack in other architectures
-
+从WebAssembly角度看，线性内存是按字节寻址的。
+可使用名为“store”和“load”的函数来操作线性内存。
+Rust编译器通过在线性内存中模拟一个额外的栈，用于动态/堆内存以及向函数传递非原始值 ，这个模拟的栈（影子栈）相当于其他架构中的栈。
 ---v
-
-### Example
-
+### 示例
 <div class="r-stack">
-<img src="./img/linear_memory_1.svg" style ="width: 70%">
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="./img/linear_memory_2.svg" style ="width: 70%">
-<!-- .element: class="fragment" data-fragment-index="1" -->
+  <img src="./img/linear_memory_1.svg" style="width: 70%">
+  <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+  <img src="./img/linear_memory_2.svg" style="width: 70%">
+  <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
-
 Notes:
-
-Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1.
-When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base_linear_memory + 1.
-
-Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information.
-Even if the offset is only positive there are embedded that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
-
+例如，WebAssembly将线性内存视为字节数组，若要访问第二个字节，会使用索引1。
+执行时，嵌入器会检测到该访问操作，并将对索引1处线性内存的访问转换为对base_linear_memory + 1处的标准内存访问。
+会发生缓冲区溢出吗？WebAssembly使用32位，这使得偏移量不可能大于4GiB，这意味着嵌入器可在其虚拟内存中留出4GiB空闲空间，使WebAssembly二进制文件无法访问任何环境信息。
+即使偏移量只能为正数，有些嵌入器也会将线性内存起始地址（BLM）前的2GiB定义为受保护区域，这样如果WebAssembly代码诱使嵌入器将偏移量视为有符号数，就会引发操作系统错误。
 ---
-
-## How Wasm is executed
-
+## WebAssembly的执行方式
 <pba-flex left>
-
-There are multiple ways to execute wasm:
-
-- Ahead Of Time Compilation
-- Just in Time Compilation
-- Single Pass Compilation
-- Interpretation
-- ...
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-</pba-flex >
-
+执行WebAssembly有多种方式：
+- 提前编译
+- 即时编译
+- 单遍编译
+- 解释执行
+- ……
+  <!-- .element: class="fragment data-fragment-index="1" -->
+</pba-flex>
 Notes:
-
-AOT: Compile all the code at the beginning, this allows to makes a lot of improvement to the final code efficiency
-JIT: The code is compiled only when needed, examples are functions that are compiled only when called, this leave space only to partials improvements
-SPC: This is a specific technique of compilation that is made in linear time, the compilation is done only passing once on the code
-Interpretation: The wasm blob is treated as any other interpreted language and executed in a Virtual Machine
-
+- 提前编译（AOT）：在开始时编译所有代码，这有助于大幅提升最终代码的执行效率。
+- 即时编译（JIT）：仅在需要时编译代码，例如函数只有在被调用时才编译，这种方式只能实现部分优化。
+- 单遍编译（SPC）：这是一种按线性时间进行的特定编译技术，对代码仅遍历一次就完成编译。
+- 解释执行：将WebAssembly二进制文件像其他解释型语言一样在虚拟机中执行。
 ---v
-
 ### Wasmtime
-
-- It is a stand alone wasm environment
-- Wasmtime is built on the optimizing Cranelift code generator to quickly generate high-quality machine code either at runtime (JIT) or ahead-of-time (AOT)
-- It executes the compiled wasm blob in sandboxed environment while keeping everything extremely secure
-
-<!--TODO: graphics-->
-
+- 它是一个独立的WebAssembly运行环境。
+- Wasmtime基于优化的Cranelift代码生成器构建，能在运行时（即时编译，JIT）或提前（提前编译，AOT）快速生成高质量的机器代码。
+- 它在沙盒环境中执行已编译的WebAssembly二进制文件，同时确保高度安全性。
+  <!--TODO: graphics-->
 Notes:
-
-- wasmtime book: <https://docs.wasmtime.dev/>
-- Used in substrate as embedder for the blockchain logic
-
-Cranelift is a fast, secure, relatively simple and innovative compiler backend.
-It takes an intermediate representation of a program generated by some frontend and compiles it to executable machine code
-
+- Wasmtime文档：<https://docs.wasmtime.dev/>
+- 在Substrate中用作区块链逻辑的嵌入器。
+Cranelift是一个快速、安全、相对简单且创新的编译器后端。它将前端生成的程序中间表示编译为可执行的机器代码。
 ---v
-
-#### Wasm lifecycle in Wasmtime
-
+#### Wasmtime中WebAssembly的生命周期
 <div class="r-stack">
-<img style="width: 70%" src="./img/wasmtime_exec_1.svg" />
-<img style="width: 70%" src="./img/wasmtime_exec_2.svg"/>
-<!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 70%" src="./img/wasmtime_exec_3.svg"/>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 70%" src="./img/wasmtime_exec_4.svg"/>
-<!-- .element: class="fragment" data-fragment-index="3" -->
+  <img style="width: 70%" src="./img/wasmtime_exec_1.svg" />
+  <img style="width: 70%" src="./img/wasmtime_exec_2.svg"/>
+  <!-- .element: class="fragment data-fragment-index="1" -->
+  <img style="width: 70%" src="./img/wasmtime_exec_3.svg"/>
+  <!-- .element: class="fragment data-fragment-index="2" -->
+  <img style="width: 70%" src="./img/wasmtime_exec_4.svg"/>
+  <!-- .element: class="fragment data-fragment-index="3" -->
 </div>
-
 ---v
-
 ### Wasmi
-
-- It is a wasm environment with support for embedded environment such as WebAssembly itself
-- Focus on simple, correct and deterministic WebAssembly execution
-- The technique of execution is interpretation but:
-  - The wasm code is transpiled to WasmI IR, another stack-based bytecode
-  - The WasmI IR is then interpreted by a Virtual Machine
-
-<!--TODO: graphics-->
-
+- 它是一个支持诸如WebAssembly自身等嵌入式环境的WebAssembly运行环境。
+- 专注于简单、正确且具有确定性的WebAssembly执行。
+- 执行技术是解释执行，但：
+  - WebAssembly代码会被转译为WasmI中间表示（IR），这是另一种基于栈的字节码。
+  - WasmI中间表示随后由虚拟机进行解释执行。
+  <!--TODO: graphics-->
 Notes:
-
-proposal to switch from a stack based ir to registry based ir <https://github.com/paritytech/wasmi/issues/361>
-
-paper explaining the efficiency of translating wasm to registry based code <https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html>
-
-Due to it's characteristics it is mainly used to execute SmartContracts on chain
-
+- 从基于栈的中间表示转换为基于寄存器的中间表示的提案：<https://github.com/paritytech/wasmi/issues/361>
+- 解释将WebAssembly转换为基于寄存器代码的效率的文章：<https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html>
+由于其特性，Wasmi主要用于在链上执行智能合约。
 ---v
-
-#### Wasm lifecycle in Wasmi
-
+#### Wasmi中WebAssembly的生命周期
 <div class="r-stack">
-<img style="width: 70%" src="./img/wasmi_exec_1.svg" />
-<img style="width: 70%" src="./img/wasmi_exec_2.svg"/>
-<!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 70%" src="./img/wasmi_exec_3.svg"/>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 70%" src="./img/wasmi_exec_4.svg"/>
-<!-- .element: class="fragment" data-fragment-index="3" -->
+  <img style="width: 70%" src="./img/wasmi_exec_1.svg" />
+  <img style="width: 70%" src="./img/wasmi_exec_2.svg"/>
+  <!-- .element: class="fragment data-fragment-index="1" -->
+  <img style="width: 70%" src="./img/wasmi_exec_3.svg"/>
+  <!-- .element: class="fragment data-fragment-index="2" -->
+  <img style="width: 70%" src="./img/wasmi_exec_4.svg"/>
+  <!-- .element: class="fragment data-fragment-index="3" -->
 </div>
-
-<!-- Really nice slide but there's not enough knowledge about substrate
-
-There are also light clients, where both Runtime and Client are implemented in wasm, so we have:
-
-- A browser as embedder of the node's client
-  - the node's client as embedder for the node's runtime
-    - the node's runtime as embedder for the SmartContract
-
-<img style="height: 30vh" src="./img/mind-blown-explosion.gif" />
-
-We have a double recursion of a PAB that embed itself
-
--->
-
+<!-- 这张幻灯片很不错，但对Substrate的介绍不够。
+还有轻客户端，其运行时和客户端都用WebAssembly实现，因此我们有：
+- 浏览器作为节点客户端的嵌入器
+  - 节点客户端作为节点运行时的嵌入器
+    - 节点运行时作为智能合约的嵌入器
+  <img style="height: 30vh" src="./img/mind-blown-explosion.gif" />
+我们有一个平台无关字节码（PAB）自身嵌套的双重递归。 -->
 ---
-
-# Alternatives
-
+# 替代方案
 ---v
-
-## EVM
-
-- The **Ethereum Virtual Machine** executes a stack machine
-  - Interesting: here the bytecode was create to be executed in a blockchain, so instructions are not hardware-dependent but there are instruction tightly related to Cryptography and others blockchain instructions
-
+## 以太坊虚拟机（EVM）
+- **以太坊虚拟机**执行基于栈的机器指令。
+  - 有趣的是：这里的字节码是为在区块链中执行而创建的，因此指令不依赖硬件，但有与密码学及其他区块链相关的指令。
 ---v
-
 ## CosmWasm
-
-- Wasm is always used but with different tools
-- They use CosmWasm as Embedder and internally is used Wasmer, a Single Pass Compiler
-
+- 始终使用WebAssembly，但使用不同的工具。
+- 他们使用CosmWasm作为嵌入器，内部使用单遍编译器Wasmer。
 ---v
-
 ## Solana eBPF
-
-- eBPF is used as PAB, but intrinsically eBPF has a lot of restrictions
-- Solana forked the eBPF backend of LLVM to makes every program to be compiled in eBPF
-- The Embedder is rBFP, a virtual machine for eBPF programs
-
+- eBPF被用作平台无关字节码（PAB），但eBPF本身有很多限制。
+- Solana对LLVM的eBPF后端进行了分叉，以使每个程序都能编译为eBPF格式。
+- 嵌入器是rBFP，一个用于eBPF程序的虚拟机。
 Notes:
-
 <https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084>
-
 ---v
-
 ## RISC-V ?!
-
-- RISC-V is a new instruction-set architecture
-- main goals are:
-  - real ISA suitable for direct native hardware implementation
-  - avoids “over-architecting”
-
-</br>
-
-Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
-
+- RISC-V是一种新的指令集架构。
+- 主要目标是：
+  - 成为适合直接在原生硬件上实现的真正指令集架构。
+  - 避免“过度架构设计”。
+<br>
+由于其简单性和“硬件独立性”，目前正在进行实验，以测试它是否适合成为新的波卡智能合约语言。
 Notes:
-
-Discussion about using RISC-V as smart contract language: <https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434>
-
-RISC-V Instruction Set Manual, Unprivileged ISA: <https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf>
-
+- 关于使用RISC-V作为智能合约语言的讨论：<https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434>
+- RISC-V指令集手册，非特权指令集架构：<https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf>
 ---
-
-## Activity: Compiling Rust to Wasm
-
-- Let's make a simple Rust crate that compiles to Wasm!
-- Clone the repo
-
+## 活动：将Rust编译为WebAssembly
+- 让我们创建一个简单的可编译为WebAssembly的Rust包！
+- 克隆代码仓库。
 ---v
-
-### Activity: Compiling Rust to Wasm
-
-- A target triple consists of three strings separated by a hyphen, with a possible fourth string at the end preceded by a hyphen.
-- The first is the **architecture**, the second is the **"vendor"**, the third is the **OS type**, and the optional fourth is environment type.
-
-* `wasm32-unknown-emscripten`: Legacy, provides some kind of `std`-like environment
-* `wasm32-unknown-unknown` ✓ WebAssembly: Can compile anywhere, can run anywhere, no `std`
-* `wasm32-wasi` ✓ WebAssembly with WASI
-
+### 活动：将Rust编译为WebAssembly
+- 目标三元组由三个用连字符分隔的字符串组成，末尾可能还有一个用连字符前缀的可选字符串。
+- 第一个是**架构**，第二个是**“供应商”**，第三个是**操作系统类型**，可选的第四个是环境类型。
+* `wasm32-unknown-emscripten`：旧版，提供类似`std`的环境。
+* `wasm32-unknown-unknown` ✓ WebAssembly：可在任何地方编译，可在任何地方运行，无`std`。
+* `wasm32-wasi` ✓ 带WASI的WebAssembly。
 ---v
-
-### Rust -> Wasm Details
-
+### Rust -> WebAssembly细节
 ```rust
-#[no_mangle] // don't re-name symbols while linking
-pub extern "C" fn add_one() { // use C-style ABI
+#[no_mangle] // 链接时不重命名符号
+pub extern "C" fn add_one() { // 使用C风格的应用程序二进制接口（ABI）
   ...
 }
 ```
-
-and if a library:
-
+如果是库：
 ```
 [lib]
 crate-type = ["cdylib"]
 ```
-
 ---v
-
-### Activity: Compiling Rust to Wasm
-
+### 活动：将Rust编译为WebAssembly
 ```
 rustup target add wasm32-unknown-unknown
-
 cargo build --target wasm32-unknown-unknown --release
-
 wasmtime ./target/wasm32-unknown-unknown/release/wasm-crate.wasm --invoke <func_name> <arg1> <arg2> ...
 ```
-
 ---v
-
-## Additional Resources! 😋
-
-> Check speaker notes (click "s" 😉)
-
+## 额外资源! 😋
+> 查看演讲者备注（点击“s” 😉）
 Notes:
-
-- More on PAB:
-
+- 更多关于平台无关字节码（PAB）的内容：
   - <https://github.com/gabriele-0201/IPABDN/blob/main/thesis/IPABDN.pdf>
-
-- More on Rust target spec:
-
+- 更多关于Rust目标规范的内容：
   - <https://rust-lang.github.io/rfcs/0131-target-specification.html>
-
-- Lin Clark's awesome talks on WASI (not super relevant to our work though):
-
+- Lin Clark关于WASI的精彩演讲（不过与我们的工作不是特别相关）：
   - <https://www.youtube.com/watch?v=fh9WXPu0hw8>
   - <https://www.youtube.com/watch?v=HktWin_LPf4>
-
-- `wasm-unknown` vs `wasm-wasi`:
-
+- `wasm-unknown`与`wasm-wasi`的对比：
   - <https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5>
-
-- `extern "C"`:
-
+- `extern "C"`：
   - <https://doc.rust-lang.org/std/keyword.extern.html>
   - <https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code>
-
-- Chapter 11 of this book is a great read: <https://nostarch.com/rust-rustaceans>
+- 这本书的第11章很值得一读：<https://nostarch.com/rust-rustaceans> 

@@ -1,4 +1,4 @@
-# EVM, Solidity, and Vyper
+# EVM, Solidity 和 Vyper
 
 <!-- markdown-link-check-disable -->
 <center>

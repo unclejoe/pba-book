@@ -1,4 +1,4 @@
-# Wasm Smart Contracts in Ink!
+# Ink! 中的 Wasm 智能合约
 
 <!-- markdown-link-check-disable -->
 <center>

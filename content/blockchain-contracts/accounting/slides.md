@@ -2,37 +2,37 @@
 title: Accounting Models & User Abstractions in Blockchains
 ---
 
-# Accounting Models & User Abstractions in Blockchains
+# 区块链中的账户模型与用户抽象
 
 ---
 
-## Overview
+## 概述
 
-- Cryptography, Signatures, Hash functions, Hash based Data Structures
+- 密码学、签名、哈希函数、基于哈希的数据结构
   <!-- .element: class="fragment" data-fragment-index="2" -->
-- Economics/Game Theory
+- 经济学/博弈论
   <!-- .element: class="fragment" data-fragment-index="3" -->
-- Blockchain structure
+- 区块链结构
   <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
-## Where do we go from here?
+## 我们接下来要做什么？
 
-- We have some base elements, ideas, and concepts
+- 我们有了一些基本元素、想法和概念
   <!-- .element: class="fragment" data-fragment-index="2" -->
-- Now, let's put them together into something cool..
+- 现在，让我们把它们组合成一些很酷的东西……
   <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
-## What are we talking about?
+## 我们在讨论什么？
 
 <pba-cols>
 <pba-col style="font-size:smaller">
 
-- Now that we have this structured decentralized tamper proof state machine..
-- Let's think of ways we can formulate a state and a state transition in terms of representing users
+- 现在我们有了这个结构化的去中心化防篡改状态机……
+- 让我们想想如何从表示用户的角度来构建一个状态和状态转换
 
 </pba-col>
 
@@ -40,200 +40,200 @@ title: Accounting Models & User Abstractions in Blockchains
 
 ---
 
-## State User Model
+## 状态用户模型
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_1.svg" />
 
 ---
 
-## State User Model
+## 状态用户模型
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_2.svg" />
 
 ---
 
-## How to represent Joshy and Andrew?
+## 如何表示乔希和安德鲁？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_1.svg" />
 
 ---
 
-## User Representation
+## 用户表示
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_3.svg" />
 
 ---
 
-## How to send from Joshy to Andrew? What do you need?
+## 如何从乔希转账给安德鲁？你需要什么？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_4.svg" />
 
-Notes:
+备注：
 
-What would be catastrophic if we got wrong??
+如果我们弄错了会有什么灾难性后果？
 
 ---
 
-## What if we want to spend this?
+## 如果我们想花这笔钱怎么办？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_5.svg" />
 
-Notes:
+备注：
 
-Why do we say spend here and not modify?
+为什么我们在这里说“花费”而不是“修改”？
 
 ---
 
-## Input
+## 输入
 
 <img rounded style="width: 1200px;" src="./img/utxo_transaction_1.svg" />
 
 ---
 
-## Transaction
+## 交易
 
 <img rounded style="width: 1200px;" src="./img/utxo_transaction_2.svg" />
 
-Notes:
+备注：
 
-Why do we not send all of the 70 to Andrew?
-
----
-
-## How to verify this state change is valid?
-
-- We can actually spend this thing signature verification!
-- Sum of the inputs is >= sum of the outputs
-- No coins are worth 0
-- Has this already been spent before?
-
-Notes:
-
-Which did I forget??
+为什么我们不把 70 全部转给安德鲁？
 
 ---
 
-## Our new state
+## 如何验证这个状态变化是有效的？
+
+- 我们实际上可以通过签名验证来花费这个东西！
+- 输入的总和 >= 输出的总和
+- 没有价值为 0 的硬币
+- 这个东西之前已经被花费过了吗？
+
+备注：
+
+我忘了哪一个？
+
+---
+
+## 我们的新状态
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_6.svg" />
 
 ---
 
-## How do we generalize beyond money?
+## 我们如何超越货币进行泛化？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_7.svg" />
 
 ---
 
-## How do we generalize beyond money?
+## 我们如何超越货币进行泛化？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_8.svg" />
 
-Notes:
+备注：
 
-How are we going to verify now that the state transition is valid?
+现在我们要如何验证状态转换是有效的？
 
 ---
 
-## Transaction
+## 交易
 
 <img rounded style="width: 1200px;" src="./img/utxo_transaction_3.svg" />
 
 ---
 
-## Transaction
+## 交易
 
 <img rounded style="width: 1200px;" src="./img/utxo_transaction_4.svg" />
 
 ---
 
-## Is this a good model? Why or why not? Let's discuss
+## 这是一个好模型吗？为什么？让我们讨论一下
 
-- Scalability
-- Privacy
-- General Computation
+- 可扩展性
+- 隐私性
+- 通用计算
 
 ---
 
-## Is there a different way?
+## 有没有其他方法？
 
 <img rounded style="width: 1200px;" src="./img/utxo_state_7.svg" />
 
-Notes:
+备注：
 
-Now ease them to the solution of Accounts
+现在引导他们想到账户的解决方案
 
 ---
 
-## Accounts
+## 账户
 
 <img rounded style="width: 1200px;" src="./img/accounts_state_1.svg" />
 
-Notes:
+备注：
 
-Now ease them to the solution of Accounts
+现在引导他们想到账户的解决方案
 
 ---
 
-## State Transition Accounts
+## 账户状态转换
 
 <img rounded style="width: 1200px;" src="./img/accounts_transaction_1.svg" />
 
 ---
 
-## State Transition Accounts
+## 账户状态转换
 
 <img rounded style="width: 1200px;" src="./img/accounts_transaction_2.svg" />
 
 ---
 
-## How do we verify and handle this transaction?
+## 我们如何验证和处理这笔交易？
 
-- Verify enough funds are in Joshy's account
-- Verify this amount + Andrews amount don't exceed the max value
-- Check the nonce of the transaction
-- Do the actual computation of output values
+- 验证乔希的账户中有足够的资金
+- 验证这笔金额加上安德鲁的金额不超过最大值
+- 检查交易的随机数
+- 进行输出值的实际计算
 
-Notes:
+备注：
 
-Did I forget any?
+我有没有遗漏什么？
 
 ---
 
-## State Transition Accounts
+## 账户状态转换
 
 <img rounded style="width: 1200px;" src="./img/accounts_transaction_3.svg" />
 
 ---
 
-## What did we do differently in Accounts vs UTXO model?
+## 与 UTXO 模型相比，我们在账户模型中做了哪些不同的处理？
 
-Notes:" />
+备注：
 
-Verify as opposed to determining the outcome.
-Not submitting output state in transaction
+进行验证而不是确定结果。
+在交易中不提交输出状态
 
 ---
 
-## Account Arbitrary Data
+## 账户任意数据
 
 <img rounded style="width: 1200px;" src="./img/accounts_state_2.svg" />
 
 ---
 
-## Is this a good model? Why or why not? Lets Discuss
+## 这是一个好模型吗？为什么？让我们讨论一下
 
-- Scalability
-- Privacy
-- General Computation
+- 可扩展性
+- 隐私性
+- 通用计算
 
-Notes:
+备注：
 
-Parallelization? Storage space, privacy solutions?
+并行处理？存储空间、隐私解决方案？
 
 ---
 
-## Small shill... Tuxedo 👔
+## 小推荐……燕尾服 👔
 
 > <https://github.com/Off-Narrative-Labs/Tuxedo>
 
@@ -241,4 +241,4 @@ Parallelization? Storage space, privacy solutions?
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

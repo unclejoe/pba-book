@@ -4,112 +4,112 @@ description: Authoring restrictions related to consensus
 duration: 30min
 ---
 
-# Consensus: Authoring
+# 共识：创作
 
 ---v
 
-### Consensus is...
+### 共识是...
 
-...a decision making process that strives to achieve acceptance of a decision by all participants.
-
----v
-
-## Blockchain Consensus is...
-
-...a decentralized consensus system to reach agreement over a shared history of a state machine.
+...一个决策过程，旨在让所有参与者都接受某个决策。
 
 ---v
 
-## Blockspace
+## 区块链共识是...
+
+...一个去中心化的共识系统，用于就状态机的共享历史达成一致。
+
+---v
+
+## 区块空间
 
 <img style="width: 00px" src="./img/blockspace-machine.svg" />
 
-Blockchain consensus systems produce a resource called blockspace.
+区块链共识系统产生一种称为区块空间的资源。
 
-Strong incentive alignments and strong guarantees make for high quality blockspace.
+强烈的激励一致性和强有力的保障能带来高质量的区块空间。
 
 Notes:
 
-As we discussed blockspace represents the right to contribute to the shared history.
-This is a valuable resource that is offered to users as a product.
-We will discuss the selling of this resource in a later lecture on allocation and fees.
-The consensus system used plays a large role in determining the quality of the blockspace.
+正如我们所讨论的，区块空间代表着对共享历史做出贡献的权利。
+这是一种有价值的资源，作为产品提供给用户。
+我们将在后续关于分配和费用的讲座中讨论这种资源的出售。
+所使用的共识系统在决定区块空间的质量方面起着重要作用。
 
 ---
 
-## Forks Review
+## 分叉回顾
 
 <img style="width: 500px" src="./img/forks-some-invalid.svg" />
 
-There are going to be forks.
-We need to decide which one is the real one.
+将会出现分叉。
+我们需要决定哪一个是真正的链。
 
-We can rule some forks out to reduce the problem space.
-Then we are left to decide which is canonical.
+我们可以排除一些分叉，以缩小问题范围。
+然后我们需要决定哪一个是规范的链。
 
 Notes:
 
-Forks represent alternate courses that history could take.
-They arise every time there is a difference of opinion.
+分叉代表着历史可能采取的不同路径。
+每当出现意见分歧时，就会产生分叉。
 
-You can think of them at a social level.
-Court cases, arguments, wars.
-Ideally we can resolve them peacefully
+你可以从社会层面来思考分叉。
+法庭案件、争论、战争。
+理想情况下，我们可以和平地解决这些分歧。
 
-You can think of them at a very low physics-y level.
-Every time an electron encounters a potential barrier it either reflects of tunnels.
-When consensus is high-quality, the result is as objective as the outcome of a physical process.
+你也可以从非常低的物理层面来思考分叉。
+每次电子遇到势垒时，它要么反射，要么隧穿。
+当共识具有高质量时，其结果就像物理过程的结果一样客观。
 
 ---
 
-## Five Aspects of Consensus
+## 共识的五个方面
 
 <pba-flex center>
 
-- State machine validity
-- Arbitrary / Political validity
-- Authorship throttling
-- Fork choice heuristic
-- Finality
+- 状态机有效性
+- 任意性/政治性有效性
+- 创作节流
+- 分叉选择启发式
+- 最终确定性
 
 </pba-flex>
 
 Notes:
 
-The first two aspects are relatively simple and I'll discuss them briefly right now.
-The third and fourth are the main topic of this lecture.
-The fifth is covered in detail two lectures from now in great detail.
+前两个方面相对简单，我现在简要讨论一下。
+第三和第四个方面是本次讲座的主要主题。
+第五个方面将在两节课后详细讨论。
 
-The first three aspects are about ruling possibilities out.
-The fourth and fifth are about deciding between any remaining possibilities.
+前三个方面是关于排除可能性。
+第四和第五个方面是关于在剩余的可能性中做出决定。
 
 ---v
 
-## State Machine Validity
+## 状态机有效性
 
-Some forks can be ruled out simply because they contain invalid state transitions.
+有些分叉可以简单地因为包含无效的状态转换而被排除。
 
 <img style="width: 00px" src="./img/invalid-state-transition.svg" />
 
 Notes:
 
-Example spending more money than you have.
-Noting your present location such that you would have traveled faster than speed of light since last record.
-Calling a smart contract with invalid parameters.
+例如，花的钱比你拥有的多。
+记录你的当前位置，使得自上次记录以来你的移动速度超过了光速。
+用无效参数调用智能合约。
 
 ---v
 
-## Arbitrary / Political Validity
+## 任意性/政治性有效性
 
-Similar to state machine validity.<br />
-Examples:
+与状态机有效性类似。<br />
+示例：
 
 <pba-flex>
 
-- Blocks that are too big
-- Blocks that have "hack" transactions
-- Empty blocks
-- Block with Even state roots
+- 区块太大
+- 包含“黑客”交易的区块
+- 空区块
+- 具有偶数状态根的区块
 
 </pba-flex>
 
@@ -117,202 +117,202 @@ Examples:
 
 Notes:
 
-This concept is similar to the previous slide.
-In some sense this is even the same.
-This allows us to rule out some forks just for not having properties that we like.
-Or for having properties that we dislike.
+这个概念与上一张幻灯片类似。
+在某种意义上，这甚至是相同的。
+这使我们能够排除一些不具备我们所喜欢的属性的分叉。
+或者排除那些具有我们不喜欢的属性的分叉。
 
-Not everyone will agree on these properties ad that leads to long-term network splits.
+不是每个人都会同意这些属性，这会导致长期的网络分裂。
 
 ---
 
-## Authorship Throttling
+## 创作节流
 
-Real-world blockchains impose additional restrictions on who can author blocks.
-Why?
+现实世界中的区块链对谁可以创作区块施加了额外的限制。
+为什么呢？
 
 <img style="width: 00px" src="./img/fork-chaos.svg" />
 
 Notes:
 
-These blockchains are supposed to be permissionless right? At least many of them are.
-Some are even very hardcore about that goal.
-So why would we want to restrict the authoring.
-Answer: So the nodes are not overwhelmed.
-Unthrottled authoring leads to fork chaos.
-If anyone authored at any moment there would be blocks raining down left and right.
-It would be impossible to check them all.
-It would be DOS central.
-So we need some organization / order to the process.
+这些区块链应该是无需许可的，对吧？至少其中很多是这样。
+有些甚至非常坚定地追求这个目标。
+那么，我们为什么要限制创作呢？
+答案是：为了不让节点不堪重负。
+无节制的创作会导致分叉混乱。
+如果任何人在任何时候都可以创作区块，那么区块就会像雨点一样四处落下。
+要检查所有这些区块是不可能的。
+这将成为拒绝服务攻击（DOS）的中心。
+所以我们需要对这个过程进行一些组织和排序。
 
 ---v
 
-## Leader Election
+## 领导者选举
 
-We need to elect a small set (or ideally a single) entity who are allowed to author next.
+我们需要选出一小部分（理想情况下是单个）实体，允许他们接下来进行创作。
 
-In pre-blockchain consensus this was called the "leader", and still often is.
+在区块链共识出现之前，这被称为“领导者”，现在仍然经常这样称呼。
 
 Notes:
 
-By electing a few leaders, we are able to throttle the authoring.
+通过选出少数领导者，我们能够对创作进行节流。
 
 ---v
 
-## Liveness
+## 活性
 
-The ability of the system to keep authoring new blocks
+系统持续创作新区块的能力
 
 Notes:
 
-Before we go on, I want to introduce the concept of liveness.
-It is a desireable property that consensus systems want to have.
-Systems that have better liveness properties offer higher quality blockspace.
-Chains without liveness guarantees become stalled.
+在继续之前，我想介绍一下活性的概念。
+这是共识系统所期望具备的一个属性。
+具有更好活性属性的系统能够提供更高质量的区块空间。
+没有活性保证的链会陷入停滞。
 
 ---
 
-## Proof of Work
+## 工作量证明
 
-Satoshi's Big invention.
+中本聪的伟大发明。
 
-Solve a Pre-image search - earn the right to author.
+解决一个原像搜索问题 - 获得创作的权利。
 
 ---v
 
-## Proof of Work: Pros
+## 工作量证明：优点
 
 <pba-flex center>
 
-- Permissionless (or so we thought)
-- Requires an external scarce resource: Energy
-- Blind: Nobody knows the next author until the moment they publish their block
-- Expensive to author competing forks - Clear incentive
+- 无需许可（或者我们曾经这么认为）
+- 需要一种外部稀缺资源：能源
+- 盲选：在发布区块的那一刻之前，没有人知道下一个创作者是谁
+- 创作竞争分叉的成本高昂 - 有明确的激励机制
 
 </pba-flex>
 
 Notes:
 
-On the surface one big strength of PoW is that anyone can spin up a node and join at any time without anyone's permission.
-This is clearly how it was described in the whitepaper.
-In practice, many systems now have such a high hashrate that your home computer is useless.
-It is now permissioned by who can afford and acquire the right hardware.
+从表面上看，工作量证明的一个重要优势是，任何人都可以启动一个节点，并在无需任何人许可的情况下随时加入。
+这显然是白皮书中所描述的方式。
+但在实践中，现在许多系统的哈希率非常高，以至于你的家用计算机毫无用处。
+现在，它是由谁能够负担得起并获得合适的硬件来决定是否有许可的。
 
-The reliance on an external resource is good in some sense because it is an objective measure of the market's valuation of the consensus system.
-This helps valuate the blockspace.
+对外部资源的依赖在某种意义上是有好处的，因为它是市场对共识系统估值的一个客观衡量标准。
+这有助于对区块空间进行估值。
 
-The blindness is a good property because it makes it impossible to perform a targeted attack (DOS or physical) on the next leader to stall the network.
+盲选是一个很好的属性，因为它使得对下一个领导者进行有针对性的攻击（拒绝服务攻击或物理攻击）以阻碍网络变得不可能。
 
-Some attacks rely on the leader authoring two competing forks and gossiping them to different parts of the network.
-With PoW, it costs energy for every block you author.
-This makes it expensive to perform such attacks.
-This provides an economic incentive for authors to only author blocks on the "correct" fork.
+一些攻击依赖于领导者创作两个竞争分叉，并将它们传播到网络的不同部分。
+在工作量证明中，你创作的每个区块都需要消耗能源。
+这使得进行此类攻击的成本很高。
+这为创作者提供了一种经济激励，使其只在“正确”的分叉上创作区块。
 
 ---v
 
-## Proof of Work: Cons
+## 工作量证明：缺点
 
 <pba-flex center>
 
-- Energy Intensive
-- Irregular block time
-- Not so permissionless
+- 能源消耗大
+- 区块时间不规律
+- 并非真正无需许可
 
 </pba-flex>
 
 Notes:
 
-Energy consumption is more often considered a negative property.
-Sometimes called proof of _waste_.
-I won't go that far, but in a world where climate change is a reality, it is certainly not ideal to be spending so much energy if we can get away with far less.
+能源消耗通常被认为是一个负面属性。
+有时被称为“浪费证明”。
+我不会走得那么远，但在气候变化成为现实的世界里，如果我们可以用更少的能源来解决问题，那么消耗这么多能源肯定不是理想的。
 
-Worth noting that some PoW schemes (eg Monero's) strive to minimize the energy impact by choosing algorithms that are "asic resistant".
-While these are decidedly better than Bitcoin's, they do not fundamentally solve the problem.
-Just alleviate it somewhat in practice.
+值得注意的是，一些工作量证明方案（例如门罗币的方案）试图通过选择“抗ASIC”的算法来最小化能源影响。
+虽然这些方案明显比比特币的方案要好，但它们并没有从根本上解决问题。
+只是在实践中有所缓解。
 
-Secondly, the block time is only probabilistically known.
-When waiting for block to be authored, there are sometimes spurts of blocks followed by long stretches without any.
+其次，区块时间只是在概率上可知。
+在等待区块被创作时，有时会出现区块爆发，随后又会有很长一段时间没有区块。
 
-Although it seems permissionless on its face, in practice, to be a bitcoin miner you need to have expensive specialized hardware.
+虽然从表面上看它似乎是无需许可的，但在实践中，要成为一名比特币矿工，你需要拥有昂贵的专用硬件。
 
 ---v
 
-## Why Author at All?
+## 为什么要进行创作呢？
 
-- Altruism - You feel good about making the world a better place
-- Your Transitions - Because you want to get your own transitions in
-- Explicit incentives - Eg block reward
+- 利他主义 - 你因为让世界变得更美好而感到高兴
+- 你的交易 - 因为你想让自己的交易被记录
+- 明确的激励措施 - 例如区块奖励
 
 Notes:
 
-If it costs energy to author blocks, why would anyone want to author to begin with?
+如果创作区块需要消耗能源，那么为什么会有人一开始就想进行创作呢？
 
-Mining only when you want to get your transaction in seems like a good idea to me.
-People who don't want to self author, can pay other a fee to do it for them.
-This is the purpose of transaction fees.
-Most chains have transaction fees specified in the transactions themselves which go to the author
+在你想让自己的交易被记录时才进行挖矿，在我看来是个不错的主意。
+那些不想自己进行创作的人，可以支付费用让别人为他们做。
+这就是交易费用的目的。
+大多数链在交易本身中就规定了交易费用，这些费用会支付给创作者。
 
-Some networks also add an explicit incentives such as a 50BTC reward per block.
+一些网络还会添加明确的激励措施，例如每个区块有50比特币的奖励。
 
 ---
 
-## Proof of Authority
+## 权威证明
 
-Traditional class of solutions.
+传统的一类解决方案。
 
-Divide time into slots.
+将时间划分为时隙。
 
-Certain identities are allowed to author in each slot.
+某些身份在每个时隙中被允许进行创作。
 
-Prove your identity with a signature.
+用签名证明你的身份。
 
 ---v
 
-## Proof of Authority: Pros
+## 权威证明：优点
 
 <pba-flex center>
 
-- Low energy consumption
-- Stable block time
+- 能源消耗低
+- 稳定的区块时间
 
 </pba-flex>
 
 Notes:
 
-Stable block time is a property of high-quality block space.
-It allows applications that consume the blockspace to have expectations about throughput.
-In PoW you will occasionally have long periods without a block which can negatively affect applications.
+稳定的区块时间是高质量区块空间的一个属性。
+它允许消耗区块空间的应用程序对吞吐量有预期。
+在工作量证明中，你偶尔会遇到很长一段时间没有区块的情况，这会对应用程序产生负面影响。
 
 ---v
 
-## Proof of Authority: Cons
+## 权威证明：缺点
 
 <pba-flex center>
 
-- Permissioned
-- No external resource to aid valuation
-- Incentives for honesty are not always clear
+- 需要许可
+- 没有外部资源辅助估值
+- 诚实的激励机制并不总是明确的
 
 </pba-flex>
 
 Notes:
 
-Does anything bad happen if they misbehave? Not inherently.
-We will need an incentive for that.
+如果他们行为不当，会有什么不好的事情发生吗？并非必然如此。
+我们需要一种激励措施来确保这一点。
 
 ---
 
-# Some PoA Schemes
+# 一些权威证明方案
 
-Reminder: PoA is a family of leader election schemes
+提醒：权威证明是一类领导者选举方案
 
 ---v
 
 ## Aura
 
-The simple one.
+简单的一种方案。
 
-Everyone takes turns in order.
+每个人按顺序轮流进行。
 
 ```rust
 authority(slot) = authorities[slot % authorities.len()];
@@ -320,14 +320,14 @@ authority(slot) = authorities[slot % authorities.len()];
 
 Notes:
 
-Pros:
+优点：
 
-- Simple
-- Single leader elected in each slot
+- 简单
+- 每个时隙中选出一个领导者
 
-Cons:
+缺点：
 
-- Not blind - welcome targeted attacks
+- 不具备盲选特性 - 容易受到有针对性的攻击
 
 ---v
 
@@ -335,21 +335,21 @@ Cons:
 
 **B**lind **A**ssignment for **B**lockchain **E**xtension
 
-- In each slot, compute a VRF output.
-- If it is below a threshold, you are eligible to author. <!-- .element: class="fragment" data-fragment-index="2" -->
-- If eligible, author a block showing VRF proof <!-- .element: class="fragment" data-fragment-index="3" -->
-- If NOT eligible, do nothing <!-- .element: class="fragment" data-fragment-index="4" -->
+- 在每个时隙中，计算一个可验证随机函数（VRF）的输出。
+- 如果输出低于一个阈值，你就有资格进行创作。 <!-- .element: class="fragment" data-fragment-index="2" -->
+- 如果有资格，创作一个包含VRF证明的区块 <!-- .element: class="fragment" data-fragment-index="3" -->
+- 如果没有资格，什么都不做 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
-Pros:
+优点：
 
-- No fixed order helps alleviate DOS attacks
+- 没有固定顺序有助于缓解拒绝服务攻击
 
-Cons:
+缺点：
 
-- Some slots have no authors - There is a workaround for this.
-- Other slots have multiple authors which leads to forks - There is **no** workaround for this.
+- 有些时隙没有创作者 - 对此有一个变通办法。
+- 其他时隙有多个创作者，这会导致分叉 - 对此**没有**变通办法。
 
 ---v
 
@@ -361,23 +361,23 @@ Cons:
 </pba-col>
 <pba-col>
 
-Single blind VRF-based leader election
+基于单个盲选可验证随机函数的领导者选举
 
-🙈TBH, IDK how it works internally. <!-- .element: class="fragment" data-fragment-index="2" -->
+🙈说实话，我不知道它内部是如何工作的。 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-But Jeff does! <!-- .element: class="fragment" data-fragment-index="3" -->
+但杰夫知道！ <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- Has most of the Pros of PoW (except for the external resource based valuation hint)
-- Has all the Pros of PoA
+- 具有工作量证明的大部分优点（除了基于外部资源的估值提示之外）
+- 具有权益证明的所有优点
 
 ---v
 
-## Sassafras Analogy
+## Sassafras类比
 
 <pba-cols>
 <pba-col>
@@ -385,13 +385,13 @@ Notes:
 </pba-col>
 <pba-col>
 
-> Sassafras is kinda cards against humanity
+> Sassafras有点像《反人类牌》游戏
 
 </pba-col>
 </pba-cols>
 ---v
 
-## Sassafras Analogy
+## Sassafras类比
 
 <img rounded width="400px" style="float: left; padding: 1px;" src="./img/caa_black.png" />
 <img rounded width="400px" style="float: left; padding: 1px;" src="./img/caa_white_1.png" />
@@ -401,153 +401,108 @@ Notes:
 
 ---v
 
-## Sassafras Analogy
+## Sassafras类比
 
 <pba-cols>
 <pba-col>
 <img rounded width="500px" src="./img/jeff.jpeg" />
 </pba-col>
 <pba-col>
-<blockquote style="font-size: 80%">Ring VRF outputs are "cards".  You anonymously "play" the best aka smallest cards in your hand.</blockquote>
+<blockquote style="font-size: 80%">环形可验证随机函数的输出就像“牌”。 你匿名“打出”手中最好（也就是最小）的牌。</blockquote>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<blockquote style="font-size: 80%">Those cards are sorted, not by funniness since they're just numbers, but by the number.</blockquote>
+<blockquote style="font-size: 80%">这些牌会被排序，由于它们只是数字，所以不是按趣味性排序，而是按数字大小排序。</blockquote>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<blockquote style="font-size: 80%">The order in which they wind up is the block production order.</blockquote>
+<blockquote style="font-size: 80%">它们最终的顺序就是区块的生成顺序。</blockquote>
 <!-- .element: class="fragment" data-fragment-index="4" -->
-<blockquote style="font-size: 80%">You claim the ones that're yours by doing a non-ring VRF with identical outputs.</blockquote>
+<blockquote style="font-size: 80%">你通过进行一个具有相同输出的非环形可验证随机函数来认领属于你的牌。</blockquote>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </pba-col>
 </pba-cols>
 
 ---v
 
-# Proof of Stake
+# 权益证明
+它其实是伪装后的权益权威证明（PoA）🤯。
 
-It's just PoA in disguise 🤯
-
-Uses an economic staking game to select the authorities.
-
-Restores the permissionlessness to at least PoW levels.
-
-Restores clear economic incentives
+权益证明通过一种经济质押博弈来挑选出记账人。
+它至少将无许可特性恢复到了工作量证明（PoW）的水平。
+同时恢复了清晰的经济激励机制。
 
 Notes:
-
-There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme.
-Actually there isn't just _one_ way to do it, there are many.
-Kian will talk a lot more about this and about the way it is done in Polkadot later.
-I'll just give the flavor now.
-
-The basic idea is that anyone can lock up some tokens on chain (in the state machine).
-The participants with the most tokens staked are elected as the authorities.
-There is a state transition that allows reporting authority misbehavior (eg authoring competing blocks at the same height), and the authority loses their tokens.
-There are often block rewards too like PoW.
-
+在状态机中，有一个名为质押的经济博弈，它可以挑选出参与权益权威证明方案的记账人。
+实际上，实现方式并非只有一种，而是有很多种。
+之后基恩（Kian）会详细讲解这个内容以及波卡（Polkadot）中的实现方式。
+现在我先大致介绍一下。
+其基本思路是，任何人都可以在链上（状态机中）锁定一些代币。
+质押代币最多的参与者会被选为记账人。
+状态机中有一个状态转换机制，可用于举报记账人的不当行为（例如在同一高度创建竞争区块），出现此类行为记账人将失去他们的代币。
+和工作量证明一样，通常也会有区块奖励。
 ---v
-
-## 💒 Consensus 🪢 State Machine
-
-- Loose coupling between consensus and state machine is common
-- Eg Block rewards, slashing, authority election
-- In PoW there is a difficulty adjustment algorithm
-
-In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine.
-
+## 💒 共识 🪢 状态机
+- 共识和状态机之间的松散耦合很常见
+- 例如区块奖励、罚没机制、记账人选举
+- 在工作量证明中有难度调整算法
+在Substrate中，有一个**运行时应用程序编程接口（Runtime API）**的概念——共识机制可以从状态机中读取信息。
 <!-- .element: class="fragment" data-fragment-index="2" -->
-
 Notes:
-
-So far I've presented consensus as orthogonal to the state machine.
-This is mostly true.
-But in practice it is extremely common for there to be some loose coupling.
-We already saw an example when we talked about block rewards.
-The consensus authors are rewarded with tokens (in the state machine) for authoring blocks.
-Now we see that they can have tokens slashed (in state machine) for breaking consensus protocol.
-And we see that even the very authorities can be elected in the state machine.
-
+到目前为止，我把共识描述为与状态机正交的概念。
+这在很大程度上是正确的。
+但在实践中，它们之间存在一些松散耦合是极为常见的。
+我们在讨论区块奖励时已经看到了一个例子。
+共识机制下的记账人因为创建区块而获得代币奖励（在状态机中）。
+现在我们看到，他们也可能因为违反共识协议而被扣除代币（在状态机中）。
+并且我们发现，甚至记账人本身都可以在状态机中选举产生。
 ---
-
-# Fork Choice Heuristics
-
-Each node's preference for which fork is best
-
+# 分叉选择启发式
+每个节点对于哪个分叉最优的偏好
 <pba-flex center>
-
-- Longest chain rule
-- Most accumulated work
-- Most blocks authored by Alice
-- Most total transactions (or most gas)
-
+- 最长链规则
+- 最多累计工作量
+- 由爱丽丝创建的最多区块
+- 最多总交易数（或最多消耗gas）
 <img style="width: 500px" src="../finality/img/reorgs-1.svg" />
-
 </pba-flex>
-
 Notes:
-
-The fork choice allows you, as a network participant, to decide which fork you consider best for now.
-It is not binding.
-Your opinion can change as you see more blocks appear on the network
-
+分叉选择使作为网络参与者的你，能够决定当前你认为哪个分叉最优。
+这并非是固定不变的。
+随着你在网络上看到更多区块出现，你的看法可能会改变。
 ---v
-
-## Reorganizations
-
+## 区块链重组
 <img style="width: 500px" src="../finality/img/reorgs-1.svg" />
-
 <img style="width: 500px" src="../finality/img/reorgs-2.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
-
-Dropped transactions re-enter tx pool and re-appear in new blocks shortly <!-- .element: class="fragment" data-fragment-index="3" -->
-
+被丢弃的交易重新进入交易池，并很快重新出现在新区块中 <!-- .element: class="fragment" data-fragment-index="3" -->
 Notes:
-
-Having seen more blocks appear, we now have a different opinion about what chain is best.
-This is known as a reorg.
-Re-orgs are nearly inevitable.
-There area ways to make sure they don't happen at all, but there are significant costs to preventing them entirely.
-Typically short reorgs are not a big problem, but deep reorgs are.
-
-You can experience this in a social way too.
-
-- Imagine that you are waiting for a colleague to submit a paper.
-  You believe they have submitted it yesterday, but it turns out that they didn't submit it until today or won't submit it until tomorrow.
-  Might be annoying, but not world shattering (usually).
-- Imagine that you believe the colleague submitted the paper months ago and the paper has been published.
-  You have applied on a job having listed the publication.
-
+随着看到更多区块出现，我们现在对哪条链最优有了不同的看法。
+这被称为区块链重组。
+区块链重组几乎是不可避免的。
+虽然有办法确保它们根本不会发生，但完全防止它们需要付出巨大代价。
+通常，短的区块链重组不是大问题，但深度重组则是。
+你也可以从社交层面体会到这一点。
+- 想象你在等同事提交一篇论文。
+  你以为他们昨天已经提交了，但结果他们今天才提交，或者要等到明天才提交。
+  这可能会让人有点恼火，但通常不会造成灾难性后果。
+- 想象你以为同事几个月前就提交了论文，而且论文已经发表。
+  你在求职时已经把这篇论文列为成果。
 ---v
-
-## Double Spends
-
+## 双花攻击
 <img style="width: 800px" src="./img/double-spend-1.svg" />
-
 Notes:
-
-The name comes from bitcoin, but the attack generalizes.
-It exploits the existence of forks.
-Attacker has to get two conflicting transactions into two forks.
-And convince a counterparty to believe one chain long enough to take an off-chain action before they see the reorg.
-
+这个名字来源于比特币，但这种攻击具有普遍性。
+它利用了区块链分叉的存在。
+攻击者必须将两笔冲突的交易放入两个分叉中。
+并在对方看到区块链重组之前，说服交易对手相信其中一条链足够长时间，从而采取链下行动。
 ---v
-
-## Double Spends
-
+## 双花攻击
 <img style="width: 800px" src="./img/double-spend-2.svg" />
-
 ---
-
-## Five Aspects of Consensus
-
+## 共识的五个方面
 <pba-flex center>
-
-- State machine validity
-- Arbitrary / Political validity
-- Authorship throttling
-- Fork choice heuristic
-- Finality
-
+- 状态机有效性
+- 任意性/政治性有效性
+- 记账限制
+- 分叉选择启发式
+- 最终确定性
 </pba-flex>
-
 Notes:
-
-We just discussed the first four aspects.
-Finality will be discussed in an upcoming lesson
+我们刚刚讨论了前四个方面。
+最终确定性将在后续课程中讨论。 

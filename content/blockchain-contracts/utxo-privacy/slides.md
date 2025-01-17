@@ -4,113 +4,113 @@ description: Explore some techniques for adding privacy to the UTXO model
 duration: 30min
 ---
 
-# Adding Privacy to the UTXO model
+# 为UTXO模型添加隐私性
 
 ---
 
-## Input/Output-based Cryptocurrencies
+## 基于输入/输出的加密货币
 
-- Transactions have a list of unspent transaction outputs (UTXOs) as its inputs
-- Each input is signed
-- The transaction is allowed to spend as much funds as the sum of its inputs
-- The transaction spends funds by creating outputs and by paying a fee
-
----
-
-## Input/Output-based Cryptocurrencies
-
-- Inputs must only refer to actually existing outputs (membership)
-- The output spent must not be prior spent (linkability)
-- The output's owner must consent to this transaction (ownership)
-- The transaction's inputs and outputs must be balanced (sum check)
+- 交易将一系列未花费的交易输出（UTXO）作为其输入
+- 每个输入都经过签名
+- 该交易可以花费的资金额度等于其所有输入的总和
+- 交易通过创建输出并支付手续费来花费资金
 
 ---
 
-## Bitcoin
+## 基于输入/输出的加密货币
 
-- Bitcoin specifies the spent output.
-  This satisfies membership and linkability
-- Each Bitcoin output has a small, non-Turing complete program (Script) specifying how it can be spent
-- Each input has a `scriptSig` which proves the script is satisfied and this is an authorized spend (ownership)
-- The outputs cannot exceed the inputs, and the remainder becomes the fee (sum check)
-
----
-
-## ZK Proofs
-
-- ZK-SNARKs - A small proof that's fast to verify (<= $O(\sqrt{n})$)
-- ZK-sNARKs - A small proof that's not fast to verify (>= $O(n)$, frequently $O(n log n)$)
-- ZK-STARKs - A small proof that's fast to verify, based on hash functions
-- All of these can prove the execution of an arbitrary program (via an arithmetic circuit)
-- None of these reveal anything about the arguments to the program
+- 输入必须仅引用实际存在的输出（成员性）
+- 被花费的输出之前不能被花费过（可链接性）
+- 输出的所有者必须同意此交易（所有权）
+- 交易的输入和输出必须平衡（总和检查）
 
 ---
 
-## Merkle Proofs
+## 比特币
 
-- Merkle proofs support logarithmically proving an item exists in a tree
-- For 2\*\*20 items, the proof only requires 20 steps
-- Even if a ZK proof is superlinear, it's a superlinear encoding of a logarithmic solution
-
----
-
-## Private Membership
-
-- When an output is created on-chain, add it to the Merkle tree
-- When an input specifies an output, it directly includes the output it's spending
-- It also includes a Merkle proof the output exists _somewhere_ on chain, embedded in a ZK proof
+- 比特币指定了要花费的输出。
+  这满足了成员性和可链接性
+- 每个比特币输出都有一个小型的、非图灵完备的程序（脚本），用于指定如何花费该输出
+- 每个输入都有一个 `scriptSig`，用于证明脚本已被满足，并且这是一次授权的花费（所有权）
+- 输出不能超过输入，剩余部分成为手续费（总和检查）
 
 ---
 
-## Pedersen Commitments
+## 零知识证明
 
-- A Pedersen commitment has a value (some number) and a mask (also some number)
-- There's as many masks as there private keys, hiding the contained value
-- Pedersen commitments can be extended to support multiple values
+- ZK-SNARKs - 一种小型证明，验证速度快（<= $O(\sqrt{n})$）
+- ZK-sNARKs - 一种小型证明，验证速度不快（>= $O(n)$，通常为 $O(n log n)$）
+- ZK-STARKs - 一种基于哈希函数的小型证明，验证速度快
+- 所有这些都可以证明任意程序的执行（通过算术电路）
+- 这些都不会透露关于程序参数的任何信息
 
 ---
 
-## A New Output Definition
+## 默克尔证明
+
+- 默克尔证明支持以对数时间复杂度证明一个项目存在于一棵树中
+- 对于 $2^{20}$ 个项目，证明只需要20步
+- 即使零知识证明是超线性的，它也是对数解决方案的超线性编码
+
+---
+
+## 私有成员性
+
+- 当一个输出在链上创建时，将其添加到默克尔树中
+- 当一个输入指定一个输出时，它直接包含它要花费的输出
+- 它还包含一个默克尔证明，证明该输出存在于链上的某个位置，该证明嵌入在零知识证明中
+
+---
+
+## 佩德森承诺
+
+- 佩德森承诺有一个值（某个数字）和一个掩码（也是某个数字）
+- 掩码的数量与私钥的数量相同，用于隐藏包含的值
+- 佩德森承诺可以扩展以支持多个值
+
+---
+
+## 新的输出定义
 
 <pba-flex center>
 
-- ID
-- Amount
-- Owner
-- Mask
-- All in a single<br />
-  Pedersen commitment
+- 标识符
+- 金额
+- 所有者
+- 掩码
+- 所有这些都在一个
+  佩德森承诺中
 
 </pba-flex>
 
 ---
 
-## Private Membership
+## 私有成员性
 
-- We don't prove the included output exists on chain
-- We prove an output with identical fields exists on chain _yet with a different mask_
-- This allows spending a specific output without revealing which it is
-
----
-
-## Ownership and linkability
-
-- A ZK proof can take the output ID and apply some transformation
-- For every output ID, the transformation should output a single, unique ID
-- Not just anyone should be able to perform this transformation
-- This provides linkability, and if only the owner can perform the transformation, ownership
+- 我们不证明所包含的输出存在于链上
+- 我们证明一个具有相同字段的输出存在于链上，但具有不同的掩码
+- 这允许花费特定的输出，而不会透露是哪个输出
 
 ---
 
-## Sum check
+## 所有权和可链接性
 
-- One final ZK proof can demonstrate the sum of inputs - the sum of outputs = fee
-- There are much more efficient ways to prove this
+- 零知识证明可以获取输出标识符并应用某种转换
+- 对于每个输出标识符，该转换应该输出一个唯一的标识符
+- 不是任何人都应该能够执行此转换
+- 这提供了可链接性，并且如果只有所有者能够执行此转换，则提供了所有权
 
 ---
 
-# Summary
+## 总和检查
 
-- This hides the output being spent and the amounts transacted
-- Combined with a stealth address protocol, which replaces addresses with one time keys, it hides who you're sending to as well
-- This builds a currency which is private w.r.t. its on-chain transactions
+- 最后一个零知识证明可以证明输入的总和 - 输出的总和 = 手续费
+- 有更高效的方法来证明这一点
+
+---
+
+# 总结
+
+- 这隐藏了被花费的输出和交易的金额
+- 结合隐身地址协议（用一次性密钥替换地址），它还可以隐藏你向谁发送资金
+- 这构建了一种在其链上交易方面具有隐私性的货币

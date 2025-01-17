@@ -4,30 +4,30 @@ description: Detailed Classification for Blockchain Forks Types
 duration: 60 minutes
 ---
 
-# Blockchain Forks
+# 区块链分叉
 
 ---
 
-# Landscape
+# 概况
 
 ---v
 
-## Landscape
+## 概况
 
-#### Ideal World
+#### 理想世界
 
-In an ideal world blockchains would look like this:
+在理想世界中，区块链应该是这样的：
 <br /><br />
 
 <img style="width: 800px" src="./img/no_fork.drawio.svg" />
 
 ---v
 
-## Landscape
+## 概况
 
-#### Real World
+#### 现实世界
 
-Things don't always go according to plan:
+事情并不总是按计划进行：
 
 <br />
 
@@ -35,11 +35,11 @@ Things don't always go according to plan:
 
 ---v
 
-## Landscape
+## 概况
 
-#### Chaotic Real World
+#### 混乱的现实世界
 
-And sometimes they get extra messy:
+有时情况会变得格外混乱：
 
 <br />
 
@@ -47,244 +47,243 @@ And sometimes they get extra messy:
 
 ---
 
-# What's the goal?
+# 目标是什么？
 
 ---v
 
-## What's the goal?
+## 目标是什么？
 
-#### _Fork Identification_
+#### _分叉识别_
 
 <img style="width: 500px" src="./img/forks_and_boxes.drawio.svg" />
 
 Notes:
 
-There are different forks, they can have different shapes and reasons.
-We'll try to identify some examples.
+存在不同的分叉，它们可能有不同的形态和原因。
+我们将尝试识别一些示例。
 
 ---v
 
-## What's the goal?
+## 目标是什么？
 
-#### _Fork Categorization_
+#### _分叉分类_
 
 <img style="width: 800px" src="./img/forks_in_boxes.drawio.svg" />
 
 Notes:
 
-Why?
-Forks in the same category will exhibit similar behavior and will require similar handling.
-Then when making changes we can easily figure out to which box the change belongs and react accordingly.
+为什么要分类？
+同一类别的分叉将表现出相似的行为，需要类似的处理方式。
+这样，在进行更改时，我们可以轻松确定更改属于哪个类别，并做出相应的反应。
 
-It's also worth pointing out that the whole web3 space is still very young and we are still figuring out how to name things appropriately.
-There is definitely still a lot of confusion about the fork types and the convention I will be using here today is based on the naming proposed by the MIT Digital Currencies Initiative.
-It will cover most of the common terms and hopefully will not be as self-contradictory as some of the terms used within the community.
+值得指出的是，整个Web3领域仍然非常年轻，我们仍在摸索如何恰当地命名事物。
+关于分叉类型肯定还存在很多困惑，我今天将使用的命名惯例是基于麻省理工学院数字货币倡议提出的命名。
+它将涵盖大多数常见术语，希望不会像社区中使用的某些术语那样自相矛盾。
 
 ---v
 
-## What's the goal?
+## 目标是什么？
 
-#### _Fork Confusion_
+#### _分叉的困惑_
 
 <br />
-BABE (sometimes):
+BABE（有时）：
 <br /><br />
 <img style="width: 800px" src="./img/transitory_fork_unresolved.drawio.svg" />
 
 Notes:
 
-To demonstrate the confusion think of BABE.
-BABE can have multiple block authors create blocks at the same time and then the chain forks.
-What type of a fork is it?
-Some of you might have heard about soft forks and hard forks, any idea which one it is?
+为了说明这种困惑，我们可以想想BABE。
+BABE可能会让多个区块作者同时创建区块，然后链就会分叉。
+这是什么类型的分叉呢？
+你们中有些人可能听说过软分叉和硬分叉，有没有人知道这是哪一种？
 
 ---
 
-# Fork Categorization
+# 分叉分类
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Forks Family Tree_
+#### _分叉家族树_
 
 <br />
 <img style="width: 800px" src="./img/fork_family.drawio.svg" />
 
 Notes:
 
-This is the core categorization of forks we'll be waking you through today.
-You don't need to understand the whole tree as we'll be going step by step.
-For now let's actually go back to the example from BABE and let's place it on the map.
+这是我们今天要带大家了解的分叉的核心分类。
+你不需要一下子理解整棵树，我们将逐步进行讲解。
+现在，让我们回到BABE的例子，把它放在这个分类图中。
 
 ---
 
-# Transitory Forks
+# 临时分叉
 
 Notes:
 
-For that we'll talk about transitory forks.
+为此，我们要谈谈临时分叉。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Transitory Forks_
+#### _临时分叉_
 
 <br />
 <img style="width: 800px" src="./img/fork_family_transitory.drawio.svg" />
 
 Notes:
 
-One of the simplest forks that is rarely talked about so the name might not sound familiar.
-They are often also called short-lived forks or temporary forks.
+这是最简单的分叉之一，很少被提及，所以这个名字可能不太熟悉。
+它们通常也被称为短暂分叉或临时分叉。
 
 ---v
 
-## Transitory Forks
+## 临时分叉
 
 <br />
 <img style="width: 800px" src="./img/transitory_forks.drawio.svg" />
 
 Notes:
 
-They usually arise from the fundamental protocol uncertainty or networking lag, but luckily they are usually resolved quickly by the network itself.
-For instance in BABE even if all the nodes are running the same software those forks can still happen when two nodes roll low enough numbers.
-In Bitcoin two miners might mine a block at roughly the same time.
-Over time one of the blocks wins due to some heuristics like the longest chain.
-Those forks are generally not a problem and only live on short timescales.
+它们通常是由基本的协议不确定性或网络延迟引起的，但幸运的是，网络本身通常会很快解决这些问题。
+例如，在BABE中，即使所有节点都运行相同的软件，当两个节点的随机数足够低时，仍然可能会出现分叉。
+在比特币中，两个矿工可能几乎同时挖出一个区块。
+随着时间的推移，由于一些启发式规则（如最长链规则），其中一个区块会成为获胜者。
+这些分叉通常不是问题，只会在短时间内存在。
 
 ---
 
-# Consensus Forks
+# 共识分叉
 
 Notes:
 
-So now let's move to something more interesting.
-Consensus forks.
+现在，让我们来看看更有趣的东西。
+共识分叉。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Consensus Forks_
+#### _共识分叉_
 
 <br />
 <img style="width: 800px" src="./img/fork_family_consensus.drawio.svg" />
 
 Notes:
 
-Usually when you hear about forks you hear about those guys.
-They are the other branch and they also come in many flavours we'll discuss in a minute.
+通常，当你听到关于分叉的讨论时，听到的就是这些。
+它们是另一个分支，也有很多不同的类型，我们一会儿会详细讨论。
 
 ---v
 
-# Consensus Forks
+# 共识分叉
 
-## _Validity Set_
+## _有效集_
 
 Notes:
 
-But first before we understand the intricacies of consensus forks we need to understand the concept of the validity set and how it connects to the protocol.
+但在理解共识分叉的复杂性之前，我们需要先理解有效集的概念以及它与协议的关系。
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 800px" src="./img/BTC_block.drawio.svg" />
 
 Notes:
 
-It's best to see it through an example so let's look at the BTC block.
-You don't need to understand all the fields that are in it but for now take a look at the blocksize field as well as the block header itself.
+通过一个例子来理解是最好的，让我们看看比特币的区块。
+你不需要理解其中的所有字段，现在先看看区块大小字段以及区块头本身。
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 300px" src="./img/BTC_header.drawio.svg" />
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 500px" src="./img/BTC_header_constraints.drawio.svg" />
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 500px" src="./img/validity_set.drawio.svg" />
 
 Notes:
 
-So the validity set is a set of all hypothetical blocks that could be produced by the protocol.
-It's a set of all valid blocks under those rules.
+所以，有效集是协议可能产生的所有假设区块的集合。
+它是在这些规则下所有有效区块的集合。
 
-So if there is a block D that for instance is too big, it's blocksize is bigger than the allowed one...
+例如，如果有一个区块D，它太大了，其区块大小超过了允许的大小……
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 500px" src="./img/universal_set.drawio.svg" />
 
 Notes:
 
-Then it falls out of the validity set into the universal set of all possible data blobs.
-Only some of those data blobs are valid blocks.
+那么它就会从有效集中排除，进入所有可能的数据块的通用集合。
+只有其中一些数据块是有效区块。
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 500px" src="./img/validity_set_old.drawio.svg" />
 
 Notes:
 
-Let's actually look at an example.
-Imagine this is Bitcoins validity set and here we see a few blocks from it.
-The numbers at the top are initial few digits from the hashes representing those blocks.
+让我们看一个例子。
+假设这是比特币的有效集，我们可以看到其中的一些区块。
+顶部的数字是代表这些区块的哈希值的前几位数字。
 
-Imagine all the Bitcoin nodes suddenly decide they really dislike when the first hash digit is odd.
-They only like when it's even so they band together and change the protocol to only accept hashes with an even first digit.
+想象一下，所有比特币节点突然决定，他们真的不喜欢哈希值的第一个数字是奇数的情况。
+他们只喜欢第一个数字是偶数的情况，所以他们联合起来修改协议，只接受哈希值第一个数字是偶数的区块。
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <br />
 <img style="width: 500px" src="./img/validity_set_new.drawio.svg" />
 
 Notes:
 
-This change in the protocol would reduce the validity set.
-It would be more constrained then before.
-Some of the previously valid blocks would no longer be valid under the new rules.
-What happens in that case?
-Can we predict that?
+协议的这种变化会缩小有效集。
+它将比以前受到更多的限制。
+一些以前有效的区块在新规则下将不再有效。
+在这种情况下会发生什么？我们能预测吗？
 
 ---v
 
-## Consensus Forks
+## 共识分叉
 
-#### _Validity Set_
+#### _有效集_
 
 <pba-cols>
     <pba-col>
@@ -298,34 +297,34 @@ Can we predict that?
 
 Notes:
 
-To generally represent the same idea we'll be using the simpler representation on the right.
-Where the new set N is contained within the old set O.
-The fancy notion at the bottom says the same N is contained in O.
+为了更简单地表示同样的概念，我们将使用右边的简化表示。
+其中新集合N包含在旧集合O中。
+底部的花哨符号表达的也是同样的意思，即N包含于O。
 
 ---
 
-# Soft Forks
+# 软分叉
 
-To understand the example from a second ago we'll dive into soft forks.
+为了理解刚才的例子，我们将深入探讨软分叉。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Soft Forks_
+#### _软分叉_
 
 <br />
 <img style="width: 800px" src="./img/fork_family_soft.drawio.svg" />
 
 Notes:
 
-Firstly soft forks are a type of a consensus fork and they are results of a change in the protocol and thus the validity set.
+首先，软分叉是一种共识分叉，它是协议变更的结果，因此会影响有效集。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Soft Forks_
+#### _软分叉_
 
 <pba-cols>
     <pba-col>
@@ -334,27 +333,27 @@ Firstly soft forks are a type of a consensus fork and they are results of a chan
     </pba-col>
     <pba-col>
 		<ul>
-			<li>Backwards Compatible</li>
-			<li>By making the consensus rules more restrictive the set of valid blocks gets smaller.</li>
-			<li>Not every (and often none) of the blocks produced under old rules will get accepted by new nodes.</li>
+			<li>向后兼容</li>
+			<li>通过使共识规则更加严格，有效区块的集合变小。</li>
+			<li>不是所有（通常是没有）在旧规则下产生的区块都会被新节点接受。</li>
 		</ul>
     </pba-col>
 </pba-cols>
 
 Notes:
 
-So based on the venn diagram we have on the side we can see that the new consensus rules are more restrictive as the validity set shrinks.
+根据旁边的维恩图，我们可以看到，新的共识规则更加严格，因为有效集缩小了。
 
-New nodes produce blocks that are always accepted by old nodes.
-Old nodes generally don't produce blocks accepted by the new nodes.
+新节点产生的区块总是会被旧节点接受。
+旧节点通常不会产生被新节点接受的区块。
 
-Before we jump into demonstration is decreasing or increasing blocksize a soft fork?
+在我们进行演示之前，请问减小或增加区块大小是软分叉吗？
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Soft Forks_
+#### _软分叉_
 
 <pba-cols>
     <pba-col>
@@ -362,30 +361,30 @@ Before we jump into demonstration is decreasing or increasing blocksize a soft f
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<strong>Examples:</strong>
+		<strong>示例：</strong>
 		<br /><br />
 		<ul>
-			<li>Decreasing blocksize</li>
-			<li>Accepting only even/odd hashes</li>
-			<li>Disallowing some transaction types</li>
+			<li>减小区块大小</li>
+			<li>只接受哈希值为偶数/奇数的区块</li>
+			<li>禁止使用某些交易类型</li>
 		</ul>
     </pba-col>
 </pba-cols>
 
 Notes:
 
-Decreasing the block size restricts how many different blocks can be constructed so it makes the set smaller.
-It is a soft fork.
-The example we had a moment ago with the even hashes is also a soft fork as it adds another constraint on the previous protocol rules restricting them even further.
-Another good example would be banning some transaction types from use.
+减小区块大小会限制可以构建的不同区块的数量，从而使集合变小。
+这是一种软分叉。
+我们刚才提到的偶数哈希值的例子也是一种软分叉，因为它在以前的协议规则上增加了另一个限制，使其更加严格。
+另一个很好的例子是禁止使用某些交易类型。
 
-Now let's take a look at how forks work in practice and how they vary based on the hash power or staking power in favour of the protocol change.
+现在，让我们看看分叉在实际中是如何工作的，以及它们如何根据支持协议变更的哈希算力或权益比例而变化。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Soft Forks_
+#### _软分叉_
 
 <pba-cols>
     <pba-col>
@@ -399,18 +398,18 @@ Now let's take a look at how forks work in practice and how they vary based on t
 
 Notes:
 
-So in this scenario we'll be looking at what happens if nodes with less than 50% hash power or stake want to soft fork.
-Remember that soft forking is simply making the consensus stricter.
+在这种情况下，我们将看看如果哈希算力或权益比例低于50%的节点想要进行软分叉会发生什么。
+记住，软分叉只是让共识规则更加严格。
 
-In that case the blocks produced by new nodes are marked with N and they are accepted by the old chain but the old chain mines faster so they don't care about the new nodes.
-Blocks produced by old nodes are NOT accepted by the new nodes so the longest chain for new nodes is the short chain with only the N blocks.
-This is effectively a permanent fork.
+在这种情况下，新节点产生的区块用N标记，它们会被旧链接受，但旧链的挖矿速度更快，所以它们并不关心新节点。
+旧节点产生的区块不会被新节点接受，所以对于新节点来说，最长的链是只有N区块的短链。
+这实际上是一个永久性的分叉。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Soft Forks_
+#### _软分叉_
 
 <pba-cols>
     <pba-col>
@@ -424,344 +423,254 @@ This is effectively a permanent fork.
 
 Notes:
 
-In the similar example when the new nodes control more than 50% power the situation changes drastically.
-The new nodes mine faster and are the longest chain.
-But remember that old nodes accept the new blocks so if they new nodes mine faster the old nodes blocks get constantly reorged out.
-They are forced to update the software if they want their blocks to get accepted at all otherwise they loose all the rewards.
+在类似的例子中，当新节点控制超过50%的算力时，情况会发生巨大的变化。
+新节点的挖矿速度更快，成为最长的链。
+但要记住，旧节点会接受新的区块，所以如果新节点挖矿速度更快，旧节点的区块会不断被重组出去。
+如果旧节点想要他们的区块被接受，就必须更新软件，否则他们将失去所有的奖励。
 
 ---
 
-# Hidden Forks
+# 隐藏分叉
 
 Notes:
 
-Now let's take a look at something a bit less known.
-Hidden forks.
+现在，让我们来看看一些不太为人所知的东西。
+隐藏分叉。
 
 ---v
 
-## Fork Categorization
+## 分叉分类
 
-#### _Hidden Forks_
+#### _隐藏分叉_
 
 <br />
 <img style="width: 800px" src="./img/fork_family_hidden.drawio.svg" />
 
 Notes:
 
-An edge case of soft forks.
+软分叉的一种特殊情况。
 
 ---v
 
-## Fork Categorization
-
-#### _Hidden Forks_
-
+## 分叉分类
+#### _隐藏分叉_
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
-		<div style="font-size: 50px;">N ⊆ O</div>
+        <img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
+        <div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<ul>
-			<li>Conflict-less</li>
-			<li>The old, now excluded blocks were allowed but never used in practice.</li>
-			<li>New nodes are theoretically stricter but practically accept all old blocks.</li>
-			<li>Old nodes accept new blocks.</li>
-		</ul>
+        <ul>
+            <li>无冲突</li>
+            <li>那些现在被排除在外的旧区块，在实践中虽被允许存在，但从未被使用过。</li>
+            <li>新节点理论上更为严格，但实际上会接受所有旧区块。</li>
+            <li>旧节点接受新区块。</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 Notes:
-
-So the venn diagram is exactly the same as in the normal soft fork case.
-But imagine that the the orange crescent, this is the part we're excluding from the old protocol when shifting to the new one... was never actually used.
-So for instance the block had an empty field that could have some arbitrary data inside, but everyone left it empty and never checked what was inside.
-The new protocol puts something meaningful in the empty field but doesn't require it.
-Because old nodes never used this field pretty much all old blocks will be accepted under the new rules.
-
-TL;DR the stuff we removed from the validity set wasn't even used despite being technically valid.
-
+所以这个维恩图和普通软分叉的情况完全一样。但想象一下，橙色月牙部分，也就是我们从旧协议切换到新协议时排除的部分……实际上从未被使用过。例如，区块中有一个空字段，里面本可以包含任意数据，但大家都让它空着，也从不检查里面有什么。新协议在这个空字段中放入了有意义的内容，但并非强制要求。由于旧节点从未使用过这个字段，几乎所有旧区块在新规则下都会被接受。
+简而言之，我们从有效集中移除的内容，尽管在技术上是有效的，但实际上从未被使用过。
 ---v
-
-## Fork Categorization
-
-#### _Hidden Forks_
-
+## 分叉分类
+#### _隐藏分叉_
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
-		<div style="font-size: 50px;">N ⊆ O</div>
+        <img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
+        <div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<strong>Examples:</strong>
-		<br /><br />
-		<ul>
-			<li>Assigning non-conflicting uses to empty opcodes.</li>
-			<li>BTC Ordinals using empty opcodes to implement BTC NFTs.</li>
-		</ul>
+        <strong>示例：</strong>
+        <br /><br />
+        <ul>
+            <li>为空白操作码分配无冲突的用途。</li>
+            <li>BTC Ordinals使用空白操作码来实现比特币NFT。</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 Notes:
-
-A good example of that assigning new optional use-cases for previously unused opcodes as with the example of the recent Bitcoin Ordinals update.
-
+一个很好的例子就是为以前未使用的操作码分配新的可选用例，就像最近比特币Ordinals更新的例子一样。
 ---v
-
-## Fork Categorization
-
-#### _Hidden Forks_
-
+## 分叉分类
+#### _隐藏分叉_
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
-		<div style="font-size: 50px;">N ⊆ O</div>
+        <img style="width: 300px" src="./img/venn_hidden.drawio.svg" />
+        <div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<img style="width: 800px" src="./img/soft_forks_hidden.drawio.svg" />
+        <img style="width: 800px" src="./img/soft_forks_hidden.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 Notes:
-
-And the reason why they are hidden... is they are not even manifesting as forks despite the consensus change.
-All nodes effectively accept each others blocks so there is no conflict.
-
+它们之所以被称为隐藏分叉……是因为尽管共识发生了变化，但它们甚至不会表现为分叉。所有节点实际上都接受彼此的区块，因此没有冲突。
 ---
-
-# Hard Forks
-
+# 硬分叉
 Notes:
-
 ---v
-
-## Fork Categorization
-
-#### _Hard Forks_
-
+## 分叉分类
+#### _硬分叉_
 <br />
 <img style="width: 800px" src="./img/fork_family_hard.drawio.svg" />
-
 ---v
-
-## Fork Categorization
-
-#### _Hard Forks_
-
+## 分叉分类
+#### _硬分叉_
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hard.drawio.svg" />
-		<div style="font-size: 50px;">O ⊆ N</div>
+        <img style="width: 300px" src="./img/venn_hard.drawio.svg" />
+        <div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-		<ul>
-			<li>Forwards Compatible</li>
-			<li>By making the consensus rules less restrictive the set of valid blocks gets bigger.</li>
-			<li>Not every (and often none) of the blocks produced under new rules will be accepted by the old nodes.</li>
-			<li>Every block produced under old rules will get accepted by new nodes.</li>
-		</ul>
+        <ul>
+            <li>向前兼容</li>
+            <li>通过放宽共识规则，有效区块的集合变大。</li>
+            <li>不是所有（通常是没有）在新规则下产生的区块都会被旧节点接受。</li>
+            <li>所有在旧规则下产生的区块都会被新节点接受。</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 ---v
 
-## Fork Categorization
-
-#### _Hard Forks_
-
+## 分叉分类
+### 硬分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hard.drawio.svg" />
-		<div style="font-size: 50px;">O ⊆ N</div>
+        <img style="width: 300px" src="./img/venn_hard.drawio.svg" />
+        <div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-		<strong>Examples:</strong>
-		<br /><br />
-		<ul>
-			<li>Increasing blocksize</li>
-			<li>BTC Cash fork at first*</li>
-			<li>Adding new transaction types</li>
-			<li>Increasing max nonce value</li>
-		</ul>
+        <strong>示例：</strong>
+        <br /><br />
+        <ul>
+            <li>增加区块大小</li>
+            <li>最初的比特币现金分叉*</li>
+            <li>添加新的交易类型</li>
+            <li>增加最大随机数（nonce）值</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 ---v
-
-## Fork Categorization
-
-#### _Hard Forks_
-
+## 分叉分类
+### 硬分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hard.drawio.svg" />
-		<div style="font-size: 50px;">O ⊆ N</div>
+        <img style="width: 300px" src="./img/venn_hard.drawio.svg" />
+        <div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-			<img style="width: 800px" src="./img/hard_forks_s50.drawio.svg" />
+        <img style="width: 800px" src="./img/hard_forks_s50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 Notes:
-
-First let's go through the scenario of a hard fork with less than 50% support.
-Remember that the rules were loosened this time.
-If new guys accept old blocks so because they have less than 50% power they get constantly reorged out.
-There is no permanent fork in this scenario and the change will not go through if if it has this limited support.
-
+首先，我们来看一下支持度低于50%的硬分叉场景。记住，这次规则是放宽了。如果新节点接受旧区块，由于它们的算力低于50%，其产生的区块会不断被重组出去。在这种情况下不会形成永久性分叉，如果支持度有限，这种变化也无法实现。
 ---v
-
-## Fork Categorization
-
-#### _Hard Forks_
-
+## 分叉分类
+### 硬分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="./img/venn_hard.drawio.svg" />
-		<div style="font-size: 50px;">O ⊆ N</div>
+        <img style="width: 300px" src="./img/venn_hard.drawio.svg" />
+        <div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-			<img style="width: 800px" src="./img/hard_forks_g50.drawio.svg" />
+        <img style="width: 800px" src="./img/hard_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 Notes:
-
-In the case of more than 50% support the new guys miner faster but they are no accepted by the old nodes so they go ahead.
-Old nodes maintain the old chain and the community is split.
-So if there is a major change that most people accept but not everyone it will always fork the chain.
-
+当支持度超过50%时，新节点挖矿速度更快，但它们不会被旧节点接受，于是新节点继续前行。旧节点维护旧链，社区就此分裂。所以，如果有一个大多数人接受但并非所有人都认可的重大变化，就总会导致链的分叉。
 ---
-
-## Small Summary
-
+## 小结
 <pba-cols>
     <pba-col>
-		<img style="width: 400px" src="./img/soft_forks_s50.drawio.svg" />
-		<br />
-		<img style="width: 400px" src="./img/soft_forks_g50.drawio.svg" />
+        <img style="width: 400px" src="./img/soft_forks_s50.drawio.svg" />
+        <br />
+        <img style="width: 400px" src="./img/soft_forks_g50.drawio.svg" />
     </pba-col>
-	<pba-col>
-		<img style="width: 400px" src="./img/hard_forks_s50.drawio.svg" />
-		<br />
-		<img style="width: 400px" src="./img/hard_forks_g50.drawio.svg" />
+    <pba-col>
+        <img style="width: 400px" src="./img/hard_forks_s50.drawio.svg" />
+        <br />
+        <img style="width: 400px" src="./img/hard_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 Notes:
-
-Now that we've seen both soft and hard forks...
-If we'd manually increase the difficulty of mining in the BTC network would that be a soft or hard fork?
-Hard.
-
-Also let's reiterate.
-We only have permanent forks in soft forks with under 50% support and in hard forks with over 50% support.
-
+现在我们已经了解了软分叉和硬分叉……如果我们手动增加比特币网络的挖矿难度，这会是软分叉还是硬分叉呢？是硬分叉。另外需要重申的是，只有在支持度低于50%的软分叉和支持度超过50%的硬分叉中，才会出现永久性分叉。
 ---
-
-# Full Forks
-
+# 完全分叉
 ---v
-
-## Fork Categorization
-
-#### _Full Forks_
-
+## 分叉分类
+### 完全分叉
 <br />
 <img style="width: 800px" src="./img/fork_family_full.drawio.svg" />
-
 ---v
 
-## Fork Categorization
-
-#### _Full Forks_
-
+## 分叉分类
+### 完全分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="./img/venn_full.drawio.svg" />
-		<div style="font-size: 50px;">O ∩ N = ∅</div>
+        <img style="width: 200px" src="./img/venn_full.drawio.svg" />
+        <div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
-		<ul>
-			<li>Fully Incompatible</li>
-			<li>Soft + Hard</li>
-			<li>By changing the consensus rules the sets can become disjoint or overlapping.</li>
-			<li>Most (and often all) blocks produced under one ruleset are not accepted under the other.</li>
-		</ul>
+        <ul>
+            <li>完全不兼容</li>
+            <li>兼具软分叉和硬分叉的特点</li>
+            <li>通过改变共识规则，相关集合可能变得互不相交或相互重叠 。</li>
+            <li>在一种规则集下产生的大多数（通常是所有）区块在另一种规则集下不被接受。</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 ---v
-
-## Fork Categorization
-
-#### _Full Forks_
-
+## 分叉分类
+### 完全分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="./img/venn_full.drawio.svg" />
-		<div style="font-size: 50px;">O ∩ N = ∅</div>
+        <img style="width: 200px" src="./img/venn_full.drawio.svg" />
+        <div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
-		<strong>Examples:</strong>
-		<br /><br />
-		<ul>
-			<li>Changing the hashing function</li>
-			<li>Changing the signature scheme</li>
-			<li>Specific combinations of soft and hard forks</li>
-			<li>BTC Cash fork in the end*</li>
-		</ul>
+        <strong>示例：</strong>
+        <br /><br />
+        <ul>
+            <li>更改哈希函数</li>
+            <li>更改签名方案</li>
+            <li>软分叉和硬分叉的特定组合</li>
+            <li>最终的比特币现金分叉*</li>
+        </ul>
     </pba-col>
 </pba-cols>
-
 ---v
-
-## Fork Categorization
-
-#### _Full Forks_
-
+## 分叉分类
+### 完全分叉
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="./img/venn_full.drawio.svg" />
-		<div style="font-size: 50px;">O ∩ N = ∅</div>
+        <img style="width: 200px" src="./img/venn_full.drawio.svg" />
+        <div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
-		<img style="width: 600px" src="./img/full_forks__&_50.drawio.svg" />
+        <img style="width: 600px" src="./img/full_forks__&_50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 ---
-
-## Summary
-
+## 总结
 <pba-cols>
     <pba-col>
-		<img style="width: 400px" src="./img/soft_forks_s50.drawio.svg" />
-		<br />
-		<img style="width: 400px" src="./img/soft_forks_g50.drawio.svg" />
-    </pba-col>
-	<pba-col>
-		<img style="width: 400px" src="./img/hard_forks_s50.drawio.svg" />
-		<br />
-		<img style="width: 400px" src="./img/hard_forks_g50.drawio.svg" />
+        <img style="width: 400px" src="./img/soft_forks_s50.drawio.svg" />
+        <br />
+        <img style="width: 400px" src="./img/soft_forks_g50.drawio.svg" />
     </pba-col>
     <pba-col>
-		<img style="width: 400px" src="./img/full_forks__&_50.drawio.svg" />
+        <img style="width: 400px" src="./img/hard_forks_s50.drawio.svg" />
+        <br />
+        <img style="width: 400px" src="./img/hard_forks_g50.drawio.svg" />
+    </pba-col>
+    <pba-col>
+        <img style="width: 400px" src="./img/full_forks__&_50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 Notes:
-
-- Bitcoin cash pivot from hard to full because they didn't have enough HP.
-- Soft are often preferred for changes because with >50%HP they do not fracture the community (BTC community logic)
-- Hard can be preferred as they seem to better represent minorities.
-  If some people don't agree with the majority they naturally fork off and are not peer pressured to follow (ETH community logic)
-
+- 比特币现金因算力不足从硬分叉转变为完全分叉。
+- 软分叉通常更受青睐，因为当算力支持超过50%时，它不会导致社区分裂（比特币社区的逻辑）。
+- 硬分叉也可能被偏好，因为它们似乎能更好地代表少数群体的意见。如果一些人不同意多数人的意见，他们可以自然地分叉出去，而不会受到同伴压力而被迫跟随（以太坊社区的逻辑）。
 ---
-
-# Thank you!
-
+# 感谢！
 ---
-
 <img style="width: 1800px" src="./img/forks.drawio.svg" />

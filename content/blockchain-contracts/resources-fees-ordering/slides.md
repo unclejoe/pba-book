@@ -4,194 +4,194 @@ description: Fees and ordering in blockchains
 duration: 1 hour
 ---
 
-# Resources, Fees, Ordering
+# 资源、费用、排序
 
 ---
 
-## Overview
+## 概述
 
 <pba-flex center>
 
-1. [Fees and ordering](#fees--ordering)
-1. [Execution models](#execution-models)
+1. [费用和排序](#fees--ordering)
+1. [执行模型](#execution-models)
 
 </pba-flex>
 
-Notes:
+备注：
 
-- This lecture is a bit all over the place.
-- A bunch of stuff worth covering, but not all directly related.
-
----
-
-# Fees & Ordering
+- 本讲座的内容有点杂乱。
+- 有很多值得讲解的内容，但并非都直接相关。
 
 ---
 
-## Fees & Ordering
-
-Blockchains are open, shared systems.
-They are unrestricted in access.
-
-But restricted in resources.
+# 费用与排序
 
 ---
 
-## Permissionless Access
+## 费用与排序
 
-Free _ability_ to access does not mean free _cost_ to access.
+区块链是开放的、共享的系统。
+它们的访问不受限制。
 
----
-
-## Threads
-
-A blockchain runtime is single-threaded.
-
-(For now)
+但资源是有限的。
 
 ---
 
-## Time
+## 无许可访问
 
-A block must terminate in some amount of time.
-
----
-
-## Network
-
-Besides execution time, blocks need to propagate throughout the network.
+免费的访问“能力”并不意味着免费的访问“成本”。
 
 ---
 
-## Demand
+## 线程
 
-Many people may want to use the system concurrently.
+区块链运行时是单线程的。
 
-But the system needs to decide:
-
-- Which state transition calls to include in a block, and
-- How to order them.
+（目前是这样）
 
 ---
 
-## Brief Interruption #1
+## 时间
 
-> The block body contains an ordered set of _extrinsics_: Packets from the outside world with _zero_ or more signatures attached.
-
-Notes:
-
-Recall from Lecture 1.
+一个区块必须在一定时间内终止。
 
 ---
 
-## Brief Interruption #1 (cont.)
+## 网络
 
-These packets include:
-
-- A call to the system's state transition function
-- Some contextual information (e.g. a spec version)
-- Perhaps some additional information that would help block authors prioritise
+除了执行时间，区块需要在整个网络中传播。
 
 ---
 
-## No-Longer Brief Interruption #1 (cont.)
+## 需求
 
-Consider packets with:
+可能有很多人想要同时使用该系统。
 
-- zero signatures attached as "inherents" or "unsigned extrinsics"
-- one or more signatures attached as "transactions"
+但系统需要做出决定：
 
-This will be pretty straightforward until it's not.
-
----
-
-## Fee Models
-
-Different blockchains have different fee models.
-
-For this lecture, we will look at three:
-
-- Size (Bitcoin)
-- Step Metering (Ethereum)
-- Time (Polkadot)\*
-
-\* (and coming soon, space)
+- 哪些状态转换调用要包含在一个区块中，以及
+- 如何对它们进行排序。
 
 ---
 
-## Size
+## 简短插曲 #1
 
-Bitcoin has a very simple STF: Namely verifying signatures and reassigning UTXOs.
+> 区块体包含一组有序的“外部数据”：来自外部世界的数据包，附带零个或多个签名。
 
-Its block size is limited, and each transaction has some byte-length (instruction, signature, etc.)
+备注：
 
-Block authors will normally choose the set of transactions that would yield the highest gross fee.
+回想一下第一讲的内容。
 
 ---
 
-## Bitcoin Fee Market
+## 简短插曲 #1（续）
+
+这些数据包包括：
+
+- 对系统状态转换函数的调用
+- 一些上下文信息（例如，规范版本）
+- 可能还有一些额外信息，可帮助区块作者进行优先级排序
+
+---
+
+## 不再简短的插曲 #1（续）
+
+考虑以下数据包：
+
+- 没有附带签名的数据包作为“固有数据”或“无签名外部数据”
+- 附带一个或多个签名的数据包作为“交易”
+
+这在一开始会很简单，但随后可能会变得复杂。
+
+---
+
+## 费用模型
+
+不同的区块链有不同的费用模型。
+
+在本讲座中，我们将介绍三种：
+
+- 大小（比特币）
+- 步骤计量（以太坊）
+- 时间（波卡）*
+
+*（很快还会有空间）
+
+---
+
+## 大小
+
+比特币有一个非常简单的状态转换函数（STF）：即验证签名并重新分配未花费交易输出（UTXO）。
+
+其区块大小是有限的，每个交易都有一定的字节长度（指令、签名等）。
+
+区块作者通常会选择能产生最高总费用的交易集。
+
+---
+
+## 比特币费用市场
 
 <img style="width: 800px" src="./img/3.3-fees-bitcoin-average-fee.png" />
 
-Notes:
+备注：
 
-- Fee market evolves based on demand
+- 费用市场根据需求而演变
 
-[Source: Y Charts](https://ycharts.com/indicators/bitcoin_average_transaction_fee_btc)
-(Couldn't find the chart I really wanted (per-byte rate), but can discuss)
-
----
-
-## Metering
-
-Ethereum has a more complex STF than Bitcoin, namely one that is quasi-Turing-complete.
-
-Users could submit transactions with an unknown number of steps to terminate.
-
-The system uses "gas metering" to halt execution of a transaction and continue to the next.
+[来源：Y Charts](https://ycharts.com/indicators/bitcoin_average_transaction_fee_btc)
+（找不到我真正想要的图表（每字节费率），但可以讨论）
 
 ---
 
-## Metering
+## 计量
 
-Ethereum's STF defines a VM with instruction set, where each instruction costs some "gas".
+以太坊的状态转换函数比比特币更复杂，即它是准图灵完备的。
 
-Users specify:
+用户可能会提交需要执行未知数量步骤才能终止的交易。
 
-- Max amount of gas to use
-- Cost, in ETH, per unit of gas they are willing to pay
-
----
-
-## Metering
-
-Each time an instruction is executed, the system deducts its cost from the max gas.
-
-If the program terminates, it only charges for the gas used.
-
-If it runs out of gas, it terminates the program.
+系统使用“Ga s计量”来停止一个交易的执行，并继续执行下一个交易。
 
 ---
 
-## Gas Rates
+## 计量
+
+以太坊的状态转换函数定义了一个带有指令集的虚拟机，其中每个指令都需要消耗一定的“Gas”。
+
+用户指定：
+
+- 要使用的最大Gas量
+- 他们愿意为每单位Gas支付的费用（以 ETH 为单位）
+
+---
+
+## 计量
+
+每次执行一条指令时，系统都会从最大Gas量中扣除其成本。
+
+如果程序终止，它只收取所使用的Gas费用。
+
+如果Gas用完，它会终止程序。
+
+---
+
+## Gas费率
 
 <img style="width: 800px" src="./img/3.3-fees-ethereum-average-gas-price.png" />
 
-Notes:
+备注：
 
-[Source: Etherscan](https://etherscan.io/chart/gasprice)
-
----
-
-## Weight
-
-Instead of metering during runtime, meter ahead of time.
-
-Charge a fixed\* fee for dispatching some call.
+[来源：Etherscan](https://etherscan.io/chart/gasprice)
 
 ---
 
-## \*Fixed
+## 权重
+
+与其在运行时进行计量，不如提前进行计量。
+
+为调度某些调用收取固定*费用。
+
+---
+
+## *固定
 
 ```rust
 #[pallet::weight(100_000_000)]
@@ -209,151 +209,151 @@ fn my_variable_weight_call(input: u8) -> Refund {
 
 ---
 
-## Time
+## 时间
 
-Weight is picoseconds of execution time (`10E-12`).
+权重是以皮秒（`10E-12`）的执行时间来衡量的。
 
-Calls are benchmarked on some "standard hardware".
+调用是在某些“标准硬件”上进行基准测试的。
 
-(There are some changes in the works about making two-dimensional weight.)
-
----
-
-## Weight
-
-Using weight reduced the overhead of runtime metering, but requires some more care from developers.
-
-- It must be possible to meter before runtime
-- So, users should not be able to deploy untrusted code
-- There is no safety net on execution
-- Some computation is OK, but should be possible from call inspection
-
-Notes:
-
-Examples:
-
-- User-supplied length of a list that will be iterated over
-- Number of calls within a batch
+（关于实现二维权重正在进行一些更改）
 
 ---
 
-## Brief Interruption #2
+## 权重
 
-Some of the gas and weight systems are evolving.
+使用权重减少了运行时计量的开销，但需要开发人员更加谨慎。
 
-- Ethereum recently added EIP1559, which uses a fee + tip mechanism
-- Parity and Web3 Foundation are discussing some changes to the weights model
+- 必须能够在运行前进行计量
+- 因此，用户不应能够部署不受信任的代码
+- 执行时没有安全网
+- 某些计算是可以的，但应该能够通过调用检查来完成
 
----
+备注：
 
-## Fee Strategies
+示例：
 
-Block authors can include transactions using several strategies:
-
-- Just take those with the highest fee
-- Take those with the highest fee to {length, gas, weight} ratio
-
----
-
-## Fee Burning
-
-Not all the fees must go to the block author (depends on system design).
-
-In fact, this is often a bad design. Block authors will want fees to go up, so may indulge in no-op transactions to boost fees.
+- 用户提供的要迭代的列表的长度
+- 批量处理中的调用次数
 
 ---
 
-## Fee Burning Examples
+## 简短插曲 #2
 
-- Polkadot only gives 20% of fees to block authors (80% goes to an on-chain Treasury)
-- Since EIP1559, Ethereum burns some of its fees (its "base") from each transaction
+一些Gas和权重系统正在演变。
 
-In both systems, users can add "tips" to increase the priority of their transaction with authors.
-
----
-
-## Filling a Block
-
-Depending on the limiting factor, systems can have different limits to call a block full.
-
-- Bitcoin: Size (in bytes)
-- Ethereum: Gas limit (sum of all gas limits of transactions)
-- Polkadot: Weight (sum of all max expected weights)
+- 以太坊最近添加了 EIP1559，它使用了费用 + 小费机制
+- Parity 和 Web3 基金会正在讨论对权重模型的一些更改
 
 ---
 
-## Ordering
+## 费用策略
 
-We've selected some transactions, but the runtime is single-threaded.
+区块作者可以使用几种策略来包含交易：
 
-Block authors must order them.
-
----
-
-## Priority Basis
-
-The naive solution is to maintain an order of pending transactions by some "priority".
-
-And just include the top `N` transactions that fit in a block.
+- 只选择费用最高的交易
+- 选择费用与{长度、Gas、权重}比率最高的交易
 
 ---
 
-## More Advanced
+## 费用销毁
 
-But, many small transactions might result in a higher fee for greedy block authors.
+并非所有费用都必须支付给区块作者（这取决于系统设计）。
 
-So there could exist a set of transactions that is more profitable than just the top `N`.
-
-Even some that could be considered attacks.
+实际上，这通常是一个糟糕的设计。区块作者会希望费用上涨，因此可能会进行无操作交易以提高费用。
 
 ---
 
-# Execution Models
+## 费用销毁示例
+
+- 波卡只将 20%的费用支付给区块作者（80% 进入链上国库）
+- 自 EIP1559 以来，以太坊会销毁每个交易中的部分费用（其“基础费用”）
+
+在这两个系统中，用户都可以添加“小费”以提高其交易在作者那里的优先级。
 
 ---
 
-## Transactional Execution
+## 填充区块
 
-Most blockchains have a "transactional" execution model.
+根据限制因素的不同，系统对区块填满的限制也不同。
 
-That is, they need to be woken up.
-
-A smart contract, for example, won't execute any code unless someone submits a signed, fee-paying transaction to the system.
-
----
-
-## Brief Interruption #3
-
-All of the "packets from the outside world" in these systems are signed.
-
-Some key holder signs an instruction that authorises a call and is willing to pay for its execution.
-
-Now is the time to enter the world of unsigned packets.
+- 比特币：大小（以字节为单位）
+- 以太坊：Gas限制（所有交易的Gas限制总和）
+- 波卡：权重（所有最大预期权重的总和）
 
 ---
 
-## Free Execution
+## 排序
 
-State machines can have autonomous functions in their state transition function.
+我们已经选择了一些交易，但运行时是单线程的。
 
-System designers can make these functions execute as part of the STF.
-
-In this model, block authors _must_ execute some logic.
+区块作者必须对它们进行排序。
 
 ---
 
-## Free Execution
+## 优先级基础
 
-These added function calls are powerful, but some care must be taken:
+朴素的解决方案是根据某种“优先级”对挂起的交易进行排序。
 
-- They still consume execution resources (e.g., weight)
-- They need some method of verification (other nodes should be able to accept/reject them)
+然后只包含能够放入一个区块的前 `N` 个交易。
 
 ---
 
-## Hooks
+## 更高级的方法
 
-The Substrate lectures will get into these, but for now just a look at some APIs:
+但是，对于贪婪的区块作者来说，许多小交易可能会带来更高的费用。
+
+因此，可能存在一组比前 `N` 个交易更有利可图的交易。
+
+甚至有些可能被视为攻击行为。
+
+---
+
+# 执行模型
+
+---
+
+## 事务性执行
+
+大多数区块链都有一个“事务性”执行模型。
+
+也就是说，它们需要被唤醒。
+
+例如，智能合约除非有人向系统提交一个签名的、支付费用的交易，否则不会执行任何代码。
+
+---
+
+## 简短插曲 #3
+
+在这些系统中，所有“来自外部世界的数据包”都是签名的。
+
+某个密钥持有者对授权调用的指令进行签名，并愿意为其执行付费。
+
+现在是进入无签名数据包世界的时候了。
+
+---
+
+## 免费执行
+
+状态机在其状态转换函数中可以有自主函数。
+
+系统设计者可以使这些函数作为状态转换函数的一部分执行。
+
+在这个模型中，区块作者必须执行某些逻辑。
+
+---
+
+## 免费执行
+
+这些额外的函数调用很强大，但需要注意一些事项：
+
+- 它们仍然会消耗执行资源（例如，权重）
+- 它们需要某种验证方法（其他节点应该能够接受或拒绝它们）
+
+---
+
+## 钩子
+
+Substrate 讲座将深入介绍这些内容，但现在先看一些 API：
 
 ```rust
 pub trait Hooks<BlockNumber> {
@@ -365,4 +365,4 @@ pub trait Hooks<BlockNumber> {
 }
 ```
 
-Source: [`/frame/support/src/traits/hooks.rs`](https://github.com/paritytech/polkadot-sdk/blob/a13382f/substrate/frame/support/src/traits/hooks.rs)
+来源：[`/frame/support/src/traits/hooks.rs`](https://github.com/paritytech/polkadot-sdk/blob/a13382f/substrate/frame/support/src/traits/hooks.rs)

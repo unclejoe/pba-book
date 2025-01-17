@@ -4,79 +4,79 @@ description: Finality providing methods and mechanisms for blockchains
 duration: 45min
 ---
 
-# Consensus: Finality
+# 共识：终局性
 
 ---
 
-## Consensus is...
+## 共识是...
 
-...a decision making process that strives to achieve acceptance of a decision by all participants.
+...一个决策过程，旨在让所有参与者都接受某个决策。
 
 Notes:
 
-If we have external factors like trust relationships or Social hierarchy it can be quite easy.
+如果存在诸如信任关系或社会等级制度等外部因素，这可能会相当容易。
 
-Trust example: If everyone trusts each other, then any one person can propose an outcome, and all the others will trust that it is in the community's best interest.
+信任示例：如果每个人都相互信任，那么任何一个人都可以提出一个结果，而其他人都会相信这符合社区的最佳利益。
 
-Social Hierarchy example: If a community has an executive (President, Queen, CEO), the executive can propose her preference and everyone will accept it based on the external mechanism that keeps her as the executive.
+社会等级制度示例：如果一个社区有一位行政人员（如总统、女王、首席执行官），这位行政人员可以提出她的偏好，而每个人都会基于使她成为行政人员的外部机制而接受这个偏好。
 
-But these conditions are not interesting, and are often not realistic.
-It gets interesting when we don't make these simplifying assumption.
+但这些条件并不有趣，而且往往不现实。
+当我们不做这些简化假设时，事情就变得有趣了。
 
 ---v
 
-## Five Aspects of Blockchain Consensus
+## 区块链共识的五个方面
 
 <pba-flex center>
 
-- State machine validity
-- Arbitrary / Political validity
-- Authorship throttling
-- Fork choice heuristic
-- Finality
+- 状态机有效性
+- 任意/政治有效性
+- 创作节流
+- 分叉选择启发式
+- 终局性
 
 </pba-flex>
 
 ---v
 
-## Adversarial Conditions
+## 对抗性条件
 
-- The participants want to agree on _something_
-- They don't trust each other
-- Some could be faulty, or make mistakes
-- Some could be straight up malicious (aka Byzantine)
+- 参与者想要就“某件事”达成一致
+- 他们彼此不信任
+- 有些参与者可能会出错或犯错误
+- 有些参与者可能会直接恶意行事（即拜占庭式行为）
 
 ---
 
-# One Shot Consensus
+# 一次性共识
 
-A single decision to make.
+只需做出一个决策。
 
-Once it is made, we are done.
-
----v
-
-## Desired Properties
-
-All honest participants...
-
-- **Termination** - Eventually reach some decision
-- **Agreement** - Reach the same decision
-- **Integrity** - Reach at most one decision, which was proposed by at least one participant.
+一旦做出决策，我们就完成了。
 
 ---v
 
-## Also Validity
+## 期望属性
 
-If all participants unanimously propose the same decision, all honest participants reach that decision.
+所有诚实的参与者...
+
+- **终止性** - 最终会做出某个决策
+- **一致性** - 做出相同的决策
+- **完整性** - 最多做出一个决策，且该决策至少由一名参与者提出。
+
+---v
+
+## 还有有效性
+
+如果所有参与者一致提出相同的决策，那么所有诚实的参与者都会达成该决策。
 
 Notes:
 
-Another desireable property that is sometimes too obvious to say.
+另一个理想的属性，有时太明显而无需赘述。
 
 ---
 
-## Example: Where to go for dinner
+## 示例：去哪里吃饭
 
 <pba-cols>
 <pba-col>
@@ -87,47 +87,47 @@ Another desireable property that is sometimes too obvious to say.
 
 <pba-col>
 
-- Termination - Stan, Kyle, and Kenny will each eventually decide where to eat.
-- Agreement - Stan, Kyle, and Kenny will each decide to eat at the same place.
-- Integrity - Stan, Kyle, and Kenny will eat at either Whistlin' Willies or Casa Bonita.
+- 终止性 - 斯坦、凯尔和肯尼最终都会决定去哪里吃饭。
+- 一致性 - 斯坦、凯尔和肯尼都会决定在同一个地方吃饭。
+- 完整性 - 斯坦、凯尔和肯尼会在“呼啸威利餐厅”或“卡萨博尼塔餐厅”吃饭。
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-Stan, Kyle, Kenny, and Cartman are trying to decide where to have dinner.
-Stan, Kyle, and Kenny want to have something yummy and spend time together.
-Cartman is secretly pursuing his own goals and doesn't care whether dinner is yummy.
-In fact he secretly hopes they won't decide at all so he can go home and eat KFC with his mom.
+斯坦、凯尔、肯尼和卡特曼正在试图决定去哪里吃饭。
+斯坦、凯尔和肯尼想要吃点好吃的，并且一起度过时光。
+卡特曼则在暗中追求自己的目标，并不关心晚餐是否美味。
+实际上，他暗自希望他们无法做出决定，这样他就可以回家和妈妈一起吃肯德基。
 
-Stan and Kyle both propose Whistlin' Willie's for dinner.
-Kenny and Cartman propose Casa Bonita.
+斯坦和凯尔都提议去“呼啸威利餐厅”吃饭。
+肯尼和卡特曼则提议去“卡萨博尼塔餐厅”。
 
-In the end Kenny may not agree that Whistlin' Willie's is the best option for dinner, but he will agree that it is the legitimate group decision.
+最后，肯尼可能并不认为“呼啸威利餐厅”是晚餐的最佳选择，但他会承认这是合法的集体决策。
 
-Image source: <https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg>
+图片来源：<https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg>
 
 ---v
 
-## Mistakes vs Malice
+## 错误与恶意
 
-**Crash Tolerance** - A system can keep operating normally when some actors crash or go offline.
+**崩溃容错** - 当某些参与者崩溃或离线时，系统仍能正常运行。
 
-**Byzantine Fault Tolerance** - A system can keep operating normally when some actors are intentionally malicious.
-Byzantine actors may:
+**拜占庭容错** - 当某些参与者故意恶意行事时，系统仍能正常运行。
+拜占庭参与者可能会：
 
-- Crash - Or pretend to have crashed - Byzantine faults are a superset of crash faults
-- Lie - Sending false information to peers
-- Equivocate - Send inconsistent information to different peers
+- 崩溃 - 或者假装崩溃 - 拜占庭故障是崩溃故障的超集
+- 说谎 - 向其他参与者发送虚假信息
+- 模棱两可 - 向不同的参与者发送不一致的信息
 
 Notes:
 
-These examples and many others are _instances_ of the Byzantine Generals Problem
+这些例子以及许多其他例子都是“拜占庭将军问题”的实例。
 
 ---v
 
-## Mistake or Malice?
+## 是错误还是恶意？
 
 <pba-cols>
 <pba-col>
@@ -138,34 +138,34 @@ These examples and many others are _instances_ of the Byzantine Generals Problem
 
 <pba-col>
 
-- Consider an Airplane flight computer.
-- The pilot _must_ know the airspeed at all times.
-- Airspeed sensors can fail.
-- Sensors can be buggy.
-- Are these malicious?
+- 考虑一下飞机的飞行计算机。
+- 飞行员必须随时知道飞机的空速。
+- 空速传感器可能会出现故障。
+- 传感器可能存在漏洞。
+- 这些是恶意行为吗？
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-Consider an Airplane flight computer.
-It is critical that the pilot (human or automated) knows the aircraft's airspeed at all times.
-Airspeed sensors can fail due to extreme temperatures, icing, solar radiation, and other reasons.
-For this reason, there are redundant sensors, and they run a consensus protocol.
+考虑一下飞机的飞行计算机。
+对于飞行员（无论是人类还是自动化的）来说，随时了解飞机的空速至关重要。
+空速传感器可能会因极端温度、结冰、太阳辐射和其他原因而出现故障。
+因此，会有冗余传感器，并且它们会运行一个共识协议。
 
-Imagine that one of the sensors has an overflow _bug_ such that when the airspeed exceeds a certain threshold, maybe `u8::max_value()`, it actually reports a much lower speed.
+想象一下，其中一个传感器存在溢出漏洞，当空速超过某个阈值（可能是 `u8::max_value()`）时，它实际上会报告一个低得多的速度。
 
-Are these crash faults or byzantine?
+这些是崩溃故障还是拜占庭故障？
 
-In a blockchain system, bugs in the code may cause nodes whose operators are intending to be honest, to deviate from the protocol anyway.
-This is why client diversity is important.
+在区块链系统中，代码中的漏洞可能会导致那些本意诚实的节点仍然偏离协议。
+这就是为什么客户端多样性很重要。
 
-Image source: <https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg>
+图片来源：<https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg>
 
 ---
 
-## Byzantine Generals Problem
+## 拜占庭将军问题
 
 <pba-cols>
 <pba-col>
@@ -176,643 +176,464 @@ Image source: <https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/p
 
 <pba-col>
 
-- Divisions plan to attack
-- Must make coordinated attack to succeed
-- Some generals might be traitors and behave maliciously
+- 各部队计划发动攻击
+- 必须进行协调一致的攻击才能成功
+- 有些将军可能是叛徒，会采取恶意行为
 
 </pba-col>
 </pba-cols>
 
-[Cornell Lecture Slides](https://www.cs.cornell.edu/courses/cs6410/2018fa/slides/18-distributed-systems-byzantine-agreement.pdf)
+[康奈尔大学讲座幻灯片](https://www.cs.cornell.edu/courses/cs6410/2018fa/slides/18-distributed-systems-byzantine-agreement.pdf)
 
 Notes:
 
-Several divisions of the Byzantine army are camped around an enemy city.
-They plan to attack the city, but have not yet decided when to attack.
-If the attack is coordinated, they will probably be successful, but if it is uncoordinated, they will probably be defeated.
-What do our three properties mean in this scenario?
+拜占庭军队的几个部队驻扎在一座敌城周围。
+他们计划攻打这座城市，但尚未决定何时发动攻击。
+如果攻击是协调一致的，他们很可能会成功，但如果不协调，他们很可能会失败。
+在这种情况下，我们的三个属性意味着什么呢？
 
-- Termination - every honest general will eventually decide when to attack
-- Agreement - honest general will all agree to attack ta the same time
-- Integrity - the attack time will have been proposed by at least one honest general
+- 终止性 - 每个诚实的将军最终都会决定何时发动攻击
+- 一致性 - 诚实的将军都会同意在同一时间发动攻击
+- 完整性 - 攻击时间至少由一名诚实的将军提出
 
-Leslie Lamport proposed this problem in the form of a story as a typical representative of the distributed consensus problem.
+莱斯利·兰波特以一个故事的形式提出了这个问题，作为分布式共识问题的一个典型代表。
 
-This is a big moment for us, so let's stop and savor it.
-Two days ago Lauren kicked us off by talking about human coordination.
-How it can achieve long railroads and the great pyramids and sports teams and dancing, and even this academic program.
-Since then we've looked through so many layers of abstraction (contracts, smart contracts, state machines, dags) and so many technical implementation details (P2P networking, platform agnostic bytecodes, blockchain headers, merkle proofs).
-We've taken a huge class of problems - human coordination problems - and distilled them down to their absolute essence.
-Human coordinate at global scale reduced to this one cute, carefully stated problem.
+这对我们来说是一个重要的时刻，让我们停下来细细品味。
+两天前，劳伦开始了这个话题，谈到了人类的协调。
+人类的协调如何能够实现修建长长的铁路、伟大的金字塔、组建运动队、跳舞，甚至是这个学术项目。
+从那以后，我们已经研究了很多抽象层面的东西（合同、智能合约、状态机、有向无环图）以及许多技术实现细节（点对点网络、平台无关的字节码、区块链头、默克尔证明）。
+我们已经将一大类问题 - 人类协调问题 - 提炼到了它们的本质。
+全球范围内的人类协调被简化为这个可爱而又精心阐述的问题。
 
 ---v
 
-## Byzantine Generals: Solved
+## 拜占庭将军问题：已解决
 
 <img height="600px" src="./img/pbft-cover.png" />
 
-_Miguel Castro and Barbara Liskov, 1999_
+_米格尔·卡斯特罗和芭芭拉·利斯科夫，1999 年_
 
 Notes:
 
-_Image = Cover page: Practical Byzantine Fault Tolerance_
+_图片 = 封面页：实用拜占庭容错_
 
-And great news.
-The problem is solved!
-At least under some conditions.
-And also great news.
-We have a pretty good understanding of under what circumstances it is solvable.
+好消息是，这个问题已经解决了！
+至少在某些条件下是这样。
+还有一个好消息是，我们对在什么情况下可以解决这个问题有了相当好的理解。
 
-Before I can tell you exactly how and where it can be solved, we have to understand networks a little bit.
+在我确切地告诉你如何以及在何处可以解决这个问题之前，我们需要对网络有一些了解。
 
 ---
 
-# History Lesson
+# 历史课
 
 ---
 
-## Synchrony
+## 同步性
 
-A network is one of:
+网络可以分为以下几种类型：
 
-- **Synchronous** - When sent, a message is received immediately by all.
-- **Asynchronous** - When a message is sent it may be received after some delay, or not at all.
-  The sender doe not know whether it is received.
-  Messages may be received in different orders by different parties.
-- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$.
-  It may not be dropped entirely.
-  Messages may be received in different orders by different parties.
+- **同步网络** - 当消息发送时，所有接收方会立即收到。
+- **异步网络** - 当消息发送时，可能会在一段时间后收到，或者根本收不到。
+  发送方不知道消息是否被接收。
+  不同的接收方可能会以不同的顺序收到消息。
+- **部分同步网络** - 当消息发送时，可能会在不超过最大延迟时间 $T$ 后收到。
+  消息不会完全丢失。
+  不同的接收方可能会以不同的顺序收到消息。
 
-Roughly analogous to real-time (async) vs. turn-based (sync) games.
+大致类似于实时游戏（异步）和回合制游戏（同步）。
 
 ---v
 
-## Sync or Async?
+## 同步还是异步？
 
-Classify each of these:
+对以下每种通信方式进行分类：
 
 <pba-flex center>
 
-- Telephone call
-- Mail communication
-- Text message
-- Jitsi video call
-- Element chat
+- 电话通话
+- 邮件通信
+- 短信
+- Jitsi 视频通话
+- Element 聊天
 
 </pba-flex>
 
 Notes:
 
-- Telephone call is sync.
-  You say something and wait for the other party to reply
-- Mail is async.
-  You send a letter, then go do other stuff for several days
-- Jitsi video call is basically sync just like the phone call.
-- The others can be either.
-  Sometimes you text back and forth quickly and wait for replies.
-  Other times you send and come back later like mail.
+- 电话通话是同步的。
+  你说了一些话，然后等待对方回复。
+- 邮件是异步的。
+  你寄了一封信，然后可以在接下来的几天里做其他事情。
+- Jitsi 视频通话基本上和电话通话一样，是同步的。
+- 其他的可以是同步的，也可以是异步的。
+  有时候你会快速地来回发短信并等待回复。
+  其他时候，你发送消息后会过一会儿再查看，就像邮件一样。
 
 ---
 
-## Determinism
+## 确定性
 
-A system is one of:
+系统可以分为以下几种类型：
 
-- **Deterministic** - The same inputs give the same outputs every time.
-- **Probabilistic** - The same inputs may not give the same outputs.<br />
-  $~~~~~~~~~~~~~~~~~~~~~~~~~$ Requires a source of entropy. eg coin flipping. <!-- $~~~$ is a hack to put in white space chars -->
+- **确定性系统** - 相同的输入每次都会产生相同的输出。
+- **概率性系统** - 相同的输入可能不会产生相同的输出。<br />
+  $~~~~~~~~~~~~~~~~~~~~~~~~~$ 需要一个熵源。例如抛硬币。 <!-- $~~~$ 是一种插入空白字符的技巧 -->
 
 ---
 
-## FLP Impossibility
+## FLP 不可能性
 
 <img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png" />
 
-[Excellent Podcast with Ethan Buchman](https://open.spotify.com/episode/7z7qnOrLTVGa5T0s0MquJd)
+[与伊桑·布赫曼的精彩播客](https://open.spotify.com/episode/7z7qnOrLTVGa5T0s0MquJd)
 
 Notes:
 
-Once it was shown that deterministic consensus is impossible in an async network, the field split into two major parts.
-Either you:
+一旦证明了在异步网络中确定性共识是不可能的，这个领域就分成了两个主要部分。
+你要么：
 
-- Assume the network is (at least partially) synchronous
-- Introduce non-determinism
+- 假设网络是（至少部分）同步的
+- 引入非确定性
 
-One interesting thing about Nakamoto pow consensus is that it does _both_.
+中本聪的工作量证明共识机制有一个有趣的地方，那就是它两者都做到了。
 
-- Nondeterminism because you don't know who will solve the pow first
-- Partial synchrony because it only works if the time to download and execute the block is much less than the time to solve the PoW
+- 非确定性，因为你不知道谁会首先解决工作量证明问题
+- 部分同步性，因为只有当下载和执行区块的时间远小于解决工作量证明问题的时间时，它才有效。
 
 ---
 
-## Ongoing Consensus
+## 持续共识
 
-We want to continue agreeing on<br />an every-growing history of events
+我们希望持续就不断增长的事件历史达成共识
 
 Notes:
 
-Blockchains are intended to keep processing and finalizing transactions forever.
-This is more like deciding where to go to dinner every night over and over.
+区块链旨在永远处理和最终确定交易。
+这更像是每天晚上都要反复决定去哪里吃饭。
 
 ---v
 
-## Desireable Properties
+## 期望属性
 
 <pba-flex center>
 
-- **Safety** aka **Finality** - Nothing bad will happen
-- **Liveness** - Something good will eventually happen
+- **安全性** 又名 **终局性** - 不会发生坏事
+- **活性** - 好事最终会发生
 
 </pba-flex>
 
 Notes:
 
-Traditional literature typically uses the term safety.
-Blockchain folks typically talk about finality.
-They basically mean the same thing.
+传统文献通常使用“安全性”这个术语。
+区块链从业者通常谈论“终局性”。
+它们基本上意思相同。
 
-Finality can be proved to entities that are not involved in consensus.
+终局性可以向不参与共识的实体证明。
 
-We spoke about liveness previously in the authoring system.
-There it means that more blocks will be authored, more blockspace will be created and put up for sale.
-Here, in finality, it means that more blocks will be finalized.
-Of course liveness in the finality depends on liveness in the authoring.
+我们之前在创作系统中提到过活性。
+在那里，它意味着会有更多的区块被创作出来，会有更多的区块空间被创建并出售。
+在这里，在终局性的语境中，它意味着会有更多的区块被最终确定。
+当然，终局性中的活性取决于创作中的活性。
 
-These two decisions can be entirely orthogonal to one another, or wrapped up together.
+这两个决策可以完全相互独立，也可以结合在一起。
 
 ---v
 
-## Liveness vs Termination
+## 活性与终止性
 
-Earlier I described Termination as desireable,<br />now I'm saying Liveness is desireable.
+早些时候，我描述了终止性是理想的属性，现在我又说活性是理想的属性。
 
-Are these at odds with each other?
+这两者相互矛盾吗？
 
 Notes:
 
-Termination guarantees that, for a given decision, each honest participant will eventually decide something.
-This concept is relevant when there is a single decision to be made.
-In the blockchain context, it guarantees that we will eventually know which block is final at height n.
+终止性保证了，对于给定的决策，每个诚实的参与者最终都会做出某个决定。
+这个概念在只需要做出一个决策的情况下是相关的。
+在区块链的语境中，它保证了我们最终会知道在高度为 $n$ 时哪个区块是最终的。
 
-Liveness guarantees that a system that is intended to continue making progress, will indeed eventually make progress.
-In the context of the blockchain, liveness means that once we've decided what block is final at height n, we will eventually go on to decide what block is final at height n + 1.
+活性保证了一个旨在持续取得进展的系统确实最终会取得进展。
+在区块链的语境中，活性意味着一旦我们确定了高度为 $n$ 的最终区块，我们最终会继续确定高度为 $n + 1$ 的最终区块。
 
 ---
 
-## Finality in Nakamoto Consensus
+## 中本聪共识中的终局性
 
 <pba-flex center>
 
-- Longest chain rule
-- Longest chain is "best"... for now
-- Someone could always start mining a chain<br />and,with low but non-zero probability,<br /> end up with it longer.
-- There could _already_ be a longer chain<br />that you just haven't heard of.
+- 最长链规则
+- 最长链目前是“最好的”...
+- 有人可能总是开始挖掘一条链，并且以很低但非零的概率，最终使这条链变得更长。
+- 可能已经存在一条更长的链，只是你还没有听说过。
 
 <pba-flex>
 
-The finality is only probabilistic.<br />
-Nakamoto consensus in only safe in a synchronous network.
+终局性只是概率性的。<br />
+中本聪共识只在同步网络中是安全的。
 
 Notes:
 
-This is to say that Nakamoto consensus is NOT safe on the real asynchronous internet.
-In practice, as long as
-blocks can be downloaded and executed much more quickly than the target block time, it is usually good enough.
+也就是说，中本聪共识在真正的异步互联网上是不安全的。
+在实践中，只要区块能够比目标区块时间更快地被下载和执行，通常就足够了。
 
-- Longest could also mean most accumulated work
+- 最长也可以意味着积累的工作量最多
 
 ---
 
-## Deterministic Finality
+## 确定性终局性
 
 <pba-flex center>
 
-- Based on traditional methods (BFT)
-- Requires an honest-majority finite authority set
+- 基于传统方法（拜占庭容错）
+- 需要一个诚实多数的有限权威集
 
 </pba-flex>
 
-<!-- two flexes needed so the next bullet points don't show too early, margin hack... TODO -->
+<!-- 需要两个 flex 布局，这样下一个要点不会显示得太早，使用 margin 技巧... 待办事项 -->
 
 <pba-flex center style="margin-left: 48px">
 
-- Consensus protocol that assumes honest majority
-- Economic game that keeps them honest
+- 假设诚实多数的共识协议
+- 让他们保持诚实的经济博弈
 
 </pba-flex>
 <!-- .element: class="fragment"-->
 
 Notes:
 
-If you want deterministic finality, it basically means employing BFT agreement protocols that we talked about in the history lesson.
-This means we need a finite authority set with an honest majority.
-And that means we need incentives to keep them honest.
+如果你想要确定性终局性，基本上意味着采用我们在历史课中讨论过的拜占庭容错协议。
+这意味着我们需要一个有诚实多数的有限权威集。
+这也意味着我们需要激励措施来让他们保持诚实。
 
 ---v
 
-## Incentives: Game Theory!
-
-Abstractly: You behave honestly<br />when the utility of doing so exceeds the cost.
-
-Incentive designers may potentially:
-
+## 激励机制：博弈论！
+从抽象层面来讲：当诚实行为带来的效用超过成本时，人们就会选择诚实行事 。
+激励机制设计者可能会采取以下措施：
 <pba-flex center>
-
-- Reward honest behavior
-- Punish (aka slash) dishonest behavior
-
+- 奖励诚实行为
+- 惩罚（也叫罚没）不诚实行为
 </pba-flex>
-
 Notes:
-
-Many systems use both of these, but doing so is not strictly necessary.
-Even without slashes, the opportunity cost of staking and the missed rewards from authoring invalid blocks may be sufficient.
-
-It is often the case that blockchain systems give rewards in the authorship and punishments in the finality.
-There is no fundamental reason for this; it is just a little more straightforward to implement.
-
+许多系统同时采用这两种方式，但并非必须如此。即使没有罚没机制，质押的机会成本以及因创建无效区块而损失的奖励可能就足以起到约束作用。
+区块链系统通常在区块创作环节给予奖励，在终局性确认环节实施惩罚。这样做并没有根本原因，只是实施起来相对简单直接。
 ---v
-
-## What is potentially punishable?
-
+## 哪些行为可能会被惩罚？
 <pba-flex center>
-
-- Authoring when you aren't supposed to
-- Failing to author when you are supposed to
-- Casting finality votes for conflicting blocks
-- Casting a finality vote for a block (or chain)<br /> that includes an invalid state transition.
-
-> How severe are each of these offenses?<br />
-> Do they all warrant a slash?<br />
-> A full slash?
-
+- 在不应该创建区块的时候创建区块
+- 在应该创建区块的时候未能创建
+- 对相互冲突的区块投出终局性投票
+- 对包含无效状态转换的区块（或链）投出终局性投票
+> 这些违规行为的严重程度如何？
+> 它们都值得罚没吗？
+> 全额罚没？
 Notes:
-
-PoW has inherent punishment through wasted energy.
-BFT based system's don't.
-
-Instead, aspiring participants will typically lock up a security deposit which can be slashed in part or in whole.
-
+工作量证明（PoW）通过浪费能源的方式实现了内在惩罚。基于拜占庭容错（BFT）的系统则没有这种内在惩罚。
+相反，有意参与的节点通常会锁定一笔保证金，这笔保证金可能会被部分或全部罚没。
 ---v
-
-### Concrete Punishment Example
-
-Let's say a slash is 100 units, and the reporter gets 10%.<br />I plan to attack.
-
-If my attack is successful,<br />I expect to gain roughly 200 units worth of utility.
-
-I ask another authority to cooperate with me:<br />"I'll pay you 20 units to _not_ rat me out for my attack".
-
-> How would you respond?
-
+### 具体惩罚示例
+假设罚没金额为100单位，举报者可获得其中的10%。我计划发动攻击。
+如果我的攻击成功，我预计能获得大约200单位的效用。
+我请求另一位权威节点与我合作，说：“我给你20单位，你别举报我的攻击行为 。”
+> 你会如何回应？
 Notes:
-
-"I don't believe you can carry out the attack because _someone else_ will report you and take the 10 units, leaving me with 0."
-
+“我不相信你能成功发动攻击，因为其他人会举报你并拿走那10单位，我就什么都得不到了 。”
 ---
-
-## Case Study: Tendermint
-
+## 案例研究：Tendermint
 <pba-flex center>
-
-- Authorship is like Aura - simple round robin
-- Naive but **simple** BFT implementation
-- If the block has enough votes<br />by the end of the slot, it is finalized.<br />
-  Otherwise, it is rejected via timeout.
-- "Instant finality"
-- Forkless - Forks are disallowed<br />because blocks can only be authored<br />on finalized parents.
-
+- 区块创作方式类似于Aura——简单的轮询机制
+- 简单但基础的拜占庭容错（BFT）实现方式
+- 如果在时隙结束时区块获得足够的票数，该区块就会被最终确定。否则，因超时被拒绝。
+- “即时终局性”
+- 无分叉——不允许分叉，因为区块只能基于已最终确定的父区块进行创作。
 </pba-flex>
-
 Notes:
-
-Tendermint assumes a partially synchronous network, like all the BFT based systems - That is to say that messages may not arrive immediately, but will arrive within a finite time bound.
-In practice this means it is slot-based just like so many of the authoring schemes.
-
-Tendermint is often touted as "instant finality".
-It is instant in the sense that finality is tied to authorship.
-In practice this means that authorship, which is inherently O(n), is slowed down to stay in sync with finality which is O(n^2).
-They sacrifice liveness to guarantee absolute safety at all times.
-
+Tendermint和所有基于BFT的系统一样，假设网络是部分同步的——也就是说，消息可能不会立即到达，但会在有限的时间内到达。在实践中，这意味着它和许多区块创作方案一样，是基于时隙的。
+Tendermint常被称为具有“即时终局性”。从终局性与区块创作紧密相关的角度来说，它是即时的。在实践中，这意味着原本时间复杂度为O(n)的区块创作过程，为了与时间复杂度为O(n^2)的终局性确认过程保持同步而减慢了速度。他们牺牲了活性以确保任何时候都有绝对的安全性。
 ---v
-
-## Tendermint Deep Dive
-
+## Tendermint深度剖析
 <pba-flex center>
 <ol>
-<li class="fragment">Wait for a block (or author one if it is your turn)</li>
-<li class="fragment">Prevote
+<li class="fragment">等待一个区块（如果轮到自己，则创建一个区块）</li>
+<li class="fragment">预投票
   <ul>
-    <li>If the block is valid, Prevote for it.</li>
-    <li>If the block is invalid, Prevote `Nil`</li>
+    <li>如果区块有效，则对其预投票。</li>
+    <li>如果区块无效，则预投票为“Nil”。</li>
   </ul>
 </li>
-<li class="fragment">Precommit
+<li class="fragment">预提交
   <ul>
-    <li>Wait for 2/3 prevotes then Precommit</li>
-    <li>If you don't get 2/3 prevotes, Precommit `Nil`</li>
+    <li>等待2/3的预投票，然后进行预提交。</li>
+    <li>如果未收到2/3的预投票，则预提交为“Nil”。</li>
   </ul>
 </li>
-<li class="fragment">Complete
+<li class="fragment">完成
   <ul>
-  <li>Wait for 2/3 Precommits them finalize</li>
-  <li>If you don't get it, throw the block away</li>
+  <li>等待2/3的预提交，然后将区块最终确定。</li>
+  <li>如果未收到，则丢弃该区块。</li>
   </ul>
 </li>
 </ol>
-
-[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465) <!-- .element: class="fragment" -->
-
+[非常有用的博客文章](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465) <!-- .element: class="fragment" -->
 </pba-flex>
-
 ---
-
-## Hybrid Consensus
-
+## 混合共识
 <pba-cols>
 <pba-col>
-
 <img rounded style="width: 900px;" src="./img/grandpa-abstract.png" />
-
 </pba-col>
 <pba-col>
 <pba-flex center style="font-size: 0.7em; margin-left:-50px">
-
-- Separates block production from finality.
-- Block production stays live even if finality lags.
-- Allows lower overhead in the finality layer.
-- Used in Substrate.
-
+- 将区块生产与终局性确认分离。
+- 即使终局性确认滞后，区块生产仍能继续进行。
+- 降低终局性确认层的开销。
+- 在Substrate中使用。
 </pba-flex>
 </pba-col>
 </pba-cols>
-
 ---v
-
-## What About Re-Orgs
-
+## 区块链重组怎么办？
 <img style="width: 500px; margin-right: 150px;" src="./img/reorgs-1.svg" />
 <br />
 <img style="width: 650px;" src="./img/reorgs-2.svg" />
-
 Notes:
-
-Previously we talked about how a node's view of the best block can change, and that is called a re-org.
-
+之前我们讨论过节点对最佳区块的看法如何改变，这被称为区块链重组。
 ---v
-
-## Modified Fork Choice Rule
-
+## 修改后的分叉选择规则
 <img style="width: 500px; margin-right: 150px;" src="./img/reorgs-finality-1.svg" />
 <br />
 <img style="width: 650px" src="./img/reorgs-finality-2.svg" />
-
-Only extend best finalized chain
+只在最佳的已最终确定链上进行扩展
 Notes:
-
-Once you have a finality gadget installed, you have to make sure you only ever author on top of finalized blocks.
-Even if another chain is longer.
-
+一旦安装了终局性机制，你必须确保只在已最终确定的区块之上进行新区块的创作。即使另一条链更长也应如此。
 ---
-
-## Case Study: Grandpa
-
+## 案例研究：Grandpa
 <pba-flex center>
-
-- Deterministic finality _only_
-- Requires an external block authoring scheme<br /> with its own liveness proof.
-- Kind of like Tendermint but better.
-- Finalizes chains, not blocks.
-
+- 仅实现确定性终局性
+- 需要一个具有自身活性证明的外部区块创作方案。
+- 有点像Tendermint，但更优。
+- 对链进行最终确定，而非对单个区块。
 </pba-flex>
-
 ---v
-
-## Vote on Chains, not Blocks
-
+## 对链投票，而非对区块投票
 <img style="width: 1000px" src="./img/validators-vote-on-chain.png"/>
-
 Notes:
-
-BFT finality with $n$ authorities is in $O(n^2)$.
-Tendermint does this at **every block**.
-This bounds the size of the authority set.
-
-With separated, we treat each vote as a vote not only for one block,but also for each ancestor block.
-This significantly reduces the number of total messages sent.
-Allows the chain to stay live even when many validators are offline
-
+n个验证者的BFT终局性确认的时间复杂度为O(n^2)。Tendermint在每个区块上都执行此操作，这限制了验证者集合的规模。
+在Grandpa中，我们将每次投票不仅视为对一个区块的投票，还视为对其每个祖先区块的投票。这大大减少了发送的消息总数，即使许多验证者离线，链也能保持运行。
 ---
-
-## A GRANDPA Round
-
-Each validator **broadcasts** a **prevote** for the **highest block** that it thinks **should** be **finalized**
-
-- For **honest** validators, this block **must include** the chain that was previously finalized
-- This **new chain** could be **several blocks** longer than the **last finalized** chain
-
-A **validator** that is designated as the **primary** broadcasts the highest block that it thinks could be final from the previous round
-
+## GRANDPA一轮流程
+每个验证者对其认为**应该**被**最终确定**的**最高区块**进行**预投票**广播：
+- 对于**诚实**的验证者，这个区块**必须包含**之前已最终确定的链。
+- 这条**新链**可能比**上一条最终确定的链**长**几个区块**。
+被指定为**主验证者**的验证者广播其认为在上一轮中可能最终确定的最高区块。
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-1.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-2.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
-Each validator **computes** the **highest block** that can be **finalized based** on the set of **prevotes**
-
-- i.e. we find the **common ancestor** of all votes that has **support** from **more** than $\frac{2}{3}N + 1$ validators
-- We refer to this block as the **prevote GHOST**
-
+## GRANDPA一轮流程
+每个验证者根据**预投票**集合**计算**可以**最终确定**的**最高区块**：
+- 即，我们找到所有投票的**共同祖先**，该祖先获得超过$\frac{2}{3}N + 1$个验证者的**支持**。
+- 我们将这个区块称为**预投票GHOST**。
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-3.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
-We define the round **estimate** as the **highest ancestor** of the **prevote GHOST** for which it is **still possible** to **precommit**
-
-- i.e. when **no precommit** votes have been **sent** out yet, then:
-
-`estimate == prevote GHOST`
-
+## GRANDPA一轮流程
+我们将本轮的**估计值**定义为**预投票GHOST**的**最高祖先**，且对该祖先进行**预提交**仍**有可能**。
+- 即，当还没有**预提交**投票被**发出**时，则：`estimate == prevote GHOST`
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-4.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
-If the **estimate** extends the **last finalized** chain, then each validator will cast a **precommit** for that chain.
-
-Each validator **waits** to receive **enough precommits** to be able to finalize
-
-- We again find the **common ancestor** of the **estimate** which has **threshold precommits**
-- We declare that **block** as **finalized**
-
+## GRANDPA一轮流程
+如果**估计值**扩展了**上一条最终确定的链**，那么每个验证者将对该链进行**预提交**。
+每个验证者**等待**收到**足够的预提交**以完成最终确定：
+- 我们再次找到**估计值**的**共同祖先**，该祖先获得达到**阈值数量**的预提交。
+- 我们将该**区块**宣布为**最终确定**。
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-5.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-6.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
-The **round** is deemed **completable**:
-
-- if the **estimate** is **lower** than the **prevote GHOST**
-- or if it's **impossible** to have a **supermajority** on any **block higher** than the current **estimate**
-
-Validators **start** a **new round** after it becomes **completable**.
-
+## GRANDPA一轮流程
+当满足以下条件时，本轮被视为**可完成**：
+- **估计值**低于**预投票GHOST**
+- 或者在高于当前**估计值**的任何**区块**上都**不可能**获得**绝大多数**支持
+验证者在本轮**可完成**后**开始**新的一轮。
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-6.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-7.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round
-
+## GRANDPA一轮流程
 <img style="width: 400px" src="./img/grandpa-round-8.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round (Alt)
-
+## GRANDPA一轮流程（另一种展示）
 <img style="width: 400px" src="./img/grandpa-round-6.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round (Alt)
-
+## GRANDPA一轮流程（另一种展示）
 <img style="width: 400px" src="./img/grandpa-round-7-alternative.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round (Alt)
-
+## GRANDPA一轮流程（另一种展示）
 <img style="width: 400px" src="./img/grandpa-round-8-alternative.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## A GRANDPA Round (Alt)
-
+## GRANDPA一轮流程（另一种展示）
 <img style="width: 400px" src="./img/grandpa-round-9-alternative.png"/>
-
 Notes:
-
-- 7 = # Validators
-- 5 = # Threshold
-
+- 7 = 验证者数量
+- 5 = 阈值数量
 ---
-
-## Summary
-
+## 总结
 <pba-flex center>
-
-- Networks can be {Synchronous, Asynchronous}
-- Consensus systems can be {Deterministic, Probabilistic}
-- Consensus systems can be {Open participation, Finite participation}
-- There is always an assumption that at least {1/2, 2/3} participants are honest
-- In decentralized systems, we use Economics and Game Theory<br />to incentivize honest execution of the consensus protocol
-
+- 网络可以分为{同步，异步}
+- 共识系统可以分为{确定性，概率性}
+- 共识系统可以分为{开放参与，有限参与}
+- 总是假设至少{1/2，2/3}的参与者是诚实的
+- 在去中心化系统中，我们使用经济学和博弈论来激励参与者诚实地执行共识协议
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Game Time
-
-> I want to play a game...<br />a board game!
+# 游戏时间
+> 我想玩个游戏...<br />一个棋盘游戏！

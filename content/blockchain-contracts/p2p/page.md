@@ -1,4 +1,4 @@
-# Peer-to-Peer (P2P) Networking
+# 点对点网络 (P2P)
 
 <!-- markdown-link-check-disable -->
 <center>

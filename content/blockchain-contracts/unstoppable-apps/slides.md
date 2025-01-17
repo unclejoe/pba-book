@@ -4,82 +4,82 @@ description: Unstoppable Applications in web3
 duration: 1 hour
 ---
 
-# Unstoppable Applications
+# 不停机的应用程序
 
 Notes:
 
-Much like tokenomic design, that is a large component in unstoppable apps that incorporate cryptocurrency or other motivating factors, this lesson is far far too short to give you all the tools and techniques to make a robust DApp design.
+很像代币经济学设计，这是融入加密货币或其他激励因素的不停机应用程序的一个重要组成部分，这节课的时间远远不够，无法为你提供所有工具和技术来设计一个强大的去中心化应用程序（DApp）。
 
-Instead we strive to highlight the problem space we face and some classes of solutions to them.
+相反，我们致力于突出我们所面临的问题领域以及一些解决方案。
 
 ---
 
-## Motivation
+## 动机
 
-So far, we have discussed state machines and consensus... in _isolation_.
+到目前为止，我们已经孤立地讨论了状态机和共识……
 
-Does the _contexts in which they operate within_ matter?
+它们运行的上下文重要吗？
 
 Notes:
 
-- So far _mostly_ on simplified, idealized systems.
-  - "Black boxes" of cryptography
-  - Rational actors and assumed complete models of behavior in economics
-  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way...
-    We will talk about the Oracle Problem.
-- In _practice_ there are far more ["unknown unknowns"](#🙈-unknown-unknowns) and "black swan" behavior.
-  More to come on that in this lesson.
+- 到目前为止，大多是关于简化的、理想化的系统。
+  - 加密学的“黑匣子”
+  - 理性行为者以及经济学中假定的完整行为模型
+  - 区块链在某种程度上是一个“[孤立系统](https://en.wikipedia.org/wiki/Isolated_system)”——外部系统无法以同样的方式进行推理……
+    我们将讨论预言机问题。
+- 在实践中，有更多的“[未知的未知](https://en.wikipedia.org/wiki/Black_swan_theory)”和“黑天鹅”行为。
+  本节课将对此进行更多讨论。
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Discussion
+## 讨论
 
-> What properties of a system make it "stoppable"?
+> 系统的哪些特性使其“可停止”？
 
 Notes:
 
-- Web2 context: central providers & authorities, ...
-- Web3 context: decentralized, ...
-- What properties of a system make it "stoppable"?
+- Web2 背景：中心化的提供商和权威机构，……
+- Web3 背景：去中心化，……
+- 系统的哪些特性使其“可停止”？
 
 ---
 
-### Unstoppable Apps Properties
+### 不停机的应用程序的特性
 
 <pba-flex center>
 
-- Anitfragile
-- Trustless\*
-- Censorship-less\*
-- Accessible\*
-- ...perhaps more?
+- 反脆弱性
+- 无需信任*
+- 无审查*
+- 可访问性*
+- ……也许还有更多？
 
 </pba-flex>
 
 Notes:
 
-The "\*" indicates the web3 context for defining properties, not generally.
-Not all of these can apply, nor is is possible all simultaneously apply.
-We need to craft the system properties based on what we must achieve.
-In reality we strive for Absolute Unstoppability, but likely cannot grantee it in _every possible scenario_.
+“*”表示在定义特性时的 Web3 背景，并非普遍适用。
+并非所有这些特性都适用，也不可能同时全部适用。
+我们需要根据我们必须实现的目标来设计系统特性。
+实际上，我们追求绝对的不停机性，但在每一种可能的情况下可能都无法保证。
 
 ---
 
-## Anitfragile
+## 反脆弱性
 
 <pba-cols>
 <pba-col>
 <div style="font-size:smaller">
 
-> Some things benefit from shocks; they thrive and grow when exposed to volatility, randomness, disorder, and stressors and love adventure, risk, and uncertainty.
-> Yet, in spite of the ubiquity of the phenomenon, there is no word for the exact opposite of fragile.
-> Let us call it antifragile.
-> Antifragility is beyond resilience or robustness.
-> The resilient resists shocks and stays the same; the antifragile gets better.
+> 有些事物从冲击中受益；当暴露于波动性、随机性、无序性和压力源时，它们会茁壮成长，并且热爱冒险、风险和不确定性。
+> 然而，尽管这种现象无处不在，但却没有一个词来准确描述脆弱的反义词。
+> 让我们称之为反脆弱性。
+> 反脆弱性超越了弹性或稳健性。
+> 有弹性的事物能够抵御冲击并保持不变；而反脆弱的事物则会变得更好。
 >
-> -- [Antifragile](https://en.wikipedia.org/wiki/Antifragile_%28book%29) --
+> ——《反脆弱》（[Antifragile](https://en.wikipedia.org/wiki/Antifragile_%28book%29)）
 
 </div>
 
@@ -91,17 +91,17 @@ In reality we strive for Absolute Unstoppability, but likely cannot grantee it i
 
 Notes:
 
-- Read Antifragile quote, recommend book recommended, see the links throughout slides for more after class.
-- Hydra fable & lore: <https://en.wikipedia.org/wiki/Lernaean_Hydra> - even though can be almost completely destroyed, it is _resilient_ and recovers.
-  Absolutely Unstoppable doesn't mean it cannot be damaged or even paused temporarily, it means it cannot cease to exist and will eventually recover, and ideally come back stronger in doing so.
+- 阅读《反脆弱》中的引文，推荐这本书，课后可查看幻灯片中的链接了解更多信息。
+- 九头蛇的寓言和传说：<https://en.wikipedia.org/wiki/Lernaean_Hydra>——尽管几乎可以被完全摧毁，但它具有韧性并能够恢复。
+  绝对的不停机并不意味着它不会受到损害或暂时暂停，而是意味着它不会停止存在，并且最终会恢复，理想情况下会因此变得更强大。
 
 ---
 
-## An N-lemma
+## 一个 N 引理
 
-Hypothesis: a _absolutely_ Unstoppable App cannot exist.
+假设：绝对不停机的应用程序不可能存在。
 
-We must make trade-offs out of all N properties<br />that a _absolutely_ Unstoppable App would possess.
+我们必须在绝对不停机的应用程序所具备的所有 N 个特性中进行权衡。
 
 <pba-cols>
 <pba-col>
@@ -114,58 +114,57 @@ We must make trade-offs out of all N properties<br />that a _absolutely_ Unstopp
 
 Notes:
 
-As with crypto, we can have astronomically good odds...
-But they are not perfect.
-We want the most robust system possible, given the _environment and context_ the consensus system lives in.
+就像加密领域一样，我们可能有极高的成功率……
+但这并不是完美的。
+考虑到共识系统所处的环境和背景，我们希望构建尽可能强大的系统。
 
-More relevant trilemma:
+更相关的三难困境：
 
-- [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
-- [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
-- More likely!
+- [可扩展性](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
+- [佐科三角](https://en.wikipedia.org/wiki/Zooko's_triangle)（网络标识）
+- 更有可能！
 
 ---
 
-## Web3 Tech Stack
+## Web3 技术栈
 
 <img style="width: 1200px" src="./img/3.4-web3-stack.png" />
 
 Notes:
 
-This diagram is a bit dated with advancements in the field, but a good approx.
-representation.
+随着该领域的发展，这个图表有点过时了，但它是一个不错的近似表示。
 
-Observation and clarification: DApps canonically refer to smart contract applications.
-These exist _within the context_ of consensus systems that themselves inherit properties of unstoppability from.
-The academy is more focused on _consensus system engineering_ - we reason about blockchains themselves - rather than "DApp"s that _use_ those as platforms to operate in or on.
-The Smart contracts lessons _may_ include detains on unstoppable dapps design considerations.
+观察和澄清：DApp 通常指智能合约应用程序。
+这些应用程序存在于共识系统的背景中，而共识系统本身继承了不停机性的特性。
+学术界更关注共识系统工程——我们对区块链本身进行推理——而不是将这些区块链作为平台来运行的“DApp”。
+智能合约课程可能会包含关于不停机的 DApp 设计考虑因素的详细信息。
 
-<!-- FIXME TODO: update this graphic, rather stale (Joe mentioned in Cambridge) -->
-<!-- FIXME TODO: clarify based on smart contract content - does it inform on system design considerations for unstoppable dapps? -->
+<!-- FIXME TODO: 更新此图形，已经过时（乔在剑桥提到过） -->
+<!-- FIXME TODO: 根据智能合约内容进行澄清 - 它是否为不停机的 DApp 的系统设计考虑因素提供了信息？ -->
 
 ---
 
-## Much More Than Blockchain Architecture...
+## 远不止区块链架构……
 
 <pba-cols>
 <pba-col>
 
-Blockchains only form one part of the stack.
+区块链只是技术栈的一部分。
 
-Web3 applications must prevent attacks at all layers.
+Web3 应用程序必须在所有层防止攻击。
 
 </pba-col>
 <pba-col>
 
 <pba-flex center>
 
-- Networking
-- Consensus
-- Node access
-- Validator power
-- Inter-consensus trust
-- _Human factors_
-- _Extrinsic factors_
+- 网络
+- 共识
+- 节点访问
+- 验证者权力
+- 共识间信任
+- 人为因素
+- 外部因素
 
 </pba-flex>
 </pba-col>
@@ -173,46 +172,45 @@ Web3 applications must prevent attacks at all layers.
 
 Notes:
 
-These are for discussion today, but there are _many more_ thank those listed here!
+这些是今天要讨论的内容，但还有很多其他内容未列出！
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Human Level
+# 人的层面
 
 ---
 
-## Attacking Web3
+## 攻击 Web3
 
 <img rounded style="width: 1000px" src="./img/3.4-xkcd-security.png" />
 
 Notes:
 
-Key point: your "perfect" system in is likely weak to things outside of the "rules"!
-especially
+关键点：你“完美”的系统可能对“规则”之外的事物很脆弱！尤其是
 
-Image Source: <https://xkcd.com/538/>
+图片来源：<https://xkcd.com/538/>
 
 ---v
 
-## Web3 Criticisms
+## Web3 的批评
 
 <pba-cols>
 <pba-col>
 
-There are [valid criticisms](https://moxie.org/2022/01/07/web3-first-impressions.html) of how many Web3 apps operate today.
+对于如今许多 Web3 应用程序的运作方式，存在[合理的批评](https://moxie.org/2022/01/07/web3-first-impressions.html)。
 
 </pba-col>
 <pba-col>
 
 <pba-flex center>
 
-- Humans are cheap & lazy...<br />
-  No individuals run servers.
-- RPC node providers
-- A _protocol_ improves<br />slowly vs. a platform.
-- False marketing,<br />frauds, & scams!
+- 人是廉价且懒惰的……
+  没有个人运行服务器。
+- RPC 节点提供商
+- 协议的改进速度比平台慢。
+- 虚假营销、欺诈和骗局！
 
 </pba-flex>
 </pba-col>
@@ -220,80 +218,80 @@ There are [valid criticisms](https://moxie.org/2022/01/07/web3-first-impressions
 
 Notes:
 
-<https://moxie.org/2022/01/07/web3-first-impressions.html> great critique on the state of the space, but founder of [Signal messenger](https://signal.org).
+<https://moxie.org/2022/01/07/web3-first-impressions.html> 对该领域的现状进行了精彩的批评，其作者是 [Signal 信使](https://signal.org) 的创始人。
 
-Not all hope is lost!
-This is valid mostly in the present, we will discuss these and what we're building to realize a better stack.
+并非毫无希望！
+这些批评大多在当下是合理的，我们将讨论这些问题以及我们正在构建的东西，以实现一个更好的技术栈。
 
-<!-- TODO FIXME: more slides on this section! -->
+<!-- TODO FIXME: 本节需要更多幻灯片！ -->
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Systems Level
+# 系统层面
 
 ---v
 
-## Prove it!
+## 证明它！
 
-We use the word "proof" a lot...<br />it means many things in [different contexts](https://en.wikipedia.org/wiki/Provable):
+我们经常使用“证明”这个词……它在[不同的语境](https://en.wikipedia.org/wiki/Provable)中有很多含义：
 
 <pba-flex center>
 
-- Math → **Provable Correct** (algo)
-- Consensus → Proof of X (security)
-- Crypto → \[ZK | VRF | Validity | ... \] Proofs
+- 数学 → **可证明正确**（算法）
+- 共识 → 某种证明（安全性）
+- 加密 → [零知识 | 可验证随机函数 | 有效性 | ……] 证明
 
 </pba-flex>
 
 Notes:
 
-The one so far not covered is Provable Correctness - where we can use maths to _prove_ that our logic cannot do unexpected behavior.
-An interesting example is [Cardano's design value proposition](https://docs.cardano.org/explore-cardano/cardano-design-rationale/) using haskell and provably correct most parts of their platform.
+到目前为止还未涉及的一个方面是可证明正确性——我们可以使用数学来证明我们的逻辑不会出现意外行为。
+一个有趣的例子是 [Cardano 的设计价值主张](https://docs.cardano.org/explore-cardano/cardano-design-rationale/)，它使用 Haskell 语言并证明了其平台的大部分是正确的。
 
-> We have a lesson and exercise on formal verification methods latter on - this is how we can approach Provable Correctness in the context of Rust and thus Substrate.
+> 我们稍后有关于形式验证方法的课程和练习——这就是我们在 Rust 以及 Substrate 语境中实现可证明正确性的方法。
 
-BUT this property assumes a complete system model!
-Nuke proposes that when considering factors outside the consensus system, there cannot be a rigorous proof of correctness as we cannot model the universe.
+但这个属性假设了一个完整的系统模型！
+Nuke 提出，当考虑共识系统之外的因素时，不可能有严格的正确性证明，因为我们无法对整个宇宙进行建模。
 
 ---v
 
-## 🔮 Oracle Problem
+## 🔮 预言机问题
 
-An [oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) provides eternal data to a consensus system.<br />(i.e. a partial state of an external chain)
+[预言机](https://en.wikipedia.org/wiki/Category:Computation_oracles) 为共识系统提供外部数据。（即外部链的部分状态）
 
-The [oracle problem](https://chain.link/education-hub/oracle-problem) relates to the _trust_ in the oracle.
+[预言机问题](https://chain.link/education-hub/oracle-problem) 与对预言机的信任有关。
 
 Notes:
 
-- Example: Random Oracle, NOT like VRF we saw in the crypto module that can be in the consensus system.
-- Oracle needed for _input_ from anything that lives outside of the boundary of the consensus system.
-  - Everything in a chain is self-referential.
-    Applications in a consensus system may want to _try_ and reason about something outside itself.
-- Inclusive of bridges
+- 示例：随机预言机，与我们在加密模块中看到的可验证随机函数（VRF）不同，VRF 可以存在于共识系统中。
+- 对于来自共识系统边界之外的任何输入，都需要预言机。
+  - 链中的所有内容都是自引用的。
+    共识系统中的应用程序可能想要尝试对自身之外的事物进行推理。
+- 包括桥接
 
 ---v
 
-## 🦢 Black Swans
+## 🦢 黑天鹅事件
 
 <pba-flex center>
 
-- known bounds of operation</br> _assumed_ impossible
-- death spirals
+- 已知的运行范围 _被认为_ 不可能发生的事情
+- 死亡螺旋
 
 </pba-flex>
 
 Notes:
 
-Explain example of luna or other system collapse.
+解释 Luna 或其他系统崩溃的例子。
 
-- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
-- [Wiki Black Swan Theory](https://en.wikipedia.org/wiki/Black_swan_theory)
+- 📔《黑天鹅：高度不可能事件的影响》（[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)）
+- [维基百科黑天鹅理论](https://en.wikipedia.org/wiki/Black_swan_theory)
 
 ---v
 
-## 🤯 Complexity
+## 🤯 复杂性
 
 <pba-cols>
 <pba-col>
@@ -303,25 +301,25 @@ Explain example of luna or other system collapse.
 </pba-col>
 <pba-col>
 
-- Illustrating how to map the intricacies of _coupled, complicated, interactions of systems_.
-- \* You are not expected to understand this plot 😅
+- 展示如何映射系统之间复杂的耦合和相互作用。
+- * 你不需要理解这个图 😅
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- Great talk by the author: <https://www.youtube.com/watch?v=S3REdLZ8Xis> reference talk by book author.
+- 作者的精彩演讲：<https://www.youtube.com/watch?v=S3REdLZ8Xis> 参考书籍作者的演讲。
 
-Example: irrational actors can be represented in a very simple model as a completely random act, or opposite act of what a rational actor would do.
-If you "fuzz" you system you may discover fragility to irrational actions that could undermine your system.
-Perhaps it's far easier and more likely than it at first appears to experience a black swan event.
+示例：非理性行为者可以在一个非常简单的模型中被表示为完全随机的行为，或者与理性行为者相反的行为。
+如果你对系统进行“模糊测试”，你可能会发现系统对非理性行为的脆弱性，而这些行为可能会破坏你的系统。
+也许经历黑天鹅事件比最初看起来要容易得多，也更有可能。
 
-- Image [source](https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg) - Describes the various categories of uncertainty, epistemology limits and statistical subjects touching on Taleb's Black swan / antifragility etc. ideas
+- 图片[来源](https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg) - 描述了各种不确定性、认识论限制和统计主题，涉及塔勒布的黑天鹅/反脆弱性等思想。
 
 ---v
 
-## 👪 Dependency
+## 👪 依赖关系
 
 <pba-cols>
 <pba-col>
@@ -331,26 +329,26 @@ Perhaps it's far easier and more likely than it at first appears to experience a
 </pba-col>
 <pba-col>
 
-- [Confusion](https://secureteam.co.uk/2021/02/24/what-is-a-dependency-confusion-attack/)
-- [Hijacking](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
-- [Hardware side-channel attacks](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
+- [混淆](https://secureteam.co.uk/2021/02/24/what-is-a-dependency-confusion-attack/)
+- [劫持](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
+- [硬件侧信道攻击](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- yes in software and hardware, you are at risk of attack from poisoned deps through non-maintenance, up to targeted exploitation.
-  One mitigation is vendoring these, need systems inn place to monitor.
-  Dependabot is not sufficient.
-- Also in dependance on specific operational contexts.
-  For example that it is legal to operate the software for nodes.
+- 是的，在软件和硬件中，你都有受到来自被污染的依赖项攻击的风险，这些依赖项可能由于缺乏维护，甚至是有针对性的利用而存在问题。
+  一种缓解措施是使用供应商提供的依赖项，需要有系统来进行监控。
+  Dependabot 是不够的。
+- 还有对特定操作环境的依赖。
+  例如，运行节点软件是否合法。
 
-Image source: <https://xkcd.com/2347/>
+图片来源：<https://xkcd.com/2347/>
 
 ---v
 
-## 🦸 Dependency in Polkadot
+## 🦸 Polkadot 中的依赖关系
 
 <pba-cols>
 <pba-col>
@@ -360,634 +358,357 @@ Image source: <https://xkcd.com/2347/>
 </pba-col>
 <pba-col>
 
-> _Foundational_ to Polkadot ecosystem!
+> 对 Polkadot 生态系统至关重要！
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- [Jaco](https://github.com/jacogr) is effectively the only maintainer of how _just about everything_ communicates with Substrate nodes!
-- [Capi](https://github.com/paritytech/capi) is on the way, but just getting started.
+- [Jaco](https://github.com/jacogr) 实际上是几乎所有与 Substrate 节点通信的唯一维护者！
+- [Capi](https://github.com/paritytech/capi) 正在开发中，但刚刚起步。
 
 ---v
 
-## 🙈 Unknown unknowns
+## 🙈 未知的未知
 
 <img rounded style="width: 800px" src="./img/DiveEdge.gif" />
 
 Notes:
 
-Outside of the system itself, we cannot guarantee/prove that every possible condition is accounted for in our models & system design.
-We must expect forces outside our system & it's model may interact in unexpected ways.
-Assumptions about context must be rigorously evaluated (i.e. - what does finality mean in the chain this pallet or contract lives in?)
-(Formal mathematical proofs reason only about the things we can and do account for.)
+在系统本身之外，我们无法保证/证明我们的模型和系统设计考虑到了所有可能的情况。
+我们必须预计到系统及其模型之外的力量可能会以意想不到的方式相互作用。
+必须严格评估关于上下文的假设（例如，在这个模块或合约所在的链中，最终性意味着什么？）
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Network Level
-
+# 网络层面
 ---v
-
-## 🕸️ Peer-to-Peer Networks
-
+## 🕸️ 对等网络
 <img style="width: 1000px" src="./img/3.4-network-topologies.png" />
-
 ---v
-
-## Network Attacks
-
+## 网络攻击
 <pba-flex center>
-
-- Entry/Boot nodes and peer discovery
-- Data center faults
-- Traffic analysis and targeted takedowns
-- Eclipse attacks
-
+- 入口/引导节点与节点发现
+- 数据中心故障
+- 流量分析与针对性攻击
+- 日食攻击
 </pba-flex>
-
 Notes:
-
-The network lesson covers these, just a reminder that the network is not in the direct command of the consensus system, so it's a threat!
-
-- security & stability
-- privacy!
-  On chain might be ZK, but how about the gossip and RPCs?
-
-Boot nodes typically _hard coded_ to "bootstrap" and start peer discovery.
-Boot nodes can decide what peers to advertize, or can be inaccessible.
-Common data centers (AWS, GCP, ...) could fail or censor, potentially large number of peers go dark.
-Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
-
+网络课程会涵盖这些内容，这里只是提醒一下，网络并不受共识系统的直接控制，所以它构成了一种威胁！
+- 安全与稳定性
+- 隐私！链上可能采用零知识证明（ZK），但节点间的信息传播和远程过程调用（RPC）的隐私性如何呢？
+引导节点通常是“硬编码”的，用于“引导”并启动节点发现过程。引导节点可以决定宣传哪些节点，或者可能无法访问。常见的数据中心（如AWS、GCP等）可能会出现故障或进行审查，这可能导致大量节点无法使用。很难隐藏！与Web2流量相比，大多数对等网络流量很容易被识别。
 ---v
-
-## Node Queries
-
-Running a node is hard, most people outsource.
-
+## 节点查询
+运行一个节点难度较大，大多数人选择外包。
 <img style="width: 1000px" src="./img/3.4-node-queries.png" />
-
-These service have power to deceive, censor, and surveil.
-
+这些服务可能存在欺骗、审查和监控的情况。
 ---v
-
-## Multi-Chain Applications
-
-If running _one_ node is burdensome, try multiple.
-
+## 多链应用
+如果运行一个节点都负担沉重，试试运行多个节点。
 <img style="width: 700px" src="./img/3.4-multi-chain-apps.png" />
-
 ---v
-
-## Trustless Messaging
-
-In order to handle messages _without trust_,<br />systems must share common finality guarantees.
-
-`A` should never process a message from `B`,<br />where `B` is reverted and `A` is not.
-
+## 无需信任的消息传递
+为了在无需信任的情况下处理消息，系统之间必须有共同的最终性保证。
+当`B`的交易被回滚而`A`没有时，`A`不应处理来自`B`的消息。
 ---v
-
-## A Note on Synchronicity
-
-Smart contracts on a single chain (e.g. Ethereum)<br />can interact trustlessly because of their shared view of finality.
-
-Asynchronous systems can also share finality.<br />
-i.e., be members of the same consensus system.
-
+## 关于同步性的说明
+在单一链（如以太坊）上的智能合约，由于对最终性有共同的认知，因此可以进行无需信任的交互。
+异步系统也可以共享最终性，也就是说，它们可以属于同一个共识系统。
 ---v
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Discussion
-
-**Minimum viable decentralization.**
-
-> What key aspects should be considered?
-
+# 讨论
+**最小可行去中心化**
+> 应该考虑哪些关键方面？
 Notes:
-
-- Quantitative: nodes needed (for what), incentives, ... FIXME TODO
-- Qualitative: social norms, ... FIXME TODO
-
+- 定量方面：所需节点数量（用于什么目的）、激励措施等。FIXME TODO
+- 定性方面：社会规范等。FIXME TODO
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Consensus
-
+# 共识
 ---v
-
-## Mining Pools
-
-Proof of Work authority sets have no finite bound.<br />
-But people like to organize.
-
-\[Collaborating | Colluding\] authority sets creates risk.
-
+## 矿池
+工作量证明的授权集合没有固定的界限。
+但人们喜欢组织起来。
+[合作 | 勾结] 的授权集合会带来风险。
 Notes:
-
-Call out that Nomination pools exist and are discussed in the NPoS lesson latter.
-Similar issues, but in a more bounded set.
-
+需要指出的是，提名池是存在的，后续的NPoS课程会讨论相关内容。虽然存在类似的问题，但提名池的情况相对更有限。
 ---v
-
-## Mining Pools
-
+## 矿池
 <img rounded style="width: 1000px" src="./img/mining-pools.png" />
-
 Notes:
-
-Source: [Buy Bitcoin Worldwide](https://buybitcoinworldwide.com/pages/mining/pools/img/pool-graph.png)
-
+来源：[Buy Bitcoin Worldwide](https://buybitcoinworldwide.com/pages/mining/pools/img/pool-graph.png)
 ---v
-
-## Security Dilution
-
-Security is always a finite resource:
-
+## 安全稀释
+安全始终是一种有限的资源：
 <pba-flex center>
-
-- Centralized: Cost of corruption/influence
-- Proof of Work: Number of CPUs in the world
-- Proof of Stake: Value (by definition, finite)
-
+- 中心化：腐败/影响的成本
+- 工作量证明：世界上CPU的数量
+- 权益证明：价值（根据定义，是有限的）
 </pba-flex>
-
 ---v
-
-## Security Dilution
-
-Consensus systems compete for security,<br />and they have reason to attack each other.
-
-Emergence of obscure/niche "Proof of X" algorithms<br />to shelter from attack only goes so far.
-
+## 安全稀释
+共识系统会为争夺安全资源而竞争，并且它们有理由相互攻击。
+一些晦涩小众的“X 证明”算法的出现，对抵御攻击的作用有限。
 ---v
-
-## ⚔ Blockchain Wars
-
-Systems with high security have the<br />incentive to attack systems with low security<br />whom they perceive as competitors.
-
-> For fun and profit.
-
+## ⚔ 区块链战争
+高安全性的系统有动机去攻击那些它们视为竞争对手的低安全性系统。
+> 为了乐趣和利益。
 Notes:
-
-"In ~~a galaxy~~ the universal consensus ~~far far away~~ not so far away..."
-
+“在这个（并非遥不可及的）全球共识世界里……”
 ---v
-
-## ⚔ Proof of Work Battles
-
+## ⚔ 工作量证明之战
 <img rounded style="width: 1300px;" src="./img/3.4-51-percent-cost.png" />
-
-> What might it cost to successfully attack?
-
+> 成功发动攻击可能需要付出什么代价？
 Notes:
-
-- For PoW, hashing power for the same algo can be attacked!
-  Buying hash power is possible:
-- Most GPU miners switch tasks to the mine the highest paying (relative to some base currency) chain using software like <https://www.nicehash.com/>.
-- ASICs are less flexible, but also can to the highest paying coin.
-- Example: [ETH classic deep re-ogs](https://coingeek.com/ethereum-classic-experiences-51-attack-and-3000-block-reorg/)
-
+- 对于工作量证明，相同算法的哈希算力可能受到攻击！购买哈希算力是可行的：
+- 大多数GPU矿工使用类似<https://www.nicehash.com/>这样的软件，切换任务去挖掘收益最高（相对于某种基础货币）的链。
+- ASIC矿机灵活性较差，但也会选择挖掘收益最高的加密货币。
+- 示例：[以太坊经典遭遇深度重组](https://coingeek.com/ethereum-classic-experiences-51-attack-and-3000-block-reorg/)
 ---v
-
-## Proof of...<br />Nothing at Stake
-
-Forks are "free" to vote in favor of...<br />
-vote on them all!
-
-(If you are not eventually slashed!)
-
-> What might it cost to successfully attack?
-
+## 权益证明中的……无风险投票
+对分叉进行投票是“免费”的……那就全都投！
+（前提是最终不会被惩罚！）
+> 成功发动攻击可能需要付出什么代价？
 Notes:
-
-- Unlike PoW where voting on a chain costs something _extrinsic_ to the system, PoS has only _intrinsic_ measures to do accounting of consensus rules.
-- **Critical:** This was a problem with early naive implementations of PoS.
-  Modern PoS schemes avoid this specific problem by having the security deposit and slashing for equivocation (in a few slides)
-- Good explainer, source of image: <https://golden.com/wiki/Nothing-at-stake_problem-639PVZA>
-
+- 与工作量证明不同，在工作量证明中对一条链投票需要消耗系统外部的资源，而权益证明中只有用于核算共识规则的内部衡量机制。
+- **关键**：这是早期简单的权益证明实现中的一个问题。现代权益证明方案通过引入保证金和对恶意行为（如发表矛盾信息）的惩罚机制（后续会讲到）来避免这个特定问题。
+- 解释得很好的文章及图片来源：<https://golden.com/wiki/Nothing-at-stake_problem-639PVZA>
 ---v
-
-## Proof of...<br /> _Relatively_ Nothing at Stake
-
-Risk-to-reward ratio of attacks is<br /> _relative to the valuation of the staked assets_.
-
-Rational actors take into account<br /> _extrinsic motivators_ in calculating the highest reward.
-
-> What might it cost to successfully attack?
-
+## 权益证明中的……相对无风险投票
+攻击的风险回报比与质押资产的估值相关。
+理性行为者在计算最高回报时会考虑外部激励因素。
+> 成功发动攻击可能需要付出什么代价？
 Notes:
-
-- Again PoS ha only _intrinsic_ measures to do accounting of consensus rules, but the system doesn't exist in a vacuum: the relative valuation of what is at stake needs to be accounted for.
-
+- 同样，权益证明只有用于核算共识规则的内部衡量机制，但系统并非孤立存在：需要考虑所涉资产的相对估值。
 ---v
-
-## Validator Consolidation
-
-How many validators does a system need?
-
-Higher numbers should lead to a decrease in the ability for entities to collude.
-
-But validators are expensive, both economically and computationally.
-
+## 验证者整合
+一个系统需要多少个验证者？
+验证者数量增加应该会降低实体之间勾结的可能性。
+但验证者在经济和计算方面成本高昂。
 Notes:
-
-Yet another N-lemma to consider.
-
+这又是一个需要考虑的“N引理”问题。
 ---v
-
-## PoS Economic Security
-
-Proposition: The upper bound of economic security in PoS is relative valuation can secure, that is correlated with the market capitalization of the network.
-
-> Market capitalization refers to the total market value of all assets inherent to a single company/chain/token.
-
+## 权益证明的经济安全性
+论点：权益证明中经济安全的上限与可保障的相对估值相关，这与网络的市值相关。
+> 市值是指单个公司/链/代币所固有的所有资产的总市场价值。
 Notes:
-
-- This market capitalization could be company shares, or total ETH in existence, or total X token associated with a specific smart contract or parachain.
-
+- 这里的市值可以是公司股票、现存的以太坊总量，或者与特定智能合约或平行链相关的X代币总量。
 ---v
-
-## ⚔ PoS Economic Security Battles
-
+## ⚔ 权益证明经济安全之战
 <img rounded style="width: 1150px;" src="./img/market-cap-pos.png" />
-
 Notes:
-
-Here like in PoW we have relative safety in networks, but there is no way to "hop" from one chain to another, so the war is still in the relative security, but one stake cannot _directly_ attach another stake in a separate consensus system...
-
-What about an system of value _within_ consensus?
-
+在这里，和工作量证明一样，网络存在相对安全性，但无法从一条链“跳到”另一条链，所以竞争仍在于相对安全性，不过一个质押不能直接攻击另一个独立共识系统中的质押……那么共识内的价值体系又如何呢？
 ---v
-
-## DApp PoS Economic Security
-
+## DApp的权益证明经济安全
 <img rounded style="width: 1200px;" src="./img/market-cap-polkadot-chains.png" />
-
 Notes:
-
-Consideration: these notes are an oversimplification! We may talk more about this kind of problem in NPoS lesson (Nuke thinks at least).
-The details of a formal analysis are out of scope for this Academy.
-
-Proposition: Total applications valuation of their assets (tokens on smart contracts, or parachains) is limited and that limit is correlated with the total economic security of the consensus system they reside in.
-
-In Polkadot's relay chain model, Nuke would argue it's feasible that an attack to extract value from a very highly valued asset could outweighs the cost of obtaining a _byzantine level of stake_ to execute.
-Therefore the sum of all parachains market cap is also limited as that same level of stake control would enable take over of all chains on it.
-
-Nuke argue this is the same for the sum of all contracts valuations on something like Ethereum.
-
+需要注意：这些说明过于简化！我们可能会在NPoS课程中进一步讨论这类问题（至少Nuke是这么认为的）。正式分析的细节超出了本课程的范围。
+论点：应用程序资产（智能合约上的代币或平行链）的总估值是有限的，并且该限制与它们所在的共识系统的总经济安全性相关。
+在Polkadot的中继链模型中，Nuke认为从高价值资产中提取价值的攻击，其收益可能超过获取执行攻击所需的“拜占庭式质押水平”的成本。因此，所有平行链的市值总和也是有限的，因为控制相同水平的质押可以接管其上的所有链。Nuke认为以太坊上所有合约的总估值也是如此。
 ---v
-
-## Authority Misbehavior
-
+## 验证者不当行为
 <pba-flex center>
-
-- Equivocation
-  - Authorship: Proposing mutually<br />exclusive chains
-  - Finality: Voting for mutually<br />exclusive chains to be final
-- Invalidity
-- Lack of availability
-- **Intentional protocol abuse** ([selfish mining](https://golden.com/wiki/Selfish_mining_attack-39PMNNA))
-
+- 发表矛盾信息
+  - 出块方面：提出相互排斥的链
+  - 最终性方面：对相互排斥的链投票使其成为最终链
+- 提供无效信息
+- 可用性缺失
+- **故意滥用协议**（[自私挖矿](https://golden.com/wiki/Selfish_mining_attack-39PMNNA)）
 </pba-flex>
-
 Notes:
-
-We already talked consensus faults, but abuse is newer.
-Nuke argues "abuse" as a term here isn't the intended mechanism design, and is adverse to the health of the system.
-Selfish mining where it's impossible to _prove_ an author is withholding valid blocks to "cheat" by mining ahead of the rest of th network is a good example in the class of attacks that consensus authorities and others may have.
-
-...Could other actors abuse the protocols?
-
+我们已经讨论过共识故障，但滥用协议是一个新问题。Nuke认为这里所说的“滥用”并非机制设计的初衷，并且对系统健康不利。自私挖矿就是一个很好的例子，在这种攻击中，难以证明出块者通过在网络其他节点之前挖矿并扣留有效区块来“作弊”。其他参与者是否也可能滥用协议呢？
 ---v
-
-## Accountability of Authority
-
-Authority should imply accountability.
-
-No matter how you design an authority selection mechanism, some people will have a privileged position within it.
-
-Those who _choose_ to become authorities should be liable for their actions.
-
+## 验证者的责任
+拥有权力就应承担责任。
+无论如何设计验证者选择机制，总会有人在其中占据特权地位。
+那些选择成为验证者的人应对自己的行为负责。
 ---v
-
-## Provability and Equivocation
-
-Some types of misbehavior are harder to prove than others.
-
-**Equivocation** is simple:<br />Someone can just produce two signed messages as cryptographic proof.
-
-Others rely on challenge-response games and dispute resolution.
-
+## 可证明性与发表矛盾信息
+有些类型的不当行为比其他行为更难证明。
+**发表矛盾信息**很容易证明：有人可以直接出示两条签名消息作为加密证明。
+其他不当行为则依赖于挑战 - 响应机制和争议解决机制。
+No te s
+“无风险”解决方案，可能存在远程攻击的问题。
+[弱主观性](https://blog.ethereum.org/2014/11/25/proof-stake-learned-love-weak-subjectivity) 仍有可能以一种更难组织的方式导致相同的行为，不良行为者可能已经释放了他们的质押，从而产生一个有效的、最终确定的分叉。
+---v
+## Po l ka do t的设计考量
+- 更多的验证者可以提高网络（平行链）的状态转换吞吐量。
+- 作为更大共识系统的成员，各个分片拥有完全的经济自由。
+- 超线性惩罚机制会让勾结的验证者面临生存风险，而善意的验证者则无需担忧。
 Notes:
-
-Nothing at stake solution, with the possible caveat of long range attacks
-[Weak subjectivity](https://blog.ethereum.org/2014/11/25/proof-stake-learned-love-weak-subjectivity) can still potentially cause the same behavior in a much harder to orchestra way, with bad actors having already have their stake released to produce a valid, finalized fork.
-
+Polkadot架构中有一些有趣的设计决策。
+我们之后会更深入地讲解Polkadot！
 ---v
-
-## Design Considerations<br />in Polkadot
-
-- More validators increases the state transition throughput of the network: parachains.
-- Individual shards have full economic freedom by being members of a larger consensus system.
-- _Superlinear_ slashing puts colluding validators at existential risk,<br />while well-meaning ones should have little to worry about).
-
-Notes:
-
-A few interesting design decisions in Polkadot's architecture.
-
-We will cover polkadot much more in depth latter!
-
----v
-
-## Transaction Censorship and Ordering
-
-Block authors choose the transactions they include and in what order.
-
+## 交易审查与排序
+区块创建者可以选择包含哪些交易以及交易的顺序。
 <pba-flex center>
-
-- Censorship attacks
-- "Maximal extractable value" (MEV)
-
+- 审查攻击
+- “最大可提取价值”（MEV）
 </pba-flex>
-
 ---v
-
-## Web3 Goal: Non-Censorship
-
-There are a lot more system users than system authorities.
-
-However, every transaction must be included by an authority.
-
-If no authority will include a user's transaction, they do not have _permissionless_ access.
-
-_If any authority (author) decides not to censor, it **may** be included._
-
+## Web3的目标：无审查
+系统用户数量远远多于系统验证者数量。
+然而，每笔交易都必须由验证者打包进区块。
+如果没有验证者愿意打包某个用户的交易，那么该用户就无法获得无许可访问。
+_只要有任何一个验证者（出块者）决定不进行审查，该交易就**可能**被打包进区块。_
 Notes:
-
-Most present systems have no mechanism to penalize censorship, and a much harder problem can be the ability to discover this is happening on the network at all, depending on the actors involved.
-
+目前大多数系统都没有惩罚审查行为的机制，更棘手的问题是，根据涉及的参与者不同，可能根本无法发现网络中正在发生这种审查行为。
 ---v
 
-## Maximal Extractable Value (MEV)
-
-A measure of the value that block authors can extract based on their knowledge of pending transactions and ability to order them.
-
+## 最大可提取价值（MEV）
+最大可提取价值是衡量区块创建者基于对未确认交易的了解以及对其排序的能力所能提取的价值。
 <pba-flex center style="margin-left: -90px">
-
-- Frontrunning
-- Backrunning
-- Sandwiching
-
+- 抢先交易
+- 后置交易
+- 夹心交易
 </pba-flex>
-
 > <https://www.mev.wiki/>
-
 Notes:
-
-Emergent behavior.
-Not realized as possible by many until it quietly became the norm.
-
+这是一种衍生行为。在它悄然成为常态之前，很多人都没有意识到这种可能性。
 ---v
-
-## Maximal Extractable Value
-
-> An environment in which detection means certain death...<br />
-> ...identifying someone’s location is as good as directly destroying them.<br /><br />
-> -- [Ethereum is a Dark Forest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest) --
-
+## 最大可提取价值
+> 在这样一个环境中，一旦被检测到就意味着死路一条……
+> ……确定某人的位置就如同直接摧毁他们。
+> 
+> -- [以太坊是一片黑暗森林](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest)
 Notes:
-
-Tell the story of this article, basically a white hat engineered obfuscation to try and remove funds in a bugged contract -> someone decoded, realized extractable valued, and front-ran them.
-
-This is now the norm on Ethereum at least, and further _it's becoming institutionalized_.
-
-<!-- FIXME TODO Dark Forest game on Ethereum testnet... or other zk game? -->
-
+讲讲这篇文章的故事，大致是有白帽黑客试图通过设计混淆手段从一个存在漏洞的合约中转移资金，结果有人破解后发现了可提取的价值，并抢先进行了交易。
+至少在以太坊上，这如今已成为常态，而且进一步 “制度化” 了。
+<!-- FIXME TODO 以太坊测试网上的黑暗森林游戏……或者其他零知识证明游戏？ -->
 ---v
-
 ## 👼 Flashbots
-
-> Flashbots is a research and development organization formed to mitigate the negative externalities posed by Maximal Extractable Value (MEV) to stateful blockchains, starting with Ethereum.<br /><br />
-> -- [Flashbots](https://www.flashbots.net/) --
-
+> Flashbots是一个研发组织，旨在减轻最大可提取价值（MEV）给有状态区块链带来的负面外部性，从以太坊开始着手。
+> 
+> -- [Flashbots](https://www.flashbots.net/)
 Notes:
-
-This might be misleading, in that they are profiting in making MeV more effective and institutionalized!
-
+这可能具有误导性，因为他们通过让MEV变得更有效和制度化而获利！
 ---v
-
 ## Flashbots 😈
-
-- **Flashbots Auction**: a marketplace for transaction ordering including the Flashbots Relay and MEV-Geth.
-- **MEV-Boost**: an out-of-protocol implementation of proposer-builder separation (PBS) for proof-of-stake Ethereum.
-- **Flashbots Protect**: an rpc endpoint that anyone can use for protection from frontrunning and failed transactions.
-- **Flashbots Data**: tools and dashboards to improve the transparency of MEV activity on Ethereum and the Flashbots Auction.
-
+- **Flashbots Auction**：一个交易排序市场，包括Flashbots中继和MEV - Geth。
+- **MEV - Boost**：以太坊权益证明中提议者 - 构建者分离（PBS）的协议外实现。
+- **Flashbots Protect**：一个任何人都可以使用的rpc端点，用于防止抢先交易和交易失败。
+- **Flashbots Data**：用于提高以太坊上MEV活动和Flashbots Auction透明度的工具和仪表盘。
 Notes:
-
-Centralizing force, as information asymmetry generally drives towards a monopoly on MeV.
-Competitive landscape for this exists, and to Flashbots' credit, they seem genuine in trying to help the health of Ethereum by decentralizing...
-
-(BUT FIRST a discussion!)
-Especially in light of recent OFAC pressures revealing fragility in the system...
-
+由于信息不对称通常会导致MEV领域的垄断，所以Flashbots是一股中心化力量。这方面存在竞争格局，值得称赞的是，Flashbots似乎真心想通过去中心化来助力以太坊的健康发展……
+（但首先需要进行讨论！）
+尤其是鉴于最近美国外国资产控制办公室（OFAC）的压力揭示了系统的脆弱性……
 ---v
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Discussion
-
-Front-running as a Service (FaaS) & MEV Auctions (MEVA)
-
-_A solution or crutch?_
-
+# 讨论
+抢先交易即服务（FaaS）和MEV拍卖（MEVA）
+是解决方案还是权宜之计？
 Notes:
-
-- Flashbots & Friends
-
+- Flashbots及相关项目
 ---v
-
-## Compliance
-
+## 合规性
 <img rounded style="width: 1000px" src="./img/tornado-ofac.png" />
-
 Notes:
-
 <https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-relay-blocks-are-censoring-the-network/>
-
-- code is unstoppable, but platform _can_ sensor.
-  Ability -> responsibility (we may talk more on that latter)
-
+- 代码不停机，但平台 **可以** 进行审查。
+  有能力就意味着有责任（我们之后可能会进一步讨论这一点）
 ---v
-
-## Social Context
-
-Social systems and norms can help _cover up_ weaknesses in protocols.
-
-> Public monitor to shame OFAC censors:
->
+## 社会背景
+社会系统和规范可以帮助掩盖协议中的弱点。
+> 用于谴责OFAC审查行为的公开监测平台：
 > <https://www.mevwatch.info/>
-
 Notes:
-
-- Pressure from peers through breaking norms, perhaps even losing of authority in consensus due to this.
-  Peer reputation in computer networks, and here also in human ones.
-- Sometimes social pressures are healthy for the system, sometimes toxic depending on point of view and who benefits!
-- In monero "run your own node" culture helps keep it decentralized.<br />
-  Bitcoin big block wars show social pressures help decide the canonical forks.
-- Normalizing MEV for the profit of middlemen, providing extraction services in the worst case.
-
+- 通过打破规范来自同伴的压力，甚至可能因此失去在共识中的权力。
+  计算机网络中的同伴声誉，在这里也适用于人类社会。
+- 社会压力有时对系统有益，有时则有害，这取决于观点和受益者！
+- 在门罗币中，“运行自己的节点” 文化有助于保持其去中心化。
+  比特币的大区块之争表明，社会压力有助于决定规范的分叉。
+- 最坏的情况是，为了中间商的利益将MEV常态化，提供价值榨取服务。
 ---v
-
-## Unbundling
-
+## 功能拆分
 <img style="width: 1200px" src="./img/3.4-web3-stack.png" />
-
 Notes:
-
-From before, but here point out how this is getting more fine grained as well, and where a single actor would do it all (early bitcoin for example) we are moving more and more to appear.
-
-- Especially if more things like MeV can be enhanced by doing so.
-- This introduces more complexity and interfaces that can provide weakness (especially when a network is required!)
-
+这张图之前出现过，这里要指出的是，功能拆分正变得越来越精细，早期比特币等由单一参与者完成所有操作的情况，正越来越多地发生改变。
+- 特别是如果像MEV这样的更多事物能借此得到增强。
+- 这会引入更多复杂性和可能存在弱点的接口（尤其是在需要网络支持的情况下！）
 ---v
-
-## Unbundling
-
-### _The vision of "blockspace" leads</br>more and more to this end_
-
+## 功能拆分
+### “区块空间” 的愿景越来越促使达成这一目的
 ---v
-
-## Diversity
-
+## 多样性
 <img style="width: 1200px" src="./img/eth-client-diversity.png" />
-
 Notes:
-
-- Parity saved ETH (alt clients, and diversity)
-  - same runtime on chain, it's impossible to have an alt runtime.
-- all on GCP
-- All run same hardware (CPU, etc.)
-- ...
-
-- Image source, and good reference on this: <https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA>
-
+- Parity拯救了以太坊（替代客户端及多样性的作用）
+  - 链上运行时相同，不可能有替代运行时。
+- 都在谷歌云平台（GCP）上运行
+- 都运行相同的硬件（CPU等）
+- ……
+- 图片来源及相关参考：<https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA>
 ---
-
-## Final Thoughts
-
-- Complexity generally increases the risks of failures, but we should not fear it.<br />
-  $~~~$_Hypothesis: this \_usually_ makes systems more brittle.\_
-- Observable behavior trumps models and theory.<br />
-  $~~~$_Complex systems are not intuitive and may show your assumptions and models are wrong!_
-- This lesson was a _start_ down holes...
-  $~~~$_We encourage you to keep diving deeper!_
-
+## 总结思考
+- 复杂性通常会增加失败的风险，但我们不应畏惧它。
+  $~~~$_假设：这通常会使系统更加脆弱。_
+- 可观察到的行为比模型和理论更重要。
+  $~~~$_复杂系统并非直观易懂，可能会表明你的假设和模型是错误的！_
+- 这节课只是一个开始……
+  $~~~$_我们鼓励你继续深入探索！_
 Notes:
-
-- Risks and unknown unknowns increase exponentially so in many cases.
-- Examples of observables in things like MEV OFAC dominance and Babe fallback dominance etc.
-- Looking forward to explore the great unknown horizons in web3 together!
-
+- 在很多情况下，风险和未知的未知会呈指数级增长。
+- 像MEV中OFAC的主导地位以及Babe共识机制的备用模式主导等可观察到的例子。
+- 期待一起探索Web3中广阔的未知领域！
 ---
-
-## 🤝 Together, into the Deep
-
+## 🤝 一起，深入探索
 <img rounded style="width: 800px" src="./img/DiveEdge.gif" />
-
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
-
+# 问题
 ---
-
 <!-- .slide: data-background-color="#000000" -->
-
-# Additional Slides
-
+# 补充幻灯片
 Notes:
-
-For reference mostly, outside of formal class time 😀
-
+主要供参考，不在正式课堂时间讲解 😀
 ---
-
-## Governance... Unstoppable?
-
-<iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-[Unstoppable Code: The Difference Between Can't and Won't](https://www.youtube-nocookie.com/embed/Q6euy5W1js4)
-
+## 治理……不停机？
+<iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube视频播放器" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[不停机的代码：不能与不愿的区别](https://www.youtube-nocookie.com/embed/Q6euy5W1js4)
 Notes:
-
-Watch _after class_!
-Perhaps assigned informally to everyone to watch in the next few days.
-
+课后观看！
+或许可以非正式地安排大家在接下来几天观看。
 ---v
-
-## Unstoppable Code
-
-> It seizes power from dominate forms of power: governments, corporations, states, associations, cultures, religions.
-> It seizes power, from these big things and gives it to little people.
-> And sooner or later, the people who are losing their undeserved, abusively applied power will start to fight back.
-> And at that point, we will start to find out how unstoppable our code is.<br /><br />
-> -- Andreas Antonopoulos --
-
+## 不停机的代码
+> 它从占主导地位的权力形式中夺取权力：政府、企业、国家、社团、文化、宗教。
+> 它从这些庞然大物手中夺取权力，并将其赋予小人物。
+> 迟早，那些正在失去不应得且被滥用权力的人会开始反击。
+> 到那时，我们就会开始了解我们的代码到底有多不停机。
+> 
+> -- 安德烈亚斯·安东诺普洛斯（Andreas Antonopoulos）
 ---v
-
-## Can't vs. Won't
-
-> The moment you go over the the line from "can't to won't, what started as an ability becomes a responsibility.
-> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence.<br /><br />
-> -- Andreas Antonopoulos --
-
+## 不能与不愿
+> 当你从 “不能” 跨越到 “不愿” 的那一刻，原本的能力就变成了责任。
+> 然后，如果你声称自己不再具备这种能力，那么这种责任就变成了疏忽，甚至是刑事疏忽。
+> 
+> -- 安德烈亚斯·安东诺普洛斯（Andreas Antonopoulos）
 Notes:
-
-- The difference?
-- Silk road founder getting 2 life sentences + 40 years.
-- moral relativism -> "who's law?"
-- Don't make your "oops clause" -> not too narrow.
-
+- 区别是什么？
+- 丝绸之路创始人被判处两个无期徒刑外加40年监禁。
+- 道德相对主义 -> “谁的法律？”
+- 别把你的 “意外条款” 设得太窄。
 ---
-
-## DAOs
-
-Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
-
-> A **coordination** mechanism.
-
+## 去中心化自治组织（DAOs）
+去中心化自治组织（[DAOs](https://www.investopedia.com/tech/what-dao/)）。
+> 一种 **协调** 机制。
 ---v
-
-## Democratic Systems
-
-Democratic Mediums is a directory of patterns<br /> for decision, deliberation, and noise.
-
+## 民主系统
+Democratic Mediums是一个关于决策、审议和舆情处理模式的目录。
 <pba-flex center>
-
 - <https://medlabboulder.gitlab.io/democraticmediums/>
-- <https://metagov.org/> -- weekly seminar
+- <https://metagov.org/> -- 每周研讨会
 - <https://www.smartcontractresearch.org/>
-
 </pba-flex>
-
 Notes:
-
-Very much encouraged to explore after class!
-Many novel and niece definitions in this wiki.
-
+强烈建议课后探索！这个维基页面中有许多新颖且精妙的定义。
 ---
+## 行为建模
+> [代币工程](https://tokenengineeringcommunity.github.io/website/)
+> {尤其是学院课程和cadCAD Edu项目}
+No te s
+主要是免费的教育资源和工具，可用于更深入地研究代币经济学。
+记住，这些通常是理想化系统的模型，现实世界的情况会有所不同！ 
 
-## Modeling Behavior
-
-> [Token Engineering](https://tokenengineeringcommunity.github.io/website/)<br />
-> {especially the Academy & cadCAD Edu}
-
-Notes:
-
-Mostly free education and tools to dive deeper on tokenomics.
-Remember, these are _models_ of idealized systems in general, real world conditions will differ!

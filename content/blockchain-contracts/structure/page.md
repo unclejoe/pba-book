@@ -1,4 +1,4 @@
-# Blockchain Structure
+# 区块链结构
 
 <!-- markdown-link-check-disable -->
 <center>

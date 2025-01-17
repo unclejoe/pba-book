@@ -3,42 +3,42 @@ title: Designing DAG-based consensus
 description: A formal, yet friendly consensus framework
 ---
 
-# Designing DAG-based consensus
+# 基于有向无环图（DAG）的共识设计
 
 ---
 
-## Goals of this lecture
+## 本讲座的目标
 
 <br />
 
-1. formalize the consensus problem and related concepts <!-- .element: class="fragment"-->
-2. provide a framework for designing DAG-based consensus protocols <!-- .element: class="fragment"-->
+1. 对共识问题及相关概念进行形式化定义 <!-- .element: class="fragment"-->
+2. 提供一个设计基于DAG的共识协议的框架 <!-- .element: class="fragment"-->
 
 ---
 
-## What is consensus?
+## 什么是共识？
 
 <br />
 
-- a **process** of agreeing on the same result among a group of participants
-- a fundamental **problem** in distributed computing
-- a key **component** of blockchain technology stack
+- 一组参与者就同一结果达成一致的**过程**
+- 分布式计算中的一个基本**问题**
+- 区块链技术栈的一个关键**组件**
 
 ---
 
-## Consensus features
+## 共识的特性
 
 <br />
 
-liveness, safety, integrity
+活性、安全性、完整性
 
 ---
 
-## We have already seen some
+## 我们已经了解的一些共识算法
 
 <br />
 
-Nakamoto
+中本聪共识
 
 Babe
 
@@ -52,281 +52,281 @@ Tendermint
 
 ---
 
-## Who is running the protocol?
+## 谁在运行这个协议？
 
 <br />
 
-Participants, called **nodes**
+参与者，称为**节点**
 
 ---
 
-## Nodes
+## 节点
 
 <br />
 
-- nodes can be either honest or malicious
-- honest nodes follow the protocol
-- malicious nodes can deviate from the protocol in any way they want
-- malicious nodes can collude with each other
-- malicious nodes can be controlled by an adversary
+- 节点可以是诚实的或恶意的
+- 诚实节点遵循协议
+- 恶意节点可以以任何方式偏离协议
+- 恶意节点可以相互勾结
+- 恶意节点可以被敌手控制
 
 ---
 
-## Public key infrastructure
+## 公钥基础设施
 
 <br />
 
-- every node has its own <font color="#c2ff33">private</font> and <font color="#e6007a">public</font> key
-- every node <font color="#c2ff33">signs</font> messages with its <font color="#c2ff33">private</font> key
-- every node <font color="#e6007a">verifies</font> messages with other nodes' <font color="#e6007a">public</font> keys
+- 每个节点都有自己的 <font color="#c2ff33">私钥</font> 和 <font color="#e6007a">公钥</font>
+- 每个节点用其 <font color="#c2ff33">私钥</font> 对消息进行 <font color="#c2ff33">签名</font>
+- 每个节点用其他节点的 <font color="#e6007a">公钥</font> 对消息进行 <font color="#e6007a">验证</font>
 
 ---
 
-## Public key infrastructure
+## 公钥基础设施
 
 <br />
 
-authenticated point-to-point communication
+经过身份验证的点对点通信
 
 ---
 
-## Adversary
+## 敌手
 
 <br />
 
-Adversary **can** control the network delays, but is _computationally bounded_, i.e. it **cannot** break the cryptography (like forging the signatures).
+敌手**可以**控制网络延迟，但它是**计算受限**的，即它**不能**破解加密（如伪造签名）。
 
 ---
 
-## Network
+## 网络
 
 <br />
 
-Communication via network... but what kind of network?
+通过网络进行通信... 但是什么样的网络呢？
 
 ---
 
-## Network models
+## 网络模型
 
 <br />
 
-synchronous
+同步
 
-partially synchronous
+部分同步
 
-asynchronous
+异步
 
 ---
 
-## Network models: synchronous
+## 网络模型：同步
 
 <br />
 
-> There exists a known upper bound \\(\Delta\\) on message delivery time.
+> 消息传递时间存在一个已知的上界 \\(\Delta\\)。
 
 <br />
 <br />
 
-_Intuition: there's a well-defined notion of a protocol round_
+_直觉：存在一个明确定义的协议轮次概念_
 
 ---
 
-## Network models: asynchronous
+## 网络模型：异步
 
 <br />
 
-> There is no upper bound on message delay, though delivery is guaranteed.
+> 消息延迟没有上界，但保证消息能够送达。
 
 <br />
 <br />
 
-_Intuition: you can't tell whether a node has crashed or has a long delay_
+_直觉：你无法判断一个节点是崩溃了还是有很长的延迟_
 
 ---
 
-## Network models: asynchronous
+## 网络模型：异步
 
 <br />
 
-> There is no upper bound on message delay, though delivery is guaranteed.
+> 消息延迟没有上界，但保证消息能够送达。
 
 <br />
 <br />
 
-- We assume that the adversary has full control over the message delays.
-- The concept of a timeout is basically useless.
+- 我们假设敌手可以完全控制消息延迟。
+- 超时的概念基本上是无用的。
 
 ---
 
-## Network models: partially synchronous
+## 网络模型：部分同步
 
 <br />
 
-> There exists a known bound \\(\Delta\\), and an unknown point in time **GST** after which the communication becomes synchronous with a delay \\(\Delta\\).
+> 存在一个已知的界限 \\(\Delta\\)，以及一个未知的时间点 **GST**，在此时间点之后，通信将以延迟 \\(\Delta\\) 同步进行。
 
 <br />
 <br />
 
-_Intuition: protocol will eventually work synchronously, but it needs to be safe before_
+_直觉：协议最终将同步工作，但在此之前需要是安全的_
 
 ---
 
-## Crucial theoretical results
+## 关键理论结果
 
 <br />
 
-> \[FLP theorem\] It is impossible to have a deterministic protocol that solves consensus in an asynchronous system in which at least one process may fail by crashing.
+> [FLP定理] 在一个至少有一个进程可能因崩溃而失败的异步系统中，不可能存在一个确定性的协议来解决共识问题。
 
 <br />
 <br />
 
-> \[Castro-Liskov theorem\] It is impossible to have a protocol that solves consensus in a partially synchronous system with \\(3f+1\\) nodes in which more than \\(f\\) processes are byzantine.
+> [Castro - Liskov定理] 在一个有 \\(3f + 1\\) 个节点且其中超过 \\(f\\) 个进程是拜占庭节点的部分同步系统中，不可能存在一个协议来解决共识问题。
 
 ---
 
-## Crucial theoretical results
+## 关键理论结果
 
 <br />
 
-> \[FLP theorem\] It is impossible to have a <font color="#c2ff33">deterministic</font> protocol that solves consensus in an <font color="#c2ff33">asynchronous</font> system in which at least one process may fail by crashing.
+> [FLP定理] 在一个 <font color="#c2ff33">异步</font> 系统中，至少有一个进程可能因崩溃而失败的情况下，不可能存在一个 <font color="#c2ff33">确定性</font> 的协议来解决共识问题。
 
 <br />
 <br />
 
-> \[Castro-Liskov theorem\] It is impossible to have a protocol that solves consensus in a <font color="#c2ff33">partially synchronous</font> system with \\(3f+1\\) nodes in which <font color="#c2ff33">more than</font> \\(f\\) processes are byzantine.
+> [Castro - Liskov定理] 在一个 <font color="#c2ff33">部分同步</font> 系统中，有 \\(3f + 1\\) 个节点且其中 <font color="#c2ff33">超过</font> \\(f\\) 个进程是拜占庭节点的情况下，不可能存在一个协议来解决共识问题。
 
 ---
 
-## Consequence
+## 结论
 
 <br />
 
-The best one can hope for in **asynchronous** scenario is **probabilistic** protocol tolerating **up to** \\(f\\) faults for \\(3f+1\\) participants.
+在**异步** 场景中，人们所能期望的最好结果是一个**概率性** 协议，对于 \\(3f + 1\\) 个参与者，该协议能够容忍 **最多** \\(f\\) 个故障。
 
 <br />
 
-> ✅ <font color="#c2ff33"> **Doable!**</font>
+> ✅ <font color="#c2ff33"> **可行！**</font>
 
 <!-- .element: class="fragment"-->
 
 ---
 
-## Note on randomness
+## 关于随机性的说明
 
 <br />
 
-Real probability is actually needed in the extremely hostile environment.
-In case where the adversary is not legendarily vicious, even a dumb (but non-trivial) randomness source will do.
+在极其恶劣的环境中，真正的概率是必需的。
+在敌手不是极其恶毒的情况下，即使是一个简单（但非平凡）的随机源也可以。
 
 ---
 
-## Responsiveness
+## 响应性
 
 ---
 
-## Responsiveness
+## 响应性
 
 <br />
 
-Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time** to proceed to the next round.
+**非响应性** 协议必须 **等待** \\(\Delta\\) **时间** 才能进入下一轮。
 <br />
 
 ---
 
-## Responsiveness
+## 响应性
 
 <br />
 
-Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time** to proceed to the next round.
+**非响应性** 协议必须 **等待** \\(\Delta\\) **时间** 才能进入下一轮。
 <br />
 <br />
 
-- \\(\Delta\\) must be long enough to allow all honest nodes to send their messages.
-- \\(\Delta\\) must be short enough to allow the protocol to make progress.
-- In case of failure, they have to perform a pretty expensive recovery procedure (like the leader change).
+- \\(\Delta\\) 必须足够长，以允许所有诚实节点发送它们的消息。
+- \\(\Delta\\) 必须足够短，以允许协议取得进展。
+- 在出现故障的情况下，它们必须执行一个相当昂贵的恢复过程（如领导者变更）。
 
 ---
 
-## Responsiveness
+## 响应性
 
 <br />
 
-Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
+**响应性** 协议 **等待** \\(2f + 1\\) **条消息** 才能进入下一轮。
 
 <br />
 <br />
 
-> <font color="#c2ff33">Why \\(2f+1\\)?</font>
+> <font color="#c2ff33">为什么是 \\(2f + 1\\)？</font>
 
 <!-- .element: class="fragment"-->
 
 ---
 
-## Responsiveness
+## 响应性
 
 <br />
 
-Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
+**响应性** 协议 **等待** \\(2f + 1\\) **条消息** 才能进入下一轮。
 
 <br />
 <br />
 
-> <font color="#c2ff33">Among \\(2f+1\\) nodes, there are at least \\(f+1\\) honest ones, i.e. honest majority.</font>
+> <font color="#c2ff33">在 \\(2f + 1\\) 个节点中，至少有 \\(f + 1\\) 个诚实节点，即诚实节点占多数。</font>
 
 ---
 
-## Responsiveness
+## 响应性
 
 <br />
 
-Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
+**响应性** 协议 **等待** \\(2f + 1\\) **条消息** 才能进入下一轮。
 <br />
 <br />
 
-- Asynchronous protocols must be responsive.
-- In good network conditions, they significantly much faster.
+- 异步协议必须是响应性的。
+- 在网络条件良好的情况下，它们的速度要快得多。
 
 ---
 
-## Checkpoint
+## 检查点
 
 <br />
 
-Up to this point, we covered:
+到目前为止，我们已经涵盖了：
 
-- consensus problem
-- node types and adversary
-- inter-node communication
-- network models (synchronicity)
-- protocol limitations in asynchronous network (honesty fraction and the need for randomness)
-- responsiveness
+- 共识问题
+- 节点类型和敌手
+- 节点间通信
+- 网络模型（同步性）
+- 异步网络中协议的局限性（诚实节点比例和对随机性的需求）
+- 响应性
 
 ---
 
-## Warmup exercise: broadcast
+## 热身练习：广播
 
 <br />
 
-> (In an asynchronous network) **reliably** send a single message to all other nodes.
+> （在异步网络中）**可靠地** 向所有其他节点发送一条消息。
 
 <br />
 <br />
 
-- (_validity_) If the sender is honest and broadcasts a message \\(m\\), then every honest node outputs \\(m\\).
+- （**有效性**）如果发送者是诚实的并且广播了一条消息 \\(m\\)，那么每个诚实节点都输出 \\(m\\)。
 
 <!-- .element: class="fragment"-->
 
-- (_integrity_) If an honest node outputs a message \\(m\\), then it must have been broadcast by the sender.
+- （**完整性**）如果一个诚实节点输出了一条消息 \\(m\\)，那么这条消息必须是由发送者广播的。
 
 <!-- .element: class="fragment"-->
 
-- (_agreement_) If an honest node outputs a message \\(m\\), every other honest node outputs \\(m\\).
+- （**一致性**）如果一个诚实节点输出了一条消息 \\(m\\)，那么其他每个诚实节点都输出 \\(m\\)。
 
 <!-- .element: class="fragment"-->
 
 ---
 
-## Reliable broadcast protocol (RBC)
+## 可靠广播协议（RBC）
 
 <br />
 
@@ -334,37 +334,37 @@ Up to this point, we covered:
 
 ---
 
-## Reliable broadcast in practice
+## 实际中的可靠广播
 
 <br />
 
-Due to the very high communication complexity we use heuristics or cryptography-based tricks.
+由于通信复杂度非常高，我们使用启发式方法或基于密码学的技巧。
 
 ---
 
-## Blockchain protocol vs Atomic broadcast
+## 区块链协议与原子广播
 
 <br />
 
-Atomic broadcast
+原子广播
 <br />
 
 <img rounded style="width: 700px;" src="./img/3.10-atomic-broadcast.svg" />
 
 ---
 
-## Randomness formalized
+## 形式化的随机性
 
 <br />
 
-Randomness beacon
+随机信标
 <br />
 
 <img rounded style="width: 700px;" src="./img/3.10-randomness-beacon.svg" />
 
 ---
 
-## Atomic broadcast: timeline
+## 原子广播：时间线
 
 <br />
 
@@ -372,7 +372,7 @@ Randomness beacon
 
 ---
 
-## Atomic broadcast: timeline
+## 原子广播：时间线
 
 <br />
 
@@ -380,56 +380,56 @@ Randomness beacon
 
 ---
 
-## Fun fact
+## 趣闻
 
 <br />
 
-Aleph paper, as the first, also achieved fully asynchronous randomness beacon:
+Aleph论文首次实现了完全异步的随机信标：
 
-- with efficient setup (\\(O(1)\\) rounds, \\(O(N^2)\\) communication)
-- with \\(O(1)\\) expected rounds to output a random value with \\(O(N)\\) communication per round
+- 高效的设置（\\(O(1)\\) 轮次，\\(O(N^2)\\) 通信量）
+- 期望在 \\(O(1)\\) 轮次内输出一个随机值，每轮的通信量为 \\(O(N)\\)
 
 ---
 
-## Consensus protocols (selection)
+## 共识协议（精选）
 
 <br />
 
 <pba-cols>
 <pba-col>
 
-### Classical protocols:
+### 经典协议：
 
-- \[DLS’88\], \[CR’92\],
-- PBFT \[CL’99\]
-- Random Oracles … \[CKS’05\]
-- Honey Badger BFT \[MXCSS’16\]
-- Tendermint \[BKM’18\]
-- VABA \[AMS’19\]
-- Flexible BFT \[MNR’19\]
-- HotStuff \[YMRGA’19\]
-- Streamlet \[CS’20\]
-- Grandpa \[SKK'20\]
+- [DLS’88]，[CR’92]，
+- PBFT [CL’99]
+- 随机预言机 … [CKS’05]
+- Honey Badger BFT [MXCSS’16]
+- Tendermint [BKM’18]
+- VABA [AMS’19]
+- Flexible BFT [MNR’19]
+- HotStuff [YMRGA’19]
+- Streamlet [CS’20]
+- Grandpa [SKK'20]
 
 </pba-col>
 <pba-col>
 
-### DAG-based protocols:
+### 基于DAG的协议：
 
-- \[L. Moser, P. Meliar-Smith ‘99\]
-- Hashgraph \[B’16\]
-- Aleph \[GLSS’18\]
-- DAG-Rider \[KKNS’21\]
-- Highway \[KFGS’21\]
-- Narwhal&Tusk \[DKSS’22\]
-- Bullshark \[SGSK’22\]
+- [L. Moser, P. Meliar - Smith ‘99]
+- Hashgraph [B’16]
+- Aleph [GLSS’18]
+- DAG - Rider [KKNS’21]
+- Highway [KFGS’21]
+- Narwhal&Tusk [DKSS’22]
+- Bullshark [SGSK’22]
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## DAG-based protocols
+## 基于DAG的协议
 
 ---
 
@@ -437,62 +437,62 @@ Aleph paper, as the first, also achieved fully asynchronous randomness beacon:
 
 <br />
 
-Directed Acyclic Graph
+有向无环图
 <br />
 
 <img rounded style="width: 700px;" src="./img/3.10-dag.svg" />
 
 ---
 
-## How does it relate to consensus?
+## 它与共识有什么关系？
 
 <br />
 
-Intuition: graph represents the dependencies between messages (units).
+直觉：图表示消息（单元）之间的依赖关系。
 <br />
 
 <img rounded style="width: 700px;" src="./img/3.10-message-dependency.svg" />
 
 ---
 
-## Framework core
+## 框架核心
 
 <br />
 
-1. We maintain a local DAG representing our knowledge of the units. <!-- .element: class="fragment"-->
-2. We perform a local, offline consensus on our DAG. <!-- .element: class="fragment"-->
+1. 我们维护一个本地DAG，代表我们对这些单元的认知。 <!-- .element: class="fragment"-->
+2. 我们对我们的DAG进行本地的、离线共识。 <!-- .element: class="fragment"-->
 
 ---
 
-## Framework core
+## 框架核心
 
 <br />
 
-1. We maintain a local DAG representing our knowledge of the units.
-2. We perform a local, <font color="#c2ff33"> **offline consensus**</font> on our DAG.
+1. 我们维护一个本地DAG，代表我们对这些单元的认知。
+2. 我们对我们的DAG进行本地的、<font color="#c2ff33"> **离线共识**</font>。
 
 ---
 
-## Framework core (in other words)
+## 框架核心（换句话说）
 
 <br />
 
-1. (online): sending and receiving units that contribute to the local DAG
-2. (offline): everybody performs a local consensus on the DAG, just by looking at it
+1. （在线）：发送和接收有助于构建本地DAG的单元
+2. （离线）：每个人只需查看DAG就可以对其进行本地共识。
 
 ---
 
-## Clue observations
+## 关键观察
 
 <br />
 
-- local DAGs might differ... <!-- .element: class="fragment"-->
-- but they are guaranteed to converge to the same DAG <!-- .element: class="fragment"-->
-- the offline consensus is guaranteed to produce the same result <!-- .element: class="fragment"-->
+- 本地DAG可能会有所不同... <!-- .element: class="fragment"-->
+- 但它们保证会收敛到同一个DAG <!-- .element: class="fragment"-->
+- 离线共识保证会产生相同的结果 <!-- .element: class="fragment"-->
 
 ---
 
-## Adversary control
+## 敌手控制
 
 <br />
 
@@ -500,186 +500,127 @@ Intuition: graph represents the dependencies between messages (units).
 
 ---
 
-## Randomness? Where is randomness?
+## 随机性？随机性在哪里？
 
 <br />
 
-It is put into the local consensus protocol.
+它被放入本地共识协议中。
 
 ---
 
-## Relation to the atomic consensus problem
+## 与原子共识问题的关系
 
 <br />
 
-- nodes receive transactions and put them into units
-- nodes send each other their new units
-- (locally) nodes come up with a linear ordering of the units and make blocks from chunks
+- 节点接收交易并将它们放入单元中
+- 节点相互发送它们的新单元
+- （本地）节点对单元进行线性排序，并从块中构建块
 
 ---
 
-## Digression: block production, information dissemination and finalization
+## 题外话：块生成、信息传播和最终确定
 
 <br />
 
-The common approach (e.g. in Substrate):
+常见方法（例如在Substrate中）：
 
-- production and dissemination is done in the same layer
-- afterwards, nodes perform consensus on finalizing disseminated blocks
+- 生成和传播在同一层进行
+- 之后，节点对传播的块进行共识以最终确定。
 
 <br />
 
-Natural approach for DAG-based protocols:
+基于DAG的协议的自然方法：
 
-- information dissemination happens as 'the first phase'
-- block building and (instant) finalization happens locally
+- 信息传播作为“第一阶段”发生
+- 块构建和（即时）最终确定在本地进行。
 
 ---
 
-## Main consequences of the different separation
+## 不同分离的主要后果
 
 <br />
 
-- block signatures
-- speed
+- 块签名
+- 速度
 
 ---
 
-## Local consensus: goal
+## 本地共识：目标
 
 <br />
 
-Local copies might differ significantly, blocks might have not come to all nodes yet, etc...
-but we have to make common decision about unit ordering!
+本地副本可能有很大差异，块可能还没有到达所有节点等等...
+但我们必须就单元排序做出共同决定！
 
 ---
 
-## Key concept: availability
-
-<br />
-
-Intuitively, a unit is **available** if:
-
-<br />
-
-- most of the nodes have it <!-- .element: class="fragment"-->
-- it was distributed pretty promptly (we won't call a unit available, if it finally arrived everywhere after a month) <!-- .element: class="fragment"-->
-- most of the nodes know that most of the nodes know that most of the nodes know... that it is available (mutual awareness) <!-- .element: class="fragment"-->
-
+## 关键概念：可用性
+<br>
+直观来讲，一个单元若满足以下条件，则可认定为**可用**：
+<br>
+- 大多数节点拥有该单元 <!-- .element: class="fragment"-->
+- 其分发相当迅速（若一个单元一个月后才在所有节点出现，我们不会称其可用） <!-- .element: class="fragment"-->
+- 大多数节点知道大多数节点知道大多数节点知道……该单元可用（相互知晓） <!-- .element: class="fragment"-->
 ---
-
-## Availability
-
-<br />
-
-If a unit is available, it is a good candidate for being chosen as an 'anchor' in extending current ordering.
-
+## 可用性
+<br>
+若一个单元可用，那么它便是扩展当前排序时作为 “锚点” 的理想候选对象。
 ---
-
-## Lightweight case study
-
-<br />
-
-Aleph Zero BFT protocol
-
+## 轻量级案例研究
+<br>
+Aleph Zero拜占庭容错（BFT）协议
 ---
-
-## Head
-
-<br />
-
+## 头部
+<br>
 <img rounded style="width: 600px;" src="./img/3.10-heads.svg" />
-
 ---
-
-## Building blocks
-
-<br />
-
+## 构建模块
+<br>
 <img rounded style="width: 800px;" src="./img/3.10-building-blocks.svg" />
-
 ---
-
-## Choosing head
-
-<br />
-
+## 选择头部
+<br>
 <img rounded style="width: 500px;" src="./img/3.10-choosing-head.svg" />
-
 ---
-
-## Availability determination
-
-<br />
-
-Units vote for each other's availability.
-
+## 可用性判定
+<br>
+各单元相互对彼此的可用性进行投票。
 ---
+## （部分）可用性判定
+<br>
+Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) 的取值规则如下：
+- 若 <font color="#e6007a">V</font> 来自 <font color="#c2ff33">U</font> 所在轮次的下一轮，则Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) = \[\[<font color="#c2ff33">U</font> 是 <font color="#e6007a">V</font> 的父单元\]\] 
+- 若 <font color="#c2ff33">U</font> 的所有子单元都投了 `0` 或都投了 `1`，则Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) = `0`/`1`
+- 其他情况，Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) = `CommonVote(round(`<font color="#c2ff33">U</font> `), round(`<font color="#e6007a">V</font> `))`
 
-## (Part of) availability determination
-
-<br />
-
-Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) =
-
-- \[\[<font color="#c2ff33">U</font> is parent of <font color="#e6007a">V</font>\]\] if <font color="#e6007a">V</font> is from the round just after the round of <font color="#c2ff33">U</font>
-- `0`/`1` if all children of <font color="#c2ff33">U</font> voted `0`/`1`
-- `CommonVote(round(`<font color="#c2ff33">U</font> `), round(`<font color="#e6007a">V</font> `))` otherwise
-  <br />
-  <br />
-
-_(U comes from the earlier round than V)_
-
+<br><br>
+（<font color="#c2ff33">U</font> 所在轮次早于 <font color="#e6007a">V</font>）
 ---
-
-## Bonus: generating randomness
-
-<br />
-
-Sig<sub> `sk`</sub>(nonce)
-
+## 额外内容：生成随机数
+<br>
+Sig<sub>`sk`</sub>(nonce)
 <!-- .element: class="fragment"-->
-<br />
-
+<br>
 <div class="fragment">
-
-- randomness must be unpredictable
-- delayed reveal
-- must depend on \\(f+1\\) nodes
-- cannot be disturbed by the adversary
-
+- 生成的随机数必须不可预测
+- 延迟揭示
+- 必须依赖 \(f + 1\) 个节点
+- 不能被敌手干扰
 </div>
-
 ---
-
-## Standard way
-
-<br />
-
+## 标准方法
+<br>
 <img rounded style="width: 600px;" src="./img/3.10-shamir.svg" />
-
 ---
-
-## Standard way
-
-<br />
-
+## 标准方法
+<br>
 <img rounded style="width: 600px;" src="./img/3.10-shamir-2.svg" />
-
-Problem: need for trusted dealer! <!-- .element: class="fragment"-->
-
+问题：需要可信分发者！ <!-- .element: class="fragment"-->
 ---
-
-## One simple trick
-
-<br />
-
-<font color="#c2ff33">Everybody is dealing secrets</font> <!-- .element: class="fragment"-->
-
+## 一个简单技巧
+<br>
+<font color="#c2ff33">每个人都分发秘密</font> <!-- .element: class="fragment"-->
 ---
-
-## Combining randomness
-
-<br />
-
-<img rounded style="width: 600px;" src="./img/3.10-xoring.svg" />
+## 随机数组合
+<br>
+<img rounded style="width: 600px;" src="./img/3.10-xoring.svg" /> 

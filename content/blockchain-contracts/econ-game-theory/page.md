@@ -1,4 +1,4 @@
-# Econ & Game Theory in Blockchain
+# 区块链中的经济学与博弈论
 
 <!-- markdown-link-check-disable -->
 <center>

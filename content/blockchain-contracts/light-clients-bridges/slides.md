@@ -3,7 +3,8 @@ title: Light Clients and Bridges
 description: Light clients principles and application in bridges
 ---
 
-# Light Clients
+
+# 轻客户端与跨链桥
 
 <pba-cols>
 <pba-col>
@@ -13,23 +14,23 @@ description: Light clients principles and application in bridges
 </pba-col>
 <pba-col>
 
-> <div> What can I say?</div> <!-- .element: class="fragment" -->
-> <div> It's a client but light.</div>  <!-- .element: class="fragment" -->
+> <div> 我该说什么呢？</div> <!-- .element: class="fragment" -->
+> <div> 这是一个客户端，但很轻量。</div>  <!-- .element: class="fragment" -->
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## 😢 Running a Node is Hard 😭
+## 😢 运行节点很难 😭
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-Ideally:
+理想情况下：
 
-- Everyone runs their own node.
+- 每个人都运行自己的节点。
 
 </pba-flex>
 </pba-col>
@@ -38,11 +39,11 @@ Ideally:
 <pba-flex center>
 
 <div>
-Reality:
+现实情况：
 
-- It takes a lot of disk, memory, etc
-- It takes some know-how
-- I don't need it _all the time_
+- 它需要大量的磁盘、内存等资源
+- 它需要一些专业知识
+- 我不是一直都需要它
 
 </div>
 <!-- .element: class="fragment" -->
@@ -53,249 +54,246 @@ Reality:
 
 Notes:
 
-The bitcoin whitepaper clearly assumes that users will run their own nodes.
-This is the most trustless and decentralized way to operate, and you should do it whenever you can.
-If you think you can't you're probably wrong.
-Just ask the Monero community.
+比特币白皮书明确假设用户将运行自己的节点。
+这是最无需信任且最去中心化的操作方式，只要你可以，就应该这么做。
+如果你觉得自己做不到，那你可能错了。
+不妨问问门罗币社区。
 
-There are _some_ reasons not to run a full node and the reality is that not everyone will.
-So even though we should always run our own nodes, let's look at some alternatives and ways we can make node running more accessible.
+确实存在一些不运行完整节点的理由，而且现实情况是并非每个人都会运行完整节点。
+所以，尽管我们应该始终运行自己的节点，但还是来看看一些替代方案以及如何让节点运行更易于实现。
 
 ---v
 
-## RPC Nodes
+## RPC 节点
 
-AKA, trust somebody else's node.
+又名，信任他人的节点。
 
 <pba-flex center>
 
 <ul>
-<li>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).</li> <!-- .element: class="fragment" -->
+<li>🕵️ 监视你（<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">比如 Infura</a>）。</li> <!-- .element: class="fragment" -->
 
-<li>🔞 Censor you <!-- .element: class="fragment" -->
-<li>🤥 Lie to you <!-- .element: class="fragment" -->
-<li>💔 Steal your boyfriend <!-- .element: class="fragment" -->
+<li>🔞 审查你 <!-- .element: class="fragment" -->
+<li>🤥 欺骗你 <!-- .element: class="fragment" -->
+<li>💔 抢走你的男朋友 <!-- .element: class="fragment" -->
 </ul>
 
 </pba-flex>
 
 Notes:
 
-The easiest thing to do is just trust some expert to run a node for you.
-Very web2.
-Lot's of things can go wrong.
+最简单的做法就是信任某个专家来为你运行节点。
+这非常“Web2”。
+但可能会出现很多问题。
 
-So this is definitely not the best option.
-Let's see if we can do better.
+所以，这绝对不是最好的选择。让我们看看是否有更好的办法。
 
 ---v
 
-## Lighten the Load
+## 减轻负担
 
-For resource constrained systems and people in a hurry
+适用于资源受限的系统和赶时间的人
 
 <pba-flex center>
 
-- Phone
-- Raspberry pi
-- Microcontroller
-- Inside Web Browser
+- 手机
+- 树莓派
+- 微控制器
+- 网页浏览器内
 
 </pba-flex>
 
 Notes:
 
-One of the complaints was that the node takes too much resources.
-This is especially true if we want people to be able to run the node in all kinds of exotic environments.
-And we do want that because we want people to run their own node even when they're just paying the bill at dinner from their phone or liking social posts while scrolling on the bus.
-Let's make the client lighter so it doesn't require as much resources.
+其中一个抱怨是节点占用太多资源。
+如果我们希望人们能够在各种特殊环境中运行节点，这种情况尤为突出。
+而我们确实希望如此，因为我们希望人们即使在晚餐时用手机付款，或者在公交车上刷社交媒体帖子时，也能运行自己的节点。
+让客户端更轻量，这样它就不需要那么多资源了。
 
 ---v
 
-## Light Client Duties
+## 轻客户端的职责
 
 <pba-flex center>
 
-- ❌ Sync blocks
-- ❌ Execute blocks
-- ✅ Sync headers
-- ❔ Maintain Transaction Pool
-- ✅ Checks consensus
-- ❌ Maintains state
+- ❌ 同步区块
+- ❌ 执行区块
+- ✅ 同步区块头
+- ❔ 维护交易池
+- ✅ 检查共识
+- ❌ 维护状态
 
 </pba-flex>
 
 Notes:
 
-This is what a typical light client does.
-There is not a single definition of light client.
-There are varying degrees of lightness to suit your needs.
+这是典型轻客户端的功能。
+轻客户端并没有单一的定义。
+有不同程度的轻量级版本来满足你的需求。
 
 ---v
 
-## Trustless
+## 无需信任
 
 <img rounded style="width:900px; margin-top:-30px" src="./img/bitcoin-spv.png" />
 
 <pba-flex center>
 
-- Relies on full node for data
-- Does not have to trust data
-- State root helps a lot
+- 依赖完整节点获取数据
+- 无需信任这些数据
+- 状态根很有帮助
 
 </pba-flex>
 
 Notes:
 
-The figure is from the Bitcoin whitepaper.
-The concept of light clients has been around since bitcoin.
-At that time it was known as Simplified Payment Verification.
-You could confirm that a payment was sent or received.
-But you couldn't confirm that the tokens in question still existed or anything else about the state.
+此图来自比特币白皮书。
+轻客户端的概念自比特币时代就已存在。
+当时它被称为简化支付验证。
+你可以确认一笔支付是否已发送或接收。
+但你无法确认相关代币是否仍然存在，或者关于状态的其他任何信息。
 
-Chains with state roots can have much more powerful light clients
+具有状态根的区块链可以拥有功能更强大的轻客户端。
 
 ---v
 
-## Syncing Strategies
+## 同步策略
 
 <pba-flex center>
 
-- Full header sync
-- Checkpoints in code
-- Warp sync
+- 完整的区块头同步
+- 代码中的检查点
+- 快速同步
 
 </pba-flex>
 
 Notes:
 
-We also need to address the use case of clients that are not always on.
-For example if you only need your node on your phone, or when using a specific web page, that means it will have some syncing to do.
+我们还需要考虑客户端并非始终在线的使用场景。
+例如，如果你只需要在手机上使用节点，或者在使用特定网页时使用节点，这意味着它需要进行一些同步操作。
 
-Doing a full sync is already a lot faster than on a full client because you aren't downloading or executing the blocks.
-But by the time you have a few million headers, it does still take some time.
+进行完整同步已经比完整客户端快很多，因为你不需要下载或执行区块。
+但当你有几百万个区块头时，仍然需要一些时间。
 
-The naive solution is to just have relatively recent headers hard-coded in the client.
-This works pretty well.
-You already have to trust the client developers for the entire implementation so you aren't trusting a new party at least.
+简单的解决方案是在客户端中硬编码相对较新的区块头。
+这种方法效果不错。
+你已经需要信任客户端开发者的整个实现，所以至少你没有信任新的一方。
 
-Warp sync is possible when you have deterministic finality.
-In dead simple PoA you just check that the authorities have signed the latest block and you are good.
-If you have authority hand-offs, there is more work to be done.
-You have to check that each authority set signs the transition to the next authority set.
-But this is still only even N blocks instead of every block.
+当你有确定性的最终性时，快速同步是可行的。
+在非常简单的权益证明（PoA）中，你只需检查权威节点是否已签署最新区块，就可以了。
+如果有权威节点交接，就需要做更多工作。
+你必须检查每个权威节点集是否签署了到下一个权威节点集的过渡。
+但这仍然只需要检查 N 个区块，而不是每个区块。
 
 ---v
 
-## Self Defense
+## 自我防御
 
-Stay in the gossip protocol or you might get got.
+保持在 gossip 协议中，否则你可能会中招。
 
 <img rounded width="500px" src="./img/wanka.jpg" />
 <!-- .element: class="fragment" -->
 
-Notes:
+No te s
 
-In the main gossip protocol, if authorities finalize two conflicting blocks, then we can prove that they have broken the rules and slash them.
-If we don't watch the gossip and only peer with a single full node, then our view is entirely defined by that node.
-They may gossip us an attack chain and we won't know.
-So it is important to communicate with many different full nodes.
+在主要的 gossip 协议中，如果权威节点最终确定了两个相互冲突的区块，那么我们可以证明他们违反了规则并对其进行惩罚。
+如果我们不关注 gossip 协议，只与单个完整节点进行交互，那么我们的视图将完全由该节点定义。
+他们可能会向我们传播攻击链，而我们却不知道。
+因此，与许多不同的完整节点进行通信非常重要。
 
 ---
 
-## Bridges
+## 跨链桥
 
-Transport layers between independent consensus systems
+独立共识系统之间的传输层
 
 <img rounded width="700px" src="./img/basic-bridge.svg" />
 
 Notes:
 
-Generally speaking bridges move arbitrary data between unrelated consensus systems.
-Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain.
-To keep it concrete, we'll mostly talk about moving tokens.
+一般来说，跨链桥用于在不相关的共识系统之间传输任意数据。
+基本上是在不同的区块链之间，这些消息可以在目标链上引发任意的副作用。
+为了具体说明，我们主要讨论代币的转移。
 
 ---v
 
-## Source and Target Chain
+## 源链和目标链
 
 <img rounded width="700px" src="./img/bridge-source-target.svg" />
 
 Notes:
 
-By convention we speak of bridges as being one-directional.
-When we talk about trustless bridge design this is a core concept in the design.
-It is less critical but still useful for trusted bridges.
+按照惯例，我们将跨链桥视为单向的。
+当我们讨论无需信任的跨链桥设计时，这是设计中的一个核心概念。
+对于受信任的跨链桥来说，这一点不是那么关键，但仍然有用。
 
-A two-way bridge is really just two one-way bridge.
-Think of a two-way
-street.
-There is a dedicated lane for each direction.
+双向跨链桥实际上就是两个单向跨链桥。
+想象一下双向街道，每个方向都有专用车道。
 
 ---v
 
-## Source Chain Re-Orgs
+## 源链重组
 
 <img rounded width="900px" src="./img/bridge-reorg.png" />
 
 Notes:
 
-On PoW chains this is truly just a judgement call and a prayer.
-If the source chain has deterministic finality we can do better.
-We need to wait for finality.
-But even this isn't foolproof.
-More on this after we cover the basic design.
+在工作量证明（PoW）链上，这真的只是一个判断和祈祷的问题。
+如果源链具有确定性的最终性，我们可以做得更好。
+我们需要等待最终性确定。
+但即使这样也不是万无一失的。
+在我们介绍基本设计之后，会对此有更多讨论。
 
 ---v
 
-## Bridge Models
+## 跨链桥模型
 
 <pba-cols>
 <pba-col>
 
-### Trust-based
+### 基于信任的
 
-Trusted intermediary makes a transfer manually.<br />
-Eg. Wrapped bitcoin on ethereum (WBTC)
+受信任的中介手动进行转移。<br />
+例如：以太坊上的封装比特币（WBTC）
 
 </pba-col>
 <pba-col>
 
-### Trustless
+### 无需信任的
 
-Trustless is the goal,<br />like almost everything in web3.
+无需信任是目标，<br />就像 Web3 中的几乎所有事物一样。
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-The trust based bridges are not at all ideal.
-You have to entirely trust an intermediary.
-You send the intermediary tokens on the source chain.
-Once the intermediary is satisfied that they really own the source tokens, they send you some target tokens on the target chain.
-Or they don't whatever, not their problem.
+基于信任的跨链桥并不理想。
+你必须完全信任一个中介。
+你将源链上的代币发送给中介。
+一旦中介确认他们确实拥有源代币，他们就会在目标链上向你发送一些目标代币。
+或者他们不这么做，反正不是他们的问题。
 
-You can make they trust properties slightly better by using a multisig or a group of people so you only have to trust some subset of them.
-But this does not fundamentally eliminate the trust agreement.
-One classic example is the WBTC foundation.
-You send them bitcoin, they wait for "enough" block confirmations, and then they mint you an ERC20 token on Ethereum.
-And they provide the same service in reverse too.
+你可以通过使用多重签名或一组人来稍微改善信任属性，这样你只需要信任其中的一部分人。
+但这并不能从根本上消除信任协议。
+一个经典的例子是 WBTC 基金会。
+你向他们发送比特币，他们等待“足够”的区块确认，然后在以太坊上为你铸造一个 ERC20 代币。
+他们也提供反向服务。
 
-A lot of the trusted bridge design can be improved and we'll talk about that in detail in the next few slides.
-But it's worth observing here that we will never be able to eliminate the part about "Once the intermediary is satisfied that they really own the source tokens".
-The bridge can never be stronger than the consensus on the source chain
+许多受信任的跨链桥设计可以改进，我们将在接下来的几张幻灯片中详细讨论。
+但值得注意的是，我们永远无法消除“一旦中介确认他们确实拥有源代币”这一部分。
+跨链桥的安全性永远不会比源链的共识更强。
 
 ---
 
-## Trustless bridge design
+## 无需信任的跨链桥设计
 
 <pba-flex center>
 
-- Most trustless way to interact with blockchain<br />is to run a node
-- This is true for individuals _and_ other blockchains
-- A blockchain is extremely resource constrained.
-- Run a source chain light client on the target chain
+- 与区块链交互最无需信任的方式<br />是运行一个节点
+- 这对个人和其他区块链都适用
+- 区块链的资源非常有限。
+- 在目标链上运行源链的轻客户端
 
 </pba-flex>
 
@@ -303,49 +301,49 @@ Notes:
 
 ---v
 
-## BTC Relay
+## BTC 中继
 
 <img rounded width="1000px" src="./img/btc-relay.svg" />
 
 ---
 
-## Bridge Design Challenges
+## 跨链桥设计挑战
 
 <img rounded width="1100px" src="./img/bridge-collapse.webp" />
 
 Notes:
 
-Bridges present their own set of design challenges beyond what we encounter in regular stand-alone light clients.
+跨链桥带来了一系列独特的设计挑战，这些挑战超出了我们在常规独立轻客户端中遇到的问题。
 
 ---v
 
-## Peers?
+## 对等节点？
 
 <pba-flex center>
 
-- How can we peer without networking?
-- Enter the **Relayer** - a permissionless and trustless role
-- Need at least one honest relayer
+- 我们如何在没有网络的情况下进行对等连接？
+- 引入 **中继者** - 一个无需许可且无需信任的角色
+- 至少需要一个诚实的中继者
 
 </pba-flex>
 
 Notes:
 
-On-chain logic doesn't have network IO, so how do we peer?
-There is a role known as a relayer.
-It is an off-chain agent who watches the source chain, and submits headers and finality proofs from the source chain to the target chain through transactions.
-Anyone can start a relayer.
-It is typically a little piece of software that you run.
-But there is nothing magic about it.
-You could perform the relayer task manually by copying header data from an explorer into metamask for example.
+链上逻辑没有网络输入输出，那么我们如何进行对等连接呢？
+有一个称为中继者的角色。
+它是一个链下代理，负责监视源链，并通过交易将源链的区块头和最终性证明提交到目标链。
+任何人都可以启动一个中继者。
+它通常是你运行的一个小程序。
+但它并没有什么神奇之处。
+例如，你可以手动执行中继者的任务，将区块头数据从浏览器复制到 MetaMask 中。
 
-You do need at least one honest relayer for the chain to get the correct header info.
-For this reason a large decentralized relayer group is nice.
-But even if you don't trust any relayer out there, you can always run your own.
+你至少需要一个诚实的中继者，以便链能够获得正确的区块头信息。
+因此，一个大型的去中心化中继者群体是很好的。
+但即使你不相信任何现有的中继者，你也可以随时运行自己的中继者。
 
 ---v
 
-## Finality and Equivocation
+## 最终性和双花
 
 <section class="!flex">
   <img rounded width="500px" src="./img/bridge-incentives-achiles.jpg" />
@@ -354,30 +352,30 @@ But even if you don't trust any relayer out there, you can always run your own.
 
 Notes:
 
-It is not safe to accept headers as finalized immediately even if there is a deterministic finality proof.
-Let that sink in.
-Even if there is a valid finality proof, it is not safe to accept them as finalized.
-Why not?
+即使有确定性的最终性证明，也不能立即将区块头视为最终确定的，这并不安全。
+好好想想。
+即使有有效的最终性证明，也不能安全地将其视为最终确定的。
+为什么呢？
 
-Because the validators may be equivocating.
-They don't send equivocations to real nodes on the network because those equivocations will be gossiped around and reported on the source chain and the validators will be slashed accordingly.
-But remember a light client on the target chain has no way to report such equivocations back to the source chain.
+因为验证者可能在进行双花操作。
+他们不会将双花操作发送给网络中的真实节点，因为这些双花操作会被传播并在源链上被报告，验证者会因此受到惩罚。
+但请记住，目标链上的轻客户端没有办法将此类双花操作报告回源链。
 
 ---v
 
-## Equivocation Incentives
+## 双花激励
 
 <pba-flex center>
 
-- Add a **Challenge Period** and
-- Add Fishermen - reverse of relayers
+- 添加一个 **挑战期** 并且
+- 添加渔夫 - 与中继者相反的角色
 
 <div>
 
-**OR**
+**或者**
 
-- Stake Relayers
-  so they can be slashed
+- 对中继者进行质押
+  这样他们就可以被惩罚
 
 </div>
 <!-- .element: class="fragment" -->
@@ -386,80 +384,67 @@ But remember a light client on the target chain has no way to report such equivo
 
 Notes:
 
-There are basically two classes of solutions.
-Both of them require a waiting period aka challenge period before accepting a header with a finality proof as final.
+基本上有两类解决方案。
+这两类方案都需要一个等待期，也就是挑战期，在接受带有最终性证明的区块头为最终结果之前。
 
-One is to add a role of fishermen.
-They are responsible for noticing when the header candidate on the target chain is different from the one in the main source chain protocol and reporting this behavior back to the source chain so the validators can be slashed there.
-Two problems:
+一种方法是添加渔夫这个角色。
+他们负责注意到目标链上的候选区块头与源链主协议中的区块头不同，并将这种行为报告回源链，以便在那里对验证者进行惩罚。
+但有两个问题：
 
-1. Fishermen have weak incentives.
-   If they do a good job there will be no equivocations and they will not get paid.
-1. Target chain is relying on the foreign source chain to keep the bridge secure instead of owning that security itself.
+1. 渔夫的激励机制较弱。
+   如果他们做得好，就不会有双花操作，他们也就得不到报酬。
+2. 目标链依赖于外部的源链来确保跨链桥的安全，而不是自己拥有这种安全性。
 
-The other is to have the relayer role require a security deposit.
-If it turns out that a relayer relays an attack header, that relayer is slashed and the relayer who reports it gets a reward.
-Relayers will expect to earn some reward for the opportunity cost of their stake which makes the bridge operation more expensive.
+另一种方法是让中继者角色需要缴纳保证金。
+如果发现某个中继者传递了攻击区块头，该中继者将被惩罚，而报告的中继者将获得奖励。
+中继者会期望因他们的质押机会成本而获得一些奖励，这会使跨链桥操作的成本更高。
 
 ---
 
-## Multichain Apps
+## 多链应用
 
 <img rounded width="800px" src="./img/bridge-multichain-stack.svg" />
 
 ---v
 
-## We have a header, now what?
+## 我们有了区块头，接下来呢？
 
 <pba-flex center>
 
-- App users submit proofs
-- Need a source chain transaction?<br />
-  Submit an spv-style transaction proof
-- Need some source chain state?<br />
-  Submit a state proof
+- 应用用户提交证明
+- 需要源链交易吗？<br />
+  提交类似简化支付验证（SPV）风格的交易证明
+- 需要一些源链状态吗？<br />
+  提交状态证明
 
 </pba-flex>
 
 Notes:
 
-The header sync is just the foundation.
-Now Applications can build on top of it with the best possible trust guarantees.
+区块头同步只是基础。
+现在，应用程序可以在其基础上构建，以获得尽可能好的信任保证。
 
-If you need some source chain transaction, your app needs to require an spv-style transaction proof to check against the header's extrinsics root.
+如果你需要某个源链交易，你的应用程序需要一个类似 SPV 风格的交易证明，以与区块头的外在根进行核对。
 
-If you need some source chain state, your app needs to require a state proof to check against the header's state root.
+如果你需要某个源链状态，你的应用程序需要一个状态证明，以与区块头的状态根进行核对。
 
 ---v
 
-## Multichain Security
-
+## 多链安全
 <img rounded style="width: 500px; margin-top:-30px" src="./img/strong-and-weak-.png" />
-
 Notes:
-
-This kind of trustless bridge _with proper incentives_ gets us information about the source chain to the target chain with security about as high as it was on the source chain.
-If you are building an app that spans multiple chains consider the security guarantees on both chains.
-The weaker security of the two is the security your app has.
-More abstractly, your app consumes two different kinds of blockspace that may be of different qualities.
-Your app is only as quality as the lower of the blockspaces.
-
+这种具备合理激励机制的无需信任跨链桥，能够将源链的信息传递至目标链，且安全性与源链相当 。
+如果你正在构建一个跨多条链的应用程序，要考虑两条链的安全保障。应用程序的安全性取决于两条链中较弱的那条。
+更抽象地说，你的应用程序使用了两种不同的区块空间，其质量可能有所不同。应用程序的质量取决于质量较低的那个区块空间。
 ---v
-
-## Example: Depository Mint Model
-
-- Send tokens to a contract on source chain
-- Message is relayed to destination chain
-  - Offchain relay and transaction
-  - XCM
-  - "Somehow"
-- New "wrapped" tokens are minted on the destination chain
-
-<!-- TODO really needs a figure -->
-
+## 示例：托管铸造模型
+- 将代币发送至源链上的合约
+- 消息被中继至目标链
+    - 链下中继与交易
+    - XCM（跨共识消息传递格式）
+    - 其他方式
+- 在目标链上铸造新的 “封装” 代币
+<!-- TODO 此处真的需要一张图 -->
 Notes:
-
-The same process works in reverse to get the original tokens back.
-This can get get complex when there are multiple bridges.
-Are their wrapped tokens interchangeable?
-What if one of the bridges gets hacked?
+反向操作同样可以将原始代币取回。
+当存在多个跨链桥时，这个过程会变得复杂。不同跨链桥产生的封装代币可以互换吗？如果其中一个跨链桥被黑客攻击会怎样？ 

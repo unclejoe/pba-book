@@ -1,220 +1,219 @@
-# Grandpa - The Board Game
+# Grandpa - 棋盘游戏
 
-> - Players: 5+ (4 actual players, 1 author)
-> - Play time: 15 - 60 min
-> - Materials: A large whiteboard and many colored markers
+> - 玩家人数：5人及以上（4名实际玩家，1名主持人）
+> - 游戏时长：15 - 60分钟
+> - 游戏材料：一块大白板和许多彩色马克笔
 
-## Overview
+## 概述
 
-Grandpa is a Byzantine fault tolerant blockchain finality gadget ([formal spec](https://arxiv.org/pdf/2007.01560.pdf)).
-This collaborative board game allows players to learn and practice the Grandpa protocol while also having fun together.
+“Grandpa”是一个拜占庭容错区块链终局小工具（[正式规范](https://arxiv.org/pdf/2007.01560.pdf)）。
+这个合作式棋盘游戏让玩家们在学习和练习“Grandpa”协议的同时，也能一起享受乐趣。
 
-Your goal in the game is to finalize blocks in an ever-growing blockchain data structure.
-You will work together to share information with other players and reach consensus.
-But watch out; some players may be Byzantine!
+你在游戏中的目标是在一个不断增长的区块链数据结构中敲定区块。
+你将与其他玩家合作，共享信息并达成共识。
+但要小心；有些玩家可能是拜占庭式的！
 
 <center>
 <figure>
     <img src="./img/generals-board-game.jpg" />
-    <figcaption><b>Pictured: Byzantine Generals solving distributed consensus via a board game.</b></figcaption>
+    <figcaption><b>图为：拜占庭将军们通过棋盘游戏解决分布式共识问题。</b></figcaption>
 </figure>
 </center>
 
-Some less important details of the grandpa protocol (such as primaries, and timeout conditions) are omitted from the board-game for the sake of playability and clarity.
+为了游戏的可玩性和清晰度，“Grandpa”协议的一些不太重要的细节（如主节点和超时条件）在棋盘游戏中被省略了。
 
-## Setup
+## 游戏设置
 
-Select one participant to act as the "author" who is responsible for creating the blockchain structure, but will not actually play the grandpa protocol.
-The remaining participants are all players in the grandpa protocol.
+选择一名参与者作为“主持人”，负责创建区块链结构，但不实际参与“Grandpa”协议的游戏。
+其余参与者都是“Grandpa”协议的玩家。
 
-Give one marker to each participant including the author.
-Each player should have their own marker color.
-Avoid colors that are hard to distinguish such as light red and pink.
-If you have colorblind players, take special care when choosing marker colors.
+给包括主持人在内的每个参与者一支马克笔。
+每个玩家应该有自己的马克笔颜色。
+避免使用难以区分的颜色，如浅红色和粉红色。
+如果有色盲玩家，在选择马克笔颜色时要特别注意。
 
-Choose a goal number of blocks that you wish to finalize together as a team.
-The game will end when you reach this block number.
+选择一个你们团队希望一起敲定的目标区块数量。
+当达到这个区块数量时，游戏结束。
 
-### Views and Gossip
+### 视图和传播
 
-The grandpa protocol operates in a decentralized asynchronous blockchain network.
-As such, there is no universal view of the blockchain data structure or the messages that are being passed between players in the protocol.
-Some players may see more information than others and information may arrive to the various players in different orders.
+“Grandpa”协议在一个去中心化的异步区块链网络中运行。
+因此，对于区块链数据结构或协议中玩家之间传递的消息，没有统一的视图。
+有些玩家可能比其他玩家看到更多的信息，而且信息可能以不同的顺序到达各个玩家那里。
 
-Divide the whiteboard into a dedicated space for each player in the protocol.
-Each player should have roughly 50cm X 50cm.
-The author does not need their own dedicated space.
+将白板划分成专门的区域，供协议中的每个玩家使用。
+每个玩家的区域大约为50厘米×50厘米。
+主持人不需要自己的专用区域。
 
 <center>
 <img src="./img/board-setup.svg" />
 </center>
 
-Throughout the game all participants including the author are responsible for communicating with other players by adding information _to other players dedicated spaces_.
-In fact, most of the marks that you make during the game will be on someone else's space rather than your own.
-For a more realistic game, take care to share information with other players in a different order each time.
+在整个游戏过程中，包括主持人在内的所有参与者都有责任通过在其他玩家的专用区域添加信息来与其他玩家进行沟通。
+实际上，你在游戏中所做的大部分标记都会在别人的区域，而不是你自己的区域。
+为了让游戏更真实，每次分享信息时要注意以不同的顺序与其他玩家分享。
 
-### Genesis Block
+### 创世区块
 
-Before game play begins, the author draws a single genesis block labeled `G` on each player's view.
-Each player marks the genesis block as final by shading it with their color in their own view.
+在游戏开始之前，主持人在每个玩家的视图上画一个标有`G`的创世区块。
+每个玩家在自己的视图中用自己的颜色将创世区块涂上阴影，以此将其标记为已敲定。
 
 <center>
 <img src="./img/genesis.svg" />
 </center>
 
-## Authoring
+## 出块
 
-The author is responsible for creating the blockchain data structure and gossiping it to the players.
-As the game progresses the author will grow the blockchain by creating descendant blocks of this genesis block.
-The author may create blocks anywhere in the chain they see fit.
-They may create forks, or linear runs without forks.
-They may create a long chain and then go back and create shorter forks from earlier in the chain.
+主持人负责创建区块链数据结构并将其传播给玩家。
+随着游戏的进行，主持人将通过创建创世区块的后代区块来扩展区块链。
+主持人可以在他们认为合适的链中的任何位置创建区块。
+他们可以创建分叉，或者创建没有分叉的线性链。
+他们可以创建一个长链，然后回过头来从链的早期创建较短的分叉。
 
-When the author creates a block they should gossip it to all players by drawing it on each player's view.
-A block is drawn with a pointer to its parent block and a short unique block identifier like a few characters or digits.
-The author should take care to vary to order in which they place new blocks on various players' views.
-In fact, the author may even gossip multiple blocks to a single player before going back and gossiping any of them to other players.
-However the author should ensure that all blocks are eventually gossiped to all players.
+当主持人创建一个区块时，他们应该通过在每个玩家的视图上绘制该区块，将其传播给所有玩家。
+一个区块的绘制需要有一个指向其父区块的指针和一个简短的唯一区块标识符，比如几个字符或数字。
+主持人应该注意改变在各个玩家视图上放置新区块的顺序。
+实际上，主持人甚至可以在回到其他玩家那里传播任何区块之前，先向单个玩家传播多个区块。
+然而，主持人应该确保所有区块最终都能传播给所有玩家。
 
 <center>
 <figure>
     <img src="./img/authoring-gossip.svg" />
-    <figcaption><b>Two blocks have been authored since genesis. Not all players have heard about block <code>DEF</code> yet.</b></figcaption>
+    <figcaption><b>自创世区块以来，已经创建了两个区块。并非所有玩家都已经听说了区块<code>DEF</code>。</b></figcaption>
 </figure>
 </center>
 
-In some ways the author acts as a "party host" or "dungeon master" for the game.
-They should observe the players progress, struggles, and enthusiasm, and author accordingly.
-If players are struggling to keep up or getting frustrated or overwhelmed the author should slow down the authoring rate or build a simpler chain with fewer forks.
-If players are easily finalizing blocks or getting bored the author should speed up, create a more complex tree with many forks, or decrease the synchrony.
+在某些方面，主持人就像是游戏的“派对主持人”或“地下城主”。
+他们应该观察玩家的进展、困难和热情，并相应地进行主持工作。
+如果玩家跟不上节奏，或者感到沮丧或不知所措，主持人应该放慢创建区块的速度，或者构建一个更简单、分叉更少的链。
+如果玩家很容易敲定区块，或者感到无聊，主持人应该加快速度，创建一个有很多分叉的更复杂的树，或者减少同步性。
 
-## Game Play
+## 游戏玩法
 
-The Grandpa protocols proceeds in rounds.
-Each player has their own view of what round they are on, and not all players will be on the same round at the same time.
-In each round, each player casts two votes known as the "prevote" and "precommit" in that order.
-Each player begins in round 1.
+“Grandpa”协议按轮次进行。
+每个玩家对自己所处的轮次有自己的看法，并非所有玩家在同一时间都处于同一轮次。
+在每一轮中，每个玩家依次投两票，称为“预投票”和“预提交”。
+每个玩家从第1轮开始。
 
-Like many other BFT protocols, Grandpa requires strictly greater than 2/3 of players (not counting the author) to be properly following the protocol.
-For the remainder of this section this will be referred to as a "threshold".
+像许多其他拜占庭容错协议一样，“Grandpa”协议要求严格超过三分之二的玩家（不包括主持人）正确遵循协议。
+在本节的其余部分，这将被称为“阈值”。
 
-### Prevoting
+### 预投票
 
-Each player begins a round by casting their prevote.
-A prevote can be thought of as a non-binding signal for what the player hopes to finalize in this round.
-Generally the prevote should be for the longest chain that extends the best finalized block.
-A player casts their prevote by writing the current round number off to the right of the block they are prevoting for first on their own view, and then on other players' views.
-Remember you should send your prevotes out to other players in a different order each time, and it is okay to allow some latency between sending it to each player.
+每个玩家在一轮开始时进行预投票。
+预投票可以被视为玩家希望在本轮中敲定的区块的非约束性信号。
+一般来说，预投票应该投给从最佳敲定区块延伸出来的最长链。
+玩家进行预投票时，先在自己的视图中，然后在其他玩家的视图中，将当前轮次编号写在他们预投票的区块的右侧。
+记住，你每次应该以不同的顺序将预投票发送给其他玩家，并且在发送给每个玩家之间允许有一些延迟是可以的。
 
 <center>
 <figure>
     <img src="./img/prevote.svg" />
-    <figcaption><b>Players 1 and 4 have cast prevotes for block <code>ABC</code> in round 2. Their prevote has not yet been gossiped to all players. Players 2 and 4 have not yet cast prevotes for round 2.</b></figcaption>
+    <figcaption><b>玩家1和玩家4在第2轮中对区块<code>ABC</code>进行了预投票。他们的预投票尚未传播给所有玩家。玩家2和玩家4尚未对第2轮进行预投票。</b></figcaption>
 </figure>
 </center>
 
-If a player hasn't yet seen the block you're prevoting for, you may add the block and its parents to their view.
+如果一个玩家还没有看到你正在预投票的区块，你可以将该区块及其父区块添加到他们的视图中。
 
-### The Prevote Ghost
+### 预投票幽灵
 
-When a player has seen a threshold of prevotes in the current round, they can _may_ mark the round's "Prevote Ghost" on their own view.
-They may also choose to wait a short time to see if any new prevotes are coming in.
-The prevote ghost is defined as the highest block that has a threshold of prevotes, and it is marked by drawing the letters `PG` and a round number off to the left of the block.
-For example `PG2` for the round two prevote ghost.
-(Or optionally `👻2` if you are feeling artistic).
+当一个玩家在当前轮次中看到了达到阈值的预投票时，他们“可以”在自己的视图中标记该轮的“预投票幽灵”。
+他们也可以选择等待一小段时间，看看是否有新的预投票进来。
+预投票幽灵被定义为拥有达到阈值的预投票的最高区块，通过在该区块的左侧绘制字母`PG`和轮次编号来标记。
+例如，第2轮的预投票幽灵标记为`PG2`。（或者，如果你有艺术细胞，也可以选择标记为`👻2`）。
 
 <center>
 <figure>
     <img src="./img/prevote-ghost.svg" />
-    <figcaption><b>Now that player 1 has seen a threshold of prevotes (3 in this case of 4 players), they can mark the prevote ghost. No other players have seen enough prevotes to mark a prevote ghost yet.</b></figcaption>
+    <figcaption><b>现在玩家1已经看到了达到阈值的预投票（在这个4人游戏的例子中是3票），他们可以标记预投票幽灵。其他玩家还没有看到足够的预投票来标记预投票幽灵。</b></figcaption>
 </figure>
 </center>
 
-### The Estimate
+### 估计值
 
-As you mark your prevote ghost, also mark your estimate on your own view to the left of the same block that is the prevote ghost with the letter `E` and a round number.
-For example, `E4` for round four's estimate.
+当你标记预投票幽灵时，也在自己的视图中，在与预投票幽灵相同的区块的左侧标记你的估计值，用字母`E`和轮次编号表示。
+例如，第4轮的估计值标记为`E4`。
 
 <center>
 <figure>
     <img src="./img/mark-estimate.svg" />
-    <figcaption><b>In round 4, Player 1 has marked their prevote ghost previously, and is now setting the estimate to the same slide.</b></figcaption>
+    <figcaption><b>在第4轮中，玩家1之前已经标记了他们的预投票幽灵，现在将估计值设置在同一个区块上。</b></figcaption>
 </figure>
 </center>
 
-A round's estimate is defined as the highest block that is in the chain of the prevote ghost that could possibly achieve a threshold of precommits.
-So while the estimate _begins_ at the same block as the prevote ghost, it may move up the chain as more precommits come in.
+一轮的估计值被定义为预投票幽灵所在链中可能达到预提交阈值的最高区块。
+因此，虽然估计值“开始”于与预投票幽灵相同的区块，但随着更多预提交的到来，它可能会在链上向上移动。
 
-### Precommitting
+### 预提交
 
-Once you have marked a prevote ghost, you may, again, wait a short time for any more prevotes to come in.
-Once you get tired of waiting (or when you have seen all the prevotes), you may cast your precommit for the block that you see as the prevote ghost.
-Mark your precommit first on your own view and then on other players' views by writing the round number off to the right of the block and circling it.
-Precommits are distinguished from prevotes by the circle.
-Remember not all players will agree on which block is the prevote ghost, so others may precommit for blocks different than you have.
+一旦你标记了预投票幽灵，你可以再次等待一小段时间，看看是否还有更多的预投票进来。
+一旦你等得不耐烦了（或者当你已经看到了所有的预投票），你就可以对你认为是预投票幽灵的区块进行预提交。
+先在自己的视图中，然后在其他玩家的视图中，将轮次编号写在该区块的右侧并圈起来，以此标记你的预提交。
+预提交与预投票的区别在于圆圈。
+记住，并非所有玩家都会对哪个区块是预投票幽灵达成一致，所以其他玩家可能会对与你不同的区块进行预提交。
 
 <center>
 <figure>
     <img src="./img/precommitting.svg" />
-    <figcaption><b>Player 1 casts their round 4 precommit for the block that they see as the prevote ghost. They have also observed a Player 2's precommit.</b></figcaption>
+    <figcaption><b>玩家1对他们认为是预投票幽灵的区块进行了第4轮的预提交。他们还观察到了玩家2的预提交。</b></figcaption>
 </figure>
 </center>
 
-As you observe more precommits appearing on your view, your estimate may change. Specifically it may move up the chain to ancestor blocks.
+当你观察到更多的预提交出现在你的视图中时，你的估计值可能会改变。具体来说，它可能会在链上向上移动到祖先区块。
 
 <center>
 <figure>
     <img src="./img/estimate-moves.svg" />
-    <figcaption><b>As Player 1 observes more precommits arriving, it becomes impossible for block<code>GHI</code> to achieve a threshold of precommits, and thus the estimate moves up the chain.</b></figcaption>
+    <figcaption><b>当玩家1观察到更多的预提交到来时，区块<code>GHI</code>不可能达到预提交的阈值，因此估计值在链上向上移动。</b></figcaption>
 </figure>
 </center>
 
-### Completing a Round
+### 完成一轮
 
-We will decide that _some_ block is finalized in each round, although it may be a block that was already finalized in a previous round.
-We will only ever finalize an ancestor of the estimate.
-Once some ancestor of the estimate has achieved a threshold of precommits, you can declare that block finalized by shading it with your color on your view.
+我们将确定在每一轮中“某个”区块被敲定，尽管它可能是在前一轮中已经被敲定的区块。
+我们只会敲定估计值的祖先区块。
+一旦估计值的某个祖先区块达到了预提交的阈值，你就可以用你的颜色在你的视图中将该区块涂上阴影，以此宣布该区块已敲定。
 
 <center>
 <img src="./img/finalizing.svg" />
 </center>
 
-After a round has completed, you may choose to erase the votes for that round from your view to keep the board tidy.
-But you are not required to do so.
-Be careful not to erase votes for _future_ rounds by accident as some players may have advanced to the next round before you.
+在一轮完成后，你可以选择从你的视图中擦除该轮的投票标记，以保持白板整洁。
+但这不是必须的。
+小心不要不小心擦除“未来”轮次的投票标记，因为有些玩家可能在你之前已经进入了下一轮。
 
 <center>
 <figure>
     <img src="./img/erasing.svg" />
-    <figcaption><b>As Player 1 has completed round 4 and has erased markings related to round 4. They have NOT erased marking related to round 5.</b></figcaption>
+    <figcaption><b>玩家1已经完成了第4轮，并擦除了与第4轮相关的标记。他们没有擦除与第5轮相关的标记。</b></figcaption>
 </figure>
 </center>
 
-Proceed to the next round.
+进入下一轮。
 
-## Ending the Game
+## 游戏结束
 
-Grandpa is intended to continue finalizing blocks forever.
-Since you likely don't want to play this board game forever, the board game does have an end.
+“Grandpa”协议旨在永远持续敲定区块。
+由于你可能不想永远玩这个棋盘游戏，所以这个棋盘游戏是有结束的时候的。
 
-The honest players win when they all finalize the goal number of blocks chosen at the beginning without a safety violation.
+当所有诚实的玩家在不违反安全规则的情况下敲定了开始时选择的目标区块数量时，诚实的玩家获胜。
 
-The Byzantine players (if any; see next section) win when two honest players finalize conflicting blocks or the honest players get fed up and flip the whiteboard over.
+拜占庭玩家（如果有的话；见下一节）在两个诚实的玩家敲定了相互冲突的区块，或者诚实的玩家忍无可忍而把白板翻过来时获胜。
 
-## Byzantine Actors
+## 拜占庭角色
 
-Once you have played a few rounds of the game and are able reliably finalize new blocks, you can spice things up by assigning one or more players to be Byzantine.
-Byzantine players are not required to follow the protocol rules.
-For example they may:
+当你已经玩了几轮游戏，并且能够可靠地敲定新的区块时，你可以通过指派一名或多名玩家扮演拜占庭角色来增加游戏的趣味性。
+拜占庭玩家不需要遵守协议规则。
+例如，他们可能会：
 
-- Prevote for chains that do not extend the latest finalized chain
-- Precommit for blocks other than the ones indicated by the prevote
-- Go back and cast votes in previous rounds
-- Fail to participate at all.
+- 对不延伸到最新敲定链的链进行预投票
+- 对预投票所指示的区块之外的区块进行预提交
+- 回到之前的轮次进行投票
+- 完全不参与游戏。
 
-When first adding Byzantine players, you may assign the Byzantine roles such that everyone knows who is Byzantine.
-Or, for a more realistic experience, you may assign it blindly by eg drawing straws.
-Remember that in order for Grandpa to work you must have strictly less than one third of grandpa players Byzantine.
+当第一次添加拜占庭玩家时，你可以分配拜占庭角色，让每个人都知道谁是拜占庭玩家。
+或者，为了获得更真实的体验，你可以通过抽签等方式盲目分配角色。
+记住，为了让“Grandpa”协议正常工作，拜占庭玩家的数量必须严格少于“Grandpa”协议玩家总数的三分之一。
 
-For the most realistic experience, allow players to self select whether they are Byzantine.
-By doing this there is no guarantee that the honest super majority criteria is met and you experience safety faults where different players finalize conflicting chains.
+为了获得最真实的体验，让玩家自行选择是否扮演拜占庭角色。
+这样做并不能保证诚实的超级多数标准得到满足，你可能会遇到安全故障，即不同的玩家敲定了相互冲突的链。

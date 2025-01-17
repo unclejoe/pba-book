@@ -8,13 +8,13 @@ duration: 20 min
 
 Notes:
 
-This workshop was an idea that came from first wave of PBA in Cambridge.
-The first time it was ever played was back in Buenos Aires.
-It's very much a PBA right of passage, so it's exciting to be able to play today.
+这个工作坊的想法源于剑桥的第一波 PBA。
+它第一次举办是在布宜诺斯艾利斯。
+这非常像是 PBA 的一种传统活动，所以今天能够参与其中非常令人兴奋。
 
 ---
 
-# Day 1
+# 第一天
 
 ---
 
@@ -22,158 +22,157 @@ It's very much a PBA right of passage, so it's exciting to be able to play today
 
 Notes:
 
-This is us playing in BA earlier this year.
+这是我们今年早些时候在布宜诺斯艾利斯的活动。
 
 ---
 
-## Components
+## 组件
 
 <br />
 
 <div class="flex-container fragment">
-<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+<div class="left"> <!-- 注意：你需要一个空行才能在 <div> 中渲染 Markdown -->
 <div style="text-align: center"> <center><h2><pre> game.contract </pre></h2></center> </div>
 <ul>
-<li>We deploy + run.</li>
-<li>Runs game loop.</li>
-<li>Invokes each player.</li>
-<li>Determines the score.</li>
+<li>我们进行部署和运行。</li>
+<li>运行游戏循环。</li>
+<li>调用每个玩家。</li>
+<li>确定得分。</li>
 </ul>
 </div>
 
-<div class="left fragment"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+<div class="left fragment"> <!-- 注意：你需要一个空行才能在 <div> 中渲染 Markdown -->
 <div style="text-align: center"> <center><h2><pre> player.contract </pre></h2></center> </div>
 
 <ul>
-<li>Your job.</li>
+<li>这是你的任务。</li>
 </ul>
 </div>
-<div class="right fragment"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+<div class="right fragment"> <!-- 注意：你需要一个空行才能在 <div> 中渲染 Markdown -->
 <div style="text-align: center"> <center><h2><pre> frontend </pre></h2></center> </div>
 <ul>
-<li>On big screen during game.</li>
+<li>游戏期间会显示在大屏幕上。</li>
 </ul>
 </div>
 </div>
 
 Notes:
 
-The game has three components:
+这个游戏有三个组件：
 
-- **click** the first is a game contract, which is something that we have taken care of.
-  I will deploy it and run it on Rococo.
-  The game contract runs the game loop.
-  It invokes each player contract and it determines the score.
-- **click** And the player.contract, that's your job.
-  so we we have a template for a very basic player and you can basically modify it in any way you like.
-  I will explain the scoring function in a moment.
-- **click** Lastly, we have a front-end that we will put on the big screen here, but it's online, you can open it up on your laptop and follow the game locally.
+- **点击** 第一个是游戏合约，这部分我们已经处理好了。
+  我会将其部署并在 Rococo 上运行。
+  游戏合约运行游戏循环。
+  它调用每个玩家合约并确定得分。
+- **点击** 还有 `player.contract`，这是你的任务。
+  我们有一个非常基础的玩家模板，你可以根据自己的喜好进行修改。
+  我一会儿会解释得分函数。
+- **点击** 最后，我们有一个前端界面，会放在这里的大屏幕上，但它是在线的，你可以在笔记本电脑上打开并本地观看游戏。
 
 ---
 
-## The Process
+## 流程
 
-1. 🧠 Create contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
-1. 🚀 Deploy contract to Rococo testnet <!-- .element: class="fragment" data-fragment-index="2" -->
-1. 🤝 Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
-1. ️🎮 We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
-1. 📺️️ It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
+1. 🧠 创建一个代表你进行游戏的合约<!-- .element: class="fragment" data-fragment-index="1" -->
+1. 🚀 将合约部署到 Rococo 测试网 <!-- .element: class="fragment" data-fragment-index="2" -->
+1. 🤝 将你的合约作为玩家注册到游戏合约中<!-- .element: class="fragment" data-fragment-index="3" -->
+1. ️🎮 我们开始游戏<!-- .element: class="fragment" data-fragment-index="4" -->
+1. 📺️️ 游戏会运行几分钟，我们在屏幕上观看<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
-So the process is as follows:
+流程如下：
 
-- **click** - you brainstorm and create a contract that plays on your behalf ideally in a better way than the other contracts
-- **click** - you deploy the contract to the Rococo testnet
-- **click** - you register your contract as a player with the game contract.
-  We will publish the addresses and it's it's not complicated you can just use contracts UI.
-  I will also show it in a second
-- **click** - then we start the game.
-  We have a script that calls the game contract regularly and the front end will display the changes
-- **click** - so the game will run for some minutes.
-  Your contract will already be uploaded at this point - so you can't do anything.
-  The contract will play on your behalf.
-  Meaning it's hands off.
-  I mean you can also change it with upgradable contract patterns and stuff, but in general, you won't have to.
-  So you can just watch the game play out.
-  If you're familiar with AI agents, that's also a similar idea, where you have an agent that plays a game on your behalf.
+- **点击** - 你要进行头脑风暴，创建一个代表你进行游戏的合约，理想情况下要比其他合约表现更好。
+- **点击** - 你将合约部署到 Rococo 测试网。
+- **点击** - 你将你的合约作为玩家注册到游戏合约中。
+  我们会公布地址，这并不复杂，你可以使用合约 UI。
+  我一会儿也会演示。
+- **点击** - 然后我们开始游戏。
+  我们有一个脚本会定期调用游戏合约，前端会显示变化。
+- **点击** - 游戏会运行几分钟。
+  此时你的合约已经上传，所以你无法再做任何操作。
+  合约会代表你进行游戏。
+  也就是说，你可以放手不管了。
+  当然，你也可以使用可升级合约模式等进行更改，但一般来说不需要。
+  你只需观看游戏进展。
+  如果你熟悉人工智能代理，这也是一个类似的概念，即有一个代理代表你进行游戏。
 
 ---
 
-## How the Game looks
+## 游戏界面
 
 <img rounded src="./img/splash-2.png" />
 
 Notes:
 
-This is what the game board itself looks like.
-You can see, it's a it's a coordinate grid.
+这是游戏棋盘的样子。
+你可以看到，这是一个坐标网格。
 
 ---
 
-## How the Game looks
+## 游戏界面
 
 <img rounded src="./img/splash-9.png" />
 
 Notes:
 
-this is X1 y0.
-And the idea is for you, as a contract developer, to paint as many fields of this canvas of the script as possible.
-There's an API function for how to paint.
-I'll show it in a minute, but the idea is that in the end the contract that painted the most Fields wins.
+这是 X1 Y0 位置。
+作为合约开发者，你的目标是尽可能多地在这个画布上涂色。
+有一个用于涂色的 API 函数，我一会儿会展示，总之，最后涂色最多的合约获胜。
 
 ---
 
-## How the Game looks
+## 游戏界面
 
 <img rounded src="./img/splash-10.png" />
 
 Notes:
 
-So yeah, there's bit of scoring to be done.
-There's also scoreboard here on the side, where all players will be shown as well as their rank.
-You will be assigned a random color to your player contract.
+是的，需要进行一些计分。
+这边还有一个计分板，会显示所有玩家及其排名。
+你的玩家合约会被分配一个随机颜色。
 
 ---
 
-## How to score?
+## 如何得分？
 
-- Use as little gas as possible to paint as many fields as possible.
-
-<!-- .element: class="fragment" -->
-
-- Stay within your gas budget.
+- 尽可能使用最少的 gas 来涂更多的区域。
 
 <!-- .element: class="fragment" -->
 
-- The later you manage to still paint a field the better you score.
+- 保持在你的 gas 预算内。
 
 <!-- .element: class="fragment" -->
 
-- No overpainting! First player to paint a field owns it.
+- 你越晚还能成功涂色，得分就越高。
+
+<!-- .element: class="fragment" -->
+
+- 不能重复涂色！第一个涂色的玩家拥有该区域。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-This game was designed in a way where all of the best practices for smart contract development will make your player run better.
-We really tried to gamify some of the concepts that are really best practices of how you should develop a smart contract.
+这个游戏的设计方式是，所有智能合约开发的最佳实践都会让你的玩家表现更好。
+我们真的试图将一些关于如何开发智能合约的最佳实践概念游戏化。
 
-- **click** - first one is to use as little gas as possible to paint as many fields as possible.
-  Gas consumption is a super big thing as user fees derived from that and the transaction throughput also relates to how big a contract is so the less complex your contract is the better it will do.
-- **click** - There's a certain gas budget allocated per player and if you if you're above that then you just won't make a turn.
-  So you have to stay in an optimal gas budget.
-- **click** - the later in the in the game that you still manage to paint the field the better you score because what will happen is that there will be all kinds of fields painted and it will convert to a place where there's only a few left.
-  so if you have a player that just randomly tries to paint things then at some at some point it just won't no longer work because it doesn't paint the unpainted fields.
-  But in order to find those, you will have to have some more complex logic in your contract.
-- **click** - and lastly, there's no overpainting.
-  So the first player to paint a field owns it.
-  So if you have a contract that just paints the same field over and over again, it will just not work.
-  So you have to have some logic in there that checks whether a field is already painted or not.
+- **点击** - 第一个要点是尽可能使用最少的 gas 来涂更多的区域。
+  gas 消耗是一个非常重要的因素，因为用户费用由此衍生，而且交易吞吐量也与合约的大小有关，所以你的合约越简单越好。
+- **点击** - 每个玩家都有一定的 gas 预算，如果超出这个预算，你在这一轮就无法行动。
+  所以你必须保持在最优的 gas 预算内。
+- **点击** - 在游戏后期你还能成功涂色，得分就越高，因为随着游戏进行，会有各种区域被涂色，最后只剩下少数区域。
+  所以如果你的玩家只是随机尝试涂色，那么在某个时候就不再起作用了，因为它涂的是已经被涂过的区域。
+  但为了找到那些未涂色的区域，你需要在合约中加入一些更复杂的逻辑。
+- **点击** - 最后，不能重复涂色。
+  所以第一个涂色的玩家拥有该区域。
+  因此，如果你的合约只是反复涂同一个区域，那是行不通的。
+  所以你需要在合约中加入一些逻辑来检查某个区域是否已经被涂过。
 
 ---
 
-## Basic Player Contract
+## 基础玩家合约
 
 ```rust [1-2,19|3-4|7-10|12-17|1-19]
 #[ink::contract]
@@ -187,8 +186,8 @@ mod player {
             Self {}
         }
 
-        /// Called during every game round.
-        /// Return `(x, y)` coordinate of pixel you want to color.
+        /// 在每一轮游戏中被调用。
+        /// 返回你想要涂色的像素的 `(x, y)` 坐标。
         #[ink(message, selector = 0)]
         pub fn your_turn(&self) -> Option<(u32, u32)> {
             Some(1, 2)
@@ -199,105 +198,103 @@ mod player {
 
 Notes:
 
-So this is a very basic player contract.
-We have a repository app set up with the template for this - I will share the link in a second.
-How it looks is - it's a contract that defines the player module.
+这是一个非常基础的玩家合约。
+我们已经设置了一个包含此模板的代码仓库 - 我一会儿会分享链接。
+它的样子是 - 这是一个定义玩家模块的合约。
 
-- **click** - a super simple player doesn't have to contain any storage whatsoever.
-- **click**- a super simple player also doesn't have to contain any Constructor arguments
-- **click** - and it can just return a random constant value.
-  So this is the most simple player ever.
-  What your player needs to do is to have one message, that has a defined selector, so you don't have to think more about this.
-  It's just that it needs to have this function and this function is called by the game with every round.
-  And whatever you return from this function.
-  This is your your turn for the game.
-  So if in this case you return an option some(1,2), this would mean you paint the pixel at X1 Y2.
-  In that case, it would be a very boring play.
-  Who can tell me what would happen here?
-  _(a player that only makes one turn - it always tries to paint the same field_.
-  _And if someone else also chose the same magic numbers then it wouldn't even make a turn at all_.)
-- **click** - So there's a couple things of how you can improve on that and I will show some hints later, but for now what we're gonna do is look at the repository and see how we can get started with this.
+- **点击** - 一个非常简单的玩家合约不需要包含任何存储。
+- **点击** - 一个非常简单的玩家合约也不需要包含任何构造函数参数。
+- **点击** - 它可以只返回一个随机的常量值。
+  所以这是最简单的玩家合约。
+  你的玩家合约需要有一个消息，该消息有一个定义好的选择器，所以你不需要过多考虑这个。
+  只是它需要有这个函数，并且这个函数在每一轮游戏中都会被游戏调用。
+  你从这个函数返回的值就是你在游戏中的行动。
+  所以在这种情况下，如果你返回 `Some(1, 2)`，这意味着你要涂 X1 Y2 位置的像素。
+  在这种情况下，游戏会非常无聊。
+  谁能告诉我这里会发生什么？
+  _（一个只进行一轮行动的玩家 - 它总是尝试涂同一个区域。如果有人也选择了相同的神奇数字，那么它甚至根本无法行动。）_
+- **点击** - 有几种方法可以改进它，我稍后会给出一些提示，但现在我们要做的是查看代码仓库，看看如何开始。
 
 ---
 
-## How to play
+## 如何玩
 
 <img rounded src="./img/github.png" />
 
 Notes:
 
-This is the Squink-Splash-beginner Repository - it contains a couple of things.
+这是 Squink-Splash-beginner 代码仓库 - 它包含了一些东西。
 
 ---
 
-## How to play
+## 如何玩
 
 <img rounded src="./img/github1.png" />
 Notes:
 
-It contains the cargo.toml file and the lib.rs, which is the player that I just showed.
+它包含 `cargo.toml` 文件和 `lib.rs` 文件，`lib.rs` 就是我刚才展示的玩家合约。
 
 ---
 
-## How to play
+## 如何玩
 
 <img rounded src="./img/github2.png" />
 
 Notes:
 
-It contains the game metadata.
-You will need this in order to interact with the game itself, to register your player and so on.
-but yeah we will show that.
+它包含游戏元数据。
+你需要这些数据来与游戏进行交互，比如注册你的玩家等等。
+我们会展示具体操作。
 
 ---
 
-## How to play
+## 如何玩
 
 <img rounded src="./img/github3.png" />
 
 Notes:
 
-And it has 2 `todo` files.
-The first is some instructions on General setup and the second one is in order to build your player.
+它有两个 `todo` 文件。
+第一个是一些关于通用设置的说明，第二个是关于构建你的玩家合约的说明。
 
 ---
 
-## Now (1)
+## 现在（1）
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-1.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-1.md)
 
 Notes:
 
-So, the first thing that we are going to do is that I would ask all of you to go to this link here and follow the instructions.
-We will go around and help whoever has an issue.
-I think you might even have already used some of the requirements in there, so it may not be super complicated.
+我们要做的第一件事是，请大家访问这个链接并按照说明操作。
+我们会四处走动，帮助遇到问题的人。
+我想你可能已经使用过其中的一些要求，所以可能不会太复杂。
 
 ---
 
-## Now (2)
+## 现在（2）
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-2.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-2.md)
 
 Notes:
 
-For this stage, you will need the address of the game.
-We'll post it in the chat.
-This is a simple example - we're just giving you exposure to the flow of uploading your player contract.
+在这个阶段，你需要游戏的地址。
+我们会在聊天中发布。
+这是一个简单的例子 - 我们只是让你了解上传玩家合约的流程。
 
 ---
 
-## 🕹️🎮 Let's play! 🕹️🎮
+## 🕹️🎮 让我们开始玩吧！ 🕹️🎮
 
 [https://splash.use.ink](https://splash.use.ink)
 
 Notes:
 
-The next slides go over strategy.
-(maybe wait to to go through until you've played one game)
+接下来的幻灯片会介绍策略。
+（也许可以等到你玩完一局游戏再看）
 
 ---
 
-## The Game Contract
+## 游戏合约
 
 > [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
 
@@ -319,333 +316,205 @@ The next slides go over strategy.
 
 Notes:
 
-When you deployed it you already saw that there's different functions that you can call.
-There are a lot of functions that are interesting.
+当你部署它时，你已经看到有不同的函数可以调用。
+有很多有趣的函数。
 
-- **click** - the game runner calls this - if you're interested, you can take a look how it works and there might be some hints for for the game.
-- **click** - then there's a function to to query the board in order to find out if certain fields are already occupied or if they are still free.
-- **click** - there's a function for the gas budget so you can find out how much gas your player is allowed to use per one round.
-  Because worst thing is if you are above this gas budget, then you just won't execute any turn during that round.
-- **click** - there's also function to query the game dimensions.
-  Same thing there, if you paint outside the bounds, then also you just missed one turn.
+- **点击** - 游戏运行器会调用这个函数 - 如果你感兴趣，可以看看它是如何工作的，可能会有一些游戏提示。
+- **点击** - 然后有一个函数可以查询棋盘，以确定某些区域是否已经被占用或者仍然是空闲的。
+- **点击** - 有一个函数可以获取 gas 预算，这样你就可以知道你的玩家在每一轮中可以使用多少 gas。
+  因为最糟糕的情况是，如果你的 gas 使用超出了这个预算，那么你在这一轮就无法执行任何行动。
+- **点击** - 还有一个函数可以查询游戏的尺寸。
+  同样，如果你的涂色超出了边界，那么你也会错过一轮。
 
 ---
 
-## Things to consider 🧠
+## 需要考虑的事情 🧠
 
-- Develop a strategy for your player.<br /><br />
-- Use as little gas as possible to paint as many fields as possible.
-- Stay within your gas budget.
-- The later you manage to still paint a field, the better you score.<br /><br />
-- No overpainting! First player to paint a field owns it.
+- 为你的玩家制定一个策略。<br /><br />
+- 尽可能使用最少的 gas 来涂更多的区域。
+- 保持在你的 gas 预算内。
+- 你越晚还能成功涂色，得分就越高。<br /><br />
+- 不能重复涂色！第一个涂色的玩家拥有该区域。
 - [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
 
 ---
 
-## How to test locally?
-
+## 如何进行本地测试？
 [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
-
 Notes:
-
-There's details in here.
-You could deploy locally to test things out.
-there's also commands you can use to deploy not using the UI.
-
+这里面有详细说明。你可以在本地部署进行测试，也有不通过用户界面进行部署的命令。
 ---
-
-## Hint: Playfield Dimensions
-
-- Paint within the bounds of the playfield!
-- Otherwise you wasted a turn.
-
+## 提示：游戏区域尺寸
+- 要在游戏区域边界内涂色！
+- 否则你就浪费了一次行动机会。
 ---
-
-## Ideas
-
-- You can call your own contract as often as you want!
-
+## 思路
+- 你可以随心所欲地多次调用自己的合约！
 <!-- .element: class="fragment" -->
-
-- Random number
-
+- 生成随机数
 <!-- .element: class="fragment" -->
-
-- Query which fields are free
-  - Query game state via cross-contract call
-  - Off-chain computation
-
+- 查询哪些区域空闲
+  - 通过跨合约调用查询游戏状态
+  - 链下计算
 <!-- .element: class="fragment" -->
-
 Notes:
-
-- **click** Lastly, some ideas for for your agent in the game you can you yourself can call your contract.
-  As often as you want and this won't contribute to the gas used during the game.
-  You can during the game you could also call a set of function of your contract if you want to adapt something.
-- **click** You could also Generate random numbers.
-  There are a couple of libraries out there, if you want to go along those lines you have to pay attention that it's a no standard Library.
-  typically a random number generator libraries they typically have a feature that you need to enable in order to make them no standard compatible
-- **click** A clever strategy would be a query which fields are free.
-  that's a bit more complex with the with the code snippet that we have in this Advanced repository, this would give you a hint.
-
+- **点击** 最后，为你在游戏中的智能体提供一些思路，你可以随意调用自己的合约。调用次数不受限制，且不会增加游戏中的gas消耗。在游戏过程中，若你想要调整某些内容，也可以调用合约中的一系列函数。
+- **点击** 你还可以生成随机数。市面上有不少相关库，不过如果使用这类库，你得留意它们是否为非标准库。通常，随机数生成器库需要启用特定功能才能与非标准环境兼容。
+- **点击** 一个巧妙的策略是查询哪些区域空闲。参考这个高级代码仓库中的代码片段，实现起来会有点复杂，但它能给你一些提示。
 ---
-
 <!-- .slide: data-background="./img/Questions_2.svg"" -->
-
 ---
-
-# Day 2
-
+# 第二天
 ---
-
 <img rounded style="width: 1400px; padding-top:15px;" src="./img/advanced-workshop.jpg" />
-
 ---
-
 <pba-cols>
 <pba-col center>
-
-### Now
-
-We help you debug!
-
+### 现在
+我们帮你调试！
 </pba-col>
 <pba-col center>
-
-### Then
-
+### 接着
 🕹️🎮🕹️🎮
-
 </pba-col>
 <pba-col center>
-
-### Thereafter
-
-Solutions Explainer
-
+### 之后
+讲解解决方案
 </pba-col>
 </pba-cols>
-
 <br />
-
 <blockquote style="text-align: left; font-size: 0.9em;">
-Use as little gas as possible to paint as many fields as possible.<br /><br />
-Stay within your gas budget.<br /><br />
-The later you manage to still paint a field, the better you score.<br /><br />
-No overpainting! First player to paint a field owns it.<br />
+尽可能用最少的gas涂最多的区域。<br /><br />
+保持在gas预算内。<br /><br />
+越晚还能涂到区域，得分越高。<br /><br />
+不能重复涂色！先涂者拥有该区域。<br />
 </blockquote>
-
 <br />
 <br />
-
 [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
-
 ---
-
-## Frontend
-
+## 前端
 [https://splash.use.ink](https://splash.use.ink)
-
 ---
-
-## Questions
-
-- What strategy did the winner choose?
-
+## 问题
+- 获胜者采用了什么策略？
 <!-- .element: class="fragment" -->
-
-- What strategies did the others choose?
-
+- 其他人采用了什么策略？
 <!-- .element: class="fragment" -->
-
-- What do you think would be the perfect strategy?
-
+- 你认为完美的策略是什么？
 <!-- .element: class="fragment" -->
-
 ---
-
-## Board Dimensions
-
-- Worst 😱
-  - Cross-contract call to `game`<br /><br />
-
+## 棋盘尺寸
+- 最差做法 😱
+  - 对`game`进行跨合约调用<br /><br />
 ```rust
 #[ink(message)]
 pub fn dimensions(&self) -> (u32, u32)
 ```
-
 <br /><br />
-
 <!-- .element: class="fragment" -->
-
-- Best 👍️
+- 最佳做法 👍️
   - `const width: u32`
   - `new(width: u32, height: u32)`
-
 <!-- .element: class="fragment" -->
-
 ---
-
-## More Pitfalls
-
+## 更多易错点
 <img rounded style="margin-top: 25px; width: 400px;" src="./img/oopsie.gif" />
-
-- Forgetting `--release`
-
+- 忘记使用`--release`
 <!-- .element: class="fragment" -->
-
-- Iterating over a datastructure in your contract
-
+- 在合约中对数据结构进行迭代
 <!-- .element: class="fragment" -->
-
 ---
-
-## Avoid iteration
-
+## 避免迭代
 <pba-cols>
 <pba-col center>
-
 ```
 #[ink(message)]
 fn pay_winner()
   let winner = self.players.find(…);
-
   self.transfer(winner, …);
 }
 ```
-
 </pba-col>
 <!-- .element: class="fragment" -->
 <pba-col center>
-
 ```rust
 #[ink(message)]
 fn pay_winner(
     winner: AccountId
 ) {
   assert!(is_winner(winner));
-
   self.transfer(winner, …);
 }
 ```
-
 </pba-col>
 <!-- .element: class="fragment" -->
 </pba-cols>
 ---
-
-## Strategy 1<br />Return Random Numbers
-
+## 策略1<br />返回随机数
 <img rounded style="margin-top: 25px; width: 500px;" src="./img/0.png" />
-
 ---
-
-## Strategy 1<br />Return Random Number
-
-- Wasm-compatible RNG
-
+## 策略1<br />返回随机数
+- 与Wasm兼容的随机数生成器
 <!-- .element: class="fragment" -->
-
-- Use Storage to hold seed for random number
-
+- 使用存储来保存随机数种子
 <!-- .element: class="fragment" -->
-
-- 📈 Uses little Gas
-
+- 📈 消耗较少gas
 <!-- .element: class="fragment" -->
-
-- 📉 Quickly runs into collisions
-
+- 📉 很快会出现碰撞
 <!-- .element: class="fragment" -->
-
-- 📉 Score function rewards players that late in game still paint fields
-
+- 📉 得分函数对在游戏后期仍能涂到区域的玩家给予奖励
 <!-- .element: class="fragment" -->
-
 ---
-
-## Strategy 2<br />Paint only free fields
-
+## 策略2<br />只涂空闲区域
 <img rounded style="margin-top: 25px; width: 500px;" src="./img/1.png" />
-
 ---
-
-## Strategy 2<br />Paint only free fields
-
-- Query board for free fields
-- 📈 Succeeds late in game
-
+## 策略2<br />只涂空闲区域
+- 查询棋盘的空闲区域
+- 📈 在游戏后期容易成功
 <!-- .element: class="fragment" -->
-
-- 📉 Cross-contract call 💰️
-- 📉 Need to iterate over `Mapping`: `O(n)`
-
+- 📉 跨合约调用 💰️
+- 📉 需要遍历`Mapping`：时间复杂度为`O(n)`
 <!-- .element: class="fragment" -->
-
 ---
-
-## Strategy 3<br />Shift computation off-chain
-
+## 策略3<br />将计算转移到链下
 <img rounded style="margin-top: 25px; width: 500px;" src="./img/2.png" />
-
 ---
-
-## Strategy 3<br />Shift computation off-chain
-
-- Off-chain Script
-  - Query board ➜ Search free field<br /><br />
-
+## 策略3<br />将计算转移到链下
+- 链下脚本
+  - 查询棋盘 ➜ 搜索空闲区域<br /><br />
 <!-- .element: class="fragment" -->
-
 - ```rust[1-2|1-7]
   #[ink(message)]
   fn set_next_turn(turn: …) {}
-
   #[ink(message, selector = 0)]
   pub fn your_turn(&mut self) -> {
     self.next_turn
   }
   ```
-
 <!-- .element: class="fragment"  -->
-
 ---
-
-## Strategy 4<br />Exploit player sorting in game loop
-
+## 策略4<br />利用游戏循环中的玩家排序
 <img rounded style="margin-top: 25px; width: 500px;" src="./img/3.png" />
-
 ---
-
-## Strategy 4<br />Exploit player sorting in game loop
-
-- On top of Strategy 3 (off-chain computation).
-
+## 策略4<br />利用游戏循环中的玩家排序
+- 基于策略3（链下计算）。
 <!-- .element: class="fragment"  -->
-
-- Game loop calls players in same order each time.
-
+- 游戏循环每次以相同顺序调用玩家。
 <!-- .element: class="fragment"  -->
-
 ```rust
 #[ink(message)]
 fn submit_turn(&mut self) {
-    // -- snip --
-
+    // -- 略 --
     for (idx, player) in players.iter_mut().enumerate() {
         …
     }
-
-  // -- snip --
+  // -- 略 --
 }
 ```
-
 <!-- .element: class="fragment"  -->
-
 ---
-
-## Strategy 4<br />Exploit player sorting in game loop
-
+## 策略4<br />利用游戏循环中的玩家排序
 ```rust
 impl<T: Config> AddressGenerator<T> for DefaultAddressGenerator {
 	fn generate_address(
@@ -654,27 +523,18 @@ impl<T: Config> AddressGenerator<T> for DefaultAddressGenerator {
 		input_data: &[u8],
 		salt: &[u8],
 	) -> T::AccountId {
-
-    // -- snip --
-
+    // -- 略 --
 	}
 }
 ```
-
-➜ All inputs are known
-
+➜ 所有输入已知
 <!-- .element: class="fragment"  -->
-
-➜ Generate low `T::AccountId` with known inputs
-
+➜ 利用已知输入生成较小的`T::AccountId`
 <!-- .element: class="fragment"  -->
-
 ---
-
-## Strategy 5<br />Checking these slides already yesterday
-
+## 策略5<br />昨天就查看这些幻灯片
 <img rounded style="margin-top: 25px; width: 500px;" src="./img/4.png" />
-
 ---
-
 <!-- .slide: data-background="./img/Questions_2.svg"" -->
+
+

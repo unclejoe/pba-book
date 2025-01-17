@@ -3,703 +3,432 @@ title: Coordination and Trust in Web3
 description: Principles of coordination, contracts, smart contracts, and comparison with traditional legal infrastructure adn web3 infrastructure.
 ---
 
-# Coordination and Trust in Web3
+---
+title: Web3中的协调与信任
+description: 协调原则、合同、智能合约，以及与传统法律基础设施和Web3基础设施的比较。
+---
+
+# Web3中的协调与信任
 
 Notes:
 
-In this module we're going to talk about Smart Contracts.
+在本模块中，我们将讨论智能合约。
 
 ---
 
-# Smart Contracts
+# 智能合约
 
-## Two Definitions
+## 两种定义
 
-### Broad Definition <!-- .element: class="fragment" data-fragment-index="1" -->
+### 广义定义 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-_aka Szabo definition_ <!-- .element: class="fragment" data-fragment-index="1" -->
+_又名萨博定义_ <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
+<blockquote>一个具有规则的机器程序，我们本可以在合同中定义这些规则，但现在由机器来执行或验证执行情况。</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-The first question we should answer is "wtf is a smart contract"?
-The term has been around for a long time (longer than any blockchain platform) and has evolved over time.
-It was first introduced by this guy Nick Szabo in the '90s.
+我们首先要回答的问题是“智能合约到底是什么？”
+这个术语已经存在很长时间了（比任何区块链平台都要久），并且随着时间的推移不断演变。
+它最早是由尼克·萨博（Nick Szabo）在20世纪90年代提出的。
 
-CLICK - read szabo definition
+点击 - 阅读萨博的定义
 
-Szabo's definition is primitive and kind of vague.
-It might even be argued that it includes all computer programs.
-But it gets at the essence of his thinking at the time.
-Szabo studied both law and computer science and his big idea was that agreements that are traditionally legal contracts could be better expressed and enforced as computer programs.
-Over time, as this vision was gradually realized, the term took on a more specific meaning and was refined quite a bit.
+萨博的定义比较原始，有些模糊。
+甚至有人可能会认为它涵盖了所有计算机程序。
+但它抓住了他当时的核心思想。
+萨博同时研究法律和计算机科学，他的主要想法是，传统的法律合同可以通过计算机程序更好地表达和执行。
+随着时间的推移，随着这一愿景逐渐实现，这个术语有了更具体的含义，并得到了相当大的完善。
 
 ---
 
-# Smart Contracts
+# 智能合约
 
-## Two Definitions
+## 两种定义
 
-### Narrow Definition <!-- .element: class="fragment" data-fragment-index="1" -->
+### 狭义定义 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-_aka web3 definition_ <!-- .element: class="fragment" data-fragment-index="1" -->
+_又名Web3定义_ <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
+<blockquote>一个程序，它规定了用户如何与状态机进行交互，并且可以无需许可地部署到区块链网络中。</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-click - read web3 definition.
-This definition is clearly more technical and precise, which is helpful in a lot of ways.
-At this point though, we haven't even learned all the terms in this web3 definition.
-As an educator, that deeply pains me.
-So - my promise to you - by the end of the week, this sentence will 100% make sense to you.
-The broad definition (szabo's - the first one we just saw) is useful in understanding the broader space, historical context, and its philosophy.
-This though, the narrow definition is useful when you're talking about deploying code to actual blockchain platforms.
-In this first lesson today, we'll focus mostly on Szabo's broader notion and explore the ways in which smart contracts are a modern extension to an ancient technology: contracts.
-We'll also look at some criticisms of the term "smart contract" and some alternatives that might have been better if it weren't already way too late.
+点击 - 阅读Web3定义。
+这个定义显然更具技术性和精确性，在很多方面都很有帮助。
+不过，到目前为止，我们甚至还没有完全理解这个Web3定义中的所有术语。
+作为一名教育工作者，这让我深感痛苦。
+所以 - 我向你保证 - 到本周末，这句话对你来说将100%有意义。
+广义定义（萨博的定义 - 我们刚刚看到的第一个定义）有助于理解更广泛的领域、历史背景及其哲学内涵。
+然而，当你谈论将代码部署到实际的区块链平台时，狭义定义会更有用。
+在今天的第一堂课中，我们将主要关注萨博的广义概念，并探讨智能合约如何成为一种古老技术（合同）的现代延伸。
+我们还将看看对“智能合约”这个术语的一些批评，以及如果还不算太晚的话，可能会更好的一些替代术语。
 
 ---
 
-## Coordination
+## 协调
 
 <img rounded src="./img/railroad.jpeg" />
 
-Examples of coordinated activities:
+协调活动的例子：
 
 <pba-flex center>
 
-- dancing, music band
-- money, business, trade
-- rowing team
-- building homes, buildings, roads
+- 跳舞、乐队演奏
+- 货币、商业、贸易
+- 划船队
+- 建造房屋、建筑物、道路
 
 </pba-flex>
 
-Doing the above safely through bureaucracies like inspection and certification procedures, automobile registration
+通过诸如检查和认证程序、汽车登记等官僚机构来安全地进行上述活动
 
 Notes:
 
-Okay so let's do that! Let's rewind a bit.
-Because before we can understand the ways in which smart contracts are "smart" versions of contracts, we need to understand what contracts are in the first place.
+好的，那我们开始吧！让我们稍微回顾一下。
+因为在我们理解智能合约如何成为合同的“智能”版本之前，我们首先需要理解合同到底是什么。
 
-After all, we are standing on the shoulders of giants here.
+毕竟，我们是站在巨人的肩膀上。
 
-So, in order to understand what contracts are, we'll start all the way back at human coordination.
-
-We'll see that contracts are just a pretty good technology to achieve coordination, and that smart contracts are an improvement on that technology.
-
-So, let's start here.
-I'm going to assert that coordinated activity is the basis of so much human behavior.
-Consider the building we're in right now.
-It has technicians, janitors, grounds people to run it, not to mention the crew it took to build it.
-Coordination is what allows this team of workers pictured here to complete a railroad that stretches across a continent.
-Obviously some coordination require more bureaucracy than others.
-Building a railroad that crosses many state lines? That will require government approval, inspection, and certification procedures - especially as it relates to safety.
-But two people dancing? That most definitely could be categorized as coordinate - but can be negotiated or navigated between two individuals.
+所以，为了理解合同是什么，我们要从人类的协调活动开始说起。
+我们会发现，合同只是一种实现协调的很好的技术，而智能合约则是对这种技术的一种改进。
+那么，我们就从这里开始吧。
+我要断言，协调活动是人类许多行为的基础。
+想想我们现在所在的这栋建筑。
+它需要技术人员、清洁工、场地维护人员来运营，更不用说建造它的施工团队了。
+协调使得这里展示的这组工人能够完成一条横跨大陆的铁路建设。
+显然，有些协调活动比其他活动需要更多的官僚程序。
+建造一条跨越多个州界的铁路？这将需要政府的批准、检查和认证程序 - 特别是在安全方面。
+但两个人跳舞呢？这绝对可以被归类为协调活动 - 但可以由两个人之间进行协商或安排。
 
 ---
 
-## Coordination
+## 协调
 
 <img rounded style="width: 500px" src="./img/basketball-strategy.webp" />
 
 Notes:
 
-There are so many examples of things we as humans can achieve only through coordination, not as individuals, it would be impossible to list them all.
-I hope it's evident that I think coordination is good a good thing! Because of it, we can build big big things and create beautiful music in a symphony together because of it.
+有太多例子表明，我们人类只有通过协调才能实现某些事情，而不是靠个人，要把它们全部列出来是不可能的。
+我希望大家能明白，我认为协调是一件好事！正因为如此，我们才能建造伟大的建筑，一起在交响乐中创造美妙的音乐。
 
 ---
 
-## Coordination
+## 协调
 
 <img rounded style="width: 500px" src="./img/org-chart.jpg" />
 
 Notes:
 
-It is how massive organizations like corporations and governments are able to function.
+这就是像公司和政府这样的大型组织能够运作的方式。
 
 ---
 
-## Voluntary vs Forced Coordination
+## 自愿协调与强制协调
 
 <img rounded style="width: 500px" src="./img/voluntary-coordination.jpeg" />
 
 Notes:
 
-A clarifying attribute of coordination is that it can happen voluntarily or by force.
-Here, we have a picture of folks working together, let's assume it's voluntarily - as it looks like they're volunteering their time at a community garden.
-This is a wonderful example of human coordination at its best.
+协调的一个明确属性是，它可以是自愿的，也可以是强制的。
+这里有一张人们一起工作的图片，我们假设这是自愿的 - 因为看起来他们是在社区花园里自愿贡献时间。
+这是人类协调活动的一个绝佳例子。
 
 ---
 
-## Voluntary vs Forced Coordination
+## 自愿协调与强制协调
 
 <img rounded src="./img/forced-coordination.jpeg" />
 
 Notes:
 
-But like all things, of course coordination can have it's ugly side.
-Pictured here, a slave boat, is categorically a coordinated effort; people are forced to work together.
-Most of us consider slavery a bad outcome.
-It IS a bad outcome.
-Even those with sketchier moral compasses would agree that _they_ don't want to be the slaves.
+但就像所有事情一样，协调当然也有其丑陋的一面。
+这里展示的是一艘奴隶船，这绝对是一种协调努力；人们被迫一起工作。
+我们大多数人都认为奴隶制是一个糟糕的结果。
+它确实是一个糟糕的结果。
+即使是那些道德观念比较模糊的人也会同意，他们不想成为奴隶。
 
-The point I'm making here is this: We want to create conditions (otherwise known as, incentives) where voluntary coordination can happen freely and easily.
-And thus make slavery as an outcome unlikely.
-And by building proper tools for voluntary coordination, we can help prevent forced coordination from happening in the first place.
-And again, voluntary coordination is a good thing between individuals - it's how we together achieve things that are impossible otherwise on our own.
-Thinking back to our first example of building a railroad - if I were to drive railroad spikes every day for the rest of my life, say I start in Miami where I live now? Maybe I eventually would make it to Georgia? But big collaborative coordination efforts? Railroads made it California! They stretch all over and across a continent!
+我在这里要表达的观点是：我们想要创造一些条件（也就是激励措施），让自愿协调能够自由、轻松地发生。
+从而使奴隶制这样的结果不太可能出现。
+通过建立适当的自愿协调工具，我们可以从一开始就帮助防止强制协调的发生。
+再次强调，个人之间的自愿协调是一件好事 - 这是我们共同实现单凭个人无法完成的事情的方式。
+回想一下我们前面提到的建造铁路的例子 - 如果我余生每天都去钉铁路道钉，假设我从现在居住的迈阿密开始？也许我最终能到达佐治亚州？但大规模的协作协调努力呢？铁路延伸到了加利福尼亚州！它们遍布整个大陆！
 
 ---
 
-## Business and Trade
+## 商业与贸易
 
 <pba-flex center>
 
-- primitive trade
-- dead weight loss
-- counterparty risk
+- 原始贸易
+- 无谓损失
+- 交易对手风险
 
 </pba-flex>
 
 Notes:
 
-From a historical perspective, one of the first forms of coordination was simple trading.
-Let's imagine that I grow food and you make houses.
-So, I'll give you some food, if you build me a house, and I pay your daily wage by giving you food as long as you're building my house.
-This is a classic example of what is called primitive trade.
-You the house builder - you need food, so you can only build houses for people who grow food.
-As in, you can't earn food by building houses for randos who don't have food to pay you with.
-Obviously there are a whole lot of problems within this situation and it won't scale over time.
-But it's also a classic example of what is called 'deadweight loss' - The definition of which is: "a cost to society created by market inefficiency, which occurs when supply and demand are out of equilibrium".
-Another classic example would be if I, for example, grow corn in the summer and you ice fish in the winter.
-And together, we _would love_ to have some way to feed each other during our off seasons - me to feed you in the summer and you to feed me in the winter - but there's no way to coordinate that because someone has to go first.
-So let's say I go first and I just give you half of my corn all summer.
-It's within reason that you could just, you know, piece out and I'm… left with nothing all winter.
-And that is what we call counterparty risk.
-And because I don't want to take on that counterparty risk, I don't engage in such a deal, which is then deadweight loss.
-So, despite the fact that we both kinda want to trade, we have no real way of making it happen.
-So are we stuck?? Do we just not do the deals because we're afraid of counterparty risk and deadweight loss?
+从历史角度来看，最早的协调形式之一就是简单的贸易。
+让我们想象一下，我种植食物，你建造房屋。
+那么，我给你一些食物，如果你为我建造一所房子，在你建造房子的期间，我每天用食物支付你的工资。
+这是一个典型的原始贸易的例子。
+你作为房屋建造者 - 你需要食物，所以你只能为那些种植食物的人建造房屋。
+也就是说，你不能通过为那些没有食物来支付你报酬的人建造房屋来获得食物。
+显然，这种情况存在很多问题，而且随着时间的推移，它无法扩大规模。
+但这也是一个典型的“无谓损失”的例子 - 其定义是：“由于市场效率低下而给社会带来的成本，当供求失衡时就会出现这种情况”。
+另一个典型的例子是，比如说，我在夏天种植玉米，你在冬天进行冰钓。
+我们都非常希望能有一种方式在淡季互相提供食物 - 我在夏天给你提供食物，你在冬天给我提供食物 - 但由于没有人愿意先行动，所以我们无法协调。
+假设我先行动，整个夏天我把一半的玉米都给了你。
+很有可能你会慢慢离开，而我整个冬天就一无所有了。
+这就是我们所说的交易对手风险。
+因为我不想承担这种交易对手风险，所以我不会进行这样的交易，这就造成了无谓损失。
+所以，尽管我们都有点想进行交易，但我们却没有真正的办法实现它。
+那么我们就被困住了吗？我们就因为害怕交易对手风险和无谓损失而不进行交易了吗？
 
 ---
 
-# Trust
+# 信任
 
-So you want to coordinate with someone.
+你想与某人进行协调。
 
-But you don't want to get ripped off.
+但你不想被骗。
 
 Notes:
 
-Let’s then move on to talk about trust - as it makes sense that it's one common way to achieve coordination.
-Because let's imagine, you want make an agreement, but you don't want to get ripped off.
-Trust means that we decide to trust whoever we're coordinating with - we're creating an agreement between one another to not to rip each other off.
-Say for example we're builders - you and I decide to build your house this week.
-Well then I in turn believe that we’ll build mine next week.
+那我们接着来谈谈信任 - 因为可以理解，信任是实现协调的一种常见方式。
+想象一下，你想达成一项协议，但你不想被骗。
+信任意味着我们决定信任与我们进行协调的人 - 我们彼此达成协议，不互相欺骗。
+比如说我们是建筑工人 - 你和我决定这周建造你的房子。
+那么我反过来相信我们下周会建造我的房子。
 
 ---
 
-# Personal/Real Trust
+# 个人/真实信任
 
-## vs
+## 与
 
-# Rational Expectations
+# 理性预期
 
-Personal trust - you can build it over time through a slow give and take like you do with your family or long term business partners. <!!-- .element: class="fragment" -->
+个人信任 - 你可以通过长期的慢慢给予和获取来建立，就像你与家人或长期商业伙伴之间的信任一样。 <!!-- .element: class="fragment" -->
 
 Notes:
 
-For those houses to be built, for that coordination to happen, we need credible expectations that the promises we make to one another will be upheld.
-AKA I have to be willing to trust you - that you are going to fulfill your end of the bargain.
-So here on the slide, I have two concepts: Personal or 'real' trust vs. rational expectation.
-CLICK - I like to think of personal trust, as a familial thing - or something that's been developed between people over time - I for example trust that my mom, who is watching my son right now, is taking good care of him.
-But she and I have gradually built up that trust over many years.
-This sort of trust happens within families, between friends or neighbors, but it can also happen in business relationships - say for example, you have a new business partner and you start that relationship off by doing say one small deal together.
-And yeah, you may choose to take on a little risk within the deal, but it’s small.
-And then the next time you interact, the deal evolves and becomes a little bigger.
-And maybe that time the other party/person takes on that little bit of risk.
-At no point is there SO much risk that you could get completely wrecked if they rip you off.
-Again, there's some, and so by accepting that risk slowly more and more over the years, you two are able to actually build up that personal and real trust.
+为了建造那些房子，为了实现那种协调，我们需要有可靠的预期，即我们彼此做出的承诺会得到履行。
+也就是说，我必须愿意信任你 - 你会履行你那一方的承诺。
+在这张幻灯片上，我有两个概念：个人或“真实”信任与理性预期。
+点击 - 我喜欢把个人信任看作是一种家庭式的东西 - 或者是人们随着时间逐渐建立起来的东西 - 比如，我相信我妈妈现在正在照顾我的儿子，她会把他照顾得很好。
+但她和我是在多年的时间里逐渐建立起这种信任的。
+这种信任存在于家庭、朋友或邻居之间，但也可以存在于商业关系中 - 比如说，你有一个新的商业伙伴，你们从做一笔小交易开始建立这种关系。
+是的，你可能会在这笔交易中承担一点风险，但风险很小。
+然后下一次你们合作时，交易规模会变大一点。
+也许这次是对方承担一点风险。
+在任何时候，风险都不会大到如果对方欺骗你，你就会彻底破产的程度。
+同样，通过在多年的时间里逐渐接受越来越多的风险，你们两人实际上能够建立起那种个人和真实的信任。
 
 ---
 
-# Trust: A Dirty Word
+# 信任：一个脏词
 
-_Less Trust, More Truth_ <!-- .element: class="fragment" data-fragment-index="1" -->
+_少一点信任，多一点真相_ <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-Okay pause - I should fully acknowledge that I'm talking a whole lot about this thing _trust_, and who here has heard or seen ppl in the web3 world wearing hats saying - CLICK - less trust, more truth.
-Anyone? (check for nods)
+好的，暂停一下 - 我得承认，我一直在谈论“信任”这个东西，这里有没有人听说过或看到过Web3世界里的人戴着帽子，上面写着 - 点击 - 少一点信任，多一点真相。
+有人吗？（看看有没有人点头）
 
-_So, some personal historical context on me_, when I was a newbie in the web3 space, I hadn’t heard this phrase (or slogan rather?).
-I saw it on ppl’s shirts and felt sort of confused and honestly, kind of excluded from what felt like maybe an inside joke.
-I remember thinking, _wait, I trust people, does that make me wrong... Is that a bad thing_?
-I asked myself the question, _why is trust such a dirty world in our world_?
-Well, in time, thanks to some of my fellow instructors in the room, I came to understand that this phrase is referring to the fact that life is not all sunshine and roses! Not all relationships and interactions are filled with trustful actors.
-In fact, most aren't!
-Literally every day we're in situations in which we are forced to treat complete strangers as if we've established real, authentic trust between one another.
-Treat them as if they're a close friend or business partner.
-And _that_ is definitely bad, and is a dirty word, and is a thing that we really shouldn't do.
-And yet! This literally happens all the time - every day really -when you give a merchant your credit card number and you trust that they won't go off on an amazon spree with it.
-Or when you give your social security number to a new employer and you trust that they won't steal your identity.
-Or when you give your passport to a border agent and you trust that they won't sell it on the black market.
-Okay, end pause - back to the slides.
+_给大家讲讲我的一些个人经历_，当我还是Web3领域的新手时，我还没有听说过这句话（或者更确切地说，这个口号）。
+我在人们的衬衫上看到过，感觉有点困惑，说实话，有点被排除在外，感觉这像是一个内部笑话。
+我记得当时在想，_等等，我信任别人，这是不是意味着我错了……这是不是一件坏事_？
+我问自己一个问题，_为什么在我们这个世界里，信任会是一个脏词_？
+嗯，随着时间的推移，多亏了房间里的一些同事，我才明白这句话指的是，生活并不总是一帆风顺的！并不是所有的关系和互动都充满了值得信任的人。
+事实上，大多数都不是！
+实际上，我们每天都处于这样的情况中，我们不得不把完全陌生的人当作我们之间已经建立了真正、可靠的信任一样对待。
+把他们当作亲密的朋友或商业伙伴。
+而_这_绝对是不好的，是一个脏词，是我们真的不应该做的事情。
+然而！这种情况实际上每天都在发生 - 真的是每天 - 当你把信用卡号码给商家时，你信任他们不会用它去疯狂购物。
+或者当你把社会安全号码给新雇主时，你信任他们不会盗用你的身份。
+或者当你把护照交给边境官员时，你信任他们不会在黑市上出售它。
+好的，暂停结束 - 回到幻灯片。
 
 ---
 
-# Personal/Real Trust
-
-# vs
-
-# Rational Expectations
-
-- Personal trust - you can build it over time through a slow give and take like you do with your family or long term business partners. <!-- .element: class="fragment" data-fragment-index="1" -->
-- Rational expectations - you can believe that a person will act faithfully because they are incentivized to do so. <!-- .element: class="fragment" data-fragment-index="1" -->
-
+# 个人/真实信任
+# 与
+# 理性预期
+- 个人信任——你可以像与家人或长期商业伙伴相处那样，通过长期的相互给予与索取逐渐建立起来。 <!-- .element: class="fragment" data-fragment-index="1" -->
+- 理性预期——你相信一个人会忠实行事，因为他们有这样做的动机。 <!-- .element: class="fragment" data-fragment-index="1" -->
 Notes:
-
-So.
-We know that we don't have the luxury of only interacting with people we truly personally trust.
-It's impossible to get personal trust with every person you'd in theory like to because it takes a super long time to bootstrap that real kind of relationship.
-And frankly, sometimes you want to interact with a stranger more immediately, say today, and not have to court them for years upon years.
-So, again, this should lead us to the question of - how do you handle these every day situations? How DO I trust that the coffee guy isn't going to run off with my credit card details?
-CLICK - Well, that's where rational expectations come into play.
-This is a game theory, incentives-based concept.
-Where you believe credibly that a person _will_ act faithfully according to an agreement you've made - because the incentives make them do so.
-So, in a sorta loose way you could say this is another kind of trust? But it's not the genuine, real, authentic kind.
-It's more like, I trust that you will act in a certain way because you are _so incentivized_ to do so and being truthful and upholding your end of the agreement ultimately is your best strategy and option.
-
+所以，我们知道我们无法只与真正信任的人交往。要与理论上想交往的每个人建立起个人信任几乎不可能，因为建立这种真正的关系耗时极长。坦率地讲，有时你希望能立刻与陌生人互动，比如就在今天，而不是花上好几年去慢慢磨合。那么，这就引出了一个问题：如何应对这些日常情况呢？我怎么能相信咖啡店员不会拿着我的信用卡信息跑掉呢？
+点击——这就是理性预期发挥作用的地方。这是一个基于博弈论和激励机制的概念。在这种概念下，你有理由相信一个人会根据你们达成的协议忠实地行动，因为激励因素促使他们这样做。所以，从某种宽泛的意义上来说，这也算是一种信任？但它并非那种真诚、真实、可靠的信任。更像是，我相信你会以某种方式行事，是因为你有强烈的动机这么做，并且说实话和履行协议最终对你而言是最佳策略和选择。
 ---
-
-## Personal Trust for Performance
-
-Personal trust can make things _really_ efficient, and it's reasonable to leverage this trust _when it's warranted_
-
+## 基于表现的个人信任
+个人信任能极大提升效率，在恰当的时候利用这种信任是合理的。
 Notes:
-
-Again, I want to make sure you're all hearing me when I say that personal/familial trust is not wrong, or bad, or dirty.
-I don’t want us all walking out here calling our moms and dissolving our trust with them.
-That just isn’t the scenario we speak to when we say 'trust is dirty'.
-And further, if you have someone who you genuinely trust, you can actually get things done a whole lot faster and more efficiently by leveraging that trust.
-So, it may be worth it to bootstrap genuine personal trust.
-You know, start small, accept a small bit of risk and gradually increase that over time.
-Again, it's only bad when you have to do that with someone that you don't know or you actively distrust AND they aren't incentivized to return that trust.
-
+我再次强调，个人/家庭信任并非错误、糟糕或不堪的。我可不想大家听完就出去给妈妈打电话，断绝与她的信任。我们说“信任是不堪的”，并非指这种情况。而且，如果你真的信任某人，利用这种信任确实能更快、更高效地完成事情。所以，逐步建立起真正的个人信任或许是值得的。可以从小事做起，承担一点小风险，然后随着时间慢慢增加。同样，只有当你不得不与你不了解或主动不信任的人打交道，且他们没有回报这种信任的动机时，才会出现糟糕的情况。
 ---
-
-## Promises and Reputation
-
+## 承诺与声誉
 <pba-flex center>
-
-- how enforceable is it?
-- does it work in small setting?
-- does it work in a large setting?
-
+- 它的可执行性如何？
+- 在小范围内有效吗？
+- 在大范围内有效吗？
 </pba-flex>
-
 Notes:
-
-So these incentives are obviously really important.
-Let's talk about what they are or could be.
-Often they are civic duty based - the fear that society or your town will turn on you if you break your promise.
-OR they're morality or religion based - you know, you keep your promise to someone out of fear of otherwise going to hell.
-Or they are based on the fact that you have a reputation to uphold.
-You don't want to be known as a liar or a cheat.
-I think you get what I'm saying here, yeah?
-It's social norms and expectations that keep people.
-Reputation is on the line.
-And this can get society pretty far.
-But, it's not perfect.
-It's not always enforceable - or rather - a threat of a bad reputation isn't always enough to keep people in line.
-Or a town grows enough that you can't keep track of everyone's reputation.
-Or, you know, you're in a big city and you don't care about your reputation because you're never going to see these people again.
-F trust.
-F reputation.
-Outlaw life is for me!
-
-From a sociological perspective, we know that if people within a society tend to keep promises, the society tends to prosper.
-But! Eventually, it will be sufficiently profitable to defect and to break promises.
-womp womp!
-
-And this is why we started the lecture off with discussing coordination.
-So let's quickly merge some of the concepts we’ve discussed thus far.
-Coordination and trust.
-Because let’s be real, to achieve things on this planet, it requires some coordination between the 8 billion people here.
-And sure, genuine personal trust can help in a small village.
-And promises based on societal reputation and civic incentives can help getting things done across a town.
-But promises don't get us all the way up to scalable, global trust.
-When talking with Joshy, about this problem his example, that I can’t seem to get out of my head was that: “It's the modern equivalent of a primitive village deciding "okay everyone, let's all agree we're going to poop in the same corner of our village, not just wherever we feel like it.” So as he says: Promises can make a village of 100 shit in the same corner, but not 8 billion.
-I think this is his way of saying that we need some bigger and more resilient coordination tools.
-
+显然，这些激励因素非常重要。我们来探讨一下它们是什么或者可能是什么。它们通常基于公民责任——担心如果违背承诺，社会或所在城镇的人会反对你；或者基于道德或宗教——比如，你遵守对某人的承诺是因为害怕否则会下地狱；又或者基于你要维护自己的声誉，你不想被视为骗子或不诚实的人。我想大家明白我的意思吧？是社会规范和期望在约束着人们，声誉至关重要。这在社会中发挥了很大作用，但并不完美。它并非总是可执行的——或者说，声誉受损的威胁并不总是足以让人们循规蹈矩。城镇规模扩大后，你无法追踪每个人的声誉。又或者，你身处大城市，觉得反正不会再见到这些人，也就不在乎自己的声誉了。去他的信任，去他的声誉，我要随心所欲！
+从社会学角度来看，我们知道如果社会中的人们倾向于遵守承诺，社会往往会繁荣发展。但是！最终，违背承诺可能会带来足够的利益诱惑。太糟糕了！
+这就是我们为什么在讲座开始时讨论协调。现在，我们快速整合一下目前讨论过的概念，即协调与信任。说实话，要在这个星球上做成事情，80亿人之间需要进行一定的协调。当然，在小村庄里，真正的个人信任会有所帮助；基于社会声誉和公民激励的承诺，在一个城镇范围内也有助于完成事情。但承诺无法让我们实现可扩展的全球信任。和乔希讨论这个问题时，他举的例子让我印象深刻：“这就好比一个原始村庄决定‘好吧，大家都同意在村子的同一个角落排便，而不是想在哪就在哪’。”正如他所说：承诺能让100人的村庄在同一个角落排便，但无法让80亿人做到。我想他的意思是，我们需要更强大、更可靠的协调工具。
 ---
-
-# Contracts
-
+# 合同
 <pba-flex center>
-
-- **Contracts are Promises**
-- Some involve money, but they're much **more general than just money**.
-- Traditionally, contracts are special promises that the **government will enforce**.
-
+- **合同即承诺**
+- 有些涉及金钱，但合同的范畴远**不止金钱**。
+- 传统上，合同是由**政府强制执行**的特殊承诺。
 </pba-flex>
-
 Notes:
-
-So how do we incentivize people to keep their promises beyond a civic duty?
-Ding ding ding - Finally! This brings us to the idea of contracts.
-They're basically, pretty much, promises.
-They could involve money, a lot of them do, though they don't have to.
-Ultimately, think of them as abstractions over promises.
-And someone is enforcing the contract.
-
-On a very small scale, think of siblings fighting over a toy, a parent might encourage them to agree to take turns.
-Later when it is time to tarde, the parent might remind the child, "you said you would trade in 5 minutes, so now you have to." The parent is big enough to physically overpower the child if it were to come to that, and the child knows it, so therefore it rarely comes to that.
-The parent in this situation is the enforcer.
-
-Same thing in sports.
-We all agree to the rules, and agree to let a referee make the judgement calls.
-The ref is the enforcer.
-In big leagues, where there can suspend players and affect their career, this works.
-In the public park, it doesn't always, because the ref is just a peer and there is no real power differential.
-
-Traditionally what you've probably learned is that "enforcer" of these contracts (or promises) is the government.
-The government, by being the enforcer, can help people engage in so much voluntary coordination just by making them keep their own promises.
-
-And sure, that's valuable because governments are big and powerful.
-You could say that even in some sense, the government enforcing it is a lot like God enforcing it.
-As in, the government is big enough to have power over individuals interacting, and if anyone tries to rip someone else off, the government will step in and make sure the contract is upheld.
-
-This essentially allows us to interact as if we trusted each other.
-And over time, the stickiness sets in and people actually do start to trust each other! Yay, happy days - But wait! What am I talking about? We know the unfortunate truth which is that government having such a power differential over the people is not always a good thing...
-
+那么，如何在公民责任之外激励人们遵守承诺呢？
+叮叮叮——终于，这就引出了合同的概念。合同基本上就是承诺，很多合同涉及金钱，但并非必须如此。归根结底，可以把合同看作是对承诺的抽象。而且合同有执行者。
+举个小例子，兄弟姐妹为了一个玩具争吵，父母可能会鼓励他们轮流玩。到了交换的时候，父母可能会提醒孩子：“你说过5分钟后交换，现在该换了。”必要时父母有足够的能力管住孩子，孩子也明白这一点，所以这种情况很少发生。在这个情境中，父母就是执行者。
+体育比赛也是如此。我们都同意比赛规则，并同意由裁判做出裁决。裁判就是执行者。在大型联赛中，裁判可以对球员禁赛，影响其职业生涯，这种方式行之有效。但在公园的比赛中，这并不总是有效，因为裁判只是同伴，彼此之间没有真正的权力差距。
+传统上你可能学到，这些合同（或承诺）的“执行者”是政府。政府作为执行者，只需让人们遵守自己的承诺，就能帮助人们进行大量的自愿协调。
+这很有价值，因为政府强大有力。可以说，在某种意义上，政府执行合同就像上帝执行旨意。也就是说，政府有足够的力量管控个人之间的互动，如果有人试图欺骗他人，政府会介入确保合同得到履行。
+这本质上让我们在互动时就像彼此信任一样。随着时间的推移，人们实际上真的开始相互信任！太好了，皆大欢喜——但等等！我在说什么呢？我们知道，政府与民众之间存在如此大的权力差距并不总是好事……
 ---
-
-# Promises with Force
-
+# 带有强制力的承诺
 <div>
   <img rounded style="width: 500px" src="./img/whitehouse-construction.jpeg" />
   <img rounded style="width: 500px" src="./img/pyramid-construction.jpeg" />
 </div>
 <!-- .element: class="fragment" -->
-
 Notes:
-
-This is a picture of the white house being built - CLICK - and of course the pyramids.
-
-Both are impressive works of human coordination.
-But to the workers they are much different.
-The construction crew building the white house was engaged in voluntary coordination through employment and they were probably excited about their new government too.
-The slaves building the pyramids, are engaged in forced coordination, and when they die, their corpses won't even make it in that pyramid, they'll just get thrown out in the desert.
-Our job, in this smart contract module, is to design systems of coordination that make it likely and easy for voluntary coordination so that it is not necessary or desireable to resort to forced coordination.
-
+这张图展示了白宫的建造过程——点击——当然还有金字塔的建造。
+两者都是人类协调的杰出成果，但对工人而言却大不相同。建造白宫的施工人员通过就业参与自愿协调，他们可能也为新政府感到兴奋。而建造金字塔的奴隶们则是被迫协调，他们死后，尸体甚至进不了金字塔，只会被扔到沙漠里。在这个智能合约模块中，我们的任务是设计协调系统，让自愿协调更有可能且更容易实现，从而避免采取强制协调。
 ---
-
-# Promises with Force
-
+# 带有强制力的承诺
 <img rounded src="./img/big-brother.jpeg" />
 <!-- .element: class="fragment" -->
 Notes:
-
-We're doing that because contracts, which often require enforcers, who usually is the government - CLICK - Yeah, which could of course not always be a good thing...
-
+我们这么做是因为合同通常需要执行者，而执行者通常是政府——点击——显然，这并非总是好事……
 ---
-
-## What is a Contract Again?
-
-(to summarize)
-
-A promise, made between parties, backed by the government, to coordinate together to accomplish something together.
-
+## 合同究竟是什么？
+（总结一下）
+合同是各方之间做出的、由政府支持的、为共同完成某事而进行协调的承诺。
 Notes:
-
-So yeah, that's the goal and what we're trying to solve.
-But, again, just before we go any further, let’s make sure we’re all on the same page about what a contract itself is.
-A promise, made between parties, backed by the government, to coordinate together to accomplish something together.
-The notion of promise is very abstract:
-
-- It could involve coordinating over time.
-- It could involve money or even credit.
-- It also could have multiple possible valid outcomes.
-
-Okay.
-Cool.
-All on the same page? Nodding heads? We can agree we understand this concept?
-
+这就是我们的目标和试图解决的问题。不过，在继续深入之前，我们要确保大家对合同的定义达成共识。合同是各方之间做出的、由政府支持的、为共同完成某事而进行协调的承诺。承诺的概念非常抽象：
+- 它可能涉及长期的协调。
+- 可能涉及金钱甚至信用。
+- 也可能有多种可能的有效结果。
+好的。明白了吧？大家都点头了，我们对这个概念理解一致吧？
 ---
-
-# Smart Contracts 🎉
-
+# 智能合约🎉
 <img rounded style="width: 500px" src="./img/szabo.jpeg" /> <!-- .element: class="fragment" -->
-
 Notes:
-
-Amazing… because, now onto smart contracts! - CLICK - We've finally made it here, folks, horary!
-Back in the 90s, this CS guy, Nick Szabo, and some other cypherpunks realized that contract law and computer science actually had a lot in common, and thus developed the _idea_ of smart contracts.
-And together we'll develop and tease out those same comparisons here.
-
+太棒了……现在来谈谈智能合约！——点击——我们终于讲到这里了，朋友们，太棒了！20世纪90年代，这位计算机科学家尼克·萨博和其他一些密码朋克意识到，合同法和计算机科学有很多共同之处，于是提出了智能合约的概念。我们将在这里一起深入探讨并梳理这些相似之处。
 ---
-
-## Smart Contracts - Szabo Definition
-
-<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
-
-Broad definition _aka Szabo definition_ formulated c 1997
-
+## 智能合约——萨博的定义
+<blockquote>一个具有规则的机器程序，这些规则我们本可以在合同中定义，但现在由机器来执行或验证执行情况。</blockquote>
+广义定义，又名萨博定义，大约形成于1997年
 Notes:
-
-So Szabo has this idea of the smart contract - which is basically to write contractual agreements as computer programs in programming languages.
-And then to run those programs on a computer that will then execute the instructions faithfully with machine-like precision.
-He was pretty excited about some of the research in multi-party computation that was happening at the time and had a sense that this vision might be right around the corner.
-Remember, there is a second smart contract definition that we called the "web3 definition" right at the beginning of this lecture.
-That definition is heavily dependent on content you'll learn during the blockchain module - so Joshy will be sure to build off of that later this week.
-
+萨博对智能合约的想法是，基本上就是用编程语言将合同协议编写成计算机程序，然后在计算机上运行这些程序，计算机将以机器般的精度忠实地执行指令。他对当时一些多方计算的研究成果感到非常兴奋，并且预感这一愿景可能即将实现。记住，在本讲座一开始，我们提到了智能合约的另一种定义，即“Web3定义”。那个定义很大程度上依赖于你将在区块链模块学到的内容——所以乔希本周晚些时候肯定会基于此展开讲解。
 <https://nakamotoinstitute.org/the-god-protocols/>
 <https://nakamotoinstitute.org/formalizing-securing-relationships/>
-
 ---
-
-## Smart Contracts 😠👎
-
+## 智能合约😠👎
 <img rounded style="width: 900px" src="./img/vitalik.jpeg" />
-
 Notes:
-
-Of course, I want to caveat that the term isn't perfect and not everybody likes it.
-As you can see in the tweet, Vitalik has worried that the term is too catchy and gives the wrong impression...
-
-With these caveats and criticisms in mind, it is still worth exploring the idea of contracts as computer programs.
-
+当然，我要提醒一下，这个术语并不完美，并非所有人都喜欢。正如你在这条推文中看到的，维塔利克担心这个术语过于吸引人，会给人错误的印象……
+尽管有这些警告和批评，但将合同视为计算机程序的想法仍然值得探索。
+---
+## 快速回顾我们的讨论历程
+Notes:
+还记得我们从简单的原始贸易开始探讨。解决那些问题的一个办法是彼此建立个人信任，但这并非适用于所有情况。所以我们发展到基于激励、声誉和社会规范的理性预期。但随之出现了可扩展性的问题。这就引出了合同，也就是承诺，它让我们能够大规模地进行协调并取得惊人的成果。为了确保这些合同得到履行，政府充当了执行的核心角色。然而，正如我们所看到的，这并不总是好事。所以现在，我们要在协调的悠久历史中迈出新的一步：这就是智能合约。
 ---
 
-## Quick review of how we got here
-
-Notes:
-
-So remember we started all the way back at simple primitive trade.
-One solution to those problems were to have personal trust with one another.
-But that doesn't work for everything.
-So we evolved to use rational expectations based on incentives and reputation and societal norms.
-But then we had the problem of scalability.
-Which brought us to, contracts, aka promises, which allowed us to really scale and achieve some incredible coordination.
-And to ensure that those contracts were upheld, the government functioned as a central point of enforcement.
-But, as we've seen, that's not always a good thing.
-And so now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
-
----
-
-## Smart Contract Objectives
-
+## 智能合约的目标
 <pba-flex center>
-
-- Retain all the value of traditional governmental contracts
-  - Can trust strangers promises
-  - Can coordinate with little risk
-  - etc.
-- Remove the need for a powerful government
-- Remove ambiguity about what contracts are enforceable
-- Make writing and understanding contracts more approachable
-- Make contract execution and enforcement more efficient
-
+- 保留传统政府合同的所有价值
+  - 能够信任陌生人的承诺
+  - 能够低风险地进行协调
+  - 等等
+- 消除对强大政府的需求
+- 消除关于哪些合同可执行的模糊性
+- 使编写和理解合同更加容易
+- 使合同的执行和实施更高效
 </pba-flex>
-
 Notes:
-
-These are the goals of a smart contract.
-We basically want to keep all the good stuff that contracts brought us, but then of course make them better by not making the government the central point of enforcement.
-We want to know, without a doubt that the contracts will be enforced.
-We want them to be approachable, legibility wise, and we want them to be efficient.
-
+这些是智能合约的目标。我们基本上希望保留合同带给我们的所有好处，但当然要通过不再以政府作为执行核心来让它们变得更好。我们希望毫无疑问地知道合同会得到执行。我们希望合同在可读性上易于理解，并且高效。
 ---
-
-# Smart Contracts - Two Parts
-
+# 智能合约——两个部分
 <pba-flex center>
-
-1. Expression
-1. Execution / Enforcement
-
+1. 表达
+2. 执行/实施
 </pba-flex>
-
 Notes:
-
-So, we'll look at smart contracts in two parts.
-Expression - this is the part about actually codifying or expressing what you agree to unambiguously.
-From a programmer's perspective, this is by writing code.
-Or from a lawyer's perspective, this is writing up a bunch of pages of legalese, which basically is a DSL for being really specific in a legal contract.
-And then the part about making sure it actually happens? and what to do if something goes wrong? That’s the execution or enforcement part.
-Execution is ultimately where the two worlds contrast - running unstoppable code on a blockchain vs. having courts and judges and police officers and things like that.
-Essentially the idea of a smart contract is: we're going to take a contract, which we all feel really confident in our definition, and we're going to glue it together with all of Szabo’s incredible Computer Science research that's come out way more recently than contract research, and that all together is the next iteration and improvement on contracts.
-I should note - of these two parts, Programming languages are good at part 1 and computers are good at part 2.
-
+所以，我们将从两个部分来探讨智能合约。表达——这部分是关于实际将你同意的内容明确地编码或表达出来。从程序员的角度来看，这意味着编写代码。从律师的角度来看，这意味着撰写大量的法律术语，这些法律术语本质上是一种用于在法律合同中表达具体内容的领域特定语言（DSL）。然后，确保合同内容实际发生以及出现问题时该如何应对的部分，就是执行或实施部分。执行最终体现了两个世界的差异——在区块链上运行不可阻挡的代码，与依靠法院、法官和警察等方式截然不同。智能合约的核心思想是：我们将取一个我们对其定义非常确定的合同，将它与萨博那些比合同研究更新颖的卓越计算机科学研究结合起来，这就是合同的下一次迭代和改进。我需要指出，在这两个部分中，编程语言擅长第一部分，而计算机擅长第二部分。
 ---
-
-# Expression -- Pt. 1
-
-_Domain Specific Languages_
-
-_Legalese:_ In witness whereof, the parties hereunto have set their hands to these presents as a deed on the day month and year hereinbefore mentioned.
-
-_ink!:_ `signatures = [alice, bob]`
-
+# 表达——第一部分
+## 领域特定语言
+法律术语：In witness whereof, the parties hereunto have set their hands to these presents as a deed on the day month and year hereinbefore mentioned.
+ink!语言：`signatures = [alice, bob]`
 Notes:
-
-Okay when we're talking expression we're really talking - Domain Specific Languages (which we say DSL for short).
-Humans have been inventing DSL forever.
-
+当我们谈论表达时，实际上我们谈论的是领域特定语言（我们简称为DSL）。人类一直在发明领域特定语言。
 ---
-
-## Domain Specific Languages
-
+## 领域特定语言
 <img rounded style="width: 900px" src="./img/linearb.jpeg" />
-
 Notes:
-
-From the ancient greek accounting and administrative language, [linear b](https://en.wikipedia.org/wiki/Linear_B),
-
+从古希腊的会计和行政语言，[线性文字B](https://en.wikipedia.org/wiki/Linear_B)，
 ---
-
-## Domain Specific Languages
-
+## 领域特定语言
 <img rounded style="width: 500px"  src="./img/chess.jpeg" />
-
 Notes:
-
-to the shorthand for summarizing chess games,
-
+到总结国际象棋比赛的速记方式，
 ---
-
-## Domain Specific Languages
-
+## 领域特定语言
 <img rounded style="width: 500px" src="./img/ink.jpeg" />
-
 Notes:
-
-to the ink! programming language that you will soon learn.
-Contract law is a DSL and is an important part of society.
-It’s hard to read (read the sentence on the slide).
-Computer Programming languages are also DSLs, which of course had it’s own evolution, independent from contract law.
-It can be quite hard to read (asm or solidity), whereas good ones can also be easier to read.
-But really, the point I'm trying to make here is that legalese contract law and computer programming languages are not so different.
-They are both DSL meant to precisely express the nuances of detailed human agreements.
-And they're both hard to read for non experts.
-Szabo recognized this similarity and thus had the idea that programming may be the future of law.
-
+再到你们很快会学习的ink!编程语言。合同法是一种领域特定语言，并且是社会的重要组成部分。它很难读懂（读一下幻灯片上的句子）。计算机编程语言也是领域特定语言，当然，它有自己独立于合同法的发展历程。有些编程语言很难读懂（如汇编语言或Solidity），而优秀的编程语言相对容易理解。但我真正想说的是，法律合同术语和计算机编程语言并没有太大的不同。它们都是用于精确表达人类详细协议细微之处的领域特定语言，并且对于非专业人士来说都很难读懂。萨博认识到了这种相似性，因此提出编程可能是法律的未来。
 ---
-
-## Coding Style
-
-- Adding laws vs negative diffs
-- Elegance vs handling each special case
-- Testing and Repeatability
-
+## 编码风格
+- 添加规则与负面差异
+- 追求优雅与处理每个特殊情况
+- 测试与可重复性
 Notes:
-
-Back to the thing about both being hard to read for non-experts, a goal of mine is to make smart contracts more accessible to everyday people so that people can read their own contracts!
-
-HOWEVER since we're talking similarities - we should also speak to the differences.
-And hence be careful with this legal and coding comparison.
-The culture of the two can certainly be different:
-
+回到它们对非专业人士来说都难以读懂这一点，我的一个目标是让智能合约对普通人来说更容易理解，这样人们就可以读懂自己的合同！然而，既然我们在讨论相似之处，我们也应该谈谈它们的差异。因此在进行法律和编码的比较时要小心。这两者的文化肯定是不同的：
 ---
-
-# Execution / Enforcement -- Pt. 2
-
+# 执行/实施——第二部分
 <img rounded style="width: 500px" src="./img/court.jpeg" />
-
 Notes:
-
-Okay, so now that we understand what it means to express and write a contract, imagine now that the legal agreement has been made, what comes next?
-
+好的，既然我们已经理解了表达和撰写合同的含义，现在想象一下，当法律协议达成后，接下来会发生什么呢？
 ---
-
-# Execution / Enforcement -- Pt. 2
-
+# 执行/实施——第二部分
 <img rounded style="width: 500px" src="./img/moonbeam.jpeg" />
-
 Notes:
-
-Well it must be executed / enforced.
-Where does that happen? How does that work?
-
+嗯，它必须被执行/实施。那么在哪里执行呢？它是如何运作的呢？
 ---
-
-## Traditional Execution
-
+## 传统执行方式
 <pba-flex center>
-
-- There is rarely an official submission moment.
-- Parties Self Execute
-- Sometimes, that's it.
-  Success.
-- Sometimes it goes to court.
-
+- 很少有正式的提交时刻。
+- 各方自行执行
+- 有时候，这样就结束了，执行成功。
+- 有时候会诉诸法庭。
 </pba-flex>
-
 Notes:
-
-So - let’s talk about execution.
-In a traditional sense, parties often just sign the contract - maybe there is a witness, sometimes even a notary, rarely does it actually get submitted to a judge.
-On the happy path, no further action is necessary - this is actually a decided strength of the traditional system - it is maximally lazy.
-When there is a dispute though, parties can go to court for a human judge to rule.
-A judge enforces through powerful agencies like police and jails, and also through social consensus.
-In practice there is little consideration for scaling, queue length, ruling priority, resource exhaustion.
-But in principle there could be.
-The existing systems of the nation states could be optimized considerably without having to even adopt any real smart contract.
-
+那么，我们来谈谈执行。从传统意义上讲，各方通常只是签署合同——可能会有一个证人，有时甚至会有公证人，但实际上很少会将合同提交给法官。在一切顺利的情况下，不需要进一步的行动——这实际上是传统系统的一大优势——它非常省事。然而，当出现争议时，各方可以诉诸法庭，由法官进行裁决。法官通过警察和监狱等强力机构，以及社会共识来执行裁决。在实践中，很少考虑可扩展性、排队长度、裁决优先级、资源耗尽等问题。但从原则上讲，这些是可以考虑的。即使不采用任何真正的智能合约，现有国家体系也可以进行相当大的优化。
 ---
-
-# Computerized Execution
-
+# 计算机化执行
 <pba-flex center>
-
-- There is a deployment moment
-- Sometimes there are checkpoints or milestones or other official interactions
-- Sometimes there is dispute resolution
-
+- 有一个部署时刻
+- 有时会有检查点、里程碑或其他正式交互环节
+- 有时会有争议解决机制
 </pba-flex>
-
 Notes:
-
-Moving beyond traditional execution to computerized: you start some process on some computer and that computer faithfully executes the program for users to interact with.
-At first you can think of it like a computer in the basement and we walk up to it when we want to interact.
-This is how nintendo works.
-Multiple controllers and multiple physically present users.
-The internet makes it better in some ways.
-We can interact with our smart contract remotely instead of being physically present.
-But now, there is the question of the server operator.
-Are they really executing the correct contract?
-A corrupt server operator is essentially the same as a corrupt judge.
-Hmmm...
-so I wonder how we might solve this?
-
+从传统执行转向计算机化执行：你在某台计算机上启动某个进程，然后这台计算机忠实地执行程序以供用户交互。一开始，你可以把它想象成地下室里的一台计算机，当我们想要交互时就走到它跟前。这就是任天堂游戏机的工作方式，多个控制器和多个在场的用户。互联网在某些方面让这变得更好。我们可以远程与智能合约进行交互，而无需亲自在场。但现在，出现了服务器运营商的问题。他们真的在执行正确的合同吗？一个不诚实的服务器运营商本质上和一个腐败的法官没什么两样。嗯……所以我在想我们该如何解决这个问题呢？
 ---
-
-# Code is Law
-
+# 代码即法律
 <img rounded style="width: 500px" src="./img/codeislaw.jpeg" />
-
 Notes:
-
-So, after all of that talk comparing law and code, it's inevitable that we get here: 'Code is law' which is another web3-ism you'll hear quite often.
-We know tech can be used to enforce rules.
-So we might wonder, do we actually need lawyers? Can code dictate what we can and cannot do? Can smart contracts be the answer? I'm not coming for lawyers.
-I'm sure they're nice.
-But could this be the answer to make life more trustless and secure?
-But this is where we'll end it today.
-I hope I've primed you with a few lingering questions.
-These smart contracts do sound cool, but perhaps the execution, where it actually happens, hopefully is a bit opaque and puzzling still.
-That's what Joshy will be able to speak to this week.
-
+在对法律和代码进行了这么多比较之后，我们不可避免地会得出这样的结论：“代码即法律”，这是你在Web3领域经常听到的另一种说法。我们知道技术可以用来执行规则。所以我们可能会想，我们真的还需要律师吗？代码能决定我们能做什么和不能做什么吗？智能合约会是答案吗？我并不是针对律师。我相信他们都很好。但这会是让生活变得更加无需信任且安全的答案吗？但今天我们就讲到这里。我希望我给你们留下了一些值得思考的问题。智能合约听起来确实很酷，但或许它实际的执行过程，仍然有点模糊和令人困惑。这就是乔希本周要讲解的内容。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Activity
-
+# 活动
 Notes:
-
-Any questions?
-
-Now I'm going to turn it over to Aaron to demonstrate this idea of expressing contracts as programming code.
+有什么问题吗？
+现在我将把时间交给亚伦，让他演示如何将合同表达为编程代码。 

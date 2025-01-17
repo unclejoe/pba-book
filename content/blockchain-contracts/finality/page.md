@@ -1,4 +1,4 @@
-# Consensus Finality
+# 共识：终局性
 
 <!-- markdown-link-check-disable -->
 <center>

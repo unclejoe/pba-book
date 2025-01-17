@@ -1,4 +1,4 @@
-# Coordination and Trust in Web3
+# Web3中的协调与信任
 
 <!-- markdown-link-check-disable -->
 <center>

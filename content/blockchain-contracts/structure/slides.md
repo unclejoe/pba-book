@@ -4,77 +4,77 @@ description: The Blockchain data structure including hash-linking, forks, header
 duration: 30 min
 ---
 
-# Blockchain Structure
+# 区块链结构
 
 <img style="width: 1000px" src="./img/opaque-blockchain.svg" />
 
 ---
 
-## Shared Story
+## 共享故事
 
-A Blockchain **cryptographically guarantees** that a history of events has not been tampered with.
-This allows interested parties to have a **shared history**.
+区块链通过加密方式保证事件历史未被篡改。
+这使得相关各方能够拥有一个**共享的历史记录**。
 
 Notes:
 
-And it allows them to know whether they have identical histories in O(1) by just comparing the tip of the chain.
+并且他们可以通过比较链的末端，在 O(1) 时间复杂度内知道他们的历史记录是否相同。
 
 ---
 
-## Hash Linked List
+## 哈希链表
 
 <img style="width: 1000px" src="./img/hash-linked-1.svg" />
 
 Notes:
 
-This is a simplified blockchain.
-Each block has a pointer to the parent block as well as a payload.
+这是一个简化的区块链。
+每个区块都有一个指向前一个区块的指针以及一个负载。
 
 ---v
 
-## Hash Linked List
+## 哈希链表
 
 <img style="width: 1000px" src="./img/hash-linked-2.svg" />
 
 Notes:
 
-The pointer is a cryptographic hash of the parent block.
-This ensures data integrity throughout the entire history of the chain.
-This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+这个指针是前一个区块的加密哈希值。
+这确保了整个链的历史数据的完整性。
+这是区块链可能采取的最简单形式，实际上它使我们能够就共享历史达成共识。
 
 ---v
 
-## Hash Linked List
+## 哈希链表
 
 <img style="width: 1000px" src="./img/hash-linked-3.svg" />
 
 Notes:
 
-This ensures data integrity throughout the entire history of the chain.
-This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+这确保了整个链的历史数据的完整性。
+这是区块链可能采取的最简单形式，实际上它使我们能够就共享历史达成共识。
 
 ---v
 
-### Genesis Block
+### 创世区块
 
 <img style="width: 1000px" src="./img/hash-linked-genesis.svg" />
 
 Notes:
 
-The first block in the chain is typically called a the "Genesis block" named after the first book in the judaeo-christian mythology - The beginning of our shared story.
-The parent hash is chosen to be some specific value.
-Typically we use the all-zero hash, although any fixed widely agreed-upon value would also do.
+链中的第一个区块通常被称为“创世区块”，这个名字来源于犹太教 - 基督教神话中的第一本书 - 我们共享故事的开端。
+父哈希值被选择为某个特定的值。
+通常我们使用全零哈希值，不过任何固定且被广泛认可的值也可以。
 
 ---
 
-## State Machines (Again)
+## 状态机（再次提及）
 
-A state machine defines:
+状态机定义：
 
 <pba-flex center>
 
-- Set of valid states
-- Rules for transitioning between states
+- 有效状态的集合
+- 状态之间转换的规则
 
 </pba-flex>
 
@@ -82,213 +82,212 @@ A state machine defines:
 
 ---v
 
-### Blockchain meet State Machine
+### 区块链与状态机的结合
 
 <img style="width: 1000px" src="./img/blockchain-meet-state-machine.svg" />
 
 Notes:
 
-The simplest way to join a blockchain to a state machine is to to make the blockchain's payload a state machine transition.
-By doing so, we effectively track the history of a state machine in a cryptographically guaranteed way.
+将区块链与状态机结合的最简单方法是使区块链的负载成为状态机的转换。
+通过这样做，我们可以以加密保证的方式有效地跟踪状态机的历史。
 
 ---v
 
-### Where do the States Live?
+### 状态存储在哪里？
 
-Somewhere else!
+在其他地方！
 
 <img style="width: 1000px" src="./img/blockchain-with-state-outside.svg" />
 
 Notes:
 
-There is a state associated with each block.
-But typically the state is NOT stored in the block.
-This state information is redundant because it can always be obtained by just re-executing the history of the transitions.
-It is possible to store the state in the blocks, but the redundancy is undesirable.
-It wastes disk space for anyone who wants to store the history of the chain.
-Storing the state in the block is not done by any moderately popular blockchain today.
-If you _want_ to store the states, you are welcome to do so.
-Software that does this is known as an Archive node or an indexer.
-But it is stored separately from the block
-...Pause...
-One more time to make sure it sinks in: The state is NOT in the block.
+每个区块都有一个与之关联的状态。
+但通常状态不会存储在区块中。
+这个状态信息是冗余的，因为它总是可以通过重新执行转换历史来获得。
+将状态存储在区块中是可能的，但这种冗余是不可取的。
+对于任何想要存储链历史的人来说，这会浪费磁盘空间。
+目前，任何稍微流行的区块链都不会将状态存储在区块中。
+如果你**想要**存储状态，你可以这样做。
+执行此操作的软件称为归档节点或索引器。
+但它与区块是分开存储的。
+...暂停...
+再重复一次，以确保你理解：状态不在区块中。
 
 ---v
 
-### State Roots
+### 状态根
 
-A cryptographic anchor to the state
+状态的加密锚点
 
 <img style="width: 1000px" src="./img/blockchain-with-state-roots.svg" />
 
 Notes:
 
-Some data redundancy can be good to help avoid corruption etc.
-It is common for a block to contain a cryptographic fingerprint of
-the state.
-This is known as a state root.
-You think of it as a hash of the state.
-In practice, the state is typically built into a Merkle tree like structure and the tree root is included.
-Not all blockchains do this.
-Notably bitcoin doesn't.
-But most do.
-We'll go into details about exactly how this state root is calculated for Substrate in the next two modules, but for now we just consider the state root to be some kind of cryptographic fingerprint.
+一些数据冗余可能有助于避免数据损坏等问题。
+一个区块通常包含状态的加密指纹。
+这被称为状态根。
+你可以把它看作是状态的哈希值。
+在实践中，状态通常被构建成类似默克尔树的结构，并且树的根被包含在内。
+并非所有的区块链都这样做。
+值得注意的是，比特币就不这样做。
+但大多数区块链会这样做。
+在接下来的两个模块中，我们将详细介绍 Substrate 中这个状态根是如何计算的，但现在我们只将状态根视为某种加密指纹。
 
 ---
 
-## Forks
+## 分叉
 
 <img style="width: 1000px" src="./img/forks.svg" />
 
-A state machine can have different possible histories.
-These are called forks.
+一个状态机可以有不同的可能历史。
+这些被称为分叉。
 
 Notes:
 
-You can think of them like alternate realities.
-We need to decide which of the many possible forks is ultimately the "real" one.
-This is the core job of consensus and we will talk about it in two upcoming lessons in this module.
+你可以把它们想象成不同的现实。
+我们需要决定众多可能的分叉中哪一个最终是“真实”的。
+这是共识的核心工作，我们将在本模块的接下来两节课中讨论它。
 
 ---v
 
-## Invalid Transitions
+## 无效转换
 
 <img style="width: 1000px" src="./img/forks-some-invalid.svg" />
 
 Notes:
 
-Before we even get to hardcore consensus, we can rule out _some_ possibilities based on the state machine itself
+在我们进入硬核共识之前，我们可以根据状态机本身排除**一些**可能性。
 
 ---
 
-## Realistic Blockchain Structure
+## 现实的区块链结构
 
 <img width="600px" src="./img/header-body.svg" />
 
-- Header: Summary of minimal important information about this block
-- Body: A batched list of state transitions
+- 头部：关于这个区块的最小重要信息的摘要
+- 主体：一批状态转换的列表
 
 Notes:
 
-The header is a minimal amount of information.
-In some ways it is like metadata.
-The body contains the real "payload".
-It is almost always a batch of state transitions.
-There are many name aliases for what is included in the body:
+头部包含的信息最少。
+在某些方面，它就像元数据。
+主体包含真正的“负载”。
+它几乎总是一批状态转换。
+主体中包含的内容有许多别名：
 
-- Transitions
-- Transactions
-- Extrinsics
+- 转换
+- 交易
+- 外部交易
 
 ---v
 
-## Blocks in Substrate
+## Substrate 中的区块
 
 ```rust
-/// Abstraction over a Substrate block.
+/// Substrate 区块的抽象。
 pub struct Block<Header, Extrinsic: MaybeSerialize> {
-	/// The block header.
+	/// 区块头部。
 	pub header: Header,
-	/// The accompanying extrinsics.
+	/// 附带的外部交易。
 	pub extrinsics: Vec<Extrinsic>,
 }
 ```
 
 Notes:
 
-This example is from Substrate and as such it strives to be a general and flexible format, we will cover Substrate in more depth in the next module.
-This is representative of nearly all real-world blockchains
+这个例子来自 Substrate，因此它力求成为一种通用且灵活的格式，我们将在下一个模块中更深入地介绍 Substrate。
+这几乎代表了所有现实世界中的区块链。
 
 ---
 
-## Headers
+## 头部
 
-Exact content varies per blockchain.
-Always contains the parent hash.
-Headers are the _actual_ hash-linked list, not entire blocks.
+确切内容因区块链而异。
+总是包含父哈希值。
+头部是**实际的**哈希链表，而不是整个区块。
 
 Notes:
 
-The parent hash links blocks together (cryptographically linked list).
-The other info is handy for other infrastructure and applications (more on that later).
+父哈希值将区块链接在一起（加密链表）。
+其他信息对于其他基础设施和应用程序很有用（稍后会详细介绍）。
 
 ---v
 
-## Header Examples
+## 头部示例
 
 <pba-cols>
 <pba-col>
 
 <pba-flex center>
 
-**Bitcoin**
+**比特币**
 
 </pba-flex>
 
-- Version
-- Previous Hash
-- Tx Merkle Root
-- Time
+- 版本
+- 前一个哈希值
+- 交易默克尔根
+- 时间
 - N_Bits
-- Nonce
+- 随机数
 
 </pba-col>
 <pba-col>
 
 <pba-flex center>
 
-**Ethereum**
+**以太坊**
 
 </pba-flex>
 
-- Time
-- Block Number
-- Base Fee
-- Difficulty
-- Mix Hash
-- Parent Hash
-- State Root
-- Nonce
+- 时间
+- 区块编号
+- 基础费用
+- 难度
+- 混合哈希值
+- 父哈希值
+- 状态根
+- 随机数
 
 </pba-col>
 </pba-cols>
 
 ---v
 
-## Substrate Header
+## Substrate 头部
 
-- Parent hash
-- Number
-- State root
-- Extrinsics root
-- Consensus Digest
+- 父哈希值
+- 编号
+- 状态根
+- 外部交易根
+- 共识摘要
 
 Notes:
 
-Extrinsics root is a crypto link to the body of the block.
-It is very similar to the state root.
-Consensus Digest is information necessary for the consensus algorithm to determine a block's validity.
-It varies widely with the consensus algorithm used and we will discuss it in two upcoming lectures.
+外部交易根是指向区块主体的加密链接。
+它与状态根非常相似。
+共识摘要是共识算法确定区块有效性所必需的信息。
+它会随着所使用的共识算法而有很大差异，我们将在接下来的两节课中讨论它。
 
 ---v
 
-## Substrate Header (Full Picture)
+## Substrate 头部（完整视图）
 
 <img style="width: 1000px" src="./img/headers-link-state-body.svg" />
 
 ---
 
-## Extrinsics
+## 外部交易
 
-Packets from the outside world with _zero_ or more signatures attached.
+来自外部世界的数据包，附带**零个**或多个签名。
 
-- Function calls to the STF
-- Some functions require signatures (e.g., transfer some tokens)
-- Others don't, but usually have some validation means
+- 对状态转换函数（STF）的函数调用
+- 一些函数需要签名（例如，转移一些代币）
+- 其他函数不需要签名，但通常有一些验证手段
 
 ---
 
-## DAGS
+## 有向无环图（DAG）
 
 **Directed Acyclic Graphs**
 
@@ -296,20 +295,20 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 Notes:
 
-In math there is a notion of a Directed Acyclic Graph.
-Define graph, than directed, than acyclic.
-Blockchains are examples of DAGs.
-Actually blockchains are a specific kind of a DAG called a tree.
-Sometimes you will hear me talk about the "block tree" which really means all the histories of the chain.
+在数学中，有一个有向无环图的概念。
+定义图，然后是有向的，然后是无环的。
+区块链是有向无环图的例子。
+实际上，区块链是一种特殊的有向无环图，称为树。
+有时你会听到我提到“区块树”，它实际上指的是链的所有历史。
 
-But there are more kinds of DAGs than just trees.
-Consider if someone authored a block that looks like this.
+但有向无环图不仅仅是树。
+考虑一下，如果有人创建了一个这样的区块。
 
-CLICK
+点击
 
 ---v
 
-## DAGS
+## 有向无环图（DAG）
 
 **Directed Acyclic Graphs**
 
@@ -317,122 +316,124 @@ CLICK
 
 Notes:
 
-What if a block could have more than one parent!?
-It could allow parallelization and increased throughput!
-But it also leads to problems.
-What if there are conflicting transactions in the two parent histories?
-How do you even know if there are conflicting histories?
+如果一个区块可以有多个父区块会怎么样？
+这可能允许并行处理并提高吞吐量！
+但这也会带来问题。
+如果两个父历史记录中存在冲突的交易怎么办？
+你甚至如何知道是否存在冲突的历史记录？
 
 ---
 
 <!-- FIXME TODO
 
-This might be a good place to split the lesson.
-The part before this is about a data structure.
-The part after this is about a P2P network of nodes that track this data structure.
+这可能是一个很好的地方来分割课程。
+在此之前的部分是关于数据结构的。
+在此之后的部分是关于跟踪此数据结构的点对点网络。
 -->
 
-## Blockchain 💒 P2P Networks
+## 区块链 💒 点对点网络
 
 <img style="width: 900px;" src="./img/blockchain_p2p.svg" />
 
 Notes:
 
-So hopefully some parts of this figure look familiar.
-What do you see here?
+希望这个图的某些部分看起来很熟悉。
+你在这里看到了什么？
 
-- Diverse servers.
-- In a p2p network.
-- Each with their own view of the blockchain.
+- 多样化的服务器。
+- 在一个点对点网络中。
+- 每个服务器都有自己对区块链的视图。
 
 ---v
 
-## Nodes
+## 节点
 
-Software agents that participate in blockchain network.<br />
-May perform these jobs:
+参与区块链网络的软件代理。<br />
+可能执行以下工作：
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-- Gossip blocks
-- Execute and Validate blocks
-- Store blocks
-- Store states
-- Gossip transactions
+- 传播区块
+- 执行和验证区块
+- 存储区块
+- 存储状态
+- 传播交易
 
 </pba-flex>
 </pba-col>
 <pba-col>
 <pba-flex center>
 
-- Maintain a transaction pool
-- Author blocks
-- Store block headers
-- Answer user requests for data (RPC)
+- 维护交易池
+- 生成区块
+- 存储区块头部
+- 响应用户的数据请求（RPC）
 
 </pba-flex>
 </pba-col>
 </pba-cols>
 Notes:
 
-Many nodes only perform a subset of these tasks
+许多节点只执行这些任务的一个子集。
 
 ---v
 
-## Types of Nodes
+## 节点类型
 
 <pba-flex center>
 
-- Full Nodes
-- Light Nodes (aka Light clients)
-- Authoring nodes
-- Archive nodes
-- RPC nodes
+- 完整节点
+- 轻节点（又名轻客户端）
+- 生成节点
+- 归档节点
+- RPC 节点
 
 </pba-flex>
 
 ---
 
-## Blockspace
+## 区块空间
 
-A resource created, and often sold, by a decentralized blockchain network.
+由去中心化的区块链网络创建并经常出售的一种资源。
 
 <img style="width: 700px;" src="./img/Web2Web3Stacks.png" />
 
-#### Learn more:
+#### 了解更多：
 
-- Article: <https://a16zcrypto.com/posts/article/blockspace-explained/>
-- Article: <https://www.rob.tech/polkadot-blockspace-over-blockchains/>
-- Podcast: <https://www.youtube.com/watch?t=5330&v=jezH_7qEk50>
+- 文章：<https://a16zcrypto.com/posts/article/blockspace-explained/>
+- 文章：<https://www.rob.tech/polkadot-blockspace-over-blockchains/>
+- 播客：<https://www.youtube.com/watch?t=5330&v=jezH_7qEk50>
 
 Notes:
 
-A Blockchain network is a replacement for a centralized server.
-It sells a product to application deployers.
-The state machine is the application layer, and the blockchain is the server replacement.
-In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc.
-Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
+区块链网络是中心化服务器的替代品。
+它向应用程序部署者出售一种产品。
+状态机是应用层，而区块链是服务器的替代品。
+就像应用程序向数据中心支付服务器资源（如 CPU 时间、磁盘空间、带宽等）一样。
+应用程序（可能通过其开发者或用户）为获得其历史记录被证明以及其状态被一个无需信任且不可阻挡的共识层跟踪的特权而付费。
 
 ---v
 
-## Transaction Pool
+## 交易池
 
-- Contains transactions that are not yet in blocks.
-- Constantly prioritizing and re-prioritizing transactions.
-- Operates as a blockspace market.
+- 包含尚未包含在区块中的交易。
+- 不断对交易进行优先级排序和重新排序。
+- 作为区块空间市场运行。
 
 Notes:
 
-Sometimes known as mempool (thanks bitcoin 🙄)
-Authoring nodes determine the order of upcoming transactions.
-In some sense they can see the future.
+有时也被称为内存池（感谢比特币 🙄）
+生成节点确定即将到来的交易的顺序。
+在某种意义上，它们可以看到未来。
 
-Foreshadow forks where players disagree on the rules
-History: dao fork bch fork
-foreshadow consensus: arbitrary additional constraints for a block to be valid
+预示着分叉，即参与者对规则存在分歧
+历史：DAO 分叉、BCH 分叉
+预示着共识：区块有效的任意额外约束
 
 ---
 
-# Let's #BUIDL It
+# 让我们开始构建吧
+
+```
