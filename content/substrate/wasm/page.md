@@ -1,4 +1,4 @@
-# Substrate Wasm meta-protocol
+# Substrate Wasm元协议
 
 <!-- markdown-link-check-disable -->
 <center>

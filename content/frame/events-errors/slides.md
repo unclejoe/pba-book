@@ -4,123 +4,122 @@ description: FRAME Events and Errors for web3 builders.
 duration: 1 hour
 ---
 
-# Events and Errors
+# 事件与错误
 
 ---
 
-## Events and Errors
+## 事件与错误
 
-In this presentation, we will go over two of the tools you have access to when developing FRAME Pallets to express how your runtime calls are executing.
-
----
-
-# Errors
+在本次演示中，我们将介绍在开发FRAME模块（Pallet）时，你可以使用的两种工具，用以说明你的运行时调用是如何执行的。
 
 ---
 
-## Intro to Errors
-
-Not all extrinsics are valid. It could be for a number of reasons:
-
-- The extrinsic itself is badly formatted. (wrong parameters, encoding, etc...)
-- The state transition function does not allow it.
-  - Maybe a timing problem.
-  - User might be lacking resources.
-  - State transition might be waiting for other data or processes.
-  - etc...
+# 错误
 
 ---
 
-## Dispatch Result
+## 错误简介
 
-All pallet calls return at the end a `DispatchResult`.
+并非所有的外部调用（extrinsics）都是有效的。原因可能有多种：
 
-From: `substrate/frame/support/src/dispatch.rs`
+- 外部调用本身的格式有误。（参数错误、编码错误等）
+- 状态转换函数不允许该调用。
+  - 可能存在时间问题。
+  - 用户可能缺少资源。
+  - 状态转换可能正在等待其他数据或进程。
+  - 等等。
+
+---
+
+## 调度结果
+
+所有模块调用最终都会返回一个 `DispatchResult`。
+
+来源：`substrate/frame/support/src/dispatch.rs`
 
 ```rust
 pub type DispatchResult = Result<(), sp_runtime::DispatchError>;
 ```
 
-So a function can either return `Ok(())` or some `DispatchError`.
+因此，一个函数可以返回 `Ok(())` 或者某个 `DispatchError`。
 
 ---
 
-## Dispatch Error
+## 调度错误
 
-From: `substrate/primitives/runtime/src/lib.rs`
+来源：`substrate/primitives/runtime/src/lib.rs`
 
 ```rust [0|6-10|13-14|15-16]
-/// Reason why a dispatch call failed.
+/// 调度调用失败的原因。
 #[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, PartialEq, MaxEncodedLen)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum DispatchError {
-	/// Some error occurred.
+	/// 发生了某个错误。
 	Other(
 		#[codec(skip)]
 		#[cfg_attr(feature = "serde", serde(skip_deserializing))]
 		&'static str,
 	),
-	/// Failed to lookup some data.
+	/// 未能查找某些数据。
 	CannotLookup,
-	/// A bad origin.
+	/// 错误的调用来源。
 	BadOrigin,
-	/// A custom error in a module.
+	/// 模块中的自定义错误。
 	Module(ModuleError),
-	/// At least one consumer is remaining so the account cannot be destroyed.
+	/// 至少还有一个消费者，因此账户无法被销毁。
 	ConsumerRemaining,
-	/// There are no providers so the account cannot be created.
+	/// 没有提供者，因此账户无法创建。
 	NoProviders,
-	/// There are too many consumers so the account cannot be created.
+	/// 消费者过多，因此账户无法创建。
 	TooManyConsumers,
-	/// An error to do with tokens.
+	/// 与代币有关的错误。
 	Token(TokenError),
-	/// An arithmetic error.
+	/// 算术错误。
 	Arithmetic(ArithmeticError),
-	/// The number of transactional layers has been reached, or we are not in a transactional
-	/// layer.
+	/// 已达到事务层的数量上限，或者我们不在事务层中。
 	Transactional(TransactionalError),
-	/// Resources exhausted, e.g. attempt to read/write data which is too large to manipulate.
+	/// 资源耗尽，例如尝试读取或写入的数据量过大，无法处理。
 	Exhausted,
-	/// The state is corrupt; this is generally not going to fix itself.
+	/// 状态已损坏；通常这种情况无法自行修复。
 	Corruption,
-	/// Some resource (e.g. a preimage) is unavailable right now. This might fix itself later.
+	/// 某些资源（例如预映象）目前不可用。这种情况可能会在稍后自行解决。
 	Unavailable,
-	/// Root origin is not allowed.
+	/// 不允许使用根来源。
 	RootNotAllowed,
 }
 ```
 
 ---
 
-## Module Errors
+## 模块错误
 
-From: `substrate/primitives/runtime/src/lib.rs`
+来源：`substrate/primitives/runtime/src/lib.rs`
 
 ```rust
-/// The number of bytes of the module-specific `error` field defined in [`ModuleError`].
-/// In FRAME, this is the maximum encoded size of a pallet error type.
+/// 在 [`ModuleError`] 中定义的模块特定 `error` 字段的字节数。
+/// 在FRAME中，这是模块错误类型的最大编码大小。
 pub const MAX_MODULE_ERROR_ENCODED_SIZE: usize = 4;
 
-/// Reason why a pallet call failed.
+/// 模块调用失败的原因。
 #[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, MaxEncodedLen)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ModuleError {
-	/// Module index, matching the metadata module index.
+	/// 模块索引，与元数据模块索引匹配。
 	pub index: u8,
-	/// Module specific error value.
+	/// 模块特定的错误值。
 	pub error: [u8; MAX_MODULE_ERROR_ENCODED_SIZE],
-	/// Optional error message.
+	/// 可选的错误消息。
 	#[codec(skip)]
 	#[cfg_attr(feature = "serde", serde(skip_deserializing))]
 	pub message: Option<&'static str>,
 }
 ```
 
-So an error is at most just 5 bytes.
+因此，一个错误最多只占5个字节。
 
 ---
 
-## Declaring Errors
+## 声明错误
 
 ```rust [0|23-30|47-48]
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -132,10 +131,10 @@ pub mod pallet {
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
-	/// Configure the pallet by specifying the parameters and types on which it depends.
+	/// 通过指定模块所依赖的参数和类型来配置模块。
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
-		/// Because this pallet emits events, it depends on the runtime's definition of an event.
+		/// 由于此模块会发出事件，因此它依赖于运行时对事件的定义。
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
@@ -145,26 +144,26 @@ pub mod pallet {
 	#[pallet::storage]
 	pub type CurrentOwner<T: Config> = StorageValue<_, T::AccountId>;
 
-	// Errors inform users that something went wrong.
+	// 错误用于告知用户发生了问题。
 	#[pallet::error]
 	pub enum Error<T> {
-		/// There is currently no owner set.
+		/// 当前没有设置所有者。
 		NoOwner,
-		/// The calling user is not authorized to make this call.
+		/// 调用用户无权进行此调用。
 		NotAuthorized,
 	}
 
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// The owner has been updated.
+		/// 所有者已更新。
 		OwnerChanged,
 	}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		/// This function allows the current owner to set a new owner.
-		/// If there is no owner, this function will return an error.
+		/// 此函数允许当前所有者设置新的所有者。
+		/// 如果没有所有者，此函数将返回错误。
 		#[pallet::weight(u64::default())]
 		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
@@ -181,9 +180,9 @@ pub mod pallet {
 
 ---
 
-## Using Errors
+## 使用错误
 
-When writing tests, you can use errors to make sure that your functions execute exactly as expected.
+在编写测试时，你可以使用错误来确保你的函数按预期执行。
 
 ```rust
 #[test]
@@ -199,9 +198,9 @@ fn errors_example() {
 
 ---
 
-## Encoding Errors
+## 编码错误
 
-All errors ultimately become a `DispatchError`, which is the final type returned by the runtime.
+所有错误最终都会变成 `DispatchError`，这是运行时返回的最终类型。
 
 ```rust
 println!("{:?}", Error::<T>::NoOwner.encode());
@@ -221,7 +220,7 @@ println!("{:?}", dispatch_error2.encode());
 
 ---
 
-## Dispatch Error Encoding
+## 调度错误编码
 
 <table>
 <tr>
@@ -234,21 +233,21 @@ println!("{:?}", dispatch_error2.encode());
 </tr>
 <tr>
 	<td>DispatchError::Module</td>
-	<td>Pallet #2</td>
-	<td>Error #2</td>
-	<td>(unused)</td>
-	<td>(unused)</td>
-	<td>(unused)</td>
+	<td>模块 #2</td>
+	<td>错误 #2</td>
+	<td>(未使用)</td>
+	<td>(未使用)</td>
+	<td>(未使用)</td>
 </tr>
 </table>
 
-Encoding based on configuration:
+基于配置的编码：
 
 <div class="flex-container">
 <div class="left" style="max-width: 700px;">
 
 ```rust
-// Configure a mock runtime to test the pallet.
+// 配置一个模拟运行时来测试模块。
 frame_support::construct_runtime!(
 	pub struct Test {
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
@@ -261,23 +260,23 @@ frame_support::construct_runtime!(
 <div class="right" style="margin-left: 10px; max-width: 700px;">
 
 ```rust
-// Errors inform users that something went wrong.
+// 错误用于告知用户发生了问题。
 #[pallet::error]
 pub enum Error<T> {
-	/// There is currently no owner set.
+	/// 当前没有设置所有者。
 	NoOwner,
-	/// The calling user is not authorized to make this call.
+	/// 调用用户无权进行此调用。
 	NotAuthorized,
-}
+	}
 ```
 
 </div>
 </div>
 ---
 
-## Nested Errors
+## 嵌套错误
 
-Errors support up to 5 bytes, which allows you to create nested errors, or insert other minimal data with the `PalletError` derive macro.
+错误最多支持5个字节，这允许你创建嵌套错误，或者使用 `PalletError` 派生宏插入其他最小数据。
 
 ```rust
 #[derive(Encode, Decode, PalletError, TypeInfo)]
@@ -289,18 +288,18 @@ pub enum SubError {
 
 use frame_system::pallet::Error as SystemError;
 
-// Errors inform users that something went wrong.
+// 错误用于告知用户发生了问题。
 #[pallet::error]
 pub enum Error<T> {
-	/// There is currently no owner set.
+	/// 当前没有设置所有者。
 	NoOwner,
-	/// The calling user is not authorized to make this call.
+	/// 调用用户无权进行此调用。
 	NotAuthorized,
-	/// Errors coming from another place.
+	/// 来自其他地方的错误。
 	SubError(SubError),
-	/// Errors coming from another place.
+	/// 来自其他地方的错误。
 	SystemError(SystemError<T>),
-	/// Some Error with minimal data
+	/// 带有最小数据的某个错误
 	DataError(u16),
 }
 ```
@@ -311,21 +310,21 @@ Notes:
 
 ---
 
-# Events
+# 事件
 
 ---
 
-## Intro to Events
+## 事件简介
 
-When an extrinsic completes successfully, there is often some metadata you would like to expose to the outside world about what exactly happened during the execution.
+当一个外部调用成功完成时，通常你希望向外界公开一些关于执行过程中具体发生了什么的元数据。
 
-For example, there may be multiple different ways an extrinsic completes successfully, and you want the user to know what happened.
+例如，一个外部调用可能有多种不同的成功完成方式，你希望用户知道发生了什么。
 
-Or maybe there is some significant state transition that you know users
+或者可能有一些重要的状态转换，你知道用户
 
 ---
 
-## Declaring and Emitting Events
+## 声明和发出事件
 
 ```rust [10-15|32-37|50]
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -337,10 +336,10 @@ pub mod pallet {
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
-	/// Configure the pallet by specifying the parameters and types on which it depends.
+	/// 通过指定模块所依赖的参数和类型来配置模块。
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
-		/// Because this pallet emits events, it depends on the runtime's definition of an event.
+		/// 由于此模块会发出事件，因此它依赖于运行时对事件的定义。
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
@@ -350,26 +349,26 @@ pub mod pallet {
 	#[pallet::storage]
 	pub type CurrentOwner<T: Config> = StorageValue<_, T::AccountId>;
 
-	// Errors inform users that something went wrong.
+	// 错误用于告知用户发生了问题。
 	#[pallet::error]
 	pub enum Error<T> {
-		/// There is currently no owner set.
+		/// 当前没有设置所有者。
 		NoOwner,
-		/// The calling user is not authorized to make this call.
+		/// 调用用户无权进行此调用。
 		NotAuthorized,
 	}
 
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		/// The owner has been updated.
+		/// 所有者已更新。
 		OwnerChanged,
 	}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		/// This function allows the current owner to set a new owner.
-		/// If there is no owner, this function will return an error.
+		/// 此函数允许当前所有者设置新的所有者。
+		/// 如果没有所有者，此函数将返回错误。
 		#[pallet::weight(u64::default())]
 		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
@@ -386,13 +385,13 @@ pub mod pallet {
 
 ---
 
-## Deposit Event
+## 存入事件
 
 ```rust
 #[pallet::generate_deposit(pub(super) fn deposit_event)]
 ```
 
-Simply generates:
+简单地生成：
 
 ```rust
 impl<T: Config> Pallet<T> {
@@ -411,25 +410,24 @@ impl<T: Config> Pallet<T> {
 
 ---
 
-## Deposit Event in System
+## 系统中的存入事件
 
-Events are just a storage item in FRAME System.
+在FRAME系统中，事件只是一个存储项。
 
 `frame/system/src/lib.rs`
 
 ```rust
-/// Events deposited for the current block.
+/// 当前块中存入的事件。
 ///
-/// N O T E: The item is unbound and should therefore never be read on chain.
-/// It could otherwise inflate the PoV size of a block.
+/// 注意：该项是无界的，因此绝不应在链上读取。
+/// 否则，它可能会增加块的证明大小（PoV size）。
 ///
-/// Events have a large in-memory size. Box the events to not go out-of-memory
-/// just in case someone still reads them from within the runtime.
+/// 事件在内存中占用的空间很大。将事件装箱，以防有人在运行时内仍然读取它们，从而避免内存溢出。
 #[pallet::storage]
 pub(super) type Events<T: Config> =
 	StorageValue<_, Vec<Box<EventRecord<T::RuntimeEvent, T::Hash>>>, ValueQuery>;
 
-/// The number of events in the `Events<T>` list.
+/// `Events<T>` 列表中的事件数量。
 #[pallet::storage]
 #[pallet::getter(fn event_count)]
 pub(super) type EventCount<T: Config> = StorageValue<_, EventIndex, ValueQuery>;
@@ -437,158 +435,146 @@ pub(super) type EventCount<T: Config> = StorageValue<_, EventIndex, ValueQuery>;
 
 ---
 
-## Deposit Events in System
+## 系统中的存入事件
 
-Depositing events ultimately just appends a new event to this storage.
+在系统中存入事件最终只是将一个新事件追加到这个存储中。
 
 `frame/system/src/lib.rs`
 
 ```rust [0|1-4|34|13-16]
-/// Deposits an event into this block's event record.
+// 将一个事件存入此块的事件记录中。
 pub fn deposit_event(event: impl Into<T::RuntimeEvent>) {
-	Self::deposit_event_indexed(&[], event.into());
+    Self::deposit_event_indexed(&[], event.into());
 }
 
-/// Deposits an event into this block's event record adding this event
-/// to the corresponding topic indexes.
-///
-/// This will update storage entries that correspond to the specified topics.
-/// It is expected that light-clients could subscribe to this topics.
+// 将一个事件存入此块的事件记录中，并将此事件添加到相应的主题索引中。
+// 这将更新与指定主题对应的存储项。预计轻客户端可以订阅这些主题。
 pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
-	let block_number = Self::block_number();
-	// Don't populate events on genesis.
-	if block_number.is_zero() {
-		return
-	}
+    let block_number = Self::block_number();
+    // 在创世块上不填充事件。
+    if block_number.is_zero() {
+        return
+    }
 
-	let phase = ExecutionPhase::<T>::get().unwrap_or_default();
-	let event = EventRecord { phase, event, topics: topics.to_vec() };
+    let phase = ExecutionPhase::<T>::get().unwrap_or_default();
+    let event = EventRecord { phase, event, topics: topics.to_vec() };
 
-	// Index of the to be added event.
-	let event_idx = {
-		let old_event_count = EventCount::<T>::get();
-		let new_event_count = match old_event_count.checked_add(1) {
-			// We've reached the maximum number of events at this block, just
-			// don't do anything and leave the event_count unaltered.
-			None => return,
-			Some(nc) => nc,
-		};
-		EventCount::<T>::put(new_event_count);
-		old_event_count
-	};
+    // 要添加的事件的索引。
+    let event_idx = {
+        let old_event_count = EventCount::<T>::get();
+        let new_event_count = match old_event_count.checked_add(1) {
+            // 当达到此块中事件的最大数量时，不做任何操作并保持事件计数不变。
+            None => return,
+            Some(nc) => nc,
+        };
+        EventCount::<T>::put(new_event_count);
+        old_event_count
+    };
 
-	Events::<T>::append(event);
+    Events::<T>::append(event);
 
-	for topic in topics {
-		<EventTopics<T>>::append(topic, &(block_number, event_idx));
-	}
+    for topic in topics {
+        <EventTopics<T>>::append(topic, &(block_number, event_idx));
+    }
 }
 ```
 
 ---
 
-## You Cannot Read Events
+## 你不能读取事件
 
-- The events storage are an unbounded vector of individual events emitted by your pallets.
-- If you ever read this storage, you will introduce the whole thing into your storage proof!
-- Never write runtime logic which reads from or depends on events.
-- Tests are okay.
+- 事件存储是由你的模块发出的单个事件的无界向量。
+- 如果你读取这个存储，你会将整个存储内容引入存储证明中！
+- 永远不要编写从事件读取或依赖事件的运行时逻辑。
+- 测试中可以这样做。
 
 ---
 
-## You Cannot Read Events
+## 你不能读取事件
 
 `frame/system/src/lib.rs`
 
 ```rust
-/// Get the current events deposited by the runtime.
-///
-/// Should only be called if you know what you are doing and outside of the runtime block
-/// execution else it can have a large impact on the PoV size of a block.
+// 获取运行时存入的当前事件。
+// 只有在你清楚自己在做什么并且不在运行时块执行中时才应调用此函数，否则它可能会对块的PoV大小产生很大影响。
 pub fn read_events_no_consensus(
 ) -> impl sp_std::iter::Iterator<Item = Box<EventRecord<T::RuntimeEvent, T::Hash>>> {
-	Events::<T>::stream_iter()
+    Events::<T>::stream_iter()
 }
 
-/// Get the current events deposited by the runtime.
-///
-/// NOTE: This should only be used in tests. Reading events from the runtime can have a large
-/// impact on the PoV size of a block. Users should use alternative and well bounded storage
-/// items for any behavior like this.
-///
-/// NOTE: Events not registered at the genesis block and quietly omitted.
+// 获取运行时存入的当前事件。
+// 注意：此函数仅应在测试中使用。从运行时读取事件可能会对块的PoV大小产生很大影响。用户对于此类行为应使用替代的有界存储项。
+// 注意：创世块中未注册的事件将被悄悄忽略。
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn events() -> Vec<EventRecord<T::RuntimeEvent, T::Hash>> {
-	debug_assert!(
-		!Self::block_number().is_zero(),
-		"events not registered at the genesis block"
-	);
-	// Dereferencing the events here is fine since we are not in the
-	// memory-restricted runtime.
-	Self::read_events_no_consensus().map(|e| *e).collect()
+    debug_assert!(
+       !Self::block_number().is_zero(),
+        "创世块中未注册事件"
+    );
+    // 在此处解引用事件是可以的，因为我们不在受内存限制的运行时中。
+    Self::read_events_no_consensus().map(|e| *e).collect()
 }
 ```
 
 ---
 
-## Testing Events
+## 测试事件
 
-Remember to set the block number to greater than zero!
+记住将块号设置为大于零的值！
 
-Some tools in FRAME System for you:
+FRAME系统中的一些工具：
 
 `frame/system/src/lib.rs`
 
 ```rust
-/// Set the block number to something in particular. Can be used as an alternative to
-/// `initialize` for tests that don't need to bother with the other environment entries.
+// 将块号设置为特定值。对于不需要处理其他环境项的测试，可作为 `initialize` 的替代方法。
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn set_block_number(n: BlockNumberFor<T>) {
-	<Number<T>>::put(n);
+    <Number<T>>::put(n);
 }
 
-/// Assert the given `event` exists.
+// 断言给定的 `event` 存在。
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn assert_has_event(event: T::RuntimeEvent) {
-	assert!(Self::events().iter().any(|record| record.event == event))
+    assert!(Self::events().iter().any(|record| record.event == event))
 }
 
-/// Assert the last event equal to the given `event`.
+// 断言最后一个事件等于给定的 `event`。
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn assert_last_event(event: T::RuntimeEvent) {
-	assert_eq!(Self::events().last().expect("events expected").event, event);
+    assert_eq!(Self::events().last().expect("期望有事件").event, event);
 }
 ```
 
 ---
 
-## Using Events in Tests
+## 在测试中使用事件
 
 ```rust
 #[test]
 fn events_example() {
-	new_test_ext().execute_with(|| {
-		frame_system::Pallet::<T>::set_block_number(1);
-		CurrentOwner::<T>::put(1);
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(1), 2));
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(2), 3));
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(3), 4));
+    new_test_ext().execute_with(|| {
+        frame_system::Pallet::<T>::set_block_number(1);
+        CurrentOwner::<T>::put(1);
+        assert_ok!(TemplateModule::change_ownership(Origin::signed(1), 2));
+        assert_ok!(TemplateModule::change_ownership(Origin::signed(2), 3));
+        assert_ok!(TemplateModule::change_ownership(Origin::signed(3), 4));
 
-		let events = frame_system::Pallet::<T>::events();
-		assert_eq!(events.len(), 3);
-		frame_system::Pallet::<T>::assert_has_event(crate::Event::<T>::OwnerChanged { old: 1, new: 2}.into());
-		frame_system::Pallet::<T>::assert_last_event(crate::Event::<T>::OwnerChanged { old: 3, new: 4}.into());
-	});
+        let events = frame_system::Pallet::<T>::events();
+        assert_eq!(events.len(), 3);
+        frame_system::Pallet::<T>::assert_has_event(crate::Event::<T>::OwnerChanged { old: 1, new: 2}.into());
+        frame_system::Pallet::<T>::assert_last_event(crate::Event::<T>::OwnerChanged { old: 3, new: 4}.into());
+    });
 }
 ```
 
-Remember other pallets can deposit events too!
+记住，其他模块也可以存入事件！
 
 ---
 
-## Summary
+## 总结
 
-- Events and Errors are two ways you can signal to users what is happening when they dispatch an extrinsic.
-- Events usually signify some successful thing happening.
-- Errors signify when something has gone bad (and all changes reverted).
-- Both are accessible by the end user when they occur.
+- 事件和错误是当用户发起外部调用时，你可以向用户传达正在发生什么的两种方式。
+- 事件通常表示某些操作成功完成。
+- 错误表示出现问题（并且所有更改都已回滚）。
+- 发生时，最终用户都可以访问这两者。

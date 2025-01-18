@@ -4,158 +4,162 @@ description: Substrate Overview for web3 builders
 duration: 60 minutes
 ---
 
-# Introduction to Substrate
+---
+title: Substrate 入门介绍
+description: 面向 web3 开发者的 Substrate 概述
+duration: 60 分钟
+---
+
+# Substrate 入门介绍
 
 ---
 
-## Before Going Any Further 🛑
+## 在继续之前 🛑
 
-While I speak, please clone `polkadot-sdk`, and run `cargo build && cargo build --release`.
+在我讲解的同时，请克隆 `polkadot-sdk`，并运行 `cargo build && cargo build --release`。
 
 > <https://github.com/paritytech/polkadot-sdk/>
 
 ---
 
-## About These Lectures and Lecturer
+## 关于这些讲座和讲师
 
-- Ground-up, low-level, but hands-on.
-- Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Narratives above facts all.
-- Interrupts and questions are always welcome.
+- 从基础开始，深入底层，但注重实践。
+- 有意避开 FRAME，但会为你提供在这方面取得成功所需的工具。
+- 叙事重于事实。
+- 随时欢迎打断和提问。
 
 ---
 
-## What is Substrate?
+## 什么是 Substrate？
 
-Substrate is a **Rust framework** for **building blockchains**.
+Substrate 是一个用于**构建区块链**的**Rust 框架**。
 
 ---v
 
-### Why Substrate?
+### 为什么选择 Substrate？
 
 <img rounded width="1000px" src="./img/dev-4-1-substrate-website.gif" />
 
 Notes:
 
-Highlight the multi-chain part.
+突出多链部分。
 
 ---v
 
-### Why Substrate?
+### 为什么选择 Substrate？
 
 <img rounded width="1000px" src="./img/dev-4.1-maximalism.png" />
 
 Notes:
 
-Polkadot is the biggest bet in this ecosystem against chain maximalism, and Substrate plays a big
-role in this scenario.
+Polkadot 是这个生态系统中对链最大化主义的最大挑战，而 Substrate 在这种情况下发挥着重要作用。
 
 ---v
 
-### Why Substrate?
+### 为什么选择 Substrate？
 
-- ⛓️ Future is multi-chain.
-
-<!-- .element: class="fragment" -->
-
-- 😭 Building a blockchain is hard. Upgrading it even harder.
+- ⛓️ 未来是多链的。
 
 <!-- .element: class="fragment" -->
 
-- 💡 Framework!
+- 😭 构建一个区块链很难。升级它则更难。
 
 <!-- .element: class="fragment" -->
 
-- 🧐 But which attitude to take?
+- 💡 框架！
+
+<!-- .element: class="fragment" -->
+
+- 🧐 但该采取什么态度呢？
 
 <!-- .element: class="fragment" -->
 
 ---
 
-## Core Philosophies of Substrate 💭
+## Substrate 的核心理念 💭
 
-The **pre-substrate** way of thinking:
+**Substrate 之前**的思维方式：
 
-- 😭 _Building a blockchain is hard. Upgrading it even harder_.
-- 💪🏻 We are going to spend maximal resources at making sure we get it right.
+- 😭 _构建一个区块链很难。升级它则更难_。
+- 💪🏻 我们将投入最大的资源来确保我们做对。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Core Philosophies of Substrate 💭
+### Substrate 的核心理念 💭
 
-But has this worked?
+但这种方法奏效了吗？
 
-- 😭 Bitcoin block size debate
-
-<!-- .element: class="fragment" -->
-
-- 2️⃣ L2s and beyond
+- 😭 比特币区块大小的争论
 
 <!-- .element: class="fragment" -->
 
-- 📈 Ethereum gas price
+- 2️⃣ 二层网络及更多
+
+<!-- .element: class="fragment" -->
+
+- 📈 以太坊的 Gas 价格
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Bitcoin block size has never been and is an ongoing debate.
+比特币区块大小一直以来都是一个持续的争论话题。
 
-I am not against L2s per se, but it is true that they mostly exist because the underlying protocol is too hard/slow to upgrade itself.
-ETH Gas prices also show that the underlying protocol cannot meet the demands of today.
+我并不是反对二层网络本身，但确实它们大多存在是因为底层协议太难或太慢而无法自我升级。
+以太坊的 Gas 价格也表明底层协议无法满足当今的需求。
 
 <https://en.wikipedia.org/wiki/Bitcoin_scalability_problem>
 <https://ycharts.com/indicators/ethereum_average_gas_price>
 
 ---v
 
-### Core Philosophies of Substrate 💭
+### Substrate 的核心理念 💭
 
-The **Substrate** way of thinking:
+**Substrate** 的思维方式：
 
-- ☯️ Society and technology evolve
-
-<!-- .element: class="fragment" -->
-
-- 🦸 Humans are fallible
+- ☯️ 社会和技术在不断发展
 
 <!-- .element: class="fragment" -->
 
-- 🧠 Best decision of today -> mistake of tomorrow
+- 🦸 人类是会犯错的
+
+<!-- .element: class="fragment" -->
+
+- 🧠 今天的最佳决策可能会成为明天的错误
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Core Philosophies of Substrate 💭
+### Substrate 的核心理念 💭
 
-Outcomes of this:
+由此产生的结果：
 
 - 🦀 Rust
-- 🤩 Generic, Modular and Extensible Design
-- 🏦 Governance + Upgradeability
+- 🤩 通用、模块化和可扩展的设计
+- 🏦 治理 + 可升级性
 
 Notes:
 
-Think about how each of these links back to "whatever you decide today will be a mistake soon".
+思考一下这些是如何与“你今天所做的任何决定很快就会成为错误”这一观点联系起来的。
 
 ---
 
 ## 🦀 Rust
 
-- First line of defense: prevent human error when possible.
-- Safe language, no memory safety issues.
+- 第一道防线：尽可能防止人为错误。
+- 安全的语言，没有内存安全问题。
 
 Notes:
 
-So at least we don't want to deal with human error, and only deal with the fact that we cannot
-predict the future.
+所以至少我们不想处理人为错误，只需要应对我们无法预测未来这一事实。
 
-Memory safety is a fundamental issue in most major system-level programming languages.
+内存安全是大多数主要系统级编程语言中的一个基本问题。
 
-Some such mistakes are impossible to make in Rust.
+在 Rust 中，有些这样的错误是不可能出现的。
 
 ---v
 
@@ -167,7 +171,7 @@ int main() {
     *x = 10;
     int* y = x;
     free(x);
-    printf("%d\n", *y);  // Accessing memory after it's been freed
+    printf("%d\n", *y);  // 访问已释放的内存
 }
 ```
 
@@ -185,7 +189,7 @@ fn main() {
 
 Notes:
 
-another one:
+另一个例子：
 
 ```c
 int* foo() {
@@ -195,7 +199,7 @@ int* foo() {
 
 int main() {
     int* y = foo();
-    printf("%d\n", *y); // Accessing memory out of its scope
+    printf("%d\n", *y); // 访问超出其作用域的内存
 }
 ```
 
@@ -217,7 +221,7 @@ fn main() {
 
 ### 🦀 Rust
 
-> Microsoft and Google have each stated that software memory safety issues are behind around 70 percent of their vulnerabilities.
+> 微软和谷歌都表示，软件内存安全问题是导致其约 70% 漏洞的原因。
 
 Notes:
 
@@ -227,8 +231,8 @@ Notes:
 
 ### 🦀 Rust
 
-- 🏎️ Most Rust abstractions are **zero-cost**.
-- ⏰ Rust has (almost) no "runtime".
+- 🏎️ 大多数 Rust 抽象是**零成本**的。
+- ⏰ Rust 几乎没有“运行时”。
 
 <br />
 
@@ -236,197 +240,186 @@ Notes:
 
 Notes:
 
-this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for
-Rustacean's chapter on `no_std` covers this very well.
-
-Also, this is a good time to talk about how we use "Runtime" in a different way.
+不过这并不完全准确，Rust 有一个小的运行时，比如异常处理程序等。Rust for Rustacean's 中关于 `no_std` 的章节对这一点有很好的阐述。
+另外，现在是讨论我们如何以不同方式使用“运行时”的好时机。
 
 ---
 
-## 🤩 Generic, Modular and Extensible Design
+## 🤩 通用、模块化和可扩展的设计
 
-- Second line of defense.
-- Our _execution_ (possibly thanks to Rust) is perfect, but we can't predict the future.
+- 第二道防线。
+- 我们的**执行**（可能得益于 Rust）是完美的，但我们无法预测未来。
 
 Notes:
 
-this is where a module, generic design is useful. You can change components easily based on the
-needs of the future.
+这就是模块化、通用设计发挥作用的地方。你可以根据未来的需求轻松更改组件。
 
 ---v
 
-### 🤩 Generic, Modular and Extensible Design
+### 🤩 通用、模块化和可扩展的设计
 
-- Multiple consensus engines (BABE/Grandpa/AURA/PoW/Sassafras)
-
-<!-- .element: class="fragment" -->
-
-- Multiple network protocols (QUIC, TCP)
+- 多种共识引擎（BABE/Grandpa/AURA/PoW/Sassafras）
 
 <!-- .element: class="fragment" -->
 
-- Multiple database implementations (ParityDB, RocksDB)
+- 多种网络协议（QUIC, TCP）
 
 <!-- .element: class="fragment" -->
 
-- Highly configurable, graph-based transaction-pool.
+- 多种数据库实现（ParityDB, RocksDB）
 
 <!-- .element: class="fragment" -->
 
-- Easy to change primitives: AccountId, Signature, BlockNumber, Header, Hash, and many more.
+- 高度可配置的、基于图的交易池。
+
+<!-- .element: class="fragment" -->
+
+- 易于更改的基本类型：AccountId、Signature、BlockNumber、Header、Hash 等等。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-FRAME takes this even multiple steps further, but that's for later.
+FRAME 在这方面更进一步，但这是后续的内容。
 
-These are all examples of being generic, modular and extensible at the Substrate level. FRAME takes
-these even further, but more on that later.
+这些都是 Substrate 层面上通用、模块化和可扩展的例子。FRAME 在此基础上更进一步，但后续会详细介绍。
 
 ---v
 
-### 🤩 Generic, Modular and Extensible Design
+### 🤩 通用、模块化和可扩展的设计
 
-- **AlephZero**: Custom finality, DAG-based, 1s block time.
-- **Moonbeam**: Ethereum compatible, build with substrate.
-- **HydraDX**: Custom transaction pool logic to match DEX orders.
-- **Kulupu**: Proof of work, custom hashing.
+- **AlephZero**：自定义终局性，基于有向无环图（DAG），1 秒出块时间。
+- **Moonbeam**：与以太坊兼容，使用 Substrate 构建。
+- **HydraDX**：自定义交易池逻辑以匹配去中心化交易所（DEX）订单。
+- **Kulupu**：工作量证明，自定义哈希算法。
 
 Notes:
 
-Substrate has been coded, from the ground up, such that it is easy to have multiple implementations
-for certain functions. Heavy use of traits and generics is the key to achieve this. As noted,
-Substrate has a lot of APIs, and optional implementations. You are bound to the API, but not the
-particular implementation.
+Substrate 从底层开始就被设计成易于为某些功能提供多种实现。大量使用特性（traits）和泛型是实现这一点的关键。如前所述，Substrate 有很多 API 和可选实现。你受限于 API，但不受特定实现的限制。
 
 ---
 
-## 🏦 Governance + Upgradeability
+## 🏦 治理 + 可升级性
 
-- Third, final, and non-negotiable line of defense to survive the test of time.
+- 第三道、也是最后一道不可协商的防线，以经受住时间的考验。
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
-- We have correct code, and components are easy to swap, replace, and upgrade.
-- What use is that, if we cannot agree on what to replace/upgrade?
-- Governance!
-
-<!-- .element: class="fragment" -->
-
-- What use is governance, if the upgrade cannot be enacted?
+- 我们有正确的代码，并且组件易于交换、替换和升级。
+- 如果我们不能就替换/升级的内容达成一致，那又有什么用呢？
+- 治理！
 
 <!-- .element: class="fragment" -->
 
-- (trustlessly) Upgradeability!
+- 如果升级无法实施，治理又有什么用呢？
+
+<!-- .element: class="fragment" -->
+
+- （无需信任的）可升级性！
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Even if we are governable, but we still need "trust" to enact the upgrade, it is hardly any better.
-In essence, if an upgrade mechanism is not self-enacting, it might as well just reside offchain and
-be a signaling mechanism.
+即使我们可以进行治理，但如果仍然需要“信任”来实施升级，那也没好到哪里去。本质上，如果一个升级机制不是自动执行的，那它还不如放在链下，仅仅作为一种信号机制。
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
-- ✅ Governance: Easy
-- 😢 Upgradeability: Not so much
+- ✅ 治理：容易
+- 😢 可升级性：没那么容易
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
-- How does a typical blockchain upgrade itself?
+- 一个典型的区块链是如何进行自我升级的？
 
 Notes:
 
-1. Discussion, offchain signaling
-2. Possibly onchain voting
-3. Hard(ish) Fork
+1. 讨论，链下信号传递
+2. 可能的链上投票
+3. 硬分叉（或类似的分叉）
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
 <img src="./img/dev-4-1-substrate-monol.svg" />
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
 <img src="./img/dev-4-1-substrate-monol-2.svg" />
 
 Notes:
 
-the problem is that the system is one big monolith protocol. Updating any part of it requires the
-whole thing to be updated.
+问题在于这个系统是一个庞大的单体协议。更新其中任何一部分都需要更新整个系统。
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
-_The way to make a protocol truly upgradeable is to design a meta-protocol that is not upgradeable._
+_使一个协议真正可升级的方法是设计一个不可升级的元协议。_
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
 <img src="./img/dev-4-1-substrate-meta.svg" />
 
-Note:
+Notes:
 
-In this figure, the meta-protocol, the substrate client, is not forklessly upgrade-able. It can only
-be upgraded with a fork. The Wasm protocol, though, can be upgraded forklessly.
+在这个图中，元协议（即 Substrate 客户端）无法在无分叉的情况下进行升级。它只能通过分叉来升级。而 Wasm 协议则可以在无分叉的情况下进行升级。
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
 <img src="./img/dev-4-1-substrate-meta-substrate.svg" />
 
 ---v
 
-### 🏦 Governance + Upgradeability
+### 🏦 治理 + 可升级性
 
-- Fixed meta-protocol?
-- &shy;<!-- .element: class="fragment" --> "_State machine as stored Wasm_" in the Substrate client.
-- <!-- .element: class="fragment" --> inherently upgradeable protocol?
-- <!-- .element: class="fragment" --> Substrate Wasm Runtime
+- 固定的元协议？
+- &shy;<!-- .element: class="fragment" --> “_状态机作为存储的 Wasm_” 在 Substrate 客户端中。
+- <!-- .element: class="fragment" --> 本质上可升级的协议？
+- <!-- .element: class="fragment" --> Substrate Wasm 运行时
 
 ---
 
-### Substrate Architecture
+### Substrate 架构
 
 <img src="./img/dev-4-1-substrate.svg" />
 
 ---v
 
-#### Substrate (simplified) Architecture
+#### Substrate（简化）架构
 
 <pba-cols>
 
 <pba-col center>
-<h3 style="color: var(--substrate-runtime); top: 0"> Runtime (Protocol) </h3>
+<h3 style="color: var(--substrate-runtime); top: 0"> 运行时（协议） </h3>
 
-- Application logic
-- Wasm (maybe **FRAME**)
-- Stored as a part of your chain state
-- Also known as: STF
+- 应用逻辑
+- Wasm（可能是 **FRAME**）
+- 作为链状态的一部分存储
+- 也称为：STF
 
 </pba-col>
 
 <pba-col center>
-<h3 style="color: var(--substrate-host); top: 0"> Client (Meta-protocol) </h3>
+<h3 style="color: var(--substrate-host); top: 0"> 客户端（元协议） </h3>
 
-- Native Binary
-- Executes the Wasm runtime
-- Everything else: Database, Networking, Mempool, Consensus..
-- Also known as: Host
+- 原生二进制文件
+- 执行 Wasm 运行时
+- 其他所有内容：数据库、网络、内存池、共识等
+- 也称为：主机
 
 </pba-col>
 
@@ -434,678 +427,414 @@ be upgraded with a fork. The Wasm protocol, though, can be upgraded forklessly.
 
 ---
 
-## The Runtime
+## 运行时
 
 <div>
 
-- Runtime -> **Application Logic**.
+- 运行时 -> **应用逻辑**。
 
 </div>
 <!-- .element: class="fragment" -->
 <div>
 
-- A _fancy_ term: Runtime -> **State Transition Function**.
+- 一个**花哨**的术语：运行时 -> **状态转换函数**。
 
 </div>
 <!-- .element: class="fragment" -->
 <div>
 
-- A _technical_ term: Runtime -> **how to execute blocks**.
+- 一个**技术**术语：运行时 -> **如何执行区块**。
 
 </div>
 <!-- .element: class="fragment" -->
 
 Notes:
 
-- I would personally call the runtime STF to avoid confusion with the "runtime" that is the general
-  programming runtime, but kinda too late for that now.
-- Among the definitions of the Wasm runtime, let's recap what the state transition is.
-- The block execution definition will be described more in the Wasm-meta lecture.
+- 我个人会将运行时称为 STF，以避免与一般编程中的“运行时”概念混淆，但现在可能有点晚了。
+- 在 Wasm 运行时的定义中，让我们回顾一下状态转换是什么。
+- 区块执行的定义将在 Wasm-meta 讲座中更详细地介绍。
 
 ---
 
-## State Transition Function
+## 状态转换函数
 
-**State**
+**状态**
 
 <img style="width: 600px" src="./img/dev-4-1-state-def.svg" />
 
 Notes:
 
-entire set of data upon which we want to maintain a consensus.
-key value.
-associated with each block.
+我们想要达成共识的所有数据集合。
+键值对。
+与每个区块相关联。
 
 ---v
 
-### State Transition Function
+### 状态转换函数
 
-**Transition Function**
+**转换函数**
 
 <img width="400px" src="./img/dev-4-1-state-transition-def.svg" />
 
 ---v
 
-### State Transition Function
+### 状态转换函数
 
 $$STF = F(block_{N}, state_{N}, code_{N}): state_{N+1}$$
 
 ---v
 
-### State Transition Function
+### 状态转换函数
 
 <img style="width: 1200px;" src="./img/dev-4-1-state.svg" />
 
 Notes:
 
-The Wasm runtime in this figure is in fact obtained from the state (see `0x123`)
+此图中的 Wasm 运行时实际上是从状态中获取的（见 `0x123`）
 
 ---v
 
-### State Transition Function
+### 状态转换函数
 
 <img style="width: 1200px;" src="./img/dev-4-1-state-code.svg" />
 
 ---v
 
-### State Transition Function
-
-<img style="width: 1200px;" src="./img/dev-4-1-state-code-next.svg" />
-
+### 状态转换函数
+![状态转换函数相关图片](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149452.png)
 Notes:
-
-THIS IS HOW A META-PROTOCOL MAKES A SYSTEM UPGRADE-ABLE.
-
-could we have updated the code in N+1? By default, no because we load the wasm before you even look
-into the block.
-
-IMPORTANT: State is not IN THE BLOCK, each state has AN ASSOCIATED BLOCK.
-
-Keeping the state is 100% optional. You can always re-create the state of block `N` by re-executing
-block `[0, .., N-1]`.
-
-ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
-
+这就是元协议如何使系统具备可升级性。
+我们能在N + 1阶段更新代码吗？默认情况下不行，因为在查看区块之前我们就加载了WebAssembly（Wasm）。
+重要的是：状态并不在区块内，每个状态都关联着一个区块。
+保留状态完全是可选的。你总是可以通过重新执行区块`[0, .., N - 1]`来重新创建区块`N`的状态。
+当然，更改Wasm代码不是任何人都能做的，这取决于治理机制。
 ---
-
-## Full Substrate Architecture
-
-<img style="width: 1400px;" src="./img/dev-4-3-full.svg" />
-
+## Substrate完整架构
+![Substrate完整架构](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149453.png)
 ---
-
-## Positive Consequences of _Wasm_ Runtime 🔥
-
+## Wasm运行时的积极影响 🔥
 ---v
-
-### 🤖 Deterministic Execution
-
-- Portable, yet deterministic.
-
+### 🤖 确定性执行
+- 可移植且具有确定性。
 Notes:
-
-Wasm's instruction set is deterministic, so all good.
-
+Wasm的指令集是确定性的，所以一切都能正常运行 。
 ---v
-
-### 🧱 Sandboxing
-
-- Useful when executing untrusted code.
-
-1. Smart contracts
-2. Parachain runtime
-
+### 🧱 沙盒机制
+- 在执行不可信代码时很有用。
+  1. 智能合约
+  2. 平行链运行时
 Notes:
-
-How can we guarantee that neither enter an infinite loop, or try to access the filesystem?
-
+我们如何确保它们既不会进入无限循环，也不会尝试访问文件系统呢？
 ---v
-
-### 🌈 Easier (light)Client Development
-
+### 🌈 更易于（轻量级）客户端开发
 Notes:
-
-for the case of client, your client only needs to implement a set of host environments, and NOT
-re-implement the business logic.
-
-Simply compare the process to create an alternative client for Ethereum, where you need to
-re-implement the EVM.
-
-Same applies to light client, as they do not need to deal with the state transition function.
-
+对于客户端而言，你的客户端只需要实现一组宿主环境，而无需重新实现业务逻辑。
+简单对比一下创建以太坊替代客户端的过程，在以太坊中你需要重新实现以太坊虚拟机（EVM）。
+这同样适用于轻量级客户端，因为它们无需处理状态转换函数。
 ---v
-
-### 😎 Forkless Upgrade
-
-<img style="width: 1400px;" src="./img/dev-4-1-forkless-1.svg" />
-
+### 😎 无分叉升级
+![无分叉升级1](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149454.png)
 ---v
-
-### 😎 Forkless Upgrade
-
-<img style="width: 1400px;" src="./img/dev-4-1-forkless-2.svg" />
-
+### 😎 无分叉升级
+![无分叉升级2](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149455.png)
 ---v
-
-### 😎 Forkless Upgrade
-
-This update was:
-
-1. Forkless
-2. Self-enacting
-
+### 😎 无分叉升级
+此次更新具有以下特点：
+1. 无分叉
+2. 自动执行
 Notes:
-
-take a moment to establish that this upgrade is forkless. The runtime is upgraded, but the client is
-not. In fact, the client didn't need to know about this at all.
-
-This is what the meta-protocol achieves.
-
+花点时间理解一下这次升级是无分叉的。运行时得到了升级，但客户端没有。事实上，客户端根本不需要知道这一点。
+这就是元协议所实现的功能。
 ---
-
-## Negative Consequences of _Wasm_ Runtime
-
-- 😩 Constrained resources (memory, speed, host access).
-- 🌈 Client diversification != state-transition diversification
-
+## Wasm运行时的负面影响
+- 😩 资源受限（内存、速度、宿主访问）。
+- 🌈 客户端的多样性并不等同于状态转换的多样性
 Notes:
-
-- 4GB of memory, which we limit even further.
-- Wasm has no allocator+panic handler of its own
-- Can be slower than native, depending on the executor/execution method.
-- Limited access to the host host env, all needs to be done through syscalls.
-
-Less state-transition diversification, because the runtime is the same for all clients.
-If there is a bug in it, everyone is affected.
-
+- 4GB内存，并且我们还会进一步限制。
+- Wasm自身没有分配器和异常处理程序。
+- 根据执行器或执行方法的不同，可能比原生代码慢。
+- 对宿主环境的访问有限，所有操作都需要通过系统调用完成。
+由于所有客户端的运行时都是相同的，所以状态转换的多样性较少。
+如果其中存在漏洞，所有人都会受到影响。
 ---
-
-## Consensus <> Runtime 🤔
-
-- Yes, consensus is not a core part of a blockchain runtime. Why?
-- Not part of your STF!
-
+## 共识与运行时的关系 🤔
+- 是的，共识并非区块链运行时的核心部分。为什么呢？
+- 它不属于状态转换函数（STF）！
 <!-- .element: class="fragment" -->
-
-- The consensus protocol is to your runtime what HTTP is to Facebook.
-
+- 共识协议对于运行时而言，就如同HTTP对于Facebook一样。
 <!-- .element: class="fragment" -->
-
 Notes:
-
-comments from Joshy:
-
-I think this is important. The runtime is the application you want to run.
-
-Consensus is outside of this application helping us agree what the official state of this runtime
-is. Last wave I used this analogy.
-
-Imagine a writers room for some TV show. Writers are sitting around coming up with potential plot
-points for future episodes. Any of their ideas could work. But eventually they need to agree what
-the next episode to air actually will be.
-
+乔希（Joshy）的评论：
+我认为这一点很重要。运行时是你想要运行的应用程序。
+共识在这个应用程序之外，帮助我们就这个运行时的官方状态达成一致。上一轮我用了这个类比。
+想象一个电视剧的编剧室。编剧们围坐在一起，为未来的剧集构思潜在的情节要点。他们的任何想法都可能行得通。但最终他们需要就下一集实际播出的内容达成一致。
 ---
-
-## Database <> State 🤔
-
-- State is the entire set of key value data that is associated with one block.
-- Database is the component that allows this be stored in disk. May or may not be key-value.
-
-<img style="width: 800px" src="./img/dev-4-1-state-database.svg" />
-
+## 数据库与状态的关系 🤔
+- 状态是与一个区块相关联的所有键值数据的集合。
+- 数据库是用于将这些数据存储在磁盘上的组件，可能是键值存储，也可能不是。
+![数据库与状态关系](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149456.png)
 Notes:
-
-State is sometimes called "storage" as well.
-
+状态有时也被称为“存储”。
 ---
-
-## Database <> Runtime 🤔
-
-- Yes, data is stored outside of the runtime. Why?
-- Wasm runtime does not have the means to store it.
-
+## 数据库与运行时的关系 🤔
+- 是的，数据存储在运行时之外。为什么呢？
+- Wasm运行时没有存储数据的方式。
 <!-- .element: class="fragment" -->
-
-- Yet, the interpretation of the data is up to the runtime.
-
+- 然而，数据的解释取决于运行时。
 <!-- .element: class="fragment" -->
-
 ---v
-
-### Database <> Runtime 🤔
-
-<img style="width: 1200px" src="./img/dev-4-1-state-opaque.svg" />
-
+### 数据库与运行时的关系 🤔
+![数据库与运行时关系](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149457.png)
 ---v
-
-## The Client: Database 🤔
-
-- The database, from the client's PoV, is an _untyped_, key-value storage.
-- The runtime knows which key/value means what.
-
+## 客户端：数据库 🤔
+- 从客户端的角度来看，数据库是一个无类型的键值存储。
+- 运行时知道哪些键值对代表什么。
 ---
-
-## State of Light Clients
-
-- Client that follows headers, therefore knows state roots and can ask for state-proofs to do more.
-
+## 轻量级客户端的状态
+- 轻量级客户端只跟踪区块头，因此知道状态根，并且可以请求状态证明以执行更多操作。
 ---v
-
-### State of Light Clients
-
+### 轻量级客户端的状态
 <pba-cols>
-<pba-col>
-
-- Not only possible, but they can also run as Wasm, in the browser!
-- "Substrate Connect" / SMOLDOT
-
-</pba-col>
-<pba-col>
-
-<img style="width: 600px;" src="./img/dev-4-1-smoldot.svg" />
-
-</pba-col>
+  <pba-col>
+    - 不仅可行，它们还可以作为Wasm在浏览器中运行！
+    - “Substrate Connect” / SMOLDOT
+  </pba-col>
+  <pba-col>
+    <img style="width: 600px;" src="./img/dev-4-1-smoldot.svg" />
+  </pba-col>
 </pba-cols>
-
 Notes:
-
-What was a light client? follows only block headers, therefore knows state roots, and a few other
-pieces of information, others send it state proofs if it wishes to do more.
-
-SMOLDOT is not exactly a substrate client. It is mainly designed to work with Polkadot. But with
-minimal tweaks, you could make it work for more substrate based chains.
-
-This has to do with the fact that consensus and a few other bits of the client and runtime are not
-100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
-client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
-configured with GRANDPA.
-
+什么是轻量级客户端？它只跟踪区块头，因此知道状态根以及其他一些信息，如果它想要执行更多操作，其他节点会向它发送状态证明。
+SMOLDOT并不完全是一个Substrate客户端。它主要是为与Polkadot一起工作而设计的。但是通过最小的调整，你可以让它适用于更多基于Substrate的链。
+这与共识以及客户端和运行时的其他一些部分并非100%独立这一事实有关。例如，GRANDPA在运行时一侧有一个模块，但主要在客户端中实现。现在，配置了GRANDPA的客户端只能与同样配置了GRANDPA的运行时一起工作。
 ---
-
-## Communication Paths
-
-<img style="width: 1400px" src="./img/dev-4-1-comms.svg" />
-
+## 通信路径
+![通信路径1](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149458.png)
 ---v
-
-### Communication Paths
-
-<img style="width: 1400px" src="./img/dev-4-1-comms-format.svg" />
-
+### 通信路径
+![通信路径2](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149459.png)
 ---v
-
-### Example: SCALE vs JSON
-
-- SCALE is an efficient, non-descriptive, binary encoding format, used EXTENSIVELY in the Substrate ecosystem.
-
+### 示例：SCALE与JSON对比
+- SCALE是一种高效的、非描述性的二进制编码格式，在Substrate生态系统中被广泛使用。
 ---v
-
-### Example: SCALE vs JSON
-
+### 示例：SCALE与JSON对比
 ```rust
 use parity_scale_codec::{Encode};
 
 #[derive(Encode)]
 struct Example {
-	number: u8,
-	is_cool: bool,
-	optional: Option<u32>,
+    number: u8,
+    is_cool: bool,
+    optional: Option<u32>,
 }
 
 fn main() {
-	let my_struct = Example {
-		number: 42,
-		is_cool: true,
-		optional: Some(69),
-	};
-	println!("{:?}", my_struct.encode());
-	// [42, 1, 1, 69, 0, 0, 0]
-	println!("{:?}", my_struct.encode().len());
-	// 7
+    let my_struct = Example {
+        number: 42,
+        is_cool: true,
+        optional: Some(69),
+    };
+    println!("{:?}", my_struct.encode());
+    // [42, 1, 1, 69, 0, 0, 0]
+    println!("{:?}", my_struct.encode().len());
+    // 7
 }
 ```
-
 ---v
-
-### Example: SCALE vs JSON
-
+### 示例：SCALE与JSON对比
 ```rust
 use serde::{Serialize};
 
 #[derive(Serialize)]
 struct Example {
-	number: u8,
-	is_cool: bool,
-	optional: Option<u32>,
+    number: u8,
+    is_cool: bool,
+    optional: Option<u32>,
 }
 
 fn main() {
-	let my_struct = Example {
-		number: 42,
-		is_cool: true,
-		optional: Some(69),
-	};
-	println!("{:?}", serde_json::to_string(&my_struct).unwrap());
-	// "{\"number\":42,\"is_cool\":true,\"optional\":69}"
-	println!("{:?}", serde_json::to_string(&my_struct).unwrap().len());
-	// 42
+    let my_struct = Example {
+        number: 42,
+        is_cool: true,
+        optional: Some(69),
+    };
+    println!("{:?}", serde_json::to_string(&my_struct).unwrap());
+    // "{\"number\":42,\"is_cool\":true,\"optional\":69}"
+    println!("{:?}", serde_json::to_string(&my_struct).unwrap().len());
+    // 42
 }
 ```
-
 ---
-
-## Substrate and Polkadot
-
-<img style="width: 1400px;" src="./img/dev-4-1-polkadot.svg" />
-
+## Substrate与Polkadot
+![Substrate与Polkadot](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149460.png)
 ---
-
-## Substrate and Smart Contracts
-
-<img style="width: 800px;" src="./img/dev-4-1-contracts.svg" />
-
+## Substrate与智能合约
+![Substrate与智能合约](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149461.png)
 ---v
-
-### Substrate and Smart Contracts
-
-> A Substrate-Connect extension is syncing a chain who's runtime is executing wasm contracts.
-
-Question: How many nested Wasm blobs are executing one another?
-
+### Substrate与智能合约
+> 一个Substrate-Connect扩展正在同步一条其运行时正在执行Wasm合约的链。
+问题：有多少个嵌套的Wasm块在相互执行？
 ---v
-
-### Substrate and Smart Contracts
-
+### Substrate与智能合约
 <pba-cols>
-<pba-col center>
-
-<img style="width: 600px;" src="./img/mind-blow-galaxy.gif" />
-
-</pba-col>
-<pba-col>
-
-- The browser is executing:
-- a Wasm blob (substrate-connect)
-- that executes a Wasm blob (runtime)
-- that executes a Wasm blob (contract)
-
-</pba-col>
+  <pba-col center>
+    <img style="width: 600px;" src="./img/mind-blow-galaxy.gif" />
+  </pba-col>
+  <pba-col>
+    - 浏览器正在执行：
+      - 一个Wasm块（substrate-connect）
+      - 该块执行另一个Wasm块（运行时）
+      - 运行时再执行一个Wasm块（合约）
+  </pba-col>
 </pba-cols>
-
 ---v
-
-### Substrate and Smart Contracts
-
-<img style="width: 1000px;" src="./img/dev-4-1-ink.jpeg" />
-
+### Substrate与智能合约
+![Substrate与智能合约](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149462.png)
 ---v
-
-### Substrate and Smart Contracts
-
-- So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
-
+### Substrate与智能合约
+- 那么什么时候应该使用智能合约（Ink!）编写，什么时候应该使用运行时（FRAME）编写呢？
 Notes:
-
-I was asked this yesterday as well. My latest answer is: if you don't need any of the customizations
-that a blockchain client/runtime gives to you, and the performance of a shared platform is okay for
-you, then go with a smart contract. If you need more, you need a "runtime" (some kind of chian,
-parachain or solo)
-
-An example of customization is that a runtime has access to `on_initialize` etc.
-
-Also, a contract can not have fee-less transactions.
-
-Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
-fee-less.
-
+昨天也有人问我这个问题。我最新的答案是：如果你不需要区块链客户端/运行时提供的任何定制功能，并且共享平台的性能对你来说可以接受，那么就选择智能合约。如果你有更多需求，那么你就需要一个“运行时”（某种链、平行链或独立链）。
+定制功能的一个例子是运行时可以访问`on_initialize`等函数 。
+此外，合约无法进行无手续费交易。
+而且，合约通常依赖于一种代币来支付gas，而运行时原则上可以无代币且无手续费。
 ---
-
-## Technical Freedom vs Ease
-
-<img style="width: 1000px;" src="./img/dev-4-1-freedom.svg" />
-
+## 技术自由度与易用性
+![技术自由度与易用性](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149463.png)
 ---
-
-### Substrate: The Gaming Console of Blockchains!
-
+### Substrate：区块链的游戏机！
 <pba-cols>
-<pba-col>
-
-<img src="./img/nintendo-console-2.png" style="width:400px;" />
-
-Substrate Client
-
-</pba-col>
-<pba-col>
-
-<img src="./img/nintendo-game.png" style="width:400px;" />
-
-Substrate's Wasm Runtime
-
-</pba-col>
+  <pba-col>
+    <img src="./img/nintendo-console-2.png" style="width:400px;" />
+    Substrate客户端
+  </pba-col>
+  <pba-col>
+    <img src="./img/nintendo-game.png" style="width:400px;" />
+    Substrate的Wasm运行时
+  </pba-col>
 </pba-cols>
-
 Notes:
-
-Another good analogy: Client is the FPGA, and FRAME/Wasm is the VHDL.
-
+另一个很好的类比：客户端就像现场可编程门阵列（FPGA），而FRAME/Wasm就像超高速集成电路硬件描述语言（VHDL）。
 ---
-
-## Lecture Recap
-
-- Substrate's design stems from 3 core principles:
-  - **Rust**, **Generic Design**, **Upgradeability/Governance**
-- Client / Runtime architecture
-- State Transition
-- Positive and negative consequences of Wasm
-- Substrate next to Polkadot and other chains.
-- Substrate for Smart Contracts.
-
+## 讲座回顾
+- Substrate的设计源于3个核心原则：
+  - **Rust**、**通用设计**、**可升级性/治理**
+- 客户端/运行时架构
+- 状态转换
+- Wasm的积极和消极影响
+- Substrate与Polkadot及其他链的关系。
+- Substrate在智能合约方面的应用。
 ---v
-
-### Recap: Substrate Architecture
-
-<img style="width: 1400px;" src="./img/dev-4-3-full.svg" />
-
+### 回顾：Substrate架构
+![Substrate架构](https://doc-ai-img-1259601696.cos.ap-beijing.myqcloud.com/6499674991493474524/%E5%9B%BE%E7%89%871694950901067149464.png)
 ---v
-
-## Recap: 🏦 Governance and Upgradeability
-
-A timeless system must be:
-
-1. Generic
-2. Governable
-3. Trust-less-ly Upgradeable.
-
-Substrate's Wasm meta-protocol exactly enables the latest ✅
-
+## 回顾：🏦 治理与可升级性
+一个经得起时间考验的系统必须具备：
+1. 通用性
+2. 可治理性
+3. 无需信任的可升级性。
+Substrate的Wasm元协议恰好实现了最后一点✅
 <!-- .element: class="fragment" -->
-
 Notes:
-
-Question: how would you put the meta-protocol of Substrate into words?
-
-The client is basically a wasm meta-protocol that does only one thing. This meta-protocol is
-hardcoded, but the protocol itself is flexible.
-
+问题：你会如何用文字描述Substrate的元协议？
+客户端本质上是一个只做一件事的Wasm元协议。这个元协议是硬编码的，但协议本身是灵活的。
 ---
-
-## Rest of This Module! 😈
-
-#### Track: Main Lectures
-
-- Wasm Meta Protocol
-- Substrate Storage
-
-#### Track: Aux Lecture
-
-- TX-Pool
-- Substrate: Show Me The Code
-- Substrate Interactions
+## 本模块剩余内容！😈
+#### 主讲座
+- Wasm元协议
+- Substrate存储
+#### 辅助讲座
+- 交易池
+- Substrate：给我看代码
+- Substrate交互
 - SCALE
-
-#### Track: Graded Activity
-
-- FRAME-Less
-
+#### 评分活动
+- 无FRAME实践
 ---v
-
-### Rest of This Module! 😈
-
-#### Day 0
-
-- Introduction ✅ (60m)
-- Wasm Meta Protocol (120+m)
-  - Activity: Finding Runtime APIs and Host Functions in Substrate
-- 🌭 _Lunch Break_
-- Show Me The Code (60m)
-- Substrate Interactions (60m)
-- FRAME-Less Activity (60m)
-
+### 本模块剩余内容！😈
+#### 第0天
+- 介绍✅（60分钟）
+- Wasm元协议（120分钟以上）
+  - 活动：在Substrate中查找运行时API和宿主函数
+- 🌭 午餐休息
+- 给我看代码（60分钟）
+- Substrate交互（60分钟）
+- 无FRAME实践活动（60分钟）
 Notes:
-
-We are aware that the module is highly skewed in terms of lecture time, but it is intentional and we
-want to see how it works. This allows you to kickstart with your assignment earlier.
-
+我们意识到本模块在讲座时间分配上严重不均，但这是有意为之，我们想看看效果如何。这样可以让你更早地开始完成作业。
 ---v
-
-## Rest of This Module! 😈
-
-#### Day 1
-
-- Transaction Pool (60m)
-- SCALE (60m)
-- Substrate/FRAME Tips and Tricks
-- 🌭 _Lunch Break_
-- FRAME-Less Activity
-
+## 本模块剩余内容！😈
+#### 第1天
+- 交易池（60分钟）
+- SCALE（60分钟）
+- Substrate/FRAME技巧与窍门
+- 🌭 午餐休息
+- 无FRAME实践活动
 ---v
-
-## Rest of This Module! 😈
-
-#### Day 2
-
-- Substrate Storage (90m)
-- FRAME-Less Activity
-- 🌭 _Lunch Break_
-- End of Module 🎉
-
+## 本模块剩余内容！😈
+#### 第2天
+- Substrate存储（90分钟）
+- 无FRAME实践活动
+- 🌭 午餐休息
+- 模块结束🎉
 ---
 
-## Additional Resources! 😋
-
-> Check speaker notes (click "s" 😉)
-
+# 额外资源！😋
+> 查看演讲者备注（点击“s” 😉）
 <img width="300px" rounded src="../scale/img/thats_all_folks.png" />
-
 Notes:
-
-- Great documentation about all things substrate/blockchain from smoldot: <https://docs.rs/smoldot/latest/smoldot/>
-
-- Read more about why we use Rust at Parity: <https://www.parity.io/blog/why-rust/>
-
-- An interesting question on JVM/Wasm: <https://stackoverflow.com/questions/58131892/why-the-jvm-cannot-be-used-in-place-of-webassembly>
-
-- Rust safety: <https://stanford-cs242.github.io/f18/lectures/05-1-rust-memory-safety.html>
+- smoldot提供的关于Substrate/区块链各方面的优秀文档：<https://docs.rs/smoldot/latest/smoldot/>
+- 深入了解Parity使用Rust的原因：<https://www.parity.io/blog/why-rust/>
+- 关于JVM与Wasm的有趣问题：<https://stackoverflow.com/questions/58131892/why-the-jvm-cannot-be-used-in-place-of-webassembly>
+- Rust安全性相关：<https://stanford-cs242.github.io/f18/lectures/05-1-rust-memory-safety.html>
 - <https://www.reddit.com/r/rust/comments/5y3cxb/how_many_security_exploits_would_rust_prevent/>
-
-- The substrate clients should still have some level of _determinism in their performance_. If
-  authority nodes have extremely varied performances, they could start finalizing different forks.
-
-- There have been attempts at writing FRAME alternatives, namely AssemblyScript. <https://github.com/LimeChain/as-substrate-runtime>
-
-- Think about the differences between a runtime and a smart contract.
-
-  - A runtime is in some sense a smart contract as well, but not a user-deployed one.
+- Substrate客户端在性能上应具备一定程度的确定性。如果权威节点的性能差异极大，它们可能会最终确定不同的分叉。
+- 有人尝试编写FRAME的替代方案，如AssemblyScript，项目地址：<https://github.com/LimeChain/as-substrate-runtime>
+- 思考运行时与智能合约之间的区别：
+  - 从某种意义上讲，运行时也是一种智能合约，但并非由用户部署。
   - <https://en.wikipedia.org/wiki/Smart_contract>
   - <https://www.futurelearn.com/info/courses/defi-exploring-decentralised-finance-with-blockchain-technologies/0/steps/251885#:~:text=to%20the%201990s.-,Writing%20in%201994%2C%20the%20computer%20scientist%20Nick%20Szabo%20defined%20a,of%20artificial%20intelligence%20is%20implied.>
-
-- Substrate Primitives (`sp-*`), Frame (`frame-*`) and the pallets (`pallets-*`), binaries (`/bin`)
-  and all other utilities are licensed under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
-
-Substrate Client (`/client/*` / `sc-*`) is licensed under [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.html) with a [classpath linking exception](https://www.gnu.org/software/classpath/license.html).
-
-- Apache2 allows teams full freedom over what and how they release, and giving licensing clarity to
-  commercial teams.
-
-- GPL3 ensures any deeper improvements made to Substrate's core logic (e.g. Substrate's internal
-  consensus, crypto or database code) to be contributed back so everyone can benefit.
-
-- Currently, the Wasm binary spec v1 is used, read more about the new version here: <https://webassembly.github.io/spec/core/binary/index.html>
-
-### Post Lecture Feedback
-
-- a takeaway after each section, more clear path (shawn).
-
+- Substrate Primitives（`sp-*`）、Frame（`frame-*`）、pallets（`pallets-*`）、二进制文件（`/bin`）以及所有其他工具均遵循[Apache 2.0许可协议](https://www.apache.org/licenses/LICENSE-2.0.html) 。Substrate客户端（`/client/*` / `sc-*`）遵循[GPL v3.0许可协议](https://www.gnu.org/licenses/gpl-3.0.html)，并带有[类路径链接例外条款](https://www.gnu.org/software/classpath/license.html)。
+- Apache2许可赋予团队在发布内容和发布方式上的充分自由，并为商业团队提供清晰的许可说明。
+- GPL3确保对Substrate核心逻辑（例如Substrate的内部共识、加密或数据库代码）所做的任何深层次改进都能回馈给社区，使所有人受益。
+- 当前使用的是Wasm二进制规范v1，可在此处了解新版本的更多信息：<https://webassembly.github.io/spec/core/binary/index.html>
+### 课后反馈
+- 每部分结束后给出总结，提供更清晰的学习路径（肖恩建议）。
 ---
-
-## Appendix: What is Wasm Anyways?
-
-> WebAssembly (abbreviated Wasm) is a _binary instruction format_ for a _stack-based virtual
-> machine_. Wasm is designed as a _portable compilation_ target for programming languages, enabling
-> deployment on the web for client and server applications.
-
+## 附录：到底什么是Wasm？
+> WebAssembly（缩写为Wasm）是一种用于基于栈的虚拟机的二进制指令格式。Wasm被设计为编程语言的可移植编译目标，支持在Web上部署客户端和服务器应用程序。
 ---v
-
-### What is Wasm Anyways?
-
+### 到底什么是Wasm？
 <img style="width: 1400px;" src="./img/dev-4-1-wasm-langs.svg" />
-
 ---v
-
-### What is Wasm Anyways?
-
+### 到底什么是Wasm？
 <pba-cols>
 <pba-col>
-
-- Wasm ❤️ Web
-- Streaming and rapid compilation.
-- Designed with the concept of host in mind.
-  Sandboxed, permissioned sys-calls.
-
-> Anyone remember "Java Applets"?
-
+- Wasm与Web紧密结合
+- 支持流传输和快速编译
+- 设计时考虑了宿主概念，具有沙盒环境和受限的系统调用权限
+> 有人还记得“Java小程序”吗？
 </pba-col>
 <pba-col>
-
 <img style="height: 700px;" src="./img/dev-4-1-wasm.svg" />
-
 </pba-col>
 </pba-cols>
-
 Notes:
-
-People actually tried sticking things like JVM into the browser (_Java Applets_), but it didn't work.
-
+人们曾尝试将类似JVM的技术嵌入浏览器（即“Java小程序”），但并未成功。
 ---v
-
-### How to Write a Wasm Runtime?
-
-- Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
-- ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
-
+### 如何编写Wasm运行时？
+- 任何能够编译为Wasm并暴露一组固定函数供客户端使用的语言均可。
+- 当然，Substrate提供了一个名为 **FRAME™️** 的框架，使开发更加便捷。
 ---
-
-## Appendix: More Diagrams of Substrate and Polkadot
-
+## 附录：更多Substrate与Polkadot的图示
 Notes:
-
-I made these figures recently to explain the relationship between Substrate, Cumulus and Polkadot.
-They use the most generic term for client and runtime, namely "Host" and "STF" respectively.
-
+我最近绘制了这些图，用于解释Substrate、Cumulus和Polkadot之间的关系。图中分别使用最通用的术语“主机”和“STF”来指代客户端和运行时。
 ---v
-
-Substrate
-
+### Substrate
 <img style="width: 1400px;" src="./img/dev-4-1-substrate-new-1.svg" />
-
 ---v
-
-Polkadot
-
+### Polkadot
 <img style="width: 1400px;" src="./img/dev-4-1-substrate-new-2.svg" />
 ---v
-
-A Parachain
-
-<img style="width: 1400px;" src="./img/dev-4-1-substrate-new-3.svg" />
+### 一条平行链
+<img style="width: 1400px;" src="./img/dev-4-1-substrate-new-3.svg" /> 

@@ -4,19 +4,25 @@ description: FRAME/Pallet Hooks
 duration: 1 hour
 ---
 
+---
+title: FRAME/Pallet Hooks
+description: FRAME/Pallet Hooks
+duration: 1小时
+---
+
 # 🪝 FRAME/Pallet Hooks 🪝
 
 ---
 
 ## Hooks: All In One
 
-- Onchain / STF
+- 链上 / STF
   - `on_runtime_upgrade`
   - `on_initialize`
-  - `poll` (WIP)
+  - `poll` (开发中)
   - `on_finalize`
   - `on_idle`
-- Offchain:
+- 链下：
   - `genesis_build`
   - `offchain_worker`
   - `integrity_test`
@@ -51,37 +57,36 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 
 Notes:
 
-Many of these functions receive the block number as an argument, but that can easily be fetched from
-`frame_system::Pallet::<T>::block_number()`
+这些函数中的许多都将块号作为参数接收，但可以很容易地从 `frame_system::Pallet::<T>::block_number()` 获取。
 
 ---
 
 ## Hooks: `on_runtime_upgrade`
 
-- Called every time the `spec_version`/`spec_name` is bumped.
-- Why would might you be interested in implementing this?
+- 每当 `spec_version`/`spec_name` 升级时调用。
+- 你为什么可能会对实现这个函数感兴趣呢？
 
 Notes:
 
-Because very often runtime upgrades needs to be accompanied by some kind of state migration.
-Has its own lecture, more over there.
+因为运行时升级通常需要伴随某种状态迁移。
+有专门的课程讲解，更多内容在那里。
 
 ---
 
 ## Hooks: `on_initialize`
 
-- Useful for any kind of **automatic** operation.
-- The weight you return is interpreted as `DispatchClass::Mandatory`.
+- 对于任何类型的**自动**操作都很有用。
+- 你返回的权重被解释为 `DispatchClass::Mandatory`。
 
 ---v
 
 ### Hooks: `On_Initialize`
 
-- `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
+- `Mandatory` Hooks 应该真正轻量级且可预测，具有有界的复杂度。
 
 ```rust
 fn on_initialize() -> Weight {
-  // any user can create one entry in `MyMap` 😱🔫.
+  // 任何用户都可以在 `MyMap` 中创建一个条目 😱🔫。
   <MyMap<T>>::iter().for_each(do_stuff);
 }
 ```
@@ -92,24 +97,22 @@ fn on_initialize() -> Weight {
 
 ### Hooks: `On_Initialize`
 
-- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order their `on_initialize` are called?
-- &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
-- &shy;<!-- .element: class="fragment" --> Question: If your `on_initialize` consumes more than the maximum block weight?
+- &shy;<!-- .element: class="fragment" --> 问题：如果你有3个pallet，它们的 `on_initialize` 函数按什么顺序调用？
+- &shy;<!-- .element: class="fragment" --> 问题：如果你的运行时在 `on_initialize` 时发生恐慌，你该如何恢复？
+- &shy;<!-- .element: class="fragment" --> 问题：如果你的 `on_initialize` 消耗的权重超过了最大块权重会怎样？
 
 Notes:
 
-- The order comes from `construct_runtime!` macro.
-- Panic in mandatory hooks is fatal error. You are pretty much done.
-- Overweight blocks using mandatory hooks, are possible, ONLY in the context of solo-chains. Such a
-  block will take longer to produce, but it eventually will. If you have your eyes set on being a
-  parachain developer, you should treat overweight blocks as fatal as well.
+- 顺序来自 `construct_runtime!` 宏。
+- 强制性钩子中的恐慌是致命错误。基本上就没救了。
+- 使用强制性钩子的超重块，只有在单链的上下文中才有可能。这样的块生成时间会更长，但最终还是会生成。如果你想成为平行链开发者，你应该把超重块也视为致命错误。
 
 ---
 
 ## Hooks: `on_finalize`
 
-- Extension of `on_initialize`, but at the end of the block.
-- Its weight needs to be known in advance. Therefore, less preferred compared to `on_initialize`.
+- 是 `on_initialize` 的扩展，但在块结束时执行。
+- 它的权重需要提前知道。因此，与 `on_initialize` 相比，不太推荐使用。
 
 ```rust
 fn on_finalize() {} // ✅
@@ -118,7 +121,7 @@ fn on_finalize() -> Weight {} // ❌
 
 <!-- .element: class="fragment" -->
 
-- Nothing to do with _finality_ in the consensus context.
+- 与共识上下文中的_最终性_无关。
 
 <!-- .element: class="fragment" -->
 
@@ -126,50 +129,49 @@ fn on_finalize() -> Weight {} // ❌
 
 ### Hooks: `on_finalize`
 
-> Generally, avoid using it unless if something REALLY needs to be happen at the end of the block.
+> 一般来说，除非在块结束时真的需要做些什么，否则避免使用它。
 
 Notes:
 
-Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1"
+有时候，与其想着“在第N个块结束时”，不如考虑编写“在第N + 1个块开始时”的代码。
 
 ---
 
 ## Hooks: `poll`
 
-- The non-mandatory version of `on_initialize`.
-- In the making 👷
+- `on_initialize` 的非强制性版本。
+- 正在开发中 👷
 
 Notes:
 
-See: <https://github.com/paritytech/substrate/pull/14279> and related PRs
+参见：<https://github.com/paritytech/substrate/pull/14279> 及相关的PR
 
 ---
 
 ## Hooks: `on_idle`
 
-- **_Optional_** variant of `on_finalize`, also executed at the end of the block.
-- Small semantical difference: executes one pallet's hook, per block, randomly, rather than all
-  pallets'.
+- `on_finalize` 的**可选**变体，也在块结束时执行。
+- 小的语义区别：每个块随机执行一个pallet的钩子，而不是所有pallet的钩子。
 
 ---v
 
-## The Future: Moving Away From Mandatory Hooks
+## 未来：远离强制性钩子
 
 - `on_initialize` -> `poll`
 - `on_finalize` -> `on_idle`
-- New primitives for multi-block migrations
-- New primitives for optional service work via extrinsics.
+- 用于多块迁移的新原语
+- 通过外部调用进行可选服务工作的新原语。
 
 Notes:
 
-This is all in the agenda of the FRAME team at Parity for 2023.
+这都是Parity的FRAME团队2023年的议程。
 
 <https://github.com/paritytech/polkadot-sdk/issues/206>
 <https://github.com/paritytech/polkadot-sdk/issues/198>
 
 ---
 
-## Recap: Onchain/STF Hooks
+## 回顾：链上/STF Hooks
 
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
@@ -209,18 +211,18 @@ end
 
 Notes:
 
-implicit in this:
+这里隐含的是：
 
-Inherents are only first, which was being discussed: <https://github.com/polkadot-fellows/RFCs/pull/13>
+固有函数（Inherents）总是最先执行，相关讨论见：<https://github.com/polkadot-fellows/RFCs/pull/13>
 
 ---
 
 ## Hooks: `genesis_build`
 
-- Means for each pallet to specify a $f(input): state$ at genesis.
-- This is called only once, by the client, when you **create a new chain**.
-  - &shy;<!-- .element: class="fragment" --> Is this invoked every time you run `cargo run`?
-- `#[pallet::genesis_build]`.
+- 每个pallet在创世时指定一个 $f(input): state$ 的方法。
+- 这仅在你**创建新链**时由客户端调用一次。
+  - &shy;<!-- .element: class="fragment" --> 每次运行 `cargo run` 时都会调用这个函数吗？
+- `#[pallet::genesis_build]`。
 
 ---v
 
@@ -239,7 +241,7 @@ pub struct GenesisConfig<T: Config> {
 ```rust
 impl<T: Config> Default for GenesisConfig<T> {
   fn default() -> Self {
-    // snip
+    // 省略部分代码
   }
 }
 ```
@@ -250,7 +252,7 @@ impl<T: Config> Default for GenesisConfig<T> {
 #[pallet::genesis_build]
 impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
   fn build(&self) {
-    // use self.foo, self.bar etc.
+    // 使用 self.foo, self.bar 等
   }
 }
 ```
@@ -261,7 +263,7 @@ impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
 
 ### Hooks: `genesis_build`
 
-- `GenesisConfig` is a composite/amalgamated item at the top level runtime.
+- `GenesisConfig` 是运行时顶层的一个复合/合并项。
 
 ```rust
 construct_runtime!(
@@ -289,8 +291,8 @@ Notes:
 
 ### Hooks: `genesis_build`
 
-- Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
-- `#[cfg(feature = "std")]` in pallets will go away.
+- 最近的更改将 `genesis_build` 改为通过运行时API使用，而不是原生运行时。
+- pallet中的 `#[cfg(feature = "std")]` 将不再使用。
 
 Notes:
 
@@ -300,23 +302,22 @@ Notes:
 
 ## Hooks: `offchain_worker`
 
-**Fully offchain application**:
+**完全链下应用**：
 
-- Read chain state via RPC.
-- submit desired side effects back to the chain as transactions.
+- 通过RPC读取链状态。
+- 将期望的副作用作为交易提交回链上。
 
-**Runtime Offchain Worker**:
+**运行时链下工作者**：
 
-- &shy;<!-- .element: class="fragment" --> Code lives onchain, upgradable only in synchrony with the whole runtime 👎
-- &shy;<!-- .element: class="fragment" --> Ergonomic and fast state access 👍
-- &shy;<!-- .element: class="fragment" --> State writes are ignored 🤷
-- &shy;<!-- .element: class="fragment" --> Can submit transactions back to the chain as well ✅
-- &shy;<!-- .element: class="fragment" --> Source of many confusions!
+- &shy;<!-- .element: class="fragment" --> 代码存在于链上，只能与整个运行时同步升级 👎
+- &shy;<!-- .element: class="fragment" --> 符合人体工程学且快速的状态访问 👍
+- &shy;<!-- .element: class="fragment" --> 状态写入被忽略 🤷
+- &shy;<!-- .element: class="fragment" --> 也可以将交易提交回链上 ✅
+- &shy;<!-- .element: class="fragment" --> 容易引起很多困惑！
 
 Notes:
 
-People have often thought that they can do magic with things with OCW, please don't. BIG warning to
-founders to be careful with this!
+人们常常认为他们可以用链下工作者（OCW）做神奇的事情，请不要这样做。给创始人一个大大的警告，使用时要小心！
 
 <https://paritytech.github.io/substrate/master/pallet_examples/index.html>
 
@@ -324,18 +325,18 @@ founders to be careful with this!
 
 ### Hooks: `offchain_worker`
 
-- Execution entirely up to the client.
-- Has a totally separate thread pool than the normal execution.
+- 执行完全由客户端决定。
+- 有一个与正常执行完全独立的线程池。
 
 ```
 --offchain-worker <ENABLED>
-    Possible values:
+    可能的值：
     - always:
     - never:
     - when-authority
 
 --execution-offchain-worker <STRATEGY>
-    Possible values:
+    可能的值：
     - native:
     - wasm:
     - both:
@@ -346,7 +347,7 @@ founders to be careful with this!
 
 ### Hooks: `offchain_worker`
 
-- Threads can **overlap**, each is reading the state of its corresponding block
+- 线程可以**重叠**，每个线程读取其对应块的状态
 
 <img style="height: 500px" src="./img/ocw.svg"  />
 
@@ -360,27 +361,25 @@ Notes:
 
 ### Hooks: `offchain_worker`
 
-- &shy;<!-- .element: class="fragment" -->Offchain workers have their own **special host
-  functions**: http, dedicated storage, time, etc.
-- &shy;<!-- .element: class="fragment" -->Offchain workers have the same **execution limits** as
-  Wasm (limited memory, custom allocator).
+- &shy;<!-- .element: class="fragment" --> 链下工作者有自己的**特殊主机函数**：http、专用存储、时间等。
+- &shy;<!-- .element: class="fragment" --> 链下工作者具有与Wasm相同的**执行限制**（有限的内存、自定义分配器）。
 
-- &shy;<!-- .element: class="fragment" -->Source of confusion, why OCWs cannot write to state.
+- &shy;<!-- .element: class="fragment" --> 令人困惑的是，为什么链下工作者不能写入状态。
 
 Notes:
 
-These are the source of the confusion.
+这些就是困惑的来源。
 
-Word on allocator limit in Substrate Wasm execution (subject to change).
+关于Substrate Wasm执行中的分配器限制（可能会更改）：
 
-- Max single allocation limited
-- Max total allocation limited.
+- 最大单次分配有限制
+- 最大总分配有限制。
 
 ---
 
 ## Hooks: `integrity_test`
 
-- Put into a test by `construct_runtime!`.
+- 由 `construct_runtime!` 放入测试中。
 
 ```rust
 __construct_runtime_integrity_test::runtime_integrity_tests
@@ -392,9 +391,9 @@ __construct_runtime_integrity_test::runtime_integrity_tests
 fn integrity_test() {
   assert!(
     T::MyConfig::get() > 0,
-    "Are all of the generic types I have sensible?"
+    "我使用的所有泛型类型都合理吗？"
   );
-  // notice that this is for tests, std is available.
+  // 注意这是用于测试的，std是可用的。
   assert!(std::mem::size_of::<T::Balance>() > 4);
 }
 ```
@@ -403,25 +402,24 @@ fn integrity_test() {
 
 Notes:
 
-I am in fan of renaming this. If you are too, please comment here
+我想给这个函数改名。如果你也这么想，请在这里评论。
 
 ---
 
 ## Hooks: `try_state`
 
-- A means for you to ensure correctness of your $STF$, after each transition.
-- &shy;<!-- .element: class="fragment" -->Entirely offchain, custom runtime-apis, conditional
-  compilation.
-  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about next week, or anyone else
-- &shy;<!-- .element: class="fragment" -->Examples from your assignment?
+- 一种在每次状态转换后确保你的 $STF$ 正确性的方法。
+- &shy;<!-- .element: class="fragment" --> 完全链下，自定义运行时API，条件编译。
+  - &shy;<!-- .element: class="fragment" --> 由 `try-runtime-cli` 调用，你下周会学到，或者其他人也可以调用
+  - &shy;<!-- .element: class="fragment" --> 作业中有相关例子吗？
 
 Notes:
 
-What is a transition? Either a block, or single extrinsic
+什么是状态转换？要么是一个块，要么是单个外部调用。
 
 ---
 
-## Hooks: Recap
+## Hooks: 回顾
 
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
@@ -468,28 +466,25 @@ end
 
 </diagram>
 
-- What other hooks can you think of?
+- 你还能想到哪些钩子？
 
 Notes:
 
-What other ideas you can think of?
+你还能想到哪些点子？
 
-- a hook called once a pallet is first initialized.
+- 一个在pallet首次初始化时调用一次的钩子。
   <https://github.com/paritytech/polkadot-sdk/issues/109>
-- Local on Post/Pre dispatch: <https://github.com/paritytech/polkadot-sdk/issues/261>
-- Global on Post/Pre dispatch is in fact a signed extension. It has to live in the runtime, because you have to specify order.
+- 本地的Post/Pre调度钩子：<https://github.com/paritytech/polkadot-sdk/issues/261>
+- 全局的Post/Pre调度钩子实际上是一个签名扩展。它必须存在于运行时中，因为你必须指定顺序。
 
 ---
 
-## Additional Resources! 😋
+## 更多资源！😋
 
-> Check speaker notes (click "s" 😉)
+> 查看演讲笔记（点击“s” 😉）
 
 Notes:
 
-## Post lecture Notes
+## 课后笔记
 
-Regarding this drawback to offchain workers that you can only upgrade in cadence with the network.
-Offchain worker, like tx-pool api, is only called from an offchain context. Node operators can
-easily use the runtime overrides feature to change the behavior of their offchain worker anytime
-they want.
+关于链下工作者只能与网络同步升级的这个缺点。链下工作者，就像tx-pool api一样，只能从链下上下文调用。节点运行者可以随时使用运行时覆盖功能轻松更改其链下工作者的行为。

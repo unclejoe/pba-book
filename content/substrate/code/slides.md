@@ -4,79 +4,79 @@ description: A hands-on dive into practical matters of substrate, such as docs, 
 duration: 60 minutes
 ---
 
-# Substrate; Show Me The Code 👨‍💻
+
+# Substrate; 请展示代码 👨‍💻
 
 ---
 
-## Substrate; Show Me The Code 👨‍💻
+## Substrate; 请展示代码 👨‍💻
 
-Previous lecture was all about high level information; now we want to bridge that to real code.
+上一讲都是关于高层次的信息；现在我们要将其与实际代码联系起来。
 
 ---
 
-## A Word on Previous Versions
+## 关于以前的版本
 
-- This is a brand new lecture replacing two old ones, with more focus on rust-docs.
-- Since this is the first time, I have kept the old versions around for you to look into
+- 这是一个全新的讲座，取代了两个旧讲座，更加关注Rust文档。
+- 由于这是第一次，我保留了旧版本供你参考。
 
-> Cambridge-y (adj) - Overall good quality, but with rough edges or imperfections. Especially when related to PBA content.
+> Cambridge-y (adj) - 总体质量不错，但有一些粗糙的边缘或缺陷。特别是与PBA内容相关时。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### A Word on the Rust Exam
+### 关于Rust考试
 
-Two main takeaways from the previous cohort:
+上一批学员的两个主要收获：
 
-- Write more rust-docs, expect them to be read.
-- Extensive use of type-system, to prepare you better for FRAME.
+- 多写Rust文档，预计会有人阅读。
+- 广泛使用类型系统，以便你更好地为FRAME做准备。
 
 Notes:
 
-Personally doing my best to make it hard, but reasonable, such that it prepares you best for
-in-depth development of Substrate.
+我个人会尽力让考试有一定难度，但又合理，这样可以让你为深入开发Substrate做好最好的准备。
 
 ---v
 
-### Interactive
+### 互动环节
 
-- This lecture will be interactive.
-- Try and learn the technique, not the specific topic. <!-- .element: class="fragment" -->
-- Try and repeat the process later. <!-- .element: class="fragment" -->
+- 本讲座将是互动式的。
+- 尝试学习技术，而不是具体的主题。 <!-- .element: class="fragment" -->
+- 稍后尝试重复这个过程。 <!-- .element: class="fragment" -->
 
 Notes:
 
-what I am trying to do here is to teach you how to plant a tree rather than giving you the apple.
+我在这里想做的是教你如何种树，而不是给你苹果。
 
 ---
 
-## Documentation Resources
+## 文档资源
 
-Core
+核心资源
 
 - paritytech.github.io
   - `substrate` crate
-  - WIP: `frame`, `cumulus` and `polkadot` crate.
+  - 正在进行中：`frame`、`cumulus`和`polkadot` crate。
 - Github
 - Substrate/Polkadot StackExchange
 
-High level
+高层次资源
 
-- `substrate.io`\*
-- Discord, Telegram, etc.
+- `substrate.io`*
+- Discord、Telegram等。
 
 ---
 
-## Exploring the `substrate` crate.
+## 探索`substrate` crate。
 
 <https://paritytech.github.io/substrate/master/substrate/index.html>
 
 ---v
 
-### Substrate From Within
+### 从内部看Substrate
 
-Division of substrate when seen from inside:
+从内部看Substrate的划分：
 
 1. `sp`
 2. `sc`
@@ -84,91 +84,91 @@ Division of substrate when seen from inside:
 
 Notes:
 
-this should be covered
+这部分应该会涵盖。
 
 ---v
 
-### Substrate Binaries
+### Substrate二进制文件
 
 Notes:
 
-alternative way is to search for `[[bin]]` in all toml files.
+另一种方法是在所有toml文件中搜索`[[bin]]`。
 
 ---v
 
-### Structure of a Binary Crate
+### 二进制crate的结构
 
-Division of a typical substrate-based project:
+一个典型的基于Substrate的项目的划分：
 
 1. `node`
-   1. Contains a `main.rs`
+   1. 包含一个`main.rs`
    2. `service.rs`
-   3. and more!
+   3. 还有更多！
 2. `runtime`
-   1. Contains a `/src/lib.rs` ("_runtime amalgamator_")
-3. more!
+   1. 包含一个`/src/lib.rs`（“_runtime amalgamator_”）
+3. 还有更多！
 
 Notes:
 
-node is client side entry point, `runtime amalgamator for the runtime`.
+`node`是客户端的入口点，`runtime amalgamator for the runtime`。
 
-- looking at node-template, it only has the two.
-- node has even more
-- polkadot has even more.
+- 看`node-template`，它只有这两个。
+- `node`还有更多内容。
+- `polkadot`还有更多内容。
 
 ---v
 
-### Substrate CLI
+### Substrate命令行界面（CLI）
 
-Study in the docs:
+在文档中学习：
 
 - `--dev`
 - `--chain`
-- `--tmp`, `--base-path`, `purge-chain`.
+- `--tmp`、`--base-path`、`purge-chain`。
 
 Notes:
 
-all commands: <https://paritytech.github.io/substrate/master/sc_cli/commands/index.html>
-all args to a typical run command <https://paritytech.github.io/substrate/master/sc_cli/commands/struct.RunCmd.html>
+所有命令：<https://paritytech.github.io/substrate/master/sc_cli/commands/index.html>
+一个典型运行命令的所有参数 <https://paritytech.github.io/substrate/master/sc_cli/commands/struct.RunCmd.html>
 
-But then each node can decide which subset of these it chooses, and how it implements it.
+但每个节点可以决定选择这些命令的哪个子集，以及如何实现它们。
 
 <https://paritytech.github.io/substrate/master/node_template/cli/enum.Subcommand.html>
 <https://paritytech.github.io/substrate/master/node_cli/enum.Subcommand.html>
 
-- execution strategies
-- database type
-- logs
-- RPC
-- pruning
-- sync modes
+- 执行策略
+- 数据库类型
+- 日志
+- 远程过程调用（RPC）
+- 修剪
+- 同步模式
 
 ---v
 
-## Wasm Build + `std` feature.
+## Wasm构建 + `std`特性。
 
-- How to compile to wasm? `build.rs`!
-- just get your `std` features right please!
+- 如何编译为Wasm？`build.rs`！
+- 请确保你的`std`特性设置正确！
 
 Notes:
 
-<https://crates.io/crates/substrate-wasm-builder> (seen env variables, pretty useful!)
+<https://crates.io/crates/substrate-wasm-builder>（查看环境变量，非常有用！）
 <https://docs.substrate.io/build/build-process/>
 
 ---v
 
-## Chain Specification
+## 链规范
 
 Notes:
 
-raw vs not-raw
+原始的与非原始的
 
 ---
 
-## #1 Rust-Docs Tip Of All Time
+## 有史以来最有用的Rust文档技巧 #1
 
-- Search traits, find implementations.
-- Examples: `trait Block`, `trait Extrinsic`, `trait Header`.
+- 搜索特性（trait），找到其实现。
+- 示例：`trait Block`、`trait Extrinsic`、`trait Header`。
 
 ```rust
 trait Config {
@@ -180,18 +180,19 @@ trait Config {
 
 Notes:
 
-Especially in FRAME, oftentimes you have to parameterize your pallets with a pattern like above.
-Simply search the trait in the rust-docs, and find the implementors!
+特别是在FRAME中，你经常需要使用上述模式来参数化你的pallet。
+只需在Rust文档中搜索该特性，然后找到其实现者！
 
 ---
 
-## Additional Resources! 😋
+## 额外资源！😋
 
-> Check speaker notes (click "s" 😉)
+> 查看演讲者笔记（点击“s” 😉）
 
 <img width="300px" rounded src="../scale/img/thats_all_folks.png" />
 
-Note:
+Notes:
 
-One important concept that is important to substrate-based chains, but is somewhat missing here is
-`chain-spec`. Make sure to read up about it in the substrate docs.
+对于基于Substrate的链来说，一个重要但这里有点缺失的概念是`chain-spec`。一定要在Substrate文档中阅读相关内容。
+
+```

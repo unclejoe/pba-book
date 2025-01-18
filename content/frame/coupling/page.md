@@ -1,4 +1,4 @@
-# Pallet Coupling
+# Pallet 耦合
 
 <!-- markdown-link-check-disable -->
 <center>

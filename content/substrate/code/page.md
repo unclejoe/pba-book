@@ -1,4 +1,4 @@
-# Substrate; Show Me The Code
+# Substrate; 请展示代码 👨‍💻
 
 <!-- markdown-link-check-disable -->
 <center>

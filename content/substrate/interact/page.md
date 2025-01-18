@@ -1,4 +1,4 @@
-# Interacting With a Substrate Blockchain
+# 与 Substrate 区块链交互
 
 <!-- markdown-link-check-disable -->
 <center>

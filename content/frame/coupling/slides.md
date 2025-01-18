@@ -4,39 +4,39 @@ description: A look into how multiple pallets interact.
 duration: 1 hour
 ---
 
-# Pallet Coupling
+# 模块耦合
 
 ---
 
-## Overview
+## 概述
 
-Substrate believes in building modular and composable blockchain runtimes.
+Substrate 致力于构建模块化和可组合的区块链运行时。
 
-The building blocks of a FRAME runtime are Pallets.
+FRAME 运行时的构建块是模块（Pallets）。
 
-Pallet coupling will teach you how to configure multiple pallets to interact with each other.
-
----
-
-## Types of Coupling
-
-- Tightly Coupled Pallets
-
-  - Pallets which are directly connected to one another.
-  - You must construct a runtime using exactly the pallets which are tightly coupled.
-
-- Loosely Coupled Pallets
-
-  - Pallets which are connected "loosely" with a trait / interface.
-  - You can construct a runtime using any pallets which satisfy the required interfaces.
+模块耦合将教你如何配置多个模块以使其相互交互。
 
 ---
 
-## Tightly Coupled Pallets
+## 耦合类型
 
-Tightly coupling is often an easier, but less flexible way to have two pallets interact with each other.
+- 紧密耦合的模块
 
-It looks like this:
+  - 直接相互连接的模块。
+  - 你必须使用完全紧密耦合的模块来构建运行时。
+
+- 松散耦合的模块
+
+  - 通过特性（trait）/接口“松散”连接的模块。
+  - 你可以使用任何满足所需接口的模块来构建运行时。
+
+---
+
+## 紧密耦合的模块
+
+紧密耦合通常是一种让两个模块相互交互的更简单但灵活性较低的方式。
+
+它看起来像这样：
 
 ```rust [2]
 #[pallet::config]
@@ -45,31 +45,31 @@ pub trait Config: frame_system::Config + pallet_treasury::Config {
 }
 ```
 
-Note that everything is tightly coupled to `frame_system`!
+请注意，所有内容都与 `frame_system` 紧密耦合！
 
 ---
 
-## What Does It Mean?
+## 这意味着什么？
 
-If Pallet A is tightly coupled to Pallet B, then it basically means:
+如果模块 A 与模块 B 紧密耦合，那么基本上意味着：
 
-> This Pallet A requires a runtime which is also configured with Pallet B.
+> 这个模块 A 需要一个也配置了模块 B 的运行时。
 
-You do not necessarily need Pallet A to use Pallet B, but you will always need Pallet B if you use Pallet A.
-
----
-
-## Example: Treasury Pallet
-
-The Treasury Pallet is a standalone pallet which controls a pot of funds that can be distributed by the governance of the chain.
-
-There are two other pallets which are tightly coupled with the Treasury Pallet: Tips and Bounties.
-
-You can think of these like "Pallet Extensions".
+你不一定需要模块 A 才能使用模块 B，但如果你使用模块 A，则始终需要模块 B。
 
 ---
 
-## Treasury, Tips, Bounties
+## 示例：国库模块
+
+国库模块（Treasury Pallet）是一个独立的模块，用于控制一笔资金，这些资金可以由链的治理机制进行分配。
+
+还有另外两个与国库模块紧密耦合的模块：小费模块（Tips）和赏金模块（Bounties）。
+
+你可以把它们想象成“模块扩展”。
+
+---
+
+## 国库、小费、赏金
 
 `pallet_treasury`
 
@@ -78,7 +78,7 @@ You can think of these like "Pallet Extensions".
 pub trait Config<I: 'static = ()>: frame_system::Config { ... }
 ```
 
-`pallet_tips` & `pallet_bounties`
+`pallet_tips` 和 `pallet_bounties`
 
 ```rust
 #[pallet::config]
@@ -87,9 +87,9 @@ pub trait Config<I: 'static = ()>: frame_system::Config + pallet_treasury::Confi
 
 ---
 
-## Tight Coupling Error
+## 紧密耦合错误
 
-Here is the kind of error you will see when you try to use a tightly coupled pallet without the appropriate pallet dependencies configured:
+当你尝试使用紧密耦合的模块而没有配置适当的模块依赖项时，会看到以下类型的错误：
 
 ```rust
 error[E0277]: the trait bound `Test: pallet_treasury::Config` is not satisfied
@@ -111,24 +111,24 @@ warning: build failed, waiting for other jobs to finish...
 
 ---
 
-## Advantage of Tight Coupling
+## 紧密耦合的优势
 
-With tight coupling, you have direct access to all public functions and interfaces of another pallet. Just like directly using a crate / module.
+通过紧密耦合，你可以直接访问另一个模块的所有公共函数和接口。就像直接使用一个 crate / 模块一样。
 
-Examples:
+示例：
 
 ```rust
-// Get the block number from `frame_system`
+// 从 `frame_system` 获取块号
 frame_system::Pallet::<T>::block_number()
 ```
 
 ```rust
-// Use type configurations defined in another pallets.
+// 使用另一个模块中定义的类型配置。
 let who: T::AccountId = ensure_signed(origin)?;
 ```
 
 ```rust
-// Dispatch an error defined in another pallet.
+// 抛出另一个模块中定义的错误。
 ensure!(
 	bounty.value <= max_amount,
 	pallet_treasury::Error::<T, I>::InsufficientPermission
@@ -137,21 +137,21 @@ ensure!(
 
 ---
 
-## When To Use Tight Coupling
+## 何时使用紧密耦合
 
-Tight coupling can make a lot of sense when trying to break apart a single "large" pallet into smaller, yet fully dependant pieces.
+当试图将一个“大型”模块拆分成更小但完全依赖的部分时，紧密耦合是很有意义的。
 
-As mentioned before, you can think of these as "extensions".
+如前所述，你可以把它们看作是“扩展”。
 
-Since there is less flexibility in how you can configure tightly coupled pallets, there is also less chance for error in configuring them.
+由于配置紧密耦合的模块的方式灵活性较低，因此配置它们时出错的可能性也较小。
 
 ---
 
-## Loosely Coupled Pallets
+## 松散耦合的模块
 
-Loose coupling is the "preferred" way to build Pallets, as it emphasizes the modular nature of Pallet development.
+松散耦合是构建模块的“首选”方式，因为它强调了模块开发的模块化特性。
 
-It looks like this:
+它看起来像这样：
 
 ```rust [3]
 #[pallet::config]
@@ -162,25 +162,24 @@ pub trait Config<I: 'static = ()>: frame_system::Config {
 }
 ```
 
-Here you can see that this pallet requires some associated type `NativeBalance` to be configured which implements some traits `fungible::Inspect` and `fungible::Mutate`, however there is no requirements on how or where that type is configured.
+在这里，你可以看到这个模块需要配置一个关联类型 `NativeBalance`，该类型要实现一些特性 `fungible::Inspect` 和 `fungible::Mutate`，但是对于该类型如何或在哪里配置没有要求。
 
 ---
 
-## Trait Definition
+## 特性定义
 
-To begin loose coupling, you need to define a trait / interface that can be provided and depended on. A very common example is the `fungible::*` traits, which most often is implemented by `pallet_balances`.
+要开始进行松散耦合，你需要定义一个可以被提供和依赖的特性（trait）/接口。一个非常常见的例子是 `fungible::*` 特性，它通常由 `pallet_balances` 实现。
 
 ```rust
-/// Trait for providing balance-inspection access to a fungible asset.
+/// 用于提供对可替代资产的余额检查访问的特性。
 pub trait Inspect<AccountId>: Sized {
-	/// Scalar type for representing balance of an account.
+	/// 用于表示账户余额的标量类型。
 	type Balance: Balance;
 
-	/// The total amount of issuance in the system.
+	/// 系统中的总发行量。
 	fn total_issuance() -> Self::Balance;
 
-	/// The total amount of issuance in the system excluding those which are controlled by the
-	/// system.
+	/// 系统中排除由系统控制的部分后的总发行量。
 	fn active_issuance() -> Self::Balance {
 		Self::total_issuance()
 	}
@@ -193,9 +192,9 @@ pub trait Inspect<AccountId>: Sized {
 
 ---
 
-## Trait Implementation
+## 特性实现
 
-This trait can then be implemented by a Pallet, for example `pallet_balances`.
+然后，这个特性可以由一个模块来实现，例如 `pallet_balances`。
 
 ```rust
 impl<T: Config<I>, I: 'static> fungible::Inspect<T::AccountId> for Pallet<T, I> {
@@ -213,13 +212,13 @@ impl<T: Config<I>, I: 'static> fungible::Inspect<T::AccountId> for Pallet<T, I> 
 
 `frame/balances/src/impl_fungible.rs`
 
-Any pallet, even one you write, could implement this trait.
+任何模块，甚至是你自己编写的模块，都可以实现这个特性。
 
 ---
 
-## Trait Dependency
+## 特性依赖
 
-Another pallet can then, separately, depend on this trait.
+另一个模块可以单独依赖这个特性。
 
 ```rust [3]
 #[pallet::config]
@@ -228,7 +227,7 @@ pub trait Config: frame_system::Config {
 }
 ```
 
-And can use this trait throughout their pallet:
+并且可以在整个模块中使用这个特性：
 
 ```rust [4-5]
 #[pallet::weight(0)]
@@ -241,44 +240,45 @@ pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 
 ---
 
-## Runtime Implementation
+## 运行时实现
 
-Finally, in the runtime configuration, we concretely define which pallet implements the trait.
+最后，在运行时配置中，我们具体定义哪个模块实现了该特性。
 
 ```rust
-/// Configuration of a pallet using the `fungible::*` traits.
+/// 使用 `fungible::*` 特性的模块的配置。
 impl pallet_voting::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type NativeBalance = pallet_balances::Pallet<Runtime>;
 }
 ```
 
-This is the place where things are no longer "loosely" defined.
+这里的事情就不再是“松散”定义的了。
 
 ---
 
-## Challenges of Loose Coupling
+## 松散耦合的挑战
 
-Loose coupling is more difficult because you need to think ahead of time about developing a flexible API that makes sense for potentially multiple implementations.
+松散耦合更具挑战性，因为你需要提前考虑开发一个灵活的 API，使其对潜在的多种实现都有意义。
 
-You need to try to not let implementation details affect the API, providing maximum flexibility to users and providers of those traits.
+你需要尽量不让实现细节影响 API，为这些特性的用户和提供者提供最大的灵活性。
 
-When done right, it can be very powerful; like the ERC20 token format.
+如果做得好，它会非常强大；就像 ERC20 代币格式一样。
 
 ---
 
-## Challenges of Generic Types
+## 泛型类型的挑战
 
-Many new pallet developers also find loose coupling challenging because associated types are not concretely defined... on purpose.
+许多新的模块开发者也觉得松散耦合具有挑战性，因为关联类型是有意不具体定义的。
 
-For example, note that the `fungible::*` trait has a generic `Balances` type.
+例如，注意 `fungible::*` 特性有一个泛型 `Balances` 类型。
 
-This allows pallet developers can configure most unsigned integers types (`u32`, `u64`, `u128`) as the `Balance` type for their chain, however, this also means that you need to be more clever when doing math or other operations with those generic types.
+这允许模块开发者将大多数无符号整数类型（`u32`、`u64`、`u128`）配置为其链的 `Balance` 类型，然而，这也意味着在对这些泛型类型进行数学运算或其他操作时，你需要更加巧妙。
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
-Next we will look over common pallets and traits, and will see many of the pallet coupling patterns first hand.
+接下来，我们将查看常见的模块和特性，并将亲眼看到许多模块耦合模式。
+```

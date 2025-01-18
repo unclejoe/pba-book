@@ -1,4 +1,4 @@
-# Substrate Merklized Storage
+# Substrate 默克尔化存储
 
 <!-- markdown-link-check-disable -->
 <center>

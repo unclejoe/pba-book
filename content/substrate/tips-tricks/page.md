@@ -1,4 +1,4 @@
-# Substrate and FRAME Tips and Tricks
+# Substrate和FRAME的技巧与窍门
 
 <!-- markdown-link-check-disable -->
 <center>

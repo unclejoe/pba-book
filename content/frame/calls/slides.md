@@ -4,98 +4,98 @@ description: FRAME Calls for web3 builders.
 duration: 1 hour
 ---
 
-# FRAME Calls
+# FRAME 调用
 
 ---
 
-## Overview
+## 概述
 
-Calls allow users to interact with your state transition function.
+调用允许用户与你的状态转换函数进行交互。
 
-In this lecture, you will learn how to create calls for your Pallet with FRAME.
-
----
-
-## Terminology
-
-The term "call", "extrinsic", and "dispatchable" all get mixed together.
-
-Here is a sentence which should help clarify their relationship, and why they are such similar terms:
-
-> Users submit an **extrinsic** to the blockchain, which is **dispatched** to a Pallet **call**.
+在本讲座中，你将学习如何使用 FRAME 为你的 Pallet 创建调用。
 
 ---
 
-## Call Definition
+## 术语
 
-Here is a simple pallet call. Let's break it down.
+“调用（call）”、“外部交易（extrinsic）”和“可调度（dispatchable）” 这些术语经常被混淆。
+
+下面这句话应该有助于阐明它们之间的关系，以及为什么它们如此相似：
+
+> 用户向区块链提交一个 **外部交易**，该交易被 **调度** 到一个 Pallet **调用**。
+
+---
+
+## 调用定义
+
+下面是一个简单的 Pallet 调用。让我们来详细分析一下。
 
 ```rust
 #[pallet::call(weight(<T as Config>::WeightInfo))]
 impl<T: Config> Pallet<T> {
-	#[pallet::call_index(0)]
-	pub fn transfer(
-		origin: OriginFor<T>,
-		dest: AccountIdLookupOf<T>,
-		#[pallet::compact] value: T::Balance,
-	) -> DispatchResult {
-		let source = ensure_signed(origin)?;
-		let dest = T::Lookup::lookup(dest)?;
-		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
-		Ok(())
-	}
+    #[pallet::call_index(0)]
+    pub fn transfer(
+        origin: OriginFor<T>,
+        dest: AccountIdLookupOf<T>,
+        #[pallet::compact] value: T::Balance,
+    ) -> DispatchResult {
+        let source = ensure_signed(origin)?;
+        let dest = T::Lookup::lookup(dest)?;
+        <Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
+        Ok(())
+    }
 }
 ```
 
 ---
 
-## Call Implementation
+## 调用实现
 
-Calls are just functions which are implemented on top of the `Pallet` struct.
+调用只是在 `Pallet` 结构体上实现的函数。
 
-You can do this with any kind of function, however, "FRAME magic" turns these into dispatchable calls through the `#[pallet::call]` macro.
+你可以使用任何类型的函数来实现，不过，“FRAME 魔法” 通过 `#[pallet::call]` 宏将这些函数转换为可调度的调用。
 
 ---
 
-## Call Origin
+## 调用来源
 
-Every pallet call must have an `origin` parameter, which uses the `OriginFor<T>` type, which comes from `frame_system`.
+每个 Pallet 调用都必须有一个 `origin` 参数，该参数使用 `OriginFor<T>` 类型，该类型来自 `frame_system`。
 
 ```rust
-/// Type alias for the `Origin` associated type of system config.
+/// 系统配置的 `Origin` 关联类型的类型别名。
 pub type OriginFor<T> = <T as crate::Config>::RuntimeOrigin;
 ```
 
 ---
 
-## Origin
+## 来源
 
-The basic origins available in frame are:
+frame 中可用的基本来源有：
 
 ```rust
-/// Origin for the System pallet.
+/// System Pallet 的来源。
 #[derive(PartialEq, Eq, Clone, RuntimeDebug, Encode, Decode, TypeInfo, MaxEncodedLen)]
 pub enum RawOrigin<AccountId> {
-	/// The system itself ordained this dispatch to happen: this is the highest privilege level.
-	Root,
-	/// It is signed by some public key and we provide the `AccountId`.
-	Signed(AccountId),
-	/// It is signed by nobody, can be either:
-	/// * included and agreed upon by the validators anyway,
-	/// * or unsigned transaction validated by a pallet.
-	None,
+    /// 系统本身规定此调度发生：这是最高特权级别。
+    Root,
+    /// 由某个公钥签名，我们提供 `AccountId`。
+    Signed(AccountId),
+    /// 无人签名，可以是以下两种情况之一：
+    /// * 无论如何都被验证者包含并认可，
+    /// * 或者是由一个 Pallet 验证的无签名交易。
+    None,
 }
 ```
 
-We will have another presentation diving deeper into Origins.
+我们将有另一个演示深入探讨来源。
 
 ---
 
-## Origin Checking
+## 来源检查
 
-Normally, the first thing you do in a call is check that the origin of the caller is what you expect.
+通常，在调用中你要做的第一件事是检查调用者的来源是否符合你的预期。
 
-Most often, this is checking that the extrinsic is `Signed`, which is a transaction from a user account.
+最常见的情况是检查外部交易是否为 `Signed`，即来自用户账户的交易。
 
 ```rust
 let caller: T::AccountId = ensure_signed(origin)?;
@@ -103,173 +103,173 @@ let caller: T::AccountId = ensure_signed(origin)?;
 
 ---
 
-## Call Parameters
+## 调用参数
 
-Pallet calls can have additional parameters beyond `origin` allowing you to submit relevant data about what the caller would like to do.
+Pallet 调用可以有除 `origin` 之外的其他参数，允许你提交有关调用者想要执行的操作的相关数据。
 
-All call parameters need to satisfy the `Parameter` trait:
+所有调用参数都需要满足 `Parameter` 特征：
 
 ```rust
-/// A type that can be used as a parameter in a dispatchable function.
+/// 一种可以在可调度函数中用作参数的类型。
 pub trait Parameter: Codec + EncodeLike + Clone + Eq + fmt::Debug + scale_info::TypeInfo {}
 impl<T> Parameter for T where T: Codec + EncodeLike + Clone + Eq + fmt::Debug + scale_info::TypeInfo {}
 ```
 
 ---
 
-## Parameter Limits
+## 参数限制
 
-Most everything can be used as a call parameter, even a normal `Vec`, however, FRAME ensures that encoded block are smaller than a maximum block size, which inherently limits the extrinsic length.
+几乎任何东西都可以用作调用参数，甚至是普通的 `Vec`，不过，FRAME 会确保编码后的块小于最大块大小，这从本质上限制了外部交易的长度。
 
-In Polkadot this is currently 5 MB.
+在 Polkadot 中，目前这个大小是 5 MB。
 
 ---
 
-## Compact Parameters
+## 紧凑参数
 
-Parameters that are compact encoded can be used in calls.
+可以在调用中使用紧凑编码的参数。
 
 ```rust
 pub fn transfer(
-	origin: OriginFor<T>,
-	dest: AccountIdLookupOf<T>,
-	#[pallet::compact] value: T::Balance,
+    origin: OriginFor<T>,
+    dest: AccountIdLookupOf<T>,
+    #[pallet::compact] value: T::Balance,
 ) -> DispatchResult { ... }
 ```
 
-This can help save lots of bytes, especially in cases like balances as shown above.
+这可以节省大量字节，尤其是在像上面所示的余额这种情况下。
 
 ---
 
-## Call Logic
+## 调用逻辑
 
-The most relevant part of a call is the "call logic".
+调用中最相关的部分是“调用逻辑”。
 
-There is really nothing magical happening here, just normal Rust.
+这里并没有什么神奇的地方，只是普通的 Rust 代码。
 
-However, you must follow one important rule...
-
----
-
-## Calls MUST NOT Panic
-
-Under no circumstances (save, perhaps, storage getting into an irreparably damaged state) must this function panic.
-
-Allowing callers to trigger a panic from a call can allow users to attack your chain by bypassing fees or other costs associated with executing logic on the blockchain.
+不过，你必须遵循一个重要规则……
 
 ---
 
-## Call Return
+## 调用绝不能 panic
 
-Every call returns a `DispatchResult`:
+在任何情况下（除非可能是存储进入无法修复的损坏状态），这个函数都绝不能 panic。
+
+允许调用者从调用中触发 panic 会让用户通过绕过费用或与在区块链上执行逻辑相关的其他成本来攻击你的链。
+
+---
+
+## 调用返回
+
+每个调用都返回一个 `DispatchResult`：
 
 ```rust
 pub type DispatchResult = Result<(), sp_runtime::DispatchError>;
 ```
 
-This allows you to handle errors in your runtime, and NEVER PANIC!
+这允许你在运行时处理错误，并且永远不要 panic！
 
 ---
 
-## Returning an Error
+## 返回错误
 
-At any point in your call logic, you can return a `DispatchError`.
+在你的调用逻辑中的任何时候，你都可以返回一个 `DispatchError`。
 
 ```rust
 ensure!(new_balance >= min_balance, Error::<T, I>::LiquidityRestrictions);
 ```
 
-When you do, thanks to transactional storage layers, all modified state will be reverted.
+当你这样做时，多亏了事务性存储层，所有修改过的状态都会被回滚。
 
 ---
 
-## Returning Success
+## 返回成功
 
-If everything in your pallet completed successfully, you simply return `Ok(())`, and all your state changes are committed, and the extrinsic is considered to have executed successfully.
+如果你的 Pallet 中的所有操作都成功完成，你只需返回 `Ok(())`，并且你所有的状态更改都会被提交，外部交易将被视为已成功执行。
 
 ---
 
-## Call Index
+## 调用索引
 
-It is best practice to explicitly label your calls with a `call_index`.
+最好的做法是用 `call_index` 显式标记你的调用。
 
 ```rust
 #[pallet::call_index(0)]
 ```
 
-This can help ensure that changes to your pallet do not lead to breaking changes to the transaction format.
+这可以帮助确保对你的 Pallet 所做的更改不会导致交易格式的破坏性更改。
 
 ---
 
-## Call Encoding
+## 调用编码
 
-At a high level, a call is encoded as two bytes (plus any parameters):
+从高层来看，一个调用被编码为两个字节（加上任何参数）：
 
-1. The Pallet Index
-1. The Call Index
+1. Pallet 索引
+1. 调用索引
 
-Pallet Index comes from the order / explicit numbering of the `construct_runtime!`. If things change order, without explicit labeling, a transaction generated by a wallet (like a ledger) could be incorrect!
+Pallet 索引来自 `construct_runtime!` 的顺序 / 显式编号。如果顺序发生变化，而没有显式标记，由钱包（如账本）生成的交易可能会出错！
 
 Notes:
 
-Note that this also implies there can only be 256 calls per pallet due to the 1 byte encoding.
+请注意，这也意味着由于 1 字节编码，每个 Pallet 最多只能有 256 个调用。
 
 ---
 
-## Weight
+## 权重
 
-Each call must also include specify a call `weight`.
+每个调用还必须指定一个调用 `weight`。
 
-We have another lecture on Weights and Benchmarking, but the high level idea is that this weight function tells us how complex the call is, and the fees that should be charged to the user.
+我们还有另一个关于权重和基准测试的讲座，但从高层来看，这个权重函数告诉我们调用的复杂程度，以及应该向用户收取的费用。
 
 ---
 
-## Weight Per Call
+## 每个调用的权重
 
-This can be done per call:
+可以为每个调用指定权重：
 
 ```rust [3]
 #[pallet::call]
 impl<T: Config> Pallet<T> {
-	#[pallet::weight(T::WeightInfo::transfer())]
-	#[pallet::call_index(0)]
-	pub fn transfer(
-		origin: OriginFor<T>,
-		dest: AccountIdLookupOf<T>,
-		#[pallet::compact] value: T::Balance,
-	) -> DispatchResult {
-		let source = ensure_signed(origin)?;
-		let dest = T::Lookup::lookup(dest)?;
-		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
-		Ok(())
-	}
+    #[pallet::weight(T::WeightInfo::transfer())]
+    #[pallet::call_index(0)]
+    pub fn transfer(
+        origin: OriginFor<T>,
+        dest: AccountIdLookupOf<T>,
+        #[pallet::compact] value: T::Balance,
+    ) -> DispatchResult {
+        let source = ensure_signed(origin)?;
+        let dest = T::Lookup::lookup(dest)?;
+        <Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
+        Ok(())
+    }
 }
 ```
 
 ---
 
-## Weight for the Pallet
+## Pallet 的权重
 
-Or for all calls in the pallet:
+或者为 Pallet 中的所有调用指定权重：
 
 ```rust [1]
 #[pallet::call(weight(<T as Config>::WeightInfo))]
 impl<T: Config> Pallet<T> {
-	#[pallet::call_index(0)]
-	pub fn transfer(
-		origin: OriginFor<T>,
-		dest: AccountIdLookupOf<T>,
-		#[pallet::compact] value: T::Balance,
-	) -> DispatchResult {
-		let source = ensure_signed(origin)?;
-		let dest = T::Lookup::lookup(dest)?;
-		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
-		Ok(())
-	}
+    #[pallet::call_index(0)]
+    pub fn transfer(
+        origin: OriginFor<T>,
+        dest: AccountIdLookupOf<T>,
+        #[pallet::compact] value: T::Balance,
+    ) -> DispatchResult {
+        let source = ensure_signed(origin)?;
+        let dest = T::Lookup::lookup(dest)?;
+        <Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
+        Ok(())
+    }
 }
 ```
 
-In this case, the weight function name is assumed to match the call name for all calls.
+在这种情况下，假设所有调用的权重函数名称都与调用名称匹配。
 
 Notes:
 
@@ -279,4 +279,4 @@ Notes:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

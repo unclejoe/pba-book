@@ -4,198 +4,198 @@ description: A review of common Pallets & Traits.
 duration: 1 hour
 ---
 
-# FRAME Pallets & Traits
+# FRAME 模块与特征
 
 ---
 
-## Overview
+## 概述
 
-We will walk through the codebase and touch on various commonly used pallets and traits.
+我们将浏览代码库，并涉及各种常用的模块和特征。
 
-The goal is to learn by example, and show how you can use the Substrate codebase to self-educate and solve problems.
-
----
-
-## System Pallet
+目标是通过示例学习，并展示你如何使用 Substrate 代码库进行自学和解决问题。
 
 ---
 
-## Utility Pallet
+## 系统模块
 
 ---
 
-## Proxy Pallet
+## 实用工具模块
 
 ---
 
-## Multisig Pallet
+## 代理模块
 
 ---
 
-## Held vs Frozen Balance
-
-- Reserved -> Held
-- Locked -> Frozen
-- Both states belong to the user... but cannot be spent / transferred.
-- Held balances stack on top of one another.
-  - Useful for user deposits, or other use cases where there is sybil concerns.
-  - Ex: Deposit for storing data on-chain,
-- Frozen balances can overlap each other.
-  - Useful when you want to use the same tokens for multiple use cases.
-  - Ex: Using the same tokens for both staking and voting in governance.
+## 多签模块
 
 ---
 
-## Held Balances
+## 预留（Held）与冻结（Frozen）余额
+
+- 预留 -> 预留状态
+- 锁定 -> 冻结状态
+- 这两种状态都属于用户……但不能用于支出/转账。
+- 预留余额是叠加的。
+  - 对于用户存款或存在刷量（sybil）问题的其他用例很有用。
+  - 例如：在链上存储数据的押金。
+- 冻结余额可以相互重叠。
+  - 当你想将相同的代币用于多个用例时很有用。
+  - 例如：在治理中同时将相同的代币用于质押和投票。
+
+---
+
+## 预留余额
 
 ```text
-  Total Balance
+  总余额
 ┌─────────────────────────────────────────────────────────┐
 ┌────────────────────────────────┼────────────────────────┐
 │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                     |ED│
 └────────────────────────────────┼────────────────────────┘
-   Held Balance                      Transferable Balance
+   预留余额                          可转账余额
 
 ┌───────────┐
-│┼┼┼┼┼┼┼┼┼┼┼│  Various Storage Deposits
+│┼┼┼┼┼┼┼┼┼┼┼│  各种存储押金
 └───────────┤
             ├──────┐
-            │┼┼┼┼┼┼│  Treasury Proposal Deposit
+            │┼┼┼┼┼┼│  国库提案押金
             └──────┤
                    ├──────────┐
-                   │┼┼┼┼┼┼┼┼┼┼│  Multisig Deposit
+                   │┼┼┼┼┼┼┼┼┼┼│  多签押金
                    └──────────┤
                               ├──┐
-                              │┼┼│  Proxy Deposit
+                              │┼┼│  代理押金
                               └──┘
 ```
 
 ---
 
-## New Holds Example
+## 新的预留示例
 
 ```text
-  Total Balance
+  总余额
 ┌─────────────────────────────────────────────────────────┐
 ┌────────────────────────────────┼────────────────────────┐
 │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                     |ED│
 └────────────────────────────────┼────────────────────────┘
-   Held Balance                      Transferable Balance
+   预留余额                          可转账余额
 
 
                                      ┌────────────────────┐
-              New Hold Successful!   │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
+              新的预留成功！           │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
                                      └────────────────────┘
 
                          ┌────────────────────────────────┐
-    New Hold Failed :(   │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
+    新的预留失败 :(        │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
                          └────────────────────────────────┘
 ```
 
 ---
 
-## Frozen Balances
+## 冻结余额
 
 ```text
-  Total Balance
+  总余额
 ┌─────────────────────────────────────────────────────────┐
 ┌────────────────────────────────┼────────────────────────┐
 │XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                     |ED│
 └────────────────────────────────┼────────────────────────┘
-   Frozen Balance                    Transferable Balance
+   冻结余额                          可转账余额
 
 ┌───────────────────────┐
-│XXXXXXXXXXXXXXXXXXXXXXX│  Vesting Balance
+│XXXXXXXXXXXXXXXXXXXXXXX│  解锁余额
 └───────────────────────┘
 
 ┌────────────────────────────────┐
-│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  Staking Bond Freeze
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  质押绑定冻结
 └────────────────────────────────┘
 
 ┌─────────────────┐
-│XXXXXXXXXXXXXXXXX│  Governance Vote Freeze
+│XXXXXXXXXXXXXXXXX│  治理投票冻结
 └─────────────────┘
 ```
 
 ---
 
-## New Freeze Example
+## 新的冻结示例
 
 ```text
-  Total Balance
+  总余额
 ┌─────────────────────────────────────────────────┐
 ┌────────────────────────────────┼────────────────┐
 │XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX             |ED│
 └────────────────────────────────┼────────────────┘
-   Frozen Balance                    Transferable Balance
+   冻结余额                          可转账余额
 
 ┌───────────────────────┐
-│XXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+│XXXXXXXXXXXXXXXXXXXXXXX│  新的冻结成功！
 └───────────────────────┘
 
 ┌─────────────────────────────────────────────────┐
-│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  新的冻结成功！
 └─────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
-│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  新的冻结成功！
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Freeze and Hold Overlap
+## 冻结与预留重叠
 
 ```text
-  Total Balance
+  总余额
 ┌──────────────────────────────────────────────────────────────┐
-   Held Balance
+   预留余额
 ┌────────────────────────────────┼─────────────────────────────┐
 │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                                | E │
 │XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         | D │
 └────────────────────────────────┼─────────────────────────────┘
-   Frozen Balance                    Transferable Balance
+   冻结余额                          可转账余额
 ```
 
 ---
 
-## Balances Pallet & Fungible Traits
+## 余额模块与可替代特征
 
 ---
 
-## Assets Pallet & Fungibles Traits
+## 资产模块与可替代特征
 
 ---
 
-## NFT Pallet & Non-Fungibles Traits
+## NFT 模块与不可替代特征
 
 ---
 
-## Transaction Payment Pallet
+## 交易支付模块
 
 ---
 
-## Sudo Pallet
+## 超级用户（Sudo）模块
 
 ---
 
-## Conviction Voting + Referenda Pallet
+## 信念投票 + 公投模块
 
-(Open Governance)
-
----
-
-## Ranked Collectives + Whitelist Pallet
-
-(Technical Fellowship)
+（开放治理）
 
 ---
 
-## Scheduler Pallet
+## 排名集体 + 白名单模块
+
+（技术研究员）
 
 ---
 
-## Polkadot Deep Dives
+## 调度器模块
+
+---
+
+## Polkadot 深度探索
 
 <img style="height: 500px" src="./img/polkadot-deep-dive.png" />
 
@@ -205,4 +205,5 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
+```

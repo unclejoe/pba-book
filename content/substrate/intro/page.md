@@ -1,4 +1,4 @@
-# Introduction to Substrate
+# Substrate 简介
 
 <!-- markdown-link-check-disable -->
 <center>

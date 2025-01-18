@@ -4,130 +4,130 @@ description: A deeper dive into how the Wasm is meta-protocol functions in subst
 duration: 60 minutes
 ---
 
-# Substrate Wasm Meta Protocol
+# Substrate Wasm元协议
 
 ---
 
-# Part 1
+# 第一部分
 
-- This is a big lecture, so I divided it into two small parts, that's all 🫵🏻
+- 这是一场大型讲座，所以我把它分成了两个小部分，就是这样 🫵🏻
 
 ---
 
-## It All Began With a Runtime..
+## 一切始于一个运行时...
 
 <img rounded style="width: 1200px;" src="./img/dev-4-3-substrate-wasm.png" />
 
 ---v
 
-### It All Began With a Runtime..
+### 一切始于一个运行时...
 
-- Personal opinion:
+- 个人观点：
 
-> Substrate technology stack will put "Wasm stored onchain" on the map,<br />
-> the same way Ethereum put "smart contracts stored onchain" on the map.
+> Substrate技术栈将使“链上存储的Wasm”广为人知，<br />
+> 就像以太坊使“链上存储的智能合约”广为人知一样。
 
 Notes:
 
-> It is only a matter of time until every blockchain is doing the same thing.
+> 每个区块链都做同样的事情只是时间问题。
 
 ---v
 
-## It All Began With a Runtime..
+## 一切始于一个运行时...
 
-- The Client / Runtime division is one of the most important design decisions in Substrate.
-  - 👿 Bad: Fixed opinion. <!-- .element: class="fragment" -->
-  - 😇 Good: Enables countless other things to not be fixed. <!-- .element: class="fragment" -->
+- 客户端/运行时的划分是Substrate中最重要的设计决策之一。
+  - 👿 不好：固定的观点。 <!-- .element: class="fragment" -->
+  - 😇 好：使无数其他事情不必固定。 <!-- .element: class="fragment" -->
 
 Notes:
 
-Recall that the boundary for this division is the **state transition**
+回想一下，这种划分的边界是**状态转换**。
 
 ---
 
-## Substrate: a short recap
+## Substrate：简要回顾
 
 <img style="width: 1200px;" src="./img/dev-4-3-full-comm.svg" />
 
 ---v
 
-### Substrate: a short recap
+### Substrate：简要回顾
 
-- **Host Functions**: Means of a runtime communicating with its host environment, i.e. the Substrate client.
+- **主机函数**：运行时与主机环境（即Substrate客户端）进行通信的方式。
 
 ---v
 
-### Substrate: a short recap
+### Substrate：简要回顾
 
-- **Runtime API**: The well-defined functions that a Wasm substrate runtime is providing.
+- **运行时API**：Wasm Substrate运行时提供的定义明确的函数。
 
 Notes:
 
-Building a Wasm module's activity was building something akin to runtime-apis
+构建Wasm模块的活动类似于构建运行时API。
 
 ---v
 
-### Substrate: a short recap
+### Substrate：简要回顾
 
-- Database is on the client side, storing an opaque key-value state per block.
+- 数据库在客户端侧，每个块存储一个不透明的键值状态。
 
 ---v
 
-### Substrate: a short recap
+### Substrate：简要回顾
 
-- Communication language of client/runtime is SCALE:
+- 客户端/运行时的通信语言是SCALE：
 
 <diagram class="mermaid">
 flowchart LR
-  B[Known Type eg. `u32`] --Encode--> V["Vec(u8)"]
+  B[已知类型，例如 `u32`] --Encode--> V["Vec(u8)"]
   V --Decode-->B
 </diagram>
 
 ---
 
-## Learning with Examples
+## 通过示例学习
 
-and some pseudo-code
+以及一些伪代码
 
 Notes:
 
-During each example, we deduce what host functions and/or runtime APIs are needed.
+在每个示例中，我们推断需要哪些主机函数和/或运行时API。
 
 ---
 
-## Example #1: State
+## 示例 #1：状态
 
-- The runtime wants to add 10 units to Kian's balance.
+- 运行时想要给Kian的余额增加10个单位。
 
 ---v
 
-### Example #1: State
+### 示例 #1：状态
 
 ```rust [1-100|1-2|4,5|7,8|10,11|13,14|1-100]
-// the runtime decides what key stores kian's balance.
+// 运行时决定哪个键存储Kian的余额。
 key: Vec<u8> = b"kian_balance".to_vec();
 
-// the runtime reads the raw bytes form that key.
+// 运行时从该键读取原始字节。
 let current_kian_balance_raw: Vec<u8> = host_functions::get(key);
 
-// and needs to know to which type it should be decoded, u128.
+// 并且需要知道应该将其解码为哪种类型，即u128。
 let mut current_kian_balance: u128 = current_kian_balance_raw.decode();
 
-// actual logic.
+// 实际逻辑。
 current_kian_balance += 10;
 
-// encode this again into an opaque byte-array.
+// 再次将其编码为不透明的字节数组。
 let new_balance_encoded: Vec<u8> = current_kian_balance.encode();
 
-// write the encoded bytes again.
+// 再次写入编码后的字节。
 host_functions::set(key, new_balance_encoded);
 ```
 
 ---v
 
-### Example #1: State
+### 示例 #1：状态
 
-- 💡 The runtime needs host functions to read/write to state.
+- 💡 运行时需要主机函数来读写状态。
 
 ```rust
 fn get(key: Vec<u8>) -> Vec<u8>;
@@ -136,14 +136,13 @@ fn set(key: Vec<u8>, value: Vec<u8>);
 
 Notes:
 
-ofc the IO to these functions is all opaque bytes, because the client does not know the state
-layout.
+当然，这些函数的输入输出都是不透明的字节，因为客户端不知道状态布局。
 
 ---v
 
-### Example #1: State
+### 示例 #1：状态
 
-- could we have communicated with the client like this?
+- 我们能不能像这样与客户端通信呢？
 
 ```rust
 fn set_balance(who: AccountId, amount: u128)
@@ -151,17 +150,16 @@ fn set_balance(who: AccountId, amount: u128)
 
 Notes:
 
-This would imply that the client would have to know, indefinitely, the types needed for account id
-and balance. Also, it would have to know the final key for someone's balance.
+这意味着客户端必须无限期地知道账户ID和余额所需的类型。此外，它还必须知道某人余额的最终键。
 
 ---v
 
-### Example #1: State
+### 示例 #1：状态
 
-- Exceptions:
+- 例外情况：
 
 ```rust
-/// The keys known to the client.
+/// 客户端已知的键。
 mod well_known_keys {
   const CODE: &[u8] = b":code";
 }
@@ -169,53 +167,51 @@ mod well_known_keys {
 
 Notes:
 
-See <https://paritytech.github.io/substrate/master/sp_storage/well_known_keys/index.html>
+参见 <https://paritytech.github.io/substrate/master/sp_storage/well_known_keys/index.html>
 
 ---v
 
-### Example #1: State
+### 示例 #1：状态
 
 <img style="width: 1000px;" src="./img/dev-4-1-state-opaque.svg" />
 
 ---
 
-## Example #2: Block Import
+## 示例 #2：块导入
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
-- Client's view of the state -> Opaque.
-- Client's view of the transactions? 🤔
+- 客户端对状态的看法 -> 不透明。
+- 客户端对交易的看法呢？ 🤔
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Short answer is: anything that is part of the STF definition must be opaque to the client, and is
-upgradeable, but we will learn this later.
+简短的答案是：任何属于STF定义的部分对客户端来说都必须是不透明的，并且是可升级的，但我们稍后会学到这一点。
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
-- Transactions format is by definition part of the state transition function as well.
-- What about header, and other fields in a typical block?
+- 交易格式根据定义也是状态转换函数的一部分。
+- 那么块中的头部和其他字段呢？
 
 Notes:
 
-as in, do we want to able to update our transactions format as well in a forkless manner?
-we want the runtime to be able to change its transactions format as well, in a forkless manner.
+也就是说，我们是否希望能够以无分叉的方式更新我们的交易格式呢？我们希望运行时也能够以无分叉的方式更改其交易格式。
 
-The answer to the latter is more involved. The short answer is that these fields like header must be known and established between client and runtime. If you want to alter the header format, that's a hard fork.
+后者的答案更为复杂。简短的答案是，像头部这样的字段必须在客户端和运行时之间已知并确定。如果你想更改头部格式，那就是硬分叉。
 
-The concept of `digest` is a means through which additional data can be put in the header without breaking changes, but that is outside the scope of this lecture.
+`digest` 的概念是一种在不进行破坏性更改的情况下将附加数据放入头部的方法，但这超出了本讲座的范围。
 
-Yet, as with other primitives, substrate allows you to readily change your header type when you are building your blockchain.
-This is achieved by a set of traits in `sp-runtime`.
-Notably, `trait Block` and `trait Header` in this crate define what it means to be a header and block, and as long as you fulfill that, you are good to go.
+然而，与其他原语一样，Substrate允许你在构建区块链时随时更改头部类型。
+这是通过 `sp-runtime` 中的一组特征来实现的。
+值得注意的是，这个包中的 `trait Block` 和 `trait Header` 定义了什么是头部和块，只要你满足这些条件，就没问题。
 
-Also, substrate provides one set of implementation for all of these types in <https://paritytech.github.io/substrate/master/sp_runtime/generic/index.html>
+此外，Substrate在 <https://paritytech.github.io/substrate/master/sp_runtime/generic/index.html> 中为所有这些类型提供了一组实现。
 
 ---v
 
@@ -223,7 +219,7 @@ Also, substrate provides one set of implementation for all of these types in <ht
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
 <pba-cols>
 
@@ -253,29 +249,29 @@ struct RuntimeBlock {
 
 Notes:
 
-this slide is intentionally using the keyword transaction instead of extrinsic.
+此幻灯片故意使用 `transaction` 关键字而不是 `extrinsic`。
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
 ```rust [1-100|1-2|4-6|8-9|1-100]
-// fetch the block from the outer world.
+// 从外部世界获取块。
 let opaque_block: ClientBlock = networking::import_queue::next_block();
 
-// initialize a wasm runtime.
+// 初始化一个Wasm运行时。
 let code = database::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// call into this runtime.
+// 调用这个运行时。
 runtime.execute_block(opaque_block);
 ```
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
-- 💡 The client needs a runtime API to ask the runtime to execute the block.
+- 💡 客户端需要一个运行时API来请求运行时执行该块。
 
 ```rust
 fn execute_block(opaque_block: ClientBlock) -> Result<_, _> { .. }
@@ -283,12 +279,11 @@ fn execute_block(opaque_block: ClientBlock) -> Result<_, _> { .. }
 
 Notes:
 
-`execute_block` is the most basic, fundamental runtime API that any substrate based runtime has to
-implement in order to be called a "blockchain runtime".
+`execute_block` 是任何基于Substrate的运行时为了被称为“区块链运行时”而必须实现的最基本、最根本的运行时API。
 
 ---
 
-### Example #2: Block Import: Something Missing
+### 示例 #2：块导入：缺少的东西
 
 ```rust
 // 🤔
@@ -302,91 +297,90 @@ runtime.execute_block(opaque_block);
 
 Notes:
 
-- From which block's state do we fetch the code??
-- This probably calls into `host_functions::{get/set}` internally.
-  What do we return
+- 我们从哪个块的状态中获取代码？？
+- 这可能会在内部调用 `host_functions::{get/set}`。
+  我们返回什么？
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
 ```rust [1-100|1-2|4-6|8-10|12-15|17-100]
-// fetch the block from the outer world.
+// 从外部世界获取块。
 let block: ClientBlock = networking::import_queue::next_block();
 
-// get the parent block's state.
+// 获取父块的状态。
 let parent = block.header.parent_hash;
 let mut state = database::state_at(parent);
 
-// initialize a wasm runtime FROM THE PARENT `state`!
+// 从父块的 `state` 初始化一个Wasm运行时！
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// call into this runtime, updates `state`.
+// 调用这个运行时，更新 `state`。
 state.execute(|| {
   runtime.execute_block(block);
 });
 
-// create the state of the next_block
+// 创建下一个块的状态
 database::store_state(block.header.hash, state)
 ```
 
 Notes:
 
-- Question: why is `state` defined as `mut`?
-- within these snippets, more or less, everything inside `state.execute` is executed within Wasm.
+- 问题：为什么 `state` 被定义为 `mut`？
+- 在这些代码片段中，基本上 `state.execute` 内部的所有内容都是在Wasm中执行的。
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
 
-- A state key is only meaningful at a given block.
-- A :code is only meaningful at at given block.
+- 一个状态键仅在给定的块中有意义。
+- 一个 `:code` 仅在给定的块中有意义。
 
 <!-- .element: class="fragment" -->
 
-- 💡 A runtime (API) is only meaningful when executed at a give block.
+- 💡 一个运行时（API）仅在给定的块中执行时才有意义。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-- The same way that Alice's balance value is only meaningful when read at a given block.
+- 就像Alice的余额值只有在给定的块中读取时才有意义一样。
 
-- Based on that:
+- 基于此：
 
-  - The correct runtime code is loaded.
-  - The correct state (and other host functions) is provided.
+  - 加载正确的运行时代码。
+  - 提供正确的状态（和其他主机函数）。
 
-- Similarly, almost all RPC operations that interact with the runtime have an `Option<Hash>`
-  argument.
-  This specifies "at which block to load the runtime and state from".
-
----v
-
-### Example #2: Block Import
-
-- I can add one more small touch to this to make it more accurate.. 🤌
+- 同样，几乎所有与运行时交互的RPC操作都有一个 `Option<Hash>` 参数。
+  这指定了“从哪个块加载运行时和状态”。
 
 ---v
 
-### Example #2: Block Import
+### 示例 #2：块导入
+
+- 我可以再添加一点小细节，使其更准确... 🤌
+
+---v
+
+### 示例 #2：块导入
 
 ```rust [14-20]
-// fetch the block from the outer world.
+// 从外部世界获取块。
 let block: ClientBlock = networking::import_queue::next_block();
 
-// get the parent hash. Note that `sp_runtime::traits::Header` provides this.
+// 获取父块的哈希。注意，`sp_runtime::traits::Header` 提供了这个功能。
 let parent = block.header.parent_hash;
 let mut state = database::state_at(parent);
 
-// initialize a wasm runtime FROM THE PARENT `state`!
+// 从父块的 `state` 初始化一个Wasm运行时！
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// call into this runtime, update `state`.
+// 调用这个运行时，更新 `state`。
 state.execute(|| {
-  // within this, we probably call into `host_functions::set` a lot.
+  // 在此处，我们可能会多次调用 `host_functions::set`。
   runtime.execute_block(block);
 
   let new_state_root = host_functions::state_root();
@@ -394,26 +388,26 @@ state.execute(|| {
   assert_eq!(new_state_root, claimed_state_root);
 });
 
-// create the state of the next_block
+// 创建下一个块的状态
 database::store_state(block.header.hash, state)
 ```
 
 ---v
 
-### Example #2: Block Import: Recap
+### 示例 #2：块导入：回顾
 
 <img style="width: 1200px;" src="./img/dev-4-3-import.svg" />
 
 ---
 
-## Detour: Extrinsic
+## 插曲：外在（Extrinsic）
 
-- Previous slides used the term "transactions" in a simplified way.
-  Let's correct it.
+- 前面的幻灯片以简化的方式使用了“交易”这个术语。
+  让我们来纠正一下。
 
 ---v
 
-### Detour: Extrinsic
+### 插曲：外在（Extrinsic）
 
 <diagram class="mermaid" center>
   %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
@@ -426,431 +420,342 @@ database::store_state(block.header.hash, state)
 
 ---v
 
-### Detour: Extrinsic
+### 插曲：外在（Extrinsic）
 
-- An Extrinsic is data that come from outside of the runtime.
-- &shy;<!-- .element: class="fragment" -->Inherents are data that is put into the block by the block author, directly.
-- &shy;<!-- .element: class="fragment" --> Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
-- &shy;<!-- .element: class="fragment" --> So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
+- 外在（Extrinsic）是来自运行时外部的数据。
+- &shy;<!-- .element: class="fragment" --> 固有（Inherent）是块作者直接放入块中的数据。
+- &shy;<!-- .element: class="fragment" --> 是的，交易是**一种外在（Extrinsic）类型**，但不是所有的外在（Extrinsic）都是交易。
+- &shy;<!-- .element: class="fragment" --> 那么，为什么叫“交易池”而不是“外在（Extrinsic）池”呢？
 
 Notes:
 
-Extrinsics are just blobs of data which can be included in a block.
-Inherents are types of extrinsic which are crafted by the block builder itself in the production process.
-They are unsigned because the assertion is that they are "inherently true" by virtue of getting past all validators.
-Notionally the origin can be said to be a plurality of validators.
-Take for example the timestamp set inherent.
-If the data were sufficiently incorrect (i.e. the wrong time), then the block would not be accepted by enough validators and would not become canonicalized.
-So the "nobody" origin is actually the tacit approval of the validators.
-Transactions are generally statements of opinion which are valuable to the chain to have included (because fees are paid or some other good is done).
-The transaction pool filters out which of these are indeed valuable and nodes share them.
+外在（Extrinsic）只是可以包含在块中的数据块。
+固有（Inherent）是块构建者在生产过程中自己创建的外在（Extrinsic）类型。
+它们是未签名的，因为可以断言它们“本质上是正确的”，因为它们通过了所有验证者的验证。
+名义上，起源可以说是多个验证者。
+例如，设置时间戳的固有（Inherent）。
+如果数据足够不正确（即时间错误），那么该块将不会被足够多的验证者接受，也不会成为规范块。
+所以“无人”起源实际上是验证者的默许。
+交易通常是对链有价值的意见陈述（因为要支付费用或有其他好处）。
+交易池会过滤出哪些交易确实有价值，并且节点会共享这些交易。
 
 ---
 
-## Example #3: Block Authoring
+## 示例 #3：区块创作
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-0-author-pool.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-1-author-pool.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-2-author-pool.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-3-author-pool.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-4-author-pool.svg" />
 
 Notes:
-
-The point being, eventually the pool builds a list of "ready transactions".
+重点是，最终池会构建一个“就绪交易”的列表。
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-0-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-1-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-2-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-3-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-4-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-5-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-6-author-builder.svg" />
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 <img style="width: 1400px;" src="./img/dev-4-3-7-author-builder.svg" />
 
 ---v
 
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 ```rust [1-100|1-2|4-5|7-9|11-12|14-20|21-100]
-// get the best-block, based on whatever consensus rule we have.
+// 根据我们拥有的任何共识规则获取最佳区块。
 let (best_number, best_hash) = consensus::best_block();
 
-// get the latest state.
+// 获取最新状态。
 let mut state = database::state_at(best_hash);
 
-// initialize a wasm runtime.
+// 初始化一个Wasm运行时。
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// get an empty client block.
+// 获取一个空的客户端区块。
 let mut block: ClientBlock = Default::default();
 
-// repeatedly apply transactions.
+// 反复应用交易。
 while let Some(next_transaction) = transaction_pool_iter::next() {
-  state.execute(|| {
-    runtime.apply_extrinsic(next_transaction);
-  });
-  block.extrinsics.push(next_transaction);
+    state.execute(|| {
+        runtime.apply_extrinsic(next_transaction);
+    });
+    block.extrinsics.push(next_transaction);
 }
 
-// set the new state root.
+// 设置新的状态根。
 block.header.state_root = state.root();
 ```
 
 Notes:
-
-- What is the type of `next_ext`? `Vec<u8>`
-- Do we actually loop forever until the tx-pool is empty? probably not!
-
----v
-
-### Example #3: Block Authoring
-
-- Substrate based runtimes are allowed to perform some operations at the beginning and end of each block.
-- ✋🏻 And recall that a smart contract could not do this.
+- `next_ext` 的类型是什么？ `Vec<u8>`
+- 我们真的会一直循环直到交易池为空吗？可能不会！
 
 ---v
+### 示例 #3：区块创作
 
-### Example #3: Block Authoring
+- 基于Substrate的运行时允许在每个区块的开始和结束时执行一些操作。
+- ✋🏻 回想一下，智能合约无法做到这一点。
+
+---v
+### 示例 #3：区块创作
 
 ```rust [14-15,25-26]
-// get the best-block, based on whatever consensus rule we have.
+// 根据我们拥有的任何共识规则获取最佳区块。
 let (best_number, best_hash) = consensus::best_block();
 
-// get the latest state.
+// 获取最新状态。
 let mut state = database::state_at(best_hash);
 
-// initialize a wasm runtime.
+// 初始化一个Wasm运行时。
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// get an empty client block.
+// 获取一个空的客户端区块。
 let mut block: ClientBlock = Default::default();
 
-// tell this runtime that you wish to start a new block.
+// 告知这个运行时你希望开始一个新区块。
 runtime.initialize_block();
 
-// repeatedly apply transactions.
+// 反复应用交易。
 while let Some(next_ext) = transaction_pool_iter::next() {
-  state.execute(|| {
-    runtime.apply_extrinsic(next_ext);
-  });
-  block.extrinsics.push(next_ext);
+    state.execute(|| {
+        runtime.apply_extrinsic(next_ext);
+    });
+    block.extrinsics.push(next_ext);
 }
 
-// tell the runtime that we are done.
+// 告知运行时我们已完成。
 runtime.finalize_block();
 
-// set the new state root.
+// 设置新的状态根。
 block.header.state_root = state.root();
 ```
 
 ---v
+### 示例 #3：区块创作
 
-### Example #3: Block Authoring
-
-- What about Inherents?
+- 那么固有信息（Inherents）呢？
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 ```rust [14-26]
-// get the best-block, based on whatever consensus rule we have.
+// 根据我们拥有的任何共识规则获取最佳区块。
 let (best_number, best_hash) = consensus::best_block();
 
-// get the latest state.
+// 获取最新状态。
 let mut state = database::state_at(best_hash);
 
-// initialize a wasm runtime.
+// 初始化一个Wasm运行时。
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// get an empty client block.
+// 获取一个空的客户端区块。
 let mut block: ClientBlock = Default::default();
 
-// tell this runtime that you wish to start a new block.
+// 告知这个运行时你希望开始一个新区块。
 runtime.initialize_block();
 
 let inherents: Vec<Vec<u8>> = block_builder::inherents();
 block.extrinsics = inherents;
 
-// repeatedly apply transactions.
+// 反复应用交易。
 while let Some(next_ext) = transaction_pool_iter::next() {
-  state.execute(|| {
-    runtime.apply_extrinsic(next_ext);
-  });
-  block.extrinsics.push(next_ext);
+    state.execute(|| {
+        runtime.apply_extrinsic(next_ext);
+    });
+    block.extrinsics.push(next_ext);
 }
 
-// tell the runtime that we are done.
+// 告知运行时我们已完成。
 runtime.finalize_block();
 
-// set the new state root.
+// 设置新的状态根。
 block.header.state_root = state.root();
 ```
 
 Notes:
-
-while inherents can in principle come at any point in the block, since FRAME restricts them to
-come first, we also keep our example aligned.
-
-Should you wish to see the real version of this, check this crate:
+虽然原则上固有信息可以出现在区块的任何位置，但由于FRAME将它们限制在首位，我们的示例也遵循这一点。
+如果你想查看此代码的真实版本，请查看这个crate：
 https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
 
 ---v
-
-### Example #3: Block Authoring
+### 示例 #3：区块创作
 
 ```rust
-fn initialize_block(..) { ... }
-// note the opaque extrinsic type.
-fn apply_extrinsic(extrinsic: Vec<u8>) { ... }
-fn finalize_block(..) { ... }
+fn initialize_block(..) {... }
+// 注意不透明的外在类型。
+fn apply_extrinsic(extrinsic: Vec<u8>) {... }
+fn finalize_block(..) {... }
 ```
 
 Notes:
-
-in fact, the client also builds its inherent list with the help of the runtime.
+实际上，客户端也会在运行时的帮助下构建其固有信息列表。
 
 ---
+## 但是等一下 😱
 
-## BUT WAIT A MINUTE 😱
+- 如果 `code` 发生变化，以下所有内容也可能会改变：
+  - <!--.element: class="fragment" --> Kian的余额的状态键是什么。
+  - <!--.element: class="fragment" --> 有效的外在格式是什么。
 
-- if the `code` changes, all the following can also change:
-
-  - <!-- .element: class="fragment" --> What state key is Kian's balance.
-  - <!-- .element: class="fragment" --> What extrinsic format is valid.
-
-- <!-- .element: class="fragment" --> How on earth is an application (i.e. a wallet) is supposed to survive?
+- <!--.element: class="fragment" --> 一个应用程序（例如钱包）究竟该如何应对呢？
 
 ---v
+### 但是等一下 😱
 
-### BUT WAIT A MINUTE 😱
-
-- Metadata 🎉
+- 元数据 🎉
 
 ```rust
-fn metadata() -> Vec<u8> { ... }
+fn metadata() -> Vec<u8> {... }
 ```
 
 Notes:
-
-Notice the opaque return type.
-
-In order the address the mentioned issue, metadata must be a runtime API.
-
+注意不透明的返回类型。
+为了解决上述问题，元数据必须是一个运行时API。
 <hr>
-
-- Metadata contains all the basic information to know about all storage items, all extrinsics, and so on.
-  It will also help a client/app decode them into the right type.
-- Substrate itself doesn't impose what the metadata should be.
-  It is `Vec<u8>`.
-- FRAME based runtime expose a certain format, which is extensively adopted in the ecosystem.
+- 元数据包含有关所有存储项、所有外在信息等的所有基本信息。
+  它还将帮助客户端/应用程序将它们解码为正确的类型。
+- Substrate本身并未规定元数据应该是什么样的。
+  它是 `Vec<u8>`。
+- 基于FRAME的运行时公开了某种格式，该格式在生态系统中被广泛采用。
 
 ---v
+### 但是等一下 😱
 
-### BUT WAIT A MINUTE 😱
-
-- Recall the fact that "runtime is only meaningful at a certain block".
+- 回想一下“运行时仅在某个特定区块才有意义”这一事实。
 
 <div class="fragment">
-
-- Two different runtimes at block `N` and `N+1` return different metadata ✅.
-
+- 区块 `N` 和 `N+1` 处的两个不同运行时会返回不同的元数据 ✅。
 </div>
 
 Notes:
+这里的应用程序/客户端，我指的是任何人/任何事物。
+Substrate客户端实际上并不使用元数据，因为它是动态类型的，但如果需要，它可以使用。
 
-By Applications/Clients I really mean anyone/anything.
-Substrate client doesn't really use metadata because it is dynamically typed, but if needed, it could.
+---
+### 激进的可升级性
+
+是以极端的不透明/动态类型为代价的。
+
+Notes:
+我希望两者兼得，但并不容易。
+
+一些个人看法：激进的可升级性是最大的优势，也可以说是Substrate生态系统的主要开发问题之一。
+编写客户端，如区块浏览器、扫描器，甚至是交易所集成，比编写一个格式固定且最多每18个月更新一次的区块链要困难得多。
+话虽如此，这场战斗在我看来是显而易见的：我们必须获胜。
+当以太坊首次引入智能合约时，大家可能都遇到了类似的问题。
+这是同一类问题，只是处于不同的层面。
 
 ---
 
-### Radical Upgradeability
-
-Comes at the cost of radical opaque/dynamic typing.
-
-Notes:
-
-I wish you could have both, but not so easy.
-
-Some personal rant: radical upgrade-ability is the biggest advantage, and arguably one of the main develop-ability problems of the substrate ecosystem.
-Writing clients, such as block explorers, scanners, and even exchange integration are orders of magnitude harder than a blockchain that has a fixed format and only changes every 18 months at most.
-That being said, this is a battle that is to me obvious: we simply HAVE to win.
-When ethereum first introduced smart contracts, everyone probably had the same class of issues.
-This is the same matter, on a a different level.
-
-also, as noted in an earlier slide, once you make it work for one chain, it works for many chains.
-
----
-
-## Oblivious Client 🙈🙉
-
-- The underlying reason why the client is "**kept in the dark**" is so that it wouldn't need to care
-  about the runtime upgrading from one block to the other.
-
+## 无感知客户端 🙈🙉
+- 客户端被 “蒙在鼓里” 的根本原因是，这样它就无需关心运行时从一个区块到另一个区块的升级情况。
 ---v
-
-## Oblivious Client 🙈🙉
-
-$$STF = F(blockBody_{N}, state_{N}) > state_{N+1}$$
-
-_Anything that is part of the STF is opaque to the client, but it can change forklessly!_
-
-- <!-- .element: class="fragment" --> The `F` itself (your Wasm blob)? It can change!
-- <!-- .element: class="fragment" --> Extrinsic format? It can change!
-- <!-- .element: class="fragment" --> State format? It can change!
-
+## 无感知客户端 🙈🙉
+$$STF = F(blockBody_{N}, state_{N}) > state_{N + 1}$$
+_任何属于状态转换函数（STF）的部分对客户端来说都是不透明的，但它可以无分叉地改变！_
+- <!-- .element: class="fragment" --> `F` 本身（即你的Wasm代码块）？它可以改变！
+- <!-- .element: class="fragment" --> 外部交易格式（Extrinsic format）？它可以改变！
+- <!-- .element: class="fragment" --> 状态格式？它可以改变！
 Notes:
-
-In essence, all components of the STF must be opaque to the client.
-`Vec<u8>`.
-Metadata is there to assist where needed.
-This is why forkless upgrades are possible in substrate.
-
+从本质上讲，STF的所有组件对客户端都必须是不透明的，以`Vec<u8>`的形式呈现。元数据会在需要时提供帮助。这就是Substrate能够实现无分叉升级的原因。
 ---v
-
-## Oblivious Client 🙈🙉
-
-- What about new host functions?
-- <!-- .element: class="fragment" --> What about a new header filed*?
-- <!-- .element: class="fragment" --> What about a new Hashing primitive?
-
-🥺 No longer forkless.
-
+## 无感知客户端 🙈🙉
+- 新的宿主函数会怎样呢？
+- <!-- .element: class="fragment" --> 新的区块头字段呢？
+- <!-- .element: class="fragment" --> 新的哈希原语呢？
+🥺 那就不再是无分叉的了。
 <!-- .element: class="fragment" -->
-
 Notes:
-
-But, recall that substrate's extensibility and generic-ness clause applies here.
-
-For some, like header, some hacks exist, like the `digest` field.
-
-Changing these is hard in a forkless manner.
-If you want to just change them at genesis and launch a new chain, they are all VERY easy to change.
-
+不过请记住，Substrate的可扩展性和通用性在这里同样适用。对于像区块头这类情况，存在一些变通方法，比如`digest`字段。以无分叉的方式更改这些内容很困难。但如果你只是想在创世时更改它们并启动一条新链，那么更改起来就非常容易。
 ---
-
-## Substrate: The Full Picture
-
+## Substrate：全貌
 <img style="width: 1200px;" src="../intro/img/dev-4-3-full.svg" />
-
 Notes:
-
-time to ask any missing questions.
-
+现在可以提出任何遗漏的问题。
 ---
-
-## Activity: Finding APIs and Host Functions
-
+## 活动：查找API和宿主函数
 ---v
-
-### Finding APIs and Host Functions
-
-- look for `impl_runtime_apis! {...}` and `decl_runtime_apis! {...}` macro calls.
-  - Try and find the corresponding the client code calling a given api as well.
-- Look for `#[runtime_interface]` macro, and try and find usage of the host functions!
-- You have 15 minutes!
-
+### 查找API和宿主函数
+- 查找`impl_runtime_apis!{...}`和`decl_runtime_apis!{...}`宏调用。
+  - 同时尝试找到调用给定API的相应客户端代码。
+- 查找`#[runtime_interface]`宏，并尝试找到宿主函数的使用之处！
+- 你有15分钟时间！
 ---v
-
-### Finding APIs and Host Functions
-
-Activity Outcomes:
-
-- `Core` is the essence of import.
-- `TaggedTransactionQueue` and `BlockBuilder` for validators.
-- `header: Header` being passed around.
-
+### 查找API和宿主函数
+活动成果：
+- `Core`是导入的关键。
+- 验证者使用`TaggedTransactionQueue`和`BlockBuilder`。
+- `header: Header`被四处传递。
 Notes:
-
-a question that arise here is that why don't have multiple runtimes, where one is only for import,
-one only for authoring, and such? the reality is that while these have different names, the
-underlying code is like 95% the same.
-
+这里出现的一个问题是，为什么我们没有多个运行时，比如一个仅用于导入，一个仅用于创建区块等等？实际情况是，虽然它们名称不同，但底层代码95%是相同的。
 ---v
-
-### Finding APIs and Host Functions
-
+### 查找API和宿主函数
 <pba-cols>
 <pba-col>
-
-#### Block Import
-
+#### 区块导入
 ```rust
 runtime.execute_block(block);
 ```
-
 </pba-col>
 <pba-col>
-
-#### Block Authoring
-
+#### 区块创建
 ```rust
 runtime.initialize_block(raw_header);
 loop {
@@ -858,411 +763,235 @@ loop {
 }
 let final_header = runtime.finalize_block();
 ```
-
 </pba-col>
 </pba-cols>
-
 Notes:
-
-to be frank, these are still a simplification.
-Inherent for example are not really represented here.
-
+坦率地说，这些仍然是简化后的内容。例如，这里并没有真正体现固有数据（Inherent）。
 ---v
-
-### Finding APIs and Host Functions
-
-- Most important host functions
-
+### 查找API和宿主函数
+- 最重要的宿主函数
 ```
 sp_io::storage::get(..);
 sp_io::storage::set(..);
 sp_io::storage::root();
 ```
-
 ---
 
-## Lecture Recap (Part 1)
-
-- Revise "**Runtime API**" and "**Host Function**" concepts.
-- Deep look at block import and authoring.
-- Oblivious client.
-- Metadata
-
+## 讲座回顾（第一部分）
+- 复习“运行时API”和“宿主函数”的概念。
+- 深入了解区块导入和创建过程。
+- 无感知客户端。
+- 元数据。
 ---
-
-# Part 2
-
+# 第二部分
 ---
-
-## Defining a Runtime API
-
+## 定义运行时API
 ```rust [1-7|9-15|17-100|1-100]
-// somewhere in common between client/runtime => substrate-primitive.
+// 在客户端/运行时共有的部分 => substrate-primitive。
 decl_runtime_apis! {
-	pub trait Core {
-		fn version() -> RuntimeVersion;
-		fn execute_block(block: Block) -> bool;
-	}
+    pub trait Core {
+        fn version() -> RuntimeVersion;
+        fn execute_block(block: Block) -> bool;
+    }
 }
-
-// somewhere in the runtime code.
+// 在运行时代码中。
 impl_runtime_apis! {
-  impl sp_api::Core<Block> for Runtime {
-    fn version() -> RuntimeVersion { /* stuff */ }
-    fn execute_block(block: Block) -> bool { /* stuff */ }
-  }
+    impl sp_api::Core<Block> for Runtime {
+        fn version() -> RuntimeVersion { /* 相关内容 */ }
+        fn execute_block(block: Block) -> bool { /* 相关内容 */ }
+    }
 }
-
-// somewhere in the client code..
+// 在客户端代码中。
 let block_hash = "0xffff...";
 let block = Block { ... };
 let outcome: Vec<u8> = api.execute_block(block, block_hash).unwrap();
 ```
-
 Notes:
-
-- All runtime APIs are generic over a `<Block>` by default.
-- All runtime APIs are executed on top of a **specific block**.
-  This is the implicit _at_ parameter.
-- Going over the API, everything is SCALE encoded both ways, but abstractions like
-  `impl_runtime_apis` hide that away from you.
-
+- 所有运行时API默认对`<Block>`是泛型的。
+- 所有运行时API都在一个**特定区块**上执行，这是一个隐式的“at”参数。
+- 在使用API时，所有数据的传输都是通过SCALE编码的，但像`impl_runtime_apis`这样的抽象机制将这一过程对开发者隐藏起来了。
 ---
-
-## Defining a Host Function
-
+## 定义宿主函数
 ```rust
-// somewhere in substrate primitives, almost always `sp_io`.
+// 在substrate primitives中，通常在`sp_io`里。
 #[runtime_interface]
 pub trait Storage {
-  fn get(&self, key: &[u8]) -> Option<Vec<u8>> {...}
-  fn get(&self, key: &[u8], value: &[u8]) -> Option<Vec<u8>> {...}
-  fn root() -> Vec<u8> {...}
+    fn get(&self, key: &[u8]) -> Option<Vec<u8>> {...}
+    fn get(&self, key: &[u8], value: &[u8]) -> Option<Vec<u8>> {...}
+    fn root() -> Vec<u8> {...}
 }
-
 #[runtime_interface]
 pub trait Hashing {
-	fn blake2_128(data: &[u8]) -> [u8; 16] {
-		sp_core::hashing::blake2_128(data)
-	}
+    fn blake2_128(data: &[u8]) -> [u8; 16] {
+        sp_core::hashing::blake2_128(data)
+    }
 }
-
-// somewhere in substrate runtime
+// 在substrate运行时中
 let hashed_value = sp_io::storage::get(b"key")
-  .and_then(sp_io::hashing::blake2_128)
-  .unwrap();
+    .and_then(sp_io::hashing::blake2_128)
+    .unwrap();
 ```
-
 ---
-
-## Considerations
-
+## 注意事项
 ---
-
-## Considerations: Speed
-
-- (new) Wasmtime is near-native 🏎️.
-- (old) `wasmi` is significantly slower 🐢.
-
+## 注意事项：速度
+- （新的）Wasmtime近乎原生速度 🏎️。
+- （旧的）`wasmi`速度明显较慢 🐢。
 Notes:
-
-slower wasmi was one of the reasons to have native execution.
-there are talks of exploring Risk-v ISA instead of wasm nowadays.
-
-https://github.com/paritytech/substrate/issues/13640
-
+`wasmi`速度较慢是采用原生执行的原因之一。如今也有关于探索使用RISC-V指令集架构替代Wasm的讨论，相关内容可参考https://github.com/paritytech/substrate/issues/13640。
 ---v
-
-### Considerations: Speed
-
+### 注意事项：速度
 <pba-cols>
 <pba-col center>
-
-- Host is generally **faster** and **more capable**, but it has a one-time cost of getting there,
-  and copying the data.
-- &shy;<!-- .element: class="fragment" -->🤔 Hashing, Crypto?
-- &shy;<!-- .element: class="fragment" -->🤔 Storage?
-
+- 宿主环境通常**速度更快**且**功能更强**，但调用宿主环境以及复制数据会产生一次性开销。
+- &shy;<!-- .element: class="fragment" -->🤔 哈希和加密操作呢？
+- &shy;<!-- .element: class="fragment" -->🤔 存储呢？
 </pba-col>
 <pba-col center>
-
 <img style="width: 700px;" src="../storage/img/dev-4-3-io.svg" />
-
 </pba-col>
 </pba-cols>
-
 Notes:
-
-Hashing and crypto is done as host function for performance
-
-Storage because of the runtime not being capable.
-
-- Going over the runtime boundary is analogous to your CPU needing to go to memory.
-
-On the other hand things as `next_storage` are high cost (generally iteration on state from runtime
-is expensive).
-This design is related to the memory location, there is alternative but this is
-simple (simple as good design).
-
-- Question: we got host function for running computation intensive code in native, but when simd for
-  wasm would be added, then will host function for a hashing be still useful:
-  A: wait and see, but is possible that simd optimization of the hash function in wasm is way faster.
-
-Again using a host function for speed up needs to be reasoned, cost of transmitting parameter in
-wasm can be bigger than the actual hashing cost.
-
+出于性能考虑，哈希和加密操作作为宿主函数来实现。存储操作也由宿主环境负责，因为运行时自身无法实现。
+- 跨越运行时边界类似于CPU访问内存。另一方面，像`next_storage`这样的操作成本较高（通常在运行时对状态进行迭代很昂贵）。这种设计与内存位置有关，虽然存在替代方案，但当前设计较为简单（简单即良好设计）。
+- 问题：我们使用宿主函数来运行计算密集型代码，但如果Wasm中添加了SIMD优化，哈希的宿主函数还有用吗？回答：拭目以待，但Wasm中哈希函数的SIMD优化可能会使其速度大幅提升。再次强调，使用宿主函数来加速需要谨慎权衡，Wasm中传输参数的成本可能高于实际哈希计算成本。
 ---
-
-### Consideration: Native Runtime
-
+### 注意事项：原生运行时
 <img style="width: 1200px;" src="./img/dev-4-3-native.svg" />
-
 ---v
-
-### Consideration: Native Runtime
-
-- Remember the `fn version()` in `Core` API!
-
+### 注意事项：原生运行时
+- 记住`Core` API中的`fn version()`函数！
 ```rust [1-100|4-5]
-/// Runtime version.
+/// 运行时版本。
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("node"),
-	spec_version: 268,
-	impl_name: create_runtime_str!("substrate-node"),
-	impl_version: 0,
-	authoring_version: 10,
-	apis: RUNTIME_API_VERSIONS,
-	transaction_version: 2,
-	state_version: 1,
+    spec_name: create_runtime_str!("node"),
+    spec_version: 268,
+    impl_name: create_runtime_str!("substrate-node"),
+    impl_version: 0,
+    authoring_version: 10,
+    apis: RUNTIME_API_VERSIONS,
+    transaction_version: 2,
+    state_version: 1,
 };
 ```
-
 ---v
-
-### Consideration: Native Runtime
-
-- Native is only an option if spec versions match!
-
+### 注意事项：原生运行时
+- 只有在规范版本匹配时，原生运行时才是一个可行选项！
 ```rust
 fn execute_native_else_wasm() {
-  let native_version = runtime::native::api::version();
-  let wasm_version = runtime::wasm::api::version();
-
-  // if spec name and version match.
-  if native_version == wasm_version {
-    runtime::native::execute();
-  } else {
-    runtime::wasm::execute();
-  }
+    let native_version = runtime::native::api::version();
+    let wasm_version = runtime::wasm::api::version();
+    // 如果规范名称和版本匹配。
+    if native_version == wasm_version {
+        runtime::native::execute();
+    } else {
+        runtime::wasm::execute();
+    }
 }
 ```
-
 ---v
-
-### Consideration: Native Runtime
-
-- The days of native runtime are numbered 💀.
-
+### 注意事项：原生运行时
+- 原生运行时的时代即将结束 💀。
 ---v
-
-### Consideration: Native Runtime
-
-- Question: what happens if you upgrade your runtime, but forget to bump the spec version?
-- &shy;<!-- .element: class="fragment" --> Question: What if a runtime upgrade is only tweaking implementation details, but not the specification?
-
+### 注意事项：原生运行时
+- 问题：如果升级运行时却忘记提升规范版本会怎样？
+- &shy;<!-- .element: class="fragment" --> 问题：如果运行时升级只是调整实现细节，而不涉及规范呢？
 Notes:
-
-If everyone is executing wasm, technically nothing, but that's super confusing, don't do it.
-But, if some are executing native, then you will have a consensus error.
-
+如果所有人都在执行Wasm，理论上不会有问题，但这会造成极大的混淆，切勿这样做。但如果部分节点执行原生运行时，就会出现共识错误。
 ---v
-
-## Speaking of Versions..
-
-- Make sure you understand the difference! 👍
-  - Client Version
-  - Runtime Version
-
+## 说到版本...
+- 务必理解其中的差异！ 👍
+  - 客户端版本
+  - 运行时版本
 ---v
-
-### Speaking of Versions..
-
+### 说到版本...
 <img style="width: 1200px;" src="./img/dev-4-1-substrate-meta-version.svg" />
-
 ---v
-
-### Speaking of Versions..
-
+### 说到版本...
 <img style="width: 1200px;" src="./img/dev-4-3-telemetry.png" />
-
 ---v
-
-### Speaking of Versions..
-
+### 说到版本...
 <img style="width: 1200px;" src="./img/dev-4-3-PJS.png" />
-
 ---v
-
-### Speaking of Versions..
-
-- What happens when Parity release a new `parity-polkadot` client binary?
-- What happens when the Polkadot fellowship wants to update the runtime?
-
+### 说到版本...
+- 当Parity发布新的`parity - polkadot`客户端二进制文件时会发生什么？
+- 当Polkadot社区想要更新运行时会怎样？
 ---
-
-## Considerations: Panic
-
-- What if any of the runtime calls, like `execute_block` or `apply_extrinsic` panics 😱?
-- To answer this, let's take a step back toward validator economics.
-
+## 注意事项：运行时恐慌（Panic）
+- 如果运行时调用，如`execute_block`或`apply_extrinsic`发生恐慌（Panic）会怎样 😱？
+- 为了回答这个问题，我们先来看看验证者的经济模型。
 ---v
-
-### Considerations: Panic
-
-- In a more broad sense, all validators never want to avoid wasting their time.
-- While building a block, sometimes it is unavoidable (when?). <!-- .element: class="fragment" -->
-- While importing a block, nodes will not tolerate this. <!-- .element: class="fragment" -->
-
+### 注意事项：运行时恐慌（Panic）
+- 从更广泛的意义上讲，所有验证者都不想浪费时间。
+- 在构建区块时，有时浪费时间不可避免（何时会这样呢？） <!-- .element: class="fragment" -->
+- 但在导入区块时，节点不会容忍这种情况。 <!-- .element: class="fragment" -->
 ---v
-
-### Considerations: Panic
-
-- Panic is a (free) form of wasting a validator's time.
-- Practically Wasm instance killed; State changes reverted.
-  - Any fee payment also reverted.
-- Transactions that consume resources but fail to pay fees are similar. <!-- .element: class="fragment" -->
-
+### 注意事项：运行时恐慌（Panic）
+- 运行时恐慌（Panic）是一种（免费的）浪费验证者时间的方式。
+- 实际上，Wasm实例会终止，状态变更会回滚。
+  - 任何费用支付也会回滚。
+- 消耗资源但未支付费用的交易也有类似影响。 <!-- .element: class="fragment" -->
 Notes:
-
-While you might think the state revert is the good thing here, it is the main problem, and the main
-reason you should not let a code-path that is accessible by arbitrary users to panic.
-Because, any
-fees paid for the wasted execution of that runtime API call is also reverted.
-
-In other words, a panic in the runtime typically allows everyone's time to be wasted, for free,
-indefinitely.
-In other words, a DOS vector.
-
-> A panic in `initialize_block` and `finalize_block` have even more catastrophic effects, which will
-> be discussed further in the FRAME section.
-
-workshop idea: make a panicing runtime, and DoS it out.
-workshop idea for FRAME: find all instances where the runtime actually correctly panics (wrong timestamp, disabled validator)
-
+虽然你可能认为状态回滚是件好事，但这其实是主要问题，也是不应让任意用户可访问的代码路径发生恐慌（Panic）的主要原因。因为为运行时API调用的无效执行所支付的任何费用也会被回滚。换句话说，运行时中的恐慌（Panic）通常会让所有人的时间被无限期免费浪费，也就是一种拒绝服务（DOS）攻击向量。
+> `initialize_block`和`finalize_block`中的恐慌（Panic）会产生更严重的后果，这将在FRAME部分进一步讨论。
+实践建议：创建一个会发生恐慌（Panic）的运行时，并进行拒绝服务攻击测试。
+针对FRAME的实践建议：找出运行时正确触发恐慌（Panic）的所有情况（如时间戳错误、验证者被禁用）
 ---v
-
-### Considerations: Panic
-
-- Panic in a user-callable code path?
-- 🤬 annoy/DOS your poor validators <!-- .element: class="fragment" -->
-- Panic on "automatic" part of your blockchain like "initialize_block"? <!-- .element: class="fragment" -->
-- 😱 Stuck forever <!-- .element: class="fragment" -->
-
+### 注意事项：运行时恐慌（Panic）
+- 用户可调用的代码路径发生恐慌（Panic）会怎样？
+- 🤬 困扰/拒绝服务攻击可怜的验证者 <!-- .element: class="fragment" -->
+- 区块链的“自动”部分，如“initialize_block”发生恐慌（Panic）呢？ <!-- .element: class="fragment" -->
+- 😱 永远卡住 <!-- .element: class="fragment" -->
 ---v
-
-### Considerations: Panic
-
-- This is why, crucially, transaction pool checks always include, despite being costly, at least
-  some sort of nonce and payment checks to make sure you can pay the transaction.
-
+### 注意事项：运行时恐慌（Panic）
+- 这就是为什么，尽管成本高昂，交易池检查通常至少会包含某种随机数（nonce）和支付检查，以确保你能够支付交易费用。
 ---v
-
-### Considerations: Panic
-
+### 注意事项：运行时恐慌（Panic）
 <diagram class="mermaid">
 graph LR
     TransactionPool --"😈"--> Authoring --"😇"--> Import
 </diagram>
-
 Notes:
-
-Consider two cases:
-
-1. A transaction that panic-ed
-1. A transaction that cannot pay for fees, but the pool somehow validated it by mistake.
-
-when you author a block, you hope that the tx-pool has pre-validated things for you, but you cannot be sure.
-The pool cannot pre-execute stuff.
-If it fails, then you have to continue.
-For example, the pool might validate a nonce that becomes invalid.
-Or a fee payment.
-In that case, the block author wasted time, but everyone else will not.
-
-To the contrary, once you have authored a block, the importers expect you to only have put VALID
-transactions into it, those that will not fail to be **included**.
-
-Note that a transaction might still fail (failed transfer), but so long as it can pay for its fee,
-it **is included** fine.
-
-See the documentation of `ApplyExtrinsicResult` in Substrate for more info about this.
-
+考虑两种情况：
+1. 一个发生恐慌（Panic）的交易
+2. 一个无法支付费用，但交易池错误验证通过的交易。
+当你创建一个区块时，你希望交易池已经为你预先验证了交易，但你无法确定。交易池无法预先执行交易。如果验证失败，你仍需继续。例如，交易池可能验证了一个无效的随机数（nonce），或者一笔费用支付。在这种情况下，区块创建者浪费了时间，但其他人不会。相反，一旦你创建了一个区块，导入者期望你只放入了有效的交易，即那些不会在**包含**过程中失败的交易。注意，一笔交易可能仍然会失败（如转账失败），但只要它能够支付费用，就会被**正常包含**。更多信息可参考Substrate中`ApplyExtrinsicResult`的文档。
 ---
-
-### Consideration: Altering Host Function
-
-- A runtime upgrade now requires a new `sp_io::new_stuff::foo()`.
-  Can we do a normal runtime upgrade?
-
+### 注意事项：修改宿主函数
+- 运行时升级现在需要一个新的`sp_io::new_stuff::foo()`函数。我们还能进行正常的运行时升级吗？
 <div>
-
-- Clients need to upgrade first.
-  No more fully forkless upgrade 😢
-
+- 客户端需要先升级。不再有完全无分叉的升级 😢。
 </div>
-
 <!-- .element: class="fragment" -->
-
 ---v
-
-### Consideration: Breaking a Host Function
-
-- Here's another example, from substrate:
-
+### 注意事项：破坏宿主函数
+- 这里有另一个来自Substrate的例子：
 ```rust
-// old
+// 旧版本
 fn root(&mut self) -> Vec<u8> { .. }
-
-// new
+// 新版本
 fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 ```
-
 <div>
-
-- For some period of time, the client needs to support both..🤔
-
+- 在一段时间内，客户端需要同时支持这两个版本...🤔
 </div>
-
 <!-- .element: class="fragment" -->
-
 <div>
-
-- When can the old host function be deleted?
-
+- 旧的宿主函数什么时候可以删除呢？
 </div>
-
 <!-- .element: class="fragment" -->
-
 ---v
-
-### Host Functions..
-
-## NEED TO BE KEPT FOREVER 😈
-
+### 宿主函数...
+## 必须永久保留 😈
 <!-- .element: class="fragment" -->
-
-- Optional activity: Go to the substrate repo, and find PRs that have altered host functions, and see the PR discussion. There are a few labels that help you find such PRs 😉.
-
+- 可选活动：访问Substrate代码仓库，查找修改过宿主函数的拉取请求（PR），并查看PR讨论。有一些标签可以帮助你找到这类PR 😉。
 <!-- .element: class="fragment" -->
-
 ---
 
-## Workshop: Inspecting Wasm Code
-
+## 实践：检查Wasm代码
 ---v
-
 - `wasm2wat polkadot_runtime.wasm > dump | rg import`
-
 ```
 (import "env" "memory" (memory (;0;) 22))
 (import "env" "ext_crypto_ed25519_generate_version_1" (func $ext_crypto_ed25519_generate_version_1 (type 17)))
@@ -1316,13 +1045,9 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 (import "env" "ext_logging_log_version_1" (func $ext_logging_log_version_1 (type 30)))
 (import "env" "ext_logging_max_level_version_1" (func $ext_logging_max_level_version_1 (type 11)))
 ```
-
 <!-- .element: class="fragment" -->
-
 ---v
-
 - `wasm2wat polkadot_runtime.wasm > dump | rg export`
-
 ```
 (export "__indirect_function_table" (table 0))
 (export "Core_version" (func $Core_version))
@@ -1393,140 +1118,85 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 (export "__data_end" (global 1))
 (export "__heap_base" (global 2))
 ```
-
 ---v
-
-### Workshop: Inspecting Wasm Code
-
-- Once you reach the Polkadot module, and you build your first parachain, repeat the same, I promise
-  you will learn a thing or two :)
-
+### 实践：检查Wasm代码
+- 当你学习到Polkadot模块并构建你的第一条平行链时，重复上述操作，我保证你会学到不少东西 。
 ---
-
-### Activity: Expected Panics In The Runtime
-
-- Look into the `frame-executive` crate's code.
-  See instances of `panic!()`, and see if you can make sense out of it.
-- You have 15 minutes!
-
+### 活动：运行时中预期的恐慌
+- 查看`frame - executive`库的代码。
+  找出`panic!()`的使用实例，并尝试理解其用途。
+- 你有15分钟时间！
 <diagram class="mermaid">
 graph LR
     TransactionPool --"😈"--> Authoring --"😇"--> Import
 </diagram>
-
 ---
-
-## Lecture Recap (Part 2)
-
-- Recap the syntax of host functions and runtime APIs.
-- Considerations:
-  - Speed
-  - Native Execution and Versioning
-  - Panics
-  - Altering Host Functions
-
+## 讲座回顾（第二部分）
+- 回顾宿主函数和运行时API的语法。
+- 注意事项：
+  - 速度
+  - 原生执行和版本控制
+  - 运行时恐慌
+  - 修改宿主函数
 ---
-
-## Additional Resources! 😋
-
-> Check speaker notes (click "s" 😉)
-
+## 额外资源！😋
+> 查看演讲者备注（点击“s” 😉）
 <img width="300px" rounded src="../scale/img/thats_all_folks.png" />
-
 Notes:
-
-- Some very recent change the the block building API set: https://github.com/paritytech/substrate/pull/14414
-
-- New runtime API for building genesis config: https://github.com/paritytech/substrate/pull/14310
-
-- All Substrate PRs that have added new host functions: https://github.com/paritytech/substrate/issues?q=label%3AE4-newhostfunctions+is%3Aclosed
-
-- All substrate PRs that have required the client to be update first: https://github.com/paritytech/substrate/issues?q=is%3Aclosed+label%3A%22E10-client-update-first+%F0%9F%91%80%22
-
-- New metadata version, including types for the runtime API: https://github.com/paritytech/substrate/issues/12939
-
-- Recent development on api versioning: https://github.com/paritytech/substrate/issues/13138
-
-- In Substrate, a type needs to provide the environment in which host functions are provided, and
-  can be executed.
-
-> We call this an "externality environment", represented by `trait Externalities`.
-
+- 近期对区块构建API集的一些重大更改：https://github.com/paritytech/substrate/pull/14414
+- 用于构建创世配置的新运行时API：https://github.com/paritytech/substrate/pull/14310
+- 所有添加新宿主函数的Substrate拉取请求：https://github.com/paritytech/substrate/issues?q=label%3AE4 - newhostfunctions+is%3Aclosed
+- 所有要求客户端先更新的Substrate拉取请求：https://github.com/paritytech/substrate/issues?q=is%3Aclosed+label%3A%22E10 - client - update - first+%F0%9F%91%80%22
+- 新的元数据版本，包括运行时API的类型：https://github.com/paritytech/substrate/issues/12939
+- API版本控制的最新进展：https://github.com/paritytech/substrate/issues/13138
+- 在Substrate中，一种类型需要提供可以提供和执行宿主函数的环境。
+> 我们将此称为“外部环境”，由`trait Externalities`表示。
 ```rust
 SomeExternalities.execute_with(|| {
     let x = sp_io::storage::get(b"foo");
 });
 ```
-
-### Post Lecture Notes
-
+### 课后笔记
 ---
-
-## Appendix
-
-Content that is not covered, but is relevant.
-
+## 附录
+未涵盖但相关的内容。
 ---v
-
-### Consideration: Runtime API Versioning
-
-- Same principle, but generally easier to deal with.
-- Metadata is part of the runtime, known **per block**.
-- Those written in a dynamically typed languages are usually fine 😎.
-
+### 考量：运行时API版本控制
+- 原理相同，但通常更易于处理。
+- 元数据是运行时的一部分，每个区块都有对应的元数据 。
+- 用动态类型语言编写的部分通常不会有问题😎。
 Notes:
-
-Also, it is arguable to say that the runtime is the boss here.
-The client must serve the runtime fully, but the runtime may or may not want to support certain APIs for certain applications.
-
-Recall from another slide:
-
-> - A lot of other runtime APIs _could_ be optional depending on the context.
-
+此外，可以说运行时在这方面起主导作用。客户端必须全力为运行时服务，但运行时可能会根据特定应用场景选择是否支持某些API。
+回想一下之前的幻灯片内容：
+> - 许多其他运行时API可能会根据具体情况变为可选。
 ---v
-
-### Consideration: Runtime API Versioning
-
-- The Rust code (which is **statically** typed) in substrate client does care if the change _is breaking_.
-  - For example, input/output types change.
-    Rust code cannot deal with that!
-
+### 考量：运行时API版本控制
+- Substrate客户端中的Rust代码（静态类型）确实会在意变更是否为破坏性的。
+  - 例如，输入/输出类型发生变化，Rust代码无法处理这种情况！
 ---v
-
-### Consideration: Runtime API Versioning
-
+### 考量：运行时API版本控制
 ```rust
 sp_api::decl_runtime_apis! {
-    // latest version
+    // 最新版本
     fn foo() -> u32;
-
-    // old version
+    // 旧版本
     #[changed_in(4)]
     fn foo() -> u64;
 }
-
 let new_return_type = if api.version < 4 {
-    // this weird function name is generated by decl_runtime_apis!
+    // 这个奇怪的函数名是由decl_runtime_apis!宏生成的！
     let old_return_type = api.foo_before_version_4();
-    // somehow convert it. don't care
+    // 以某种方式进行转换。暂不考虑具体实现
     old_return_type.try_into().unwrap()
 } else {
     api.foo()
 }
 ```
-
 ---v
-
-### Consideration: Runtime API Versioning
-
-> Rule of thumb: Every time you change the signature of a host function / runtime API, i.e. change
-> the input/output types, you need to think about this.
-
-But what you have to do is dependent on the scenario.
-
-### Activity: API Versioning
-
-- Look into substrate and find all instances of `#[changed_in(_)]` macro to detect runtime api version.
-- Then see if/how this is being used in the client code.
-
-- Find all the `#[version]` macros in `sp-io` to find all the versioned host functions.
+### 考量：运行时API版本控制
+> 经验法则：每次更改宿主函数/运行时API的签名，即更改输入/输出类型时，都需要考虑这一点。
+但具体该怎么做取决于实际场景。
+### 活动：API版本控制
+- 深入研究Substrate，查找所有`#[changed_in(_)]`宏的实例，以检测运行时API的版本。
+- 然后查看其在客户端代码中的使用方式及是否被使用。
+- 查找`sp - io`中所有`#[version]`宏，以找到所有有版本控制的宿主函数。

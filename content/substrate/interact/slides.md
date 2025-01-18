@@ -3,28 +3,32 @@ title: Interacting With a Substrate Blockchain
 duration: 60 minutes
 ---
 
-# Interacting With a Substrate Blockchain
+---
+title: 与Substrate区块链交互
+duration: 60分钟
+---
+
+# 与Substrate区块链交互
 
 ---
 
-## Interacting With a Substrate Blockchain
+## 与Substrate区块链交互
 
 <img style="width: 1200px;" src="../intro/img/dev-4-1-json.svg" />
 
 Notes:
 
-Many of these interactions land in a wasm blob.
+这些交互中的许多都在一个Wasm二进制大对象（blob）中进行。
 
-So what question you need to ask yourself there? which runtime blob.
+那么你需要问自己什么问题呢？使用哪个运行时二进制大对象。
 
-almost all external communication happens over JSPN-RPC, so let's take a closer look.
+几乎所有的外部通信都是通过JSON-RPC进行的，所以让我们仔细看看。
 
 ---
 
 ## JSON-RPC
 
-> JSON-RPC is a remote procedure call protocol encoded in JSON. It is similar to the XML-RPC
-> protocol, defining only a few data types and commands.
+> JSON-RPC是一种用JSON编码的远程过程调用协议。它类似于XML-RPC协议，只定义了少数数据类型和命令。
 
 ---v
 
@@ -51,41 +55,41 @@ almost all external communication happens over JSPN-RPC, so let's take a closer 
 
 ### JSON-RPC
 
-- Entirely transport agnostic.
-- Substrate based chains expose both `websocket` and `http` (or `wss` and `https`, if desired).
+- 完全与传输协议无关。
+- 基于Substrate的链同时支持`websocket`和`http`（如果需要，也支持`wss`和`https`）。
 
-> with `--ws-port` and `--rpc-port`, 9944 and 9934 respectively.
+> 通过`--ws-port`和`--rpc-port`，分别为9944和9934。
 
 ---v
 
 ### JSON-RPC
 
-- JSON-RPC methods are conventionally written as `scope_method`
+- JSON-RPC方法通常写成`scope_method`的形式
 
-  - e.g. `rpc_methods`, `state_call`
+  - 例如：`rpc_methods`，`state_call`
 
-- &shy;<!-- .element: class="fragment" --> `author`: for submitting stuff to the chain.
-- &shy;<!-- .element: class="fragment" --> `chain`: for retrieving information about the _blockchain_ data.
-- &shy;<!-- .element: class="fragment" --> `state`: for retrieving information about the _state_ data.
-- &shy;<!-- .element: class="fragment" --> `system`: information about the chain.
-- &shy;<!-- .element: class="fragment" --> `rpc`: information about the RPC endpoints.
+- &shy;<!-- .element: class="fragment" --> `author`：用于向链提交内容。
+- &shy;<!-- .element: class="fragment" --> `chain`：用于获取关于_区块链_数据的信息。
+- &shy;<!-- .element: class="fragment" --> `state`：用于获取关于_状态_数据的信息。
+- &shy;<!-- .element: class="fragment" --> `system`：关于链的信息。
+- &shy;<!-- .element: class="fragment" --> `rpc`：关于RPC端点的信息。
 
 Notes:
 
-Recall:
+回顾：
 
 - <https://paritytech.github.io/substrate/master/sc_rpc_api/index.html>
 - <https://paritytech.github.io/substrate/master/sc_rpc/index.html>
 
-The full list can also be seen here: <https://polkadot.js.org/docs/substrate/rpc/>
+完整列表也可以在这里看到：<https://polkadot.js.org/docs/substrate/rpc/>
 
 ---v
 
 ### JSON-RPC
 
-- Let's look at a few examples:
+- 让我们看几个例子：
 
-- `system_name`, `system_chain`, `system_chainType`, `system_health`, `system_version`, `system_nodeRoles`, `rpc_methods`, `state_getRuntimeVersion`, `state_getMetadata`
+- `system_name`，`system_chain`，`system_chainType`，`system_health`，`system_version`，`system_nodeRoles`，`rpc_methods`，`state_getRuntimeVersion`，`state_getMetadata`
 
 ```sh
 wscat \
@@ -96,98 +100,97 @@ wscat \
 
 ---v
 
-### JSON-RPC: Runtime Agnostic
+### JSON-RPC: 运行时无关性
 
-- Needless to say, RPC methods are runtime agnostic. Nothing in the above tells you if FRAME is
-  being used or not.
-- <!-- .element: class="fragment" --> Except... metadata, to some extent.
-
----v
-
-### JSON-RPC: Runtime API
-
-- While agnostic, many RPC calls land in a runtime API.
-- &shy;<!-- .element: class="fragment" --> RPC Endpoints have an `at: Option<hash>`, runtime APIs do too, what a coincidence! 🌈
-  - &shy;<!-- .element: class="fragment" --> Recall the scope `state`?
+- 不用说，RPC方法是与运行时无关的。上述内容并没有告诉你是否使用了FRAME。
+- <!-- .element: class="fragment" --> 除了……在某种程度上的元数据。
 
 ---v
 
-### JSON-RPC: Extending
+### JSON-RPC: 运行时API
 
-- The runtime can extend more custom RPC methods, but the new trend is to move toward using `state_call`.
-
----v
-
-### JSON-RPC: Safety
-
-- Some PRC methods are unsafe 😱.
+- 虽然与运行时无关，但许多RPC调用会落在运行时API中。
+- &shy;<!-- .element: class="fragment" --> RPC端点有一个`at: Option<hash>`，运行时API也有，真巧！🌈
+  - &shy;<!-- .element: class="fragment" --> 还记得`state`这个作用域吗？
 
 ---v
 
-### JSON-RPC: Resilience
+### JSON-RPC: 扩展
 
-RPC-Server vs. Light Client
+- 运行时可以扩展更多自定义的RPC方法，但新的趋势是使用`state_call`。
+
+---v
+
+### JSON-RPC: 安全性
+
+- 一些RPC方法是不安全的 😱。
+
+---v
+
+### JSON-RPC: 弹性
+
+RPC服务器与轻客户端
 
 ---
 
-### JSON-RPC: Application
+### JSON-RPC: 应用
 
-- On top of `SCALE` and `JSON-RPC`, a large array of libraries have been built.
+- 在`SCALE`和`JSON-RPC`的基础上，已经构建了大量的库。
 
 - &shy;<!-- .element: class="fragment" --> `PJS-API` / `PJS-APPS`
 - &shy;<!-- .element: class="fragment" --> `capi`
 - &shy;<!-- .element: class="fragment" --> `subxt`
-- &shy;<!-- .element: class="fragment" --> Any many more!
+- &shy;<!-- .element: class="fragment" --> 还有很多！
 
 Notes:
 
 <https://github.com/JFJun/go-substrate-rpc-client>
 <https://github.com/polkascan/py-substrate-interface>
-more here: <https://project-awesome.org/substrate-developer-hub/awesome-substrate>
+更多内容在这里：<https://project-awesome.org/substrate-developer-hub/awesome-substrate>
 
 ---
 
-### JSON-RPC: Mini Activity
+### JSON-RPC: 小活动
 
-In Kusama:
+在Kusama中：
 
-- Find the genesis hash..
-- Number of extrinsics at block 10,000,000.
-- The block number is stored under `twox128("System") ++ twox128("Number")`.
-  - Find it now, and at block 10,000,000.
+- 找到创世块哈希。
+- 第10,000,000个块的外部交易（extrinsics）数量。
+- 块号存储在`twox128("System") ++ twox128("Number")`下。
+  - 现在就找，以及在第10,000,000个块时找。
 
 <br />
 
-- Refer to the "Substrate; Show Me The Code" lecture to find the right RPC endpoints.
-- You have 15 minutes!
+- 参考“Substrate; Show Me The Code”讲座来找到正确的RPC端点。
+- 你有15分钟时间！
 
 Notes:
 
 ```sh
-# 10,000,000 in hex
+# 10,000,000的十六进制表示
 printf "%x\n" 10000000
-# Genesis hash
+# 创世块哈希
 wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"chain_getBlockHash", "params": ["0x0"] }' | jq
-# Hash of the block at height 10,000,000
+# 高度为10,000,000的块的哈希
 wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"chain_getBlockHash", "params": ["0x989680"] }' | jq
-# The block at height 1,000,000
+# 高度为1,000,000的块
 wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"chain_getBlock", "params": ["0xdcbaa224ab080f2fbf3dfc85f3387ab21019355c392d79a143d7e50afba3c6e9"] }' | jq
 
-# `0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac` now.
+# 现在的`0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac`
 wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"state_getStorage", "params": ["0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac"] }' | jq
-# `0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac` at block 1,000,000.
+# 在第1,000,000个块时的`0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac`
 wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"state_getStorage", "params": ["0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac", "0xdcbaa224ab080f2fbf3dfc85f3387ab21019355c392d79a143d7e50afba3c6e9"] }' | jq
 ```
 
-Notice that this number that we get back is the little endian (SCALE) encoded value that we passed in at first.
+注意，我们得到的这个数字是小端序（SCALE）编码的值，也就是我们最初传入的值。
 
 ---
 
 ## Polkadot JS API
 
-A brief introduction.
+简要介绍。
 
-Excellent tutorial at: <https://polkadot.js.org/docs/>
+优秀的教程在这里：<https://polkadot.js.org/docs/>
 
 ---v
 
@@ -197,27 +200,27 @@ Excellent tutorial at: <https://polkadot.js.org/docs/>
 
 ---v
 
-### PJS: Overview
+### PJS: 概述
 
 - `api.registry`
 - `api.rpc`
 
 ---v
 
-### PJS: Overview
+### PJS: 概述
 
-Almost everything else basically builds on top of `api.rpc`.
+几乎所有其他内容基本上都是基于`api.rpc`构建的。
 
 - `api.tx`
 - `api.query`
 - `api.consts`
 - `api.derive`
 
-Please revise this while you learn FRAME, and they will make perfect sense!
+在学习FRAME的同时请复习这些内容，它们会变得非常有意义！
 
 ---v
 
-### PJS: Workshop 🧑‍💻
+### PJS: 工作坊 🧑‍💻
 
 Notes:
 
@@ -227,13 +230,13 @@ const provider = new WsProvider("wss://rpc.polkadot.io");
 const api = await ApiPromise.create({ provider });
 api.stats;
 api.isConnected;
- // where does this come from?
+ // 这个值从哪里来？
 api.runtimeVersion;
-// where does this come from?
+// 这个值从哪里来？
 api.registry.chainDecimals;
 api.registry.chainTokens;
 api.registry.chainSS58;
-// where does this come from?
+// 这个值从哪里来？
 api.registry.metadata;
 api.registry.metadata.pallets.map(p => p.toHuman());
 api.registry.createType();
@@ -249,7 +252,7 @@ await api.rpc.state.getStorageSize("0x3A636F6465"),
 
 <https://polkadot.js.org/docs/substrate/rpc#getstoragekey-storagekey-at-blockhash-storagedata>
 
-A few random other things:
+一些其他随机的内容：
 
 ```ts
 api.createType("Balance", new Uint8Array([1, 2, 3, 4]));
@@ -263,19 +266,19 @@ xxHashAsHex("Foo");
 
 ## `subxt`
 
-- Something analogous to `PJS` for Rust.
-- The real magic is that it generates the types by fetching the metadata at compile time, or linking
-  it statically.
-- ..It might need manual updates when the code, and therefore the metadata changes.
+- 类似于Rust中的`PJS`。
+- 真正神奇的是，它在编译时通过获取元数据来生成类型，或者静态链接元数据。
+- ……当代码（因此元数据）发生变化时，可能需要手动更新。
 
 ---
 
-## Additional Resources! 😋
+## 更多资源！😋
 
-> Check speaker notes (click "s" 😉)
+> 查看演讲者备注（点击“s” 😉）
 
 Notes:
 
-- see "Client Libraries" here: <https://project-awesome.org/substrate-developer-hub/awesome-substrate>
+- 查看“客户端库”部分：<https://project-awesome.org/substrate-developer-hub/awesome-substrate>
 - <https://paritytech.github.io/json-rpc-interface-spec/introduction.html>
-- Full `subxt` guide: <https://docs.rs/subxt/latest/subxt/book/index.html>
+- 完整的`subxt`指南：<https://docs.rs/subxt/latest/subxt/book/index.html>
+```
