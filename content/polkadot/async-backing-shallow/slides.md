@@ -4,36 +4,36 @@ description: Decoupling Backing and Inclusion Through Advance Work Based on Happ
 duration: 30 min
 ---
 
-# Shallow Dive, Asynchronous Backing
+# 浅探异步支持
 
 Notes:
 
-Hello again everyone
+大家好呀
 
-Today I'll be speaking to you about asynchronous backing, the new feature which delivers shorter parachain block times and an order of magnitude increase in quantity of Polkadot blockspace.
+今天我要给大家讲讲异步支持，这一新特性能够缩短平行链区块时间，并使波卡区块空间的数量提升一个数量级。
 
-Lets get to it
+咱们开始吧
 
 ---
 
-## Overview
+## 概述
 
 <pba-flex center>
 
-- Synchronous vs asynchronous
-- Why is asynchronous backing desirable?
+- 同步与异步
+- 为什么异步支持是可取的？
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- High level mechanisms of async backing
+- 异步支持的高级机制
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- The unincluded segment, and prospective parachains
+- 未包含的片段以及潜在平行链
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-- Async backing enabling other roadmap items
+- 异步支持助力其他路线图项目
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
@@ -41,19 +41,19 @@ Lets get to it
 
 ---
 
-## Synchronous Backing Simplified
+## 简化的同步支持
 
 <img rounded style="width: 1100px" src="./img/synchronous_backing_simplified.svg" />
 
 Notes:
 
-- The dividing line between the left and right is when a candidate is backed on chain
-- Approvals, disputes, and finality don't immediately gate the production of farther candidates.
-  So we don't need to represent those steps in this model.
+- 左右的分界线是候选区块在链上得到支持的时刻
+- 批准、争议和最终确认不会立即阻碍更多候选区块的产生。
+  所以在这个模型中我们不需要表示这些步骤。
 
 ---
 
-## Async Backing Simplified
+## 简化的异步支持
 
 <div class="r-stack">
 <img rounded style="width: 1100px" src="./img/async_backing_simplified_1.svg" />
@@ -65,16 +65,16 @@ Notes:
 
 Notes:
 
-Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing
+我们的平行链区块候选缓存允许我们在链上支持这一关键分界线之前暂停。
 
 ---
 
-## The Async Backing Optimistic Collator Assumptions
+## 异步支持的乐观收集者假设
 
 <pba-flex center>
 
-1. "The best existing parablock I'm aware of will eventually be included in the relay chain."
-1. "There won't be a chain reversion impacting that best parablock."
+1. “我所知道的最佳现有平行链区块最终将被包含在中继链中。”
+1. “不会有影响该最佳平行链区块的链回滚。”
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -83,31 +83,31 @@ Our cache of parablock candidates allows us to pause just before that dividing l
 <br />
 <br />
 
-> The Stakes Are Low
+> 风险很低
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-Best is determined by a process similar to the BABE fork choice rule.
-Brief BABE fork choice rule review
+最佳是通过类似于BABE分叉选择规则的过程来确定的。
+简要回顾BABE分叉选择规则
 
 ---
 
-## Advantages of Asynchronous Backing
+## 异步支持的优势
 
 <pba-flex center>
 
-1. 3-5x more extrinsics per block
-1. Shorter parachain block times 6s vs 12s
+1. 每个区块的外部交易数量增加3 - 5倍
+1. 平行链区块时间更短，从12秒缩短至6秒
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-1. Resulting 6-10x boost in quantity of blockspace
+1. 区块空间数量因此提升6 - 10倍
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-1. Fewer wasted parachain blocks
+1. 浪费的平行链区块更少
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -115,20 +115,20 @@ Brief BABE fork choice rule review
 
 Notes:
 
-1. Collators have more time to fill each block
-1. Advance work ensures backable candidates for each parachain are present to be backed on the relay chain every 6 seconds
-1. Self explanatory
-1. Allow parachain blocks to be ‘reused’ when they don’t make it onto the relay chain in the first attempt
+1. 收集者有更多时间来填充每个区块
+1. 前期工作确保每个平行链都有可支持的候选区块，以便每6秒在中继链上得到支持
+1. 不言自明
+1. 当平行链区块在第一次尝试时未能进入中继链时，允许其被“重用”
 
 ---
 
-## Parablock Validation Pipelining
+## 平行链区块验证流水线
 
 <img rounded style="width: 1100px" src="./img/async_backing_pipelining.svg" />
 
 ---
 
-## Synchronous Backing, Another Look
+## 同步支持，再看一眼
 
 <div class="r-stack">
 <img rounded style="width: 1100px" src="./img/synchronous_backing_1.svg" />
@@ -140,18 +140,18 @@ Notes:
 
 Notes:
 
-Image version 1:
+图片版本1：
 
-- Now let's take a closer look at when each step of backing and inclusion takes place both with synchronous and asynchronous backing.
+- 现在让我们更仔细地看看在同步和异步支持下，支持和包含的每个步骤分别在何时发生。
 
-Image version 3:
+图片版本3：
 
-- Whole process is a cycle of duration 12 seconds (2 relay blocks).
-- No part of this cycle can be started for a second candidate of the same parachain until the first is included.
+- 整个过程是一个持续12秒（2个中继区块）的周期。
+- 在第一个候选区块被包含之前，同一平行链的第二个候选区块的周期中的任何部分都无法开始。
 
 ---
 
-## Async Backing, Another Look
+## 异步支持，再看一眼
 
 <div class="r-stack">
 <img rounded style="width: 1500px" src="./img/async_backing_1.svg" />
@@ -161,40 +161,40 @@ Image version 3:
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
-Note:
+Notes:
 
-Image version 1:
+图片版本1：
 
-- Candidates stored in prospective parachains (detail on that later)
+- 候选区块存储在潜在平行链中（稍后会详细介绍）
 
-Image version 2:
+图片版本2：
 
-- Now we see our relay block cycle.
-- It is 6 seconds rather than 12.
-- It completes on-chain backing for one candidate and inclusion for another each cycle.
+- 现在我们看到了我们的中继区块周期。
+- 它是6秒而不是12秒。
+- 每个周期完成一个候选区块的链上支持和另一个候选区块的包含。
 
-Image version 3:
+图片版本3：
 
-- Collation generation and off-chain backing are outside of the relay block cycle.
-- Because of this, collators have the freedom to work several blocks in advance. In practice, even working 2-3 blocks in advance gives a collator ample time to fully fill blocks (PoV size 5MiB)
-- Notice that a part of the collation generation context, the unincluded segment, comes from the collator itself.
+- 整理生成和链下支持在中继区块周期之外。
+- 因此，收集者可以自由地提前处理几个区块。实际上，即使提前处理2 - 3个区块，收集者也有足够的时间来完全填充区块（PoV大小为5MiB）
+- 注意，整理生成上下文的一部分，即未包含的片段，来自收集者本身。
 
 ---
 
-## The Unincluded Segment
+## 未包含的片段
 
 <pba-flex center>
 
-- A parachain's record of all parablocks on a particular chain fork produced but not yet included
-- Used to apply limitations when constructing future blocks
+- 平行链在特定链分叉上产生但尚未被包含的所有平行链区块的记录
+- 在构建未来区块时用于施加限制
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Lives in the parachain runtime
+- 存在于平行链运行时中
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- Viewed from the perspective of a new parablock under construction
+- 从正在构建的新平行链区块的角度来看
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -202,50 +202,50 @@ Image version 3:
 
 Notes:
 
-Limitation example, upward messages remaining before the relay chain would have to drop incoming messages from our parachain
+限制示例：在中继链不得不丢弃来自我们平行链的传入消息之前，剩余的上行消息数量
 
 ---
 
-## Unincluded Segment
+## 未包含的片段
 
 <img rounded style="width: 1100px" src="./img/unincluded_segment_1.svg" />
 
 Notes:
 
-- Segment added to as each new block is imported into the parachain runtime
-- Segment shrinks when one of its ancestor blocks becomes included
-- Maximum unincluded segment capacity is set both on the parachain and relay chain
+- 每当有新的区块被导入到平行链运行时时，该片段就会增加
+- 当该片段的某个祖先区块被包含时，该片段会缩小
+- 未包含片段的最大容量在平行链和中继链上都有设定
 
 ---
 
-## Unincluded Segment
+## 未包含的片段
 
 <img rounded style="width: 1100px" src="./img/unincluded_segment_2.svg" />
 
 Notes:
 
-UsedBandwidth:
+已使用带宽：
 
 - pub ump_msg_count: u32,
 - pub ump_total_bytes: u32,
-- pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
+- pub hrmp_outgoing: BTreeMap<ParaId, HrmpChannelUpdate>,
 
 ---
 
-## Prospective Parachains
+## 潜在平行链
 
 <pba-flex center>
 
-- The relay chain's record of all candidates on all chain forks from all parachains
-- As if you folded all unincluded segments into one huge structure
+- 中继链对所有平行链的所有链分叉上的所有候选区块的记录
+- 就好像你把所有未包含的片段折叠成一个巨大的结构
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Used to store candidates and later provide them to the on-chain backing process
+- 用于存储候选区块，并在稍后将其提供给链上支持过程
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- Lives in the relay client (off chain)
+- 存在于中继客户端（链下）
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -253,20 +253,20 @@ UsedBandwidth:
 
 ---
 
-## Prospective Parachains Snapshot
+## 潜在平行链快照
 
 <img rounded style="width: 1500px" src="./img/Prospective_Parachains_Overview.svg" />
 
 Notes:
 
-- Fragment trees only built for active leaves
-- Fragment trees built per scheduled parachain at each leaf
-- Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain's state.
-- Collation generation, passing, and seconding work has already been completed for each fragment.
+- 仅为活动叶节点构建片段树
+- 在每个叶节点为每个已调度的平行链构建片段树
+- 片段树可能有0个或多个片段，代表构成平行链状态可能未来的潜在平行链区块。
+- 每个片段的整理生成、传递和支持工作已经完成。
 
 ---
 
-## Async Backing Simplified
+## 简化的异步支持
 
 <div class="r-stack">
 <img rounded style="width: 1100px" src="./img/async_backing_simplified_3.svg" />
@@ -274,40 +274,40 @@ Notes:
 
 Notes:
 
-Returning to our most basic diagram
+回到我们最基本的图表
 
-- Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
-- Q: Which did I omit entirely?
+- 问题：为了简化，我遗漏了哪个结构的名称，这个名称应该放在我们图表的哪个位置？
+- 问题：我完全省略了哪个结构？
 
 ---
 
-## Async Backing and Exotic Core Scheduling
+## 异步支持与特殊核心调度
 
 <img rounded style="width: 1100px" src="./img/exotic_scheduling.svg" />
 
 Notes:
 
-- What is exotic core scheduling?
-  - Multiple cores per parachain
-  - Overlapping leases of many lengths
-  - Lease + On-demand
-- How does asynchronous backing help?
-- The unincluded segment is necessary to build 2 or more parablocks in a single relay block
+- 什么是特殊核心调度？
+  - 每个平行链有多个核心
+  - 多个不同长度的租赁期重叠
+  - 租赁 + 按需
+- 异步支持有什么帮助？
+- 未包含的片段对于在单个中继区块中构建2个或更多平行链区块是必要的
 
 ---
 
-## Resources
+## 资源
 
 <pba-col center>
 
-1. [Polkadot Async Backing PR](https://github.com/paritytech/polkadot/pull/5022)
-1. [Cumulus Async Backing PR](https://github.com/paritytech/cumulus/pull/2300)
-1. [Implementers Guide: Prospective Parachains](https://github.com/paritytech/polkadot/blob/631b66d5daa642fad7ed0a9712194c5b85b96563/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
-   <!-- FIXME above guide is deprecated -->
+1. [波卡异步支持拉取请求](https://github.com/paritytech/polkadot/pull/5022)
+2. [Cumulus异步支持拉取请求](https://github.com/paritytech/cumulus/pull/2300)
+3. [实施者指南：潜在平行链](https://github.com/paritytech/polkadot/blob/631b66d5daa642fad7ed0a9712194c5b85b96563/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
+   <!-- FIXME 上述指南已弃用 -->
    </pba-col>
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

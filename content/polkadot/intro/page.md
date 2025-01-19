@@ -1,4 +1,4 @@
-# Introduction to Polkadot
+# Polkadot 简介
 
 <!-- markdown-link-check-disable -->
 <center>

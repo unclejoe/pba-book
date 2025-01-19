@@ -7,299 +7,290 @@ duration: 30 mins
 
 ---
 
-## Prelude: Decentralization
+## 前奏：去中心化
 
-- Decentralization can come in many fashions.
-- Some of my (somewhat) personal opinions.. 💭
+- 去中心化可以有多种形式。
+- 一些我的（有些）个人观点.. 💭
 
 ---v
 
-### Prelude: Decentralization
+### 前奏：去中心化
 
-#### 1. Technical 🔐
+#### 1. 技术层面 🔐
 
-- Can the software be executed in a decentralized manner?
+- 该软件能否以去中心化的方式运行？
 
 <!-- .element: class="fragment" -->
 
-- Can multiple nodes actually run the software and come to consensus?
+- 多个节点是否真的可以运行该软件并达成共识？
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-- Nakatomo coefficient
-- Most blockchain systems actually already have this.
+- 中本系数
+- 大多数区块链系统实际上已经具备这一点。
 
 ---v
 
-### Prelude: Decentralization
+### 前奏：去中心化
 
-#### 2. Operational ⚙️
+#### 2. 运营层面 ⚙️
 
-- The software is capable of running in a decentralized manner. But is it actually?
+- 该软件有能力以去中心化的方式运行。但实际上呢？
   <!-- .element: class="fragment" -->
-  - Intermediaries, gateways, pools.
+  - 中介机构、网关、矿池。
   <!-- .element: class="fragment" -->
-- Is the right "software" being executed by node operators?
+- 节点运营商是否在运行“正确的软件”？
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-- Metamask
-- Mining/Staking Pool getting to large.
+- MetaMask
+- 挖矿/质押矿池规模过大。
 
-- **Node operators** are a concept here. They have the duty to run the "correct software". But how
-  they come to this decision is something that needs knowledge, which brings us to the next point.
+- **节点运营商** 是这里的一个概念。他们有责任运行“正确的软件”。但他们如何做出这个决定需要相关知识，这就引出了下一个要点。
 
 <https://moxie.org/2022/01/07/web3-first-impressions.html>
 
 ---v
 
-### Prelude: Decentralization
+### 前奏：去中心化
 
-#### 3. Intellectual 🧠
+#### 3. 知识层面 🧠
 
-- How many people know the existing protocol well enough to understand it.
-
-<!-- .element: class="fragment" -->
-
-- Which subset of these people make decisions about the future?
+- 有多少人对现有的协议有足够的了解？
 
 <!-- .element: class="fragment" -->
 
-- Important to remember that node operators are usually in neither.
+- 这些人中的哪一部分人对未来做出决策？
+
+<!-- .element: class="fragment" -->
+
+- 重要的是要记住，节点运营商通常不属于这两类人。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-1. the cathedral and bazaar
-1. the papal model
+1. 大教堂与集市
+1. 教皇模式
 
 <https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar>
 
 ---v
 
-### Prelude: Decentralization
+### 前奏：去中心化
 
-#### 3. Intellectual 🧠
+#### 3. 知识层面 🧠
 
-> My trust in Polkadot’s credible future should not rely on knowing that Parity, Gav or Shawn will
-> continue to act benevolently.
+> 我对 Polkadot 可信未来的信任不应该依赖于知道 Parity、Gav 或 Shawn 会继续善意行事。
 
-- This is where a meta-protocol, and rule-based upgrade systems becomes important.
+- 这就是元协议和基于规则的升级系统变得重要的地方。
 
 Notes:
 
-Recall how if the governance of the chain decide to upgrade to protocol, node-operators don't have a
-say in that by default.
+回想一下，如果链的治理决定升级协议，节点运营商默认情况下对此没有发言权。
 
-This is taking away the "power of default" to be in the hands of the token holders, not the
-node-operators.
+这是将“默认权力”从节点运营商手中夺走，交到代币持有者手中。
 
 ---v
 
-### Prelude: Decentralization
+### 前奏：去中心化
 
-#### Geopolitical 🌎
+#### 地缘政治层面 🌎
 
-- How many of protocol experts/node operators are under the same juristiction?
+- 有多少协议专家/节点运营商受同一司法管辖？
 
 ---
 
-## The Fellowship
+## Fellowship
 
-The fellowship is a **_technical decision making body_** onchain, aimed at alleviating the above
-facades of centralization, but more so than anything else, the intellectual aspect.
+Fellowship是链上的一个**技术决策机构**，旨在缓解上述中心化的表象，但更重要的是知识层面的问题。
 
 Notes:
 
-- Technical, high focus on core protocol aspects for now.
-- decision-making: not saying it has absolute power yet.
+- 技术层面，目前主要关注核心协议方面。
+- 决策制定：目前还不能说它拥有绝对权力。
 
 ---v
 
-## The Fellowship
+## Fellowship
 
-- Imperfect, not for everyone, opinionated 🥲!
-- Strictly better than not taking an action.
+- 不完美，不是适合所有人，有偏见的 🥲！
+- 严格来说比不采取行动要好。
 
 Notes:
 
-It is an _attempt_ at solving the issue. We believe it is strictly better than defining no rule
-around it and letting it be as-is, but it might be sub-optimal.
+这是解决该问题的一次**尝试**。我们认为这比不制定相关规则、任其发展要好，但可能不是最优的。
 
-> The Polkadot Fellowship aims to be one example of such an explicit action. The Fellowship is a
-> rules-based social organisation with several aims centred around the support and recognition of
-> the technical expertise needed for technical stability, security and progress of the network.
+> Polkadot Fellowship旨在成为这种明确行动的一个例子。Fellowship是一个基于规则的社会组织，其目标围绕支持和认可网络技术稳定、安全和发展所需的技术专业知识。
 
 ---
 
-## The Fellowship Lifecycle
+## Fellowship生命周期
 
-1. Initial seed
-
-<!-- .element: class="fragment" -->
-
-1. Entry
+1. 初始种子
 
 <!-- .element: class="fragment" -->
 
-1. Promotion
+2. 加入
 
 <!-- .element: class="fragment" -->
 
-1. Continuation
+3. 晋升
 
 <!-- .element: class="fragment" -->
 
-1. Gradual demote every 3-6 months.
+4. 延续
+
+<!-- .element: class="fragment" -->
+
+5. 每 3 - 6 个月逐步降级。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### The Fellowship Lifecycle: Evaluation
+### Fellowship生命周期：评估
 
-> Evaluation is subjective, based on merits of "core blockchain engineering".
+> 评估是主观的，基于“核心区块链工程”的优点。
 
-The manifesto provides one such example
+宣言提供了这样一个例子：
 
-1. API and code design.
-1. Code contribution.
-1. Social interactions.
-1. Voting.
+1. API 和代码设计。
+2. 代码贡献。
+3. 社交互动。
+4. 投票。
 
-- Activity
-- Agreement.
+- 活跃度
+- 一致性。
 
 ---
 
-## The Fellowship Structure
+## Fellowship结构
 
 <table>
 <tr>
-	<td>Dan</td>
-	<td>Name</td>
-	<td>Group</td>
-	<td>Exp from Dan I</td>
-	<td>Material</td>
+	<td>等级</td>
+	<td>名称</td>
+	<td>组别</td>
+	<td>从等级 I 晋升所需经验</td>
+	<td>材料</td>
 </tr>
 <tr class="fragment">
 	<td>0</td>
-	<td>Candidate</td>
-	<td>n/a</td>
-	<td>n/a</td>
-	<td>n/a</td>
+	<td>候选人</td>
+	<td>无</td>
+	<td>无</td>
+	<td>无</td>
 </tr>
 <tr class="fragment">
 	<td>1</td>
-	<td>Humble</td>
-	<td>Members</td>
-	<td>n/a</td>
-	<td>Graphite</td>
+	<td>谦逊者</td>
+	<td>成员</td>
+	<td>无</td>
+	<td>石墨</td>
 </tr>
 <tr class="fragment">
 	<td>2</td>
-	<td>Proficient</td>
-	<td>Members</td>
-	<td>1 years</td>
-	<td>Stibnite</td>
+	<td>熟练者</td>
+	<td>成员</td>
+	<td>1 年</td>
+	<td>辉锑矿</td>
 </tr>
 <tr class="fragment">
 	<td>3</td>
-	<td>Fellow</td>
-	<td>Fellows</td>
-	<td>2 years</td>
-	<td>Galena</td>
+	<td>会员</td>
+	<td>会员</td>
+	<td>2 年</td>
+	<td>方铅矿</td>
 </tr>
 <tr class="fragment">
 	<td>4</td>
-	<td>Architect</td>
-	<td>Architects</td>
-	<td>3+ years</td>
-	<td>Obsidian</td>
+	<td>架构师</td>
+	<td>架构师</td>
+	<td>3 年以上</td>
+	<td>黑曜石</td>
 </tr>
 <tr class="fragment">
 	<td>5</td>
-	<td>Architect Adept</td>
-	<td>Architects</td>
-	<td>4+ years</td>
-	<td>Ilvaite</td>
+	<td>资深架构师</td>
+	<td>架构师</td>
+	<td>4 年以上</td>
+	<td>黑柱石</td>
 </tr>
 <tr class="fragment">
 	<td>6</td>
-	<td>Grand Architect</td>
-	<td>Architects</td>
-	<td>5+ years</td>
-	<td>Magnetite</td>
+	<td>首席架构师</td>
+	<td>架构师</td>
+	<td>5 年以上</td>
+	<td>磁铁矿</td>
 </tr>
 <tr class="fragment">
 	<td>7</td>
-	<td>Free Master</td>
-	<td>Masters</td>
-	<td>6+ years</td>
-	<td>Black Spinel</td>
+	<td>自由大师</td>
+	<td>大师</td>
+	<td>6 年以上</td>
+	<td>黑尖晶石</td>
 </tr>
 <tr class="fragment">
 	<td>8</td>
-	<td>Master Constant</td>
-	<td>Masters</td>
-	<td>11+ years</td>
-	<td>Carborundum</td>
+	<td>恒常大师</td>
+	<td>大师</td>
+	<td>11 年以上</td>
+	<td>碳化硅</td>
 </tr>
 <tr class="fragment">
 	<td>9</td>
-	<td>Grand Master</td>
-	<td>Masters</td>
-	<td>19+ years</td>
-	<td>Carbandos</td>
+	<td>特级大师</td>
+	<td>大师</td>
+	<td>19 年以上</td>
+	<td>碳化硼</td>
 </tr>
 </table>
 
 ---
 
-## Dan 0: The Candidate
+## 等级 0：候选人
 
-- No requirement, no implication
-- Deposit held for storage usage etc.
+- 无要求，无含义
+- 押金用于存储使用等。
 
 ---
 
-## Dan I: The Humble
+## 等级 I：谦逊者
 
-- The (potentially) softest of the materials
-- Wide range of hardness (1-3 Moh)
-- Shares the exact same chemical composition as the material of the highest rank Grand Master—the hardest material—symbolizing the individual’s potential to go all the
-  way.
+- （可能）最软的材料
+- 硬度范围广（1 - 3 莫氏硬度）
+- 与最高等级特级大师的材料具有完全相同的化学成分——最硬的材料——象征着个人有成为特级大师的潜力。
 
 ---v
 
-## Dan I: The Humble
+## 等级 I：谦逊者
 
-- Clear aspiration to learn and evangelize the protocol.
-- Deep knowledge at least one key component.
-- Independent, vision-driven contribution.
-- Being available and playing a crucial operational role for a network fix.
-
----
-
-## Dan II: The Proficient
-
-- ~1 Year of experience passed since acquiring Dan I.
-- Responsible for research, analysis and implementation of a key component of the system.
-- Potentially "on-call" for the same component.
-- At least one published long-form semi-technical article concerning Polkadot.
+- 有明确的学习和宣传协议的愿望。
+- 对至少一个关键组件有深入的了解。
+- 独立、有远见的贡献。
+- 随时待命，并在网络修复中发挥关键的运营作用。
 
 ---
 
-## Fellowship: Kusama
+## 等级 II：熟练者
 
-- Used in conjuncture with `pallet-whitelist` and `pallet-preimage`.
-- The fellowship can whitelist certain pre-images, which in turn can lead to faster execution.
-- End of the day, it is all (virtual) runtime origins:
+- 自获得等级 I 以来已有约 1 年的经验。
+- 负责系统关键组件的研究、分析和实施。
+- 可能需要随时待命处理同一组件的相关事务。
+- 至少发表过一篇关于 Polkadot 的长篇半技术性文章。
+
+---
+
+## Fellowship：Kusama
+
+- 与 `pallet-whitelist` 和 `pallet-preimage` 结合使用。
+- Fellowship可以将某些预映像列入白名单，从而加快执行速度。
+- 归根结底，这都是（虚拟）运行时起源：
   - `Fellows`,
   - `Fellowship3Dan`,
   - `WhitelistedCaller`
@@ -307,17 +298,17 @@ The manifesto provides one such example
 
 ---
 
-## Fellowship: The Near Future
+## Fellowship：近期展望
 
-- Payroll
-- Delegation
-- Runtimes moved to the fellowship repository
+- 薪资
+- 授权
+- 运行时迁移到Fellowship仓库
 
 ---
 
 ## Polkadot Fellowship
 
-Learn more:
+了解更多：
 
 - <https://github.com/polkadot-fellows>
 - <https://kusama.subscan.io/fellowship>

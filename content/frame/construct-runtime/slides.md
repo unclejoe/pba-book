@@ -4,11 +4,15 @@ description: Deep dive into the Construct Runtime macro
 duration: 1 hour
 ---
 
-# `construct_runtime!` and Testing 🔨
+---
+# 构建运行时
+---
+
+# `construct_runtime!` 和测试 🔨
 
 ---
 
-# Part 1: Runtime Construction
+# 第一部分：运行时构建
 
 ---
 
@@ -16,29 +20,29 @@ duration: 1 hour
 
 ---
 
-## Pallet <=> Runtime
+## 模块 <=> 运行时
 
-A runtime is really ✌️ things:
+一个运行时实际上是 ✌️ 两件事：
 
-1. A struct that implements `Config` of all pallets.
-2. A type that helps `Executive` implement `RuntimeApis`.
+1. 一个实现了所有模块的 `Config` 的结构体。
+2. 一个帮助 `Executive` 实现 `RuntimeApis` 的类型。
 
 ---v
 
-### Pallet <=> Runtime
+### 模块 <=> 运行时
 
-We build a runtime, using `construct_runtime`, typically twice:
+我们通常会使用 `construct_runtime` 构建运行时，一般会构建两次：
 
-1. Per pallet, there is a mock runtime.
-2. A real runtime elsewhere.
+1. 对于每个模块，都有一个模拟运行时。
+2. 另外有一个真实的运行时。
 
-Note:
+Notes:
 
-Benchmarking can then use both of these runtimes.
+基准测试可以使用这两种运行时。
 
 ---
 
-## `construct_runtime`: `Runtime` type
+## `construct_runtime`：`Runtime` 类型
 
 ```rust [1-100|2]
 frame_support::construct_runtime!(
@@ -54,10 +58,10 @@ frame_support::construct_runtime!(
 
 ---v
 
-### `Runtime` type
+### `Runtime` 类型
 
-- It implements [A LOT OF STUFF](https://paritytech.github.io/substrate/master/kitchensink_runtime/struct.Runtime.html)!
-- But most importantly, the `Config` trait of all of your pallets 🫵🏻.
+- 它实现了 [很多东西](https://paritytech.github.io/substrate/master/kitchensink_runtime/struct.Runtime.html)！
+- 但最重要的是，实现了你所有模块的 `Config` 特征 🫵🏻。
 
 ```rust
 impl frame_system::Config for Runtime { .. }
@@ -69,20 +73,20 @@ impl pallet_dpos::Config for Runtime { .. }
 
 ### `<T: Config>` ==> `Runtime`
 
-> Anywhere in your pallet code that you have `<T: Config>` can now be replaced with `Runtime`.
+> 在你的模块代码中，任何出现 `<T: Config>` 的地方现在都可以替换为 `Runtime`。
 
 ```rust[1-2|3-4|5-6]
-// a normal pub function defined in
+// 一个普通的公有函数定义在
 frame_system::Pallet::<Runtime>::block_number();
-// a storage getter of a map.
+// 一个映射的存储获取器。
 frame_system::Pallet::<Runtime>::account(42u32);
-// A storage type.
+// 一个存储类型。
 frame_system::Account::<Runtime>::get(42u32);
 ```
 
 ---
 
-## `construct_runtime`: Pallet List
+## `construct_runtime`：模块列表
 
 ```rust [3-7|8|1-100]
 frame_support::construct_runtime!(
@@ -99,9 +103,9 @@ frame_support::construct_runtime!(
 
 ---v
 
-### Pallet List
+### 模块列表
 
-- Crucially, under the hood, this generates:
+- 关键的是，在底层，这会生成：
 
 ```rust
 type System = frame_system::Pallet<Runtime>;
@@ -110,11 +114,11 @@ type Balances = pallet_balances::Pallet<Runtime>;
 type DPos = pallet_dpos::Pallet<Runtime>;
 ```
 
-- Recall that `Runtime` implements `<T: Config>` of all pallets.
+- 回想一下，`Runtime` 实现了所有模块的 `<T: Config>`。
 
 ---v
 
-### Pallet List
+### 模块列表
 
 ```rust
 frame_system::Pallet::<Runtime>::block_number(); // 🤮
@@ -126,9 +130,9 @@ System::account(42u32); // 🥳
 
 ---v
 
-### Pallet List
+### 模块列表
 
-- Next crucial piece of information that is generated is:
+- 接下来生成的另一个关键信息是：
 
 ```rust
 type AllPallets = (System, Balances, ..., Dpos);
@@ -136,7 +140,7 @@ type AllPallets = (System, Balances, ..., Dpos);
 
 <div>
 
-- This is used in `Executive` to dispatch pallet hooks.
+- 这在 `Executive` 中用于调度模块钩子。
 
 ```rust
 <AllPallets as OnInitialize>::on_initialize();
@@ -149,14 +153,14 @@ type AllPallets = (System, Balances, ..., Dpos);
 
 Notes:
 
-Question: What will be the order of `fn on_initialize()`?
-There's also `type AllPalletsWithoutSystem` and some other variants that are no longer
+问题：`fn on_initialize()` 的执行顺序是什么？
+还有 `type AllPalletsWithoutSystem` 以及一些其他变体现在已经不再使用了。
 
 ---v
 
-### Pallet List + Outer Enums
+### 模块列表 + 外部枚举
 
-- Generates some outer types:
+- 生成一些外部类型：
 
   - `RuntimeCall`
   - `RuntimeEvent`
@@ -165,14 +169,14 @@ There's also `type AllPalletsWithoutSystem` and some other variants that are no 
 
 Notes:
 
-See the lecture on individual item, and the "Outer Enum" lecture.
+参见关于单个项目的讲座，以及“外部枚举”讲座。
 
 ---v
 
-### Pallet List: `RuntimeCall` Example
+### 模块列表：`RuntimeCall` 示例
 
 ```rust
-// somewhere in your pallet, called `my_pallet`
+// 在你的某个模块中，名为 `my_pallet`
 #[pallet::call]
 impl<T: Config> Pallet<T> {
   fn transfer(origin: OriginFor<T>, from: T::AccountId, to: T::AccountId, amount: u128);
@@ -181,7 +185,7 @@ impl<T: Config> Pallet<T> {
 ```
 
 ```rust
-// expanded in your pallet
+// 在你的模块中展开
 enum Call {
   transfer { from: T::AccountId, to: T::AccountId, amount: u128 },
   update_runtime { new_code: Vec<u8> },
@@ -191,7 +195,7 @@ enum Call {
 <!-- .element: class="fragment" -->
 
 ```rust
-// in your outer runtime
+// 在你的外部运行时中
 enum RuntimeCall {
   System(frame_system::Call),
   MyPallet(my_pallet::Call),
@@ -202,7 +206,7 @@ enum RuntimeCall {
 
 ---v
 
-### Pallet List: Pallet Parts
+### 模块列表：模块部分
 
 ```rust [1-100|3-5]
 frame_support::construct_runtime!(
@@ -214,13 +218,13 @@ frame_support::construct_runtime!(
 );
 ```
 
-- Omitting them will exclude them from the metadata, or the "outer/runtime types"
+- 省略它们将使它们从元数据或“外部/运行时类型”中排除。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Pallet List: Pallet Index
+### 模块列表：模块索引
 
 ```rust [3-5]
 frame_support::construct_runtime!(
@@ -234,10 +238,10 @@ frame_support::construct_runtime!(
 
 ---
 
-## `construct_runtime`: Final Thoughts
+## `construct_runtime`：最终思考
 
-- Order in the `construct_runtime` matters!
-- Recall `integrity_test()` is called upon `construct_runtime`.
+- `construct_runtime` 中的顺序很重要！
+- 回想一下，在调用 `construct_runtime` 时会调用 `integrity_test()`。
 
 ```sh
 test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
@@ -245,9 +249,9 @@ test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
 
 ---v
 
-### Preview
+### 预览
 
-Of the next potential syntax:
+可能的新语法：
 
 ```rust
 #[frame::construct_runtime]
@@ -271,36 +275,36 @@ mod runtime {
 
 Notes:
 
-See: <https://github.com/paritytech/polkadot-sdk/issues/232>
+参见：<https://github.com/paritytech/polkadot-sdk/issues/232>
 
 ---
 
-# Part 2: Testing
+# 第二部分：测试
 
 ---
 
-## Testing and Mocks
+## 测试和模拟
 
-A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
+一个测试需要一个模拟运行时，所以我们需要进行完整的 `construct_runtime` 😱
 
-.. but luckily, most types can be mocked 😮‍💨
+.. 但幸运的是，大多数类型都可以被模拟 😮‍💨
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Testing and Mocks
+### 测试和模拟
 
-- `u32` account id.
-- `u128` balance.
-- `u32` block number.
+- `u32` 类型的账户 ID。
+- `u128` 类型的余额。
+- `u32` 类型的区块号。
 - ...
 
 ---
 
-## Testing: `Get<_>`
+## 测试：`Get<_>`
 
-- Next, we want to supply some value to those `Get<_>` associated types.
+- 接下来，我们想要为那些 `Get<_>` 关联类型提供一些值。
 
 ```rust
 #[pallet::config]
@@ -311,7 +315,7 @@ pub trait Config: frame_system::Config {
 
 ---v
 
-### Testing: `Get<_>`
+### 测试：`Get<_>`
 
 ```rust
 parameter_types! {
@@ -329,9 +333,9 @@ impl pallet_template::Config for Runtime {
 
 ---v
 
-### Testing: `Get<_>`
+### 测试：`Get<_>`
 
-- Or, if your value is always constant:
+- 或者，如果你的值始终是常量：
 
 ```rust
 impl pallet_dpos::Config for Runtime {
@@ -341,9 +345,9 @@ impl pallet_dpos::Config for Runtime {
 
 ---v
 
-### Testing: `Get<_>`
+### 测试：`Get<_>`
 
-- Or, if you want to torture yourself:
+- 或者，如果你想折磨自己：
 
 ```rust
 pub struct MyMaxVoters;
@@ -360,10 +364,9 @@ impl pallet_dpos::Config for Runtime {
 
 ---
 
-## Testing: Genesis and Builder
+## 测试：创世配置和构建器
 
-- Next, if you want to feed some data into your pallet's genesis state, we must first setup the
-  genesis config correctly.
+- 接下来，如果你想将一些数据输入到你的模块的创世状态中，我们必须首先正确设置创世配置。
 
 ```rust
 #[pallet::genesis_config]
@@ -376,7 +379,7 @@ pub struct GenesisConfig<T: Config> {
 impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
   fn build(&self) {
     for (voter, maybe_vote) in &self.voters {
-      // do stuff.
+      // 做一些事情。
     }
   }
 }
@@ -384,9 +387,9 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 
 ---v
 
-### Testing and Mocks: Genesis and Builder
+### 测试和模拟：创世配置和构建器
 
-- Then, we build a builder pattern to construct the genesis config.
+- 然后，我们构建一个构建器模式来构造创世配置。
 
 ```rust
 #[derive(Default)]
@@ -408,9 +411,9 @@ impl Builder {
 
 ---v
 
-### Testing and Mocks: Genesis and Builder
+### 测试和模拟：创世配置和构建器
 
-- Finally:
+- 最后：
 
 ```rust
 impl Builder {
@@ -423,16 +426,16 @@ impl Builder {
   pub fn build_and_execute(self, f: impl FnOnce()) {
     let mut ext = self.build();
     ext.execute_with(f);
-    // any post checks can come here.
+    // 任何后置检查可以放在这里。
   }
 }
 ```
 
 ---v
 
-### Testing and Mocks
+### 测试和模拟
 
-- Finally, this allows you to write a test like this:
+- 最后，这允许你编写这样的测试：
 
 ```rust
 #[test]
@@ -441,16 +444,16 @@ fn test_stuff() {
     .add_voter_with_vote(2, Vote::Aye)
     .add_voter(3)
     build_and_execute(|| {
-      // do stuff
+      // 做一些事情
     });
 }
 ```
 
 ---
 
-## Testing: static `parameter_types!`
+## 测试：静态 `parameter_types!`
 
-- What if you want to change that `MyMaxVoters`?
+- 如果你想改变 `MyMaxVoters` 怎么办？
 
 <div>
 
@@ -471,16 +474,16 @@ MyMaxVoters::get();
 
 ---
 
-## Test ing: Progressing Blocks
+## 测试：推进区块
 
-- Often times, in your test, you want mimic the progression of an empty block.
-- De-nada! We can fake everything in tests 🤠
+- 通常，在你的测试中，你想要模拟一个空区块的推进。
+- 没问题！我们可以在测试中伪造一切 🤠
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Progressing Blocks
+### 推进区块
 
 ```rust
 pub fn next_block() {
@@ -497,7 +500,7 @@ pub fn next_block() {
 
 ---v
 
-### Progressing Blocks
+### 推进区块
 
 ```rust
 pub fn next_block() {
@@ -512,7 +515,7 @@ pub fn next_block() {
 
 ---v
 
-### Progressing Blocks
+### 推进区块
 
 ````rust
 ```rust
@@ -523,15 +526,15 @@ fn test() {
     .set_minimum_delegation(200)
     .build();
   ext.execute_with(|| {
-    // initial stuff
+    // 初始操作
     next_block();
 
-    // dispatch some call
+    // 调度一些调用
     assert!(some_condition);
 
     next_block();
 
-    // repeat..
+    // 重复...
   });
 }
 ````
@@ -539,46 +542,26 @@ fn test() {
 ```
 ---
 
-## Additional Resources 😋
+## 附加资源 😋
 
-> Check speaker notes (click "s" 😉)
+> 查看演讲笔记（按 “s” 😉）
 
 Notes:
 
-- This PR was actually an outcome Cambridge PBA: <https://github.com/paritytech/substrate/pull/11932>
+- 这个 PR 实际上是剑桥 PBA 的成果：<https://github.com/paritytech/substrate/pull/11932>
 - <https://github.com/paritytech/substrate/pull/11818>
 - <https://github.com/paritytech/substrate/pull/10043>
-- On usage of macros un Substrate: <https://github.com/paritytech/substrate/issues/12331>
-- Discussion on advance testing: <https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356>
-- Reserve topic: Reading events.
-- Reserve-topic: try-state.
+- 关于 Substrate 中宏的使用：<https://github.com/paritytech/substrate/issues/12331>
+- 关于高级测试的讨论：<https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356>
+- 预留主题：读取事件。
+- 预留主题：尝试状态。
 
-### Original Lecture Script
+### 原始演讲脚本
 
-this is your bridge from a pallet into a runtime.
+这是你从模块进入运行时的桥梁。
 
-a runtime amalgamator is composed of the following:
+一个运行时聚合器由以下部分组成：
 
-1. all pallet's `Config` implemented by a `struct Runtime`;
-1. construct `Executive` and use it to implement all the runtime APIs
-1. Optionally, some boilerplate to setup benchmarking.
-1. invoke `construct_runtime!`.
-1. Alias for each pallet.
-
-The `construct_runtime!` itself does a few things under the hood:
-
-1. crate `struct Runtime`.
-1. amalgamate `enum RuntimeCall`; // passed inwards to some pallets that want to store calls.
-1. amalgamate `enum RuntimeEvent`; // passed inwards to all pallets.
-1. amalgamate `enum RuntimeOrigin` (this is a fixed struct, not an amalgamation);
-1. Create a very important type alias:
-
-- `type AllPallets` / `type AllPalletsWithoutSystem`
-
-1. run `integrity_test()`.
-
-> Note that there is no such thing as `RuntimeError`. Errors are not amalgamated, they just are. This should be in the error lecture.
-
-- Ordering in `construct_runtime` matters.
-- Pallet parts can be optional in `construct_runtime!`.
+1. 所有模块的 `Config` 由一个 `struct Runtime` 实现；
+1. 构建 `Executive` 并使用它来实现所有运行时 API。
 ```

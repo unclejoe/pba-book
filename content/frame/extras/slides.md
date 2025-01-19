@@ -3,22 +3,22 @@ title: FRAME Extras
 description: Additional Topics to Talk About
 ---
 
-# FRAME Extras
+# FRAME 扩展内容
 
 ---
 
-## Follow Along!
+## 跟着学！
 
-These are topics where it can be easier to just learn by looking through the code and discussing.
-
----
-
-## Runtime Call Filters
+这些主题通过查看代码并进行讨论来学习会更容易。
 
 ---
 
-## Account Reference Counters
+## 运行时调用过滤器
 
 ---
 
-## Pallet Instances
+## 账户引用计数器
+
+---
+
+## 模块实例

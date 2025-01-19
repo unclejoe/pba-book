@@ -4,130 +4,136 @@ description: How to benchmark Pallets in FRAME.
 duration: 1 hours
 ---
 
-# FRAME Benchmarking
+---
+标题：FRAME 基准测试 1
+描述：如何在 FRAME 中进行基准测试。
+时长：1 小时
+---
 
-## Lesson 1
+# FRAME 基准测试
+
+## 第一课
 
 ---
 
-## Overview
+## 概述
 
-- Quick Recap of Weights
-- Deep Dive Into Benchmarking
-
----
-
-## Blockchains are Limited
-
-Blockchain systems are extremely limited environments.
-
-Limited in:
-
-- Execution Time / Block Time
-- Available Storage
-- Available Memory
-- Network Bandwidth
-- etc...
+- 权重快速回顾
+- 深入了解基准测试
 
 ---
 
-## Performance vs Centralization
+## 区块链是有限的
 
-Nodes are expected to be decentralized and distributed.
+区块链系统是极其受限的环境。
 
-Increasing the system requirements can potentially lead to centralization in who can afford to run that hardware, and where such hardware may be available.
+受限因素包括：
 
----
-
-## Why do we need benchmarking?
-
-Benchmarking ensures that when users interact with our Blockchain, they are not using resources beyond what is available and expected for our network.
-
----
-
-## What is Weight?
-
-Weight is a general concept used to track consumption of limited blockchain resources.
+- 执行时间 / 区块时间
+- 可用存储
+- 可用内存
+- 网络带宽
+- 等等……
 
 ---
 
-## What is Weight in Substrate?
+## 性能与中心化
 
-We currently track just two main limitations:
+节点应是去中心化和分布式的。
 
-- Execution Time on "Reference Hardware"
-- Size of Data Required to Create a Merkle Proof
+提高系统要求可能会导致中心化，即只有那些有能力运行该硬件的人才能参与，并且这些硬件可能只能在特定地点获得。
+
+---
+
+## 我们为什么需要基准测试？
+
+基准测试可确保当用户与我们的区块链进行交互时，他们不会使用超出我们网络可用和预期的资源。
+
+---
+
+## 什么是权重？
+
+权重是一个用于跟踪有限区块链资源消耗的通用概念。
+
+---
+
+## Substrate 中的权重是什么？
+
+我们目前主要跟踪两个限制：
+
+- 在“参考硬件”上的执行时间
+- 创建默克尔证明所需的数据大小
 
 ```rust
 pub struct Weight {
-	/// The weight of computational time used based on some reference hardware.
+	/// 基于某些参考硬件使用的计算时间的权重。
 	ref_time: u64,
-	/// The weight of storage space used by proof of validity.
+	/// 有效性证明所使用的存储空间的权重。
 	proof_size: u64,
 }
 ```
 
-This was already expanded once, and could be expanded in the future.
+这已经扩展过一次，未来可能还会扩展。
 
 ---
 
-## Weight limits are specific to each blockchain.
+## 权重限制因区块链而异。
 
-- 1 second of compute on different computers allows for different amounts of computation.
-- Weights of your blockchain will evolve over time.
-- Higher hardware requirements will result in a more performant blockchain (i.e. TXs per second), but will limit the kinds of validators that can safely participate in your network.
-- Proof size limitations can be relevant for parachains, but ignored for solo-chains.
+- 不同的计算机在 1 秒的计算时间内能够完成的计算量不同。
+- 你的区块链的权重会随着时间的推移而变化。
+- 更高的硬件要求将带来性能更高的区块链（即每秒交易数），但会限制能够安全参与你网络的验证者类型。
+- 证明大小限制对于平行链可能相关，但对于独立链可以忽略。
 
 ---
 
-## What can affect relative Weight?
+## 哪些因素会影响相对权重？
 
 <pba-cols>
 
 <pba-col>
 
-- Processor
-- Memory
-- Hard Drive
-  - HDD vs. SSD vs. NVME
-- Operating System
-- Drivers
-- Rust Compiler
+- 处理器
+- 内存
+- 硬盘
+  - 机械硬盘（HDD）与固态硬盘（SSD）与非易失性内存主机控制器接口（NVME）
+- 操作系统
+- 驱动程序
+- Rust 编译器
 
 </pba-col>
 <pba-col>
 
-- Runtime Execution Engine
-  - compiled vs. interpreted
-- Database
-  - RocksDB vs. ParityDB vs. ?
-- Merkle trie / storage format
-- and more!
+- 运行时执行引擎
+  - 编译型与解释型
+- 数据库
+  - RocksDB 与 ParityDB 与其他？
+- 默克尔树 / 存储格式
+- 等等！
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## Block Import Weight Breakdown
+## 区块导入权重细分
 
 <img style="height: 500px;" src="./img/block-import.svg" />
 
 ---
 
-# The Benchmarking Framework
+# 基准测试框架
 
 ---
 
-## The Benchmarking Plan
+## 基准测试计划
 
 <div class="flex-container">
 <div class="left-large">
 
-- Use empirical measurements of the runtime to determine the time and space it takes to execute extrinsics and other runtime logic.
-- Run benchmarks using worst case scenario conditions.
-  - Primary goal is to keep the runtime safe.
-  - Secondary goal is to be as accurate as possible to maximize throughput.
+- 使用运行时的经验测量来确定执行外部函数和其他运行时逻辑所需的时间和空间。
+- 在最坏情况条件下运行基准测试。
+  - 主要目标是确保运行时的安全性。
+  - 次要目标是尽可能准确以最大化吞吐量。
 
 </div>
 <div class="right">
@@ -139,7 +145,7 @@ This was already expanded once, and could be expanded in the future.
 
 ---
 
-## The `#[benchmarks]` Macro
+## `#[benchmarks]` 宏
 
 ```rust
 #[benchmarks]
@@ -148,13 +154,13 @@ mod benchmarks {
 
 	#[benchmark]
 	fn benchmark_name() {
-		/* setup initial state */
+		/* 设置初始状态 */
 
-		/* execute extrinsic or function */
+		/* 执行外部函数或函数 */
 		#[extrinsic_call]
 		extrinsic_name();
 
-		/* verify final state */
+		/* 验证最终状态 */
 		assert!(true)
 	}
 }
@@ -162,7 +168,7 @@ mod benchmarks {
 
 ---
 
-## Multiple Linear Regression Analysis
+## 多元线性回归分析
 
 <div class="flex-container">
 <div class="left-small">
@@ -172,50 +178,50 @@ mod benchmarks {
 </div>
 <div class="right">
 
-- We require that no functions in Substrate have superlinear complexity.
-- Ordinary least squared linear regression.
-  - linregress crate
-- Supports multiple linear coefficients.
+- 我们要求 Substrate 中的任何函数都不能有超线性复杂度。
+- 普通最小二乘线性回归。
+  - linregress 库
+- 支持多个线性系数。
   - Y = Ax + By + Cz + k
-- For constant time functions, we simply use the median value.
+- 对于常数时间函数，我们只使用中位数。
 
 </div>
 </div>
 
 ---
 
-## The `benchmark` CLI
+## `benchmark` 命令行工具
 
-Compile your node with `--features runtime-benchmarks`.
+使用 `--features runtime-benchmarks` 编译你的节点。
 
 ```sh
 ➜  ~ substrate benchmark --help
-Sub-commands concerned with benchmarking.
-The pallet benchmarking moved to the `pallet` sub-command
+与基准测试相关的子命令。
+Pallet 基准测试已移至 `pallet` 子命令。
 
-Usage: polkadot benchmark <COMMAND>
+用法: polkadot benchmark <COMMAND>
 
-Commands:
-  pallet     Benchmark the extrinsic weight of FRAME Pallets
-  storage    Benchmark the storage speed of a chain snapshot
-  overhead   Benchmark the execution overhead per-block and per-extrinsic
-  block      Benchmark the execution time of historic blocks
-  machine    Command to benchmark the hardware
-  extrinsic  Benchmark the execution time of different extrinsics
-  help       Print this message or the help of the given subcommand(s)
+命令:
+  pallet     对 FRAME Pallet 的外部函数权重进行基准测试
+  storage    对链快照的存储速度进行基准测试
+  overhead   对每个区块和每个外部函数的执行开销进行基准测试
+  block      对历史区块的执行时间进行基准测试
+  machine    用于对硬件进行基准测试的命令
+  extrinsic  对不同外部函数的执行时间进行基准测试
+  help       打印此消息或给定子命令的帮助信息
 
-Options:
-  -h, --help     Print help information
-  -V, --version  Print version information
+选项:
+  -h, --help     打印帮助信息
+  -V, --version  打印版本信息
 ```
 
 ---
 
-## `pallet` Subcommand
+## `pallet` 子命令
 
-- Benchmark the weight of functions within pallets.
-  - Any arbitrary code can be benchmarked.
-- Outputs Autogenerated Weight files.
+- 对 Pallet 内的函数权重进行基准测试。
+  - 任何任意代码都可以进行基准测试。
+- 输出生成的权重文件。
 
 ```rust
 pub trait WeightInfo {
@@ -229,11 +235,11 @@ pub trait WeightInfo {
 
 ---
 
-# Deep Dive
+# 深入探究
 
-So let’s walk through the steps of a benchmark!
+让我们逐步了解基准测试的步骤！
 
-Reference: `frame/benchmarking/src/lib.rs`
+参考：`frame/benchmarking/src/lib.rs`
 
 ```rust
 -> fn run_benchmark(...)
@@ -241,31 +247,31 @@ Reference: `frame/benchmarking/src/lib.rs`
 
 ---
 
-## The Benchmarking Process
+## 基准测试过程
 
-For each component and repeat:
+对于每个组件，重复以下步骤：
 
-1. Select component to benchmark
-1. Generate range of values to test (steps)
-1. Whitelist known DB keys
-1. Setup benchmarking state
-1. Commit state to the DB, clearing cache
-1. Get system time (start)
-1. Execute extrinsic / benchmark function
-1. Get system time (end)
-1. Count DB reads and writes
-1. Record Data
+1. 选择要进行基准测试的组件
+1. 生成要测试的值的范围（步骤）
+1. 白名单已知的数据库键
+1. 设置基准测试状态
+1. 将状态提交到数据库，清除缓存
+1. 获取系统时间（开始）
+1. 执行外部函数 / 基准测试函数
+1. 获取系统时间（结束）
+1. 统计数据库的读写次数
+1. 记录数据
 
 ---
 
-## Benchmarking Components
+## 基准测试组件
 
-- Imagine a function with 3 components
+- 假设有一个包含 3 个组件的函数
   - let x in 1..2;
   - let y in 0..5;
   - let z in 0..10;
-- We set number of steps to 3.
-- Vary one component at a time, select high value for the others.
+- 我们将步骤数设置为 3。
+- 每次只改变一个组件，其他组件选择高值。
 
 <!-- prettier-ignore -->
 |   | Δx | Δy | Δy | Δz | Δz | max |
@@ -276,55 +282,55 @@ For each component and repeat:
 
 ---
 
-## Benchmarks Evaluated Over Components
+## 基于组件评估的基准测试
 
 <img style="height: 600px;" src="./img/components.svg" />
 
 ---
 
-## Whitelisted DB Keys
+## 白名单数据库键
 
 ```rust [3]
-/// The current block number being processed. Set by `execute_block`.
+/// 当前正在处理的区块号。由 `execute_block` 设置。
 #[pallet::storage]
 #[pallet::whitelist_storage]
 #[pallet::getter(fn block_number)]
 pub(super) type Number<T: Config> = StorageValue<_, BlockNumberFor<T>, ValueQuery>;
 ```
 
-- Some keys are accessed every block:
-  - Block Number
-  - Events
-  - Total Issuance
-  - etc…
-- We don’t want to count these reads and writes in our benchmarking results.
-- Applied to all benchmarks being run.
-- This includes a “whitelisted account” provided by FRAME.
+- 某些键在每个区块中都会被访问：
+  - 区块号
+  - 事件
+  - 总发行量
+  - 等等……
+- 我们不希望在基准测试结果中统计这些读写操作。
+- 应用于所有正在运行的基准测试。
+- 这包括 FRAME 提供的“白名单账户”。
 
 ---
 
-## Example Benchmark
+## 示例基准测试
 
-The Identity Pallet
+身份 Pallet
 
 <img style="height: 500px;" src="./img/identity-icon.svg" />
 
 ---
 
-## Identity Pallet
+## 身份 Pallet
 
-- Identity can have variable amount of information
-  - Name
-  - Email
-  - Twitter
-  - etc…
-- Identity can be judged by a variable amount of registrars.
-- Identity can have a two-way link to “sub-identities”
-  - Other accounts that inherit the identity status of the “super-identity”
+- 身份可以包含可变数量的信息
+  - 姓名
+  - 电子邮件
+  - 推特
+  - 等等……
+- 身份可以由可变数量的注册机构进行评判。
+- 身份可以与“子身份”建立双向链接
+  - 其他账户继承“超级身份”的身份状态
 
 ---
 
-## Extrinsic: Kill Identity
+## 外部函数：删除身份
 
 ```rust
 pub fn kill_identity(
@@ -333,16 +339,16 @@ pub fn kill_identity(
 ) -> DispatchResultWithPostInfo {
 	T::ForceOrigin::ensure_origin(origin)?;
 
-	// Figure out who we're meant to be clearing.
+	// 确定我们要清除的对象。
 	let target = T::Lookup::lookup(target)?;
 
-	// Grab their deposit (and check that they have one).
+	// 获取他们的押金（并检查他们是否有押金）。
 	let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
 	let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
 	let deposit = id.total_deposit() + subs_deposit;
 	for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
 
-	// Slash their deposit from them.
+	// 从他们那里扣除押金。
 	T::Slashed::on_unbalanced(T::Currency::slash_reserved(&target, deposit).0);
 	Self::deposit_event(Event::IdentityKilled { who: target, deposit });
 	Ok(())
@@ -351,58 +357,58 @@ pub fn kill_identity(
 
 ---
 
-## Handling Configurations
+## 处理配置
 
-- `kill_identity` will only execute if the `ForceOrigin` is calling.
+- `kill_identity` 只有在 `ForceOrigin` 调用时才会执行。
 
 ```rust
 T::ForceOrigin::ensure_origin(origin)?;
 ```
 
-- However, this is configurable by the pallet developer.
-- Our benchmark needs to always work independent of the configuration.
-- We added a special function behind a feature flag:
+- 然而，这是由 Pallet 开发者配置的。
+- 我们的基准测试需要始终独立于配置工作。
+- 我们在特性标志后面添加了一个特殊函数：
 
 ```rust
-/// Returns an outer origin capable of passing `try_origin` check.
+/// 返回一个能够通过 `try_origin` 检查的外部来源。
 ///
-/// ** Should be used for benchmarking only!!! **
+/// ** 仅应用于基准测试！！！ **
 #[cfg(feature = "runtime-benchmarks")]
 fn successful_origin() -> OuterOrigin;
 ```
 
 ---
 
-## External Logic / Hooks
+## 外部逻辑 / 钩子
 
 ```rust
-// Figure out who we're meant to be clearing.
+// 确定我们要清除的对象。
 let target = T::Lookup::lookup(target)?;
 ```
 
-- In general, hooks like these are configurable in the runtime.
-- Each blockchain will have their own logic, and thus their own weight.
-- We run benchmarks against the real runtime, so we get the real results.
-- **IMPORTANT!** You need to be careful that the limitations of these hooks are well understood by the pallet developer and users of your pallet, otherwise, your benchmark will not be accurate.
+- 一般来说，像这样的钩子在运行时是可配置的。
+- 每个区块链都有自己的逻辑，因此有自己的权重。
+- 我们针对真实的运行时运行基准测试，因此可以得到真实的结果。
+- **重要！** 你需要确保 Pallet 开发者和你的 Pallet 用户充分了解这些钩子的限制，否则你的基准测试将不准确。
 
 ---
 
-## Deterministic Storage Reads / Writes
+## 确定性存储读写
 
 ```rust
-// Grab their deposit (and check that they have one).
+// 获取他们的押金（并检查他们是否有押金）。
 let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
 let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
 ```
 
-- 2 storage reads and writes.
-- The size of these storage items will depends on:
-  - Number of Registrars
-  - Number of Additional Fields
+- 2 次存储读写操作。
+- 这些存储项的大小取决于：
+  - 注册机构的数量
+  - 附加字段的数量
 
 ---
 
-## Variable Storage Reads / Writes
+## 可变存储读写
 
 ```rust
 for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
@@ -410,37 +416,37 @@ for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
 
 enchmarkinghere you store balances!
 
-- What happens with slashed funds is configurable too!
+- 扣除的资金的处理方式也是可配置的！
 
 ---
 
-## Whitelisted Storage
+## 白名单存储
 
 ```rust
 Self::deposit_event(Event::IdentityKilled { who: target, deposit });
 ```
 
-- We whitelist changes to the Events storage item, so generally this is “free” beyond computation and in-memory DB weight.
+- 我们将对事件存储项的更改列入白名单，因此通常除了计算和内存中数据库的权重外，这是“免费”的。
 
 ---
 
-## Preparing to Write Your Benchmark
+## 准备编写你的基准测试
 
-- 3 Components
+- 3 个组件
 
-  - `R` - number of registrars
-  - `S` - number of sub-accounts
-  - `X` - number of additional fields
+  - `R` - 注册机构的数量
+  - `S` - 子账户的数量
+  - `X` - 附加字段的数量
 
-- Need to:
-  - Set up account with funds.
-  - Register an identity with additional fields.
-  - Set up worst case scenario for registrars and sub-accounts.
-  - Take into account `ForceOrigin` to make the call.
+- 需要做的事情：
+  - 为账户设置资金。
+  - 注册一个带有附加字段的身份。
+  - 为注册机构和子账户设置最坏情况。
+  - 考虑 `ForceOrigin` 来进行调用。
 
 ---
 
-## Kill Identity Benchmark
+## 删除身份基准测试
 
 ```rust
 #[benchmark]
@@ -460,7 +466,7 @@ fn kill_identity(
 	Identity::<T>::set_identity(target_origin.clone(), Box::new(info.clone()))?;
 	let _ = add_sub_accounts::<T>(&target, s)?;
 
-	// User requests judgement from all the registrars, and they approve
+	// 用户请求所有注册机构进行评判，并且他们都批准了
 	for i in 0..r {
 		let registrar: T::AccountId = account("registrar", i, SEED);
 		let balance_to_use =  T::Currency::minimum_balance() * 10u32.into();
@@ -483,27 +489,28 @@ fn kill_identity(
 
 ---
 
-## Benchmarking Components
+---
+## 基准测试组件
 
 ```rust
 fn kill_identity(
-	r: Linear<1, T::MaxRegistrars::get()>,
-	s: Linear<0, T::MaxSubAccounts::get()>,
-	x: Linear<0, T::MaxAdditionalFields::get()>,
-) -> Result<(), BenchmarkError> { ... }
+    r: Linear<1, T::MaxRegistrars::get()>,
+    s: Linear<0, T::MaxSubAccounts::get()>,
+    x: Linear<0, T::MaxAdditionalFields::get()>,
+) -> Result<(), BenchmarkError> {... }
 ```
 
-- Our components.
-  - R = Number of Registrars
-  - S = Number of Sub-Accounts
-  - X = Number of Additional Fields on the Identity.
-- Note all of these have configurable, known at compile time maxima.
-  - Part of the pallet configuration trait.
-  - Runtime logic should enforce these limits.
+- 我们的组件。
+  - R = 注册商的数量
+  - S = 子账户的数量
+  - X = 身份上附加字段的数量。
+- 请注意，所有这些都具有可配置的、在编译时已知的最大值。
+  - 这是模块配置特征的一部分。
+  - 运行时逻辑应该强制执行这些限制。
 
 ---
 
-## Set Up Logic
+## 准备逻辑
 
 ```rust
 add_registrars::<T>(r)?;
@@ -514,13 +521,13 @@ let target_lookup = T::Lookup::unlookup(target.clone());
 let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
 ```
 
-- Adds registrars to the runtime storage.
-- Set up an account with the appropriate funds.
-- Note this is just like writing runtime tests!
+- 向运行时存储中添加注册商。
+- 用适当的资金设置一个账户。
+- 注意，这就像编写运行时测试一样！
 
 ---
 
-## Reusable Setup Functions
+## 可重用的准备函数
 
 ```rust
 let info = create_identity_info::<T>(x);
@@ -528,234 +535,234 @@ Identity::<T>::set_identity(target_origin.clone(), Box::new(info.clone()))?;
 let _ = add_sub_accounts::<T>(&target, s)?;
 ```
 
-- Using some custom functions defined in the benchmarking file:
-- Give that account an Identity with x additional fields.
-- Give that Identity `s` sub-accounts.
+- 使用基准测试文件中定义的一些自定义函数：
+- 给该账户一个具有 x 个附加字段的身份。
+- 给该身份添加 `s` 个子账户。
 
 ---
 
-## Set Up Worst Case Scenario
+## 设置最坏情况
 
 ```rust
-// User requests judgement from all the registrars, and they approve
+// 用户向所有注册商请求评判，并且他们都批准了
 for i in 0..r {
-	let registrar: T::AccountId = account("registrar", i, SEED);
-	let balance_to_use =  T::Currency::minimum_balance() * 10u32.into();
-	let _ = T::Currency::make_free_balance_be(&registrar, balance_to_use);
+    let registrar: T::AccountId = account("registrar", i, SEED);
+    let balance_to_use =  T::Currency::minimum_balance() * 10u32.into();
+    let _ = T::Currency::make_free_balance_be(&registrar, balance_to_use);
 
-	Identity::<T>::request_judgement(target_origin.clone(), i, 10u32.into())?;
-	Identity::<T>::provide_judgement( RawOrigin::Signed(registrar).into(), i, target_lookup.clone(), Judgement::Reasonable, T::Hashing::hash_of(&info),
-	)?;
+    Identity::<T>::request_judgement(target_origin.clone(), i, 10u32.into())?;
+    Identity::<T>::provide_judgement( RawOrigin::Signed(registrar).into(), i, target_lookup.clone(), Judgement::Reasonable, T::Hashing::hash_of(&info),
+    )?;
 }
 ```
 
-- Add r registrars.
-- Have all of them give a judgement to this identity.
+- 添加 `r` 个注册商。
+- 让它们都对该身份进行评判。
 
 ---
 
-## Execute and Verify the Benchmark:
+## 执行并验证基准测试：
 
 ```rust
-ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
+ensure!(IdentityOf::<T>::contains_key(&target), "身份未设置");
 let origin = T::ForceOrigin::successful_origin();
 
 #[extrinsic_call]
 kill_identity<T::RuntimeOrigin>(origin, target_lookup)
 
-ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
+ensure!(!IdentityOf::<T>::contains_key(&target), "身份未移除");
 Ok(())
 ```
 
-- First ensure statement verifies the “before” state is as we expect.
-- We need to use our custom origin.
-- Verify block ensures our “final” state is as we expect.
+- 第一个 `ensure` 语句验证“之前”的状态是否符合我们的预期。
+- 我们需要使用我们的自定义来源。
+- 验证块确保我们的“最终”状态符合我们的预期。
 
 ---
 
-## Executing the Benchmark
+## 执行基准测试
 
 ```sh
 ./target/production/substrate benchmark pallet \
-	--chain=dev \				# Configurable Chain Spec
-	--steps=50 \				# Number of steps across component ranges
-	--repeat=20 \				# Number of times we repeat a benchmark
-	--pallet=pallet_identity \	# Select the pallet
-	--extrinsic=* \				# Select the extrinsic(s)
-	--wasm-execution=compiled \ # Always used `wasm-time`
-	--heap-pages=4096 \			# Not really needed, adjusts memory
-	--output=./frame/identity/src/weights.rs \	# Output results into a Rust file
-	--header=./HEADER-APACHE2 \	# Custom header file to include with template
-	--template=./.maintain/frame-weight-template.hbs # Handlebar template
+    --chain=dev \                # 可配置的链规范
+    --steps=50 \                # 组件范围的步数
+    --repeat=20 \                # 我们重复基准测试的次数
+    --pallet=pallet_identity \    # 选择模块
+    --extrinsic=* \             # 选择外部函数（多个）
+    --wasm-execution=compiled \   # 始终使用 `wasm-time`
+    --heap-pages=4096 \          # 不是必需的，用于调整内存
+    --output=./frame/identity/src/weights.rs \    # 将结果输出到一个 Rust 文件
+    --header=./HEADER-APACHE2 \    # 包含模板的自定义头文件
+    --template=./.maintain/frame-weight-template.hbs # 手柄模板
 ```
 
 ---
 
-# Looking at Raw Benchmarking Data
+# 查看原始基准测试数据
 
 ---
 
-## Results: Extrinsic Time vs. # of Registrars
+## 结果：外部函数时间与注册商数量的关系
 
 <img style="height: 500px;" src="./img/identity-raw-registrars.png" />
 
 Notes:
 
-Graph source: <https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
+图表来源：<https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
 
 ---
 
-## Results: Extrinsic Time vs. # of Sub-Accounts
+## 结果：外部函数时间与子账户数量的关系
 
 <img style="height: 500px;" src="./img/identity-raw-sub.png" />
 
 Notes:
 
-Graph source: <https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
+图表来源：<https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
 
 ---
 
-## Results: Extrinsic Time vs. Additional Fields
+## 结果：外部函数时间与附加字段数量的关系
 
 <img style="height: 500px;" src="./img/identity-raw-fields.png" />
 
 Notes:
 
-Graph source: <https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
+图表来源：<https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
 
 ---
 
-## Result: DB Operations vs. Sub Accounts
+## 结果：数据库操作与子账户的关系
 
 <img style="height: 500px;" src="./img/identity-db-sub.png" />
 
 Notes:
 
-Graph source: <https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
+图表来源：<https://www.shawntabrizi.com/substrate-graph-benchmarks/old/>
 
 ---
 
-## Final Weight
+## 最终权重
 
 ```rust
-// Storage: Identity SubsOf (r:1 w:1)
-// Storage: Identity IdentityOf (r:1 w:1)
-// Storage: System Account (r:1 w:1)
-// Storage: Identity SuperOf (r:0 w:100)
-/// The range of component `r` is `[1, 20]`.
-/// The range of component `s` is `[0, 100]`.
-/// The range of component `x` is `[0, 100]`.
+// 存储：身份 SubsOf（读:1 写:1）
+// 存储：身份 IdentityOf（读:1 写:1）
+// 存储：系统账户（读:1 写:1）
+// 存储：身份 SuperOf（读:0 写:100）
+/// 组件 `r` 的范围是 `[1, 20]`。
+/// 组件 `s` 的范围是 `[0, 100]`。
+/// 组件 `x` 的范围是 `[0, 100]`。
 fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight {
-	// Minimum execution time: 68_794 nanoseconds.
-	Weight::from_ref_time(52_114_486 as u64)
-		// Standard Error: 4_808
-		.saturating_add(Weight::from_ref_time(153_462 as u64).saturating_mul(r as u64))
-		// Standard Error: 939
-		.saturating_add(Weight::from_ref_time(1_084_612 as u64).saturating_mul(s as u64))
-		// Standard Error: 939
-		.saturating_add(Weight::from_ref_time(170_112 as u64).saturating_mul(x as u64))
-		.saturating_add(T::DbWeight::get().reads(3 as u64))
-		.saturating_add(T::DbWeight::get().writes(3 as u64))
-		.saturating_add(T::DbWeight::get().writes((1 as u64).saturating_mul(s as u64)))
+    // 最小执行时间：68,794 纳秒。
+    Weight::from_ref_time(52_114_486 as u64)
+        // 标准误差：4,808
+       .saturating_add(Weight::from_ref_time(153_462 as u64).saturating_mul(r as u64))
+        // 标准误差：939
+       .saturating_add(Weight::from_ref_time(1_084_612 as u64).saturating_mul(s as u64))
+        // 标准误差：939
+       .saturating_add(Weight::from_ref_time(170_112 as u64).saturating_mul(x as u64))
+       .saturating_add(T::DbWeight::get().reads(3 as u64))
+       .saturating_add(T::DbWeight::get().writes(3 as u64))
+       .saturating_add(T::DbWeight::get().writes((1 as u64).saturating_mul(s as u64)))
 }
 ```
 
 ---
 
-## WeightInfo Generation
+## 权重信息生成
 
 ```rust
-/// Weight functions needed for pallet_identity.
+/// pallet_identity 所需的权重函数。
 pub trait WeightInfo {
-	fn add_registrar(r: u32, ) -> Weight;
-	fn set_identity(r: u32, x: u32, ) -> Weight;
-	fn set_subs_new(s: u32, ) -> Weight;
-	fn set_subs_old(p: u32, ) -> Weight;
-	fn clear_identity(r: u32, s: u32, x: u32, ) -> Weight;
-	fn request_judgement(r: u32, x: u32, ) -> Weight;
-	fn cancel_request(r: u32, x: u32, ) -> Weight;
-	fn set_fee(r: u32, ) -> Weight;
-	fn set_account_id(r: u32, ) -> Weight;
-	fn set_fields(r: u32, ) -> Weight;
-	fn provide_judgement(r: u32, x: u32, ) -> Weight;
-	fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight;
-	fn add_sub(s: u32, ) -> Weight;
-	fn rename_sub(s: u32, ) -> Weight;
-	fn remove_sub(s: u32, ) -> Weight;
-	fn quit_sub(s: u32, ) -> Weight;
+    fn add_registrar(r: u32, ) -> Weight;
+    fn set_identity(r: u32, x: u32, ) -> Weight;
+    fn set_subs_new(s: u32, ) -> Weight;
+    fn set_subs_old(p: u32, ) -> Weight;
+    fn clear_identity(r: u32, s: u32, x: u32, ) -> Weight;
+    fn request_judgement(r: u32, x: u32, ) -> Weight;
+    fn cancel_request(r: u32, x: u32, ) -> Weight;
+    fn set_fee(r: u32, ) -> Weight;
+    fn set_account_id(r: u32, ) -> Weight;
+    fn set_fields(r: u32, ) -> Weight;
+    fn provide_judgement(r: u32, x: u32, ) -> Weight;
+    fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight;
+    fn add_sub(s: u32, ) -> Weight;
+    fn rename_sub(s: u32, ) -> Weight;
+    fn remove_sub(s: u32, ) -> Weight;
+    fn quit_sub(s: u32, ) -> Weight;
 }
 ```
 
 ---
 
-## WeightInfo Integration
+## 权重信息集成
 
 ```rust
 #[pallet::weight(T::WeightInfo::kill_identity(
-	T::MaxRegistrars::get(), // R
-	T::MaxSubAccounts::get(), // S
-	T::MaxAdditionalFields::get(), // X
+    T::MaxRegistrars::get(), // R
+    T::MaxSubAccounts::get(), // S
+    T::MaxAdditionalFields::get(), // X
 ))]
 pub fn kill_identity(
-	origin: OriginFor<T>,
-	target: AccountIdLookupOf<T>,
+    origin: OriginFor<T>,
+    target: AccountIdLookupOf<T>,
 ) -> DispatchResultWithPostInfo {
 
-	// -- snip --
+    // -- 省略 --
 
-	Ok(Some(T::WeightInfo::kill_identity(
-		id.judgements.len() as u32,      // R
-		sub_ids.len() as u32,            // S
-		id.info.additional.len() as u32, // X
-	))
-	.into())
+    Ok(Some(T::WeightInfo::kill_identity(
+        id.judgements.len() as u32,      // R
+        sub_ids.len() as u32,            // S
+        id.info.additional.len() as u32, // X
+    ))
+   .into())
 }
 ```
 
 ---
 
-## Initial Weight
+## 初始权重
 
 ```rust
 #[pallet::weight(T::WeightInfo::kill_identity(
-	T::MaxRegistrars::get(), // R
-	T::MaxSubAccounts::get(), // S
-	T::MaxAdditionalFields::get(), // X
+    T::MaxRegistrars::get(), // R
+    T::MaxSubAccounts::get(), // S
+    T::MaxAdditionalFields::get(), // X
 ))]
 ```
 
-- Use the WeightInfo function as the weight definition for your function.
-- Note that we assume absolute worst case scenario to begin since we cannot know these specific values until we query storage.
+- 将权重信息函数用作你函数的权重定义。
+- 请注意，我们从一开始就假设是绝对最坏的情况，因为在查询存储之前我们无法知道这些具体值。
 
 ---
 
-## Final Weight (Refund)
+## 最终权重（退款）
 
 ```rust
-pub fn kill_identity(...) -> DispatchResultWithPostInfo { ... }
+pub fn kill_identity(...) -> DispatchResultWithPostInfo {... }
 ```
 
 ```rust
 Ok(Some(T::WeightInfo::kill_identity(
-	id.judgements.len() as u32,      // R
-	sub_ids.len() as u32,            // S
-	id.info.additional.len() as u32, // X
+    id.judgements.len() as u32,      // R
+    sub_ids.len() as u32,            // S
+    id.info.additional.len() as u32, // X
 ))
 .into())
 ```
 
-- Then we return the actual weight used at the end!
-- We use the same WeightInfo formula, but using the values that we queried from storage as part of executing the extrinsic.
-- This only allows you to **decrease** the final weight. Nothing will happen if you return a bigger weight than the initial weight.
+- 然后我们返回最终使用的实际权重！
+- 我们使用相同的权重信息公式，但使用执行外部函数时从存储中查询的值。
+- 这只允许你**减少**最终权重。如果你返回的权重比初始权重大，将不会发生任何事情。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!--.slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
-In another presentation we will cover some of the things we learned while benchmarking, and best practices.
+在另一个演示中，我们将介绍我们在基准测试时学到的一些内容以及最佳实践。
 
 ---
 
-# Benchmarking Exercise
+# 基准测试练习

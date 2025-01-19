@@ -1,4 +1,4 @@
-# Build a Parachain
+# 构建一条平行链
 
 <!-- markdown-link-check-disable -->
 <center>

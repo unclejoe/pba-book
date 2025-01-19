@@ -1,4 +1,4 @@
-# Nominated Proof of Stake
+# 提名权益证明
 
 <!-- markdown-link-check-disable -->
 <center>

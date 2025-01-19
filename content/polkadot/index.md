@@ -1,4 +1,3 @@
 # 🟣 Polkadot
 
-The Polkadot blockchain covered in depth, focus on high-level design and practically how to utilize it's blockspace.
-Dive into the purpose, implementation, and protocols of Polkadot, the sharded multichain system.
+熟知 Polkadot 区块链，专注于高级设计以及如何实际利用它的区块空间。深入了解其分片多链系统的目的、实现和相关协议。

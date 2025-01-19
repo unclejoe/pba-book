@@ -4,85 +4,85 @@ description: FRAME, Pallets, System Pallet, Executive, Runtime Amalgamator.
 duration: 1 hour
 ---
 
-# FRAME Deep Dive
+# FRAME 深度剖析
 
 ---v
 
-## Agenda
+## 议程
 
-Recall the following figure:
+回想下面这张图：
 
 <img style="height: 600px" src="./img/frame0.svg" />
 
 Notes:
 
-Without frame, there is the runtime and there is the client, and an API that sits in between.
+如果没有 FRAME，就只有运行时和客户端，以及介于两者之间的 API。
 
 ---v
 
-## Agenda
+## 议程
 
-By the end of this lecture, you will fully understand this figure.
+在本讲座结束时，你将完全理解这张图。
 
 <img style="height: 600px" src="../intro/img/frame1.svg" />
 
 ---
 
-## Expanding A Pallet
+## 扩展一个 Pallet
 
-- Grab a simple pallet code, and expand it.
+- 拿一个简单的 Pallet 代码，然后对其进行扩展。
 
-- `Pallet` implements the transactions as public functions.
-- `Pallet` implements `Hooks`, and some equivalents like `OnInitialize`.
-- `enum Call` that has in itself is just an encoding of the transaction's data
+- `Pallet` 将交易实现为公共函数。
+- `Pallet` 实现了 `Hooks`，以及一些类似 `OnInitialize` 的等效功能。
+- `enum Call` 本身只是交易数据的一种编码。
 
-- and implements `UnfilteredDispatchable` (which just forward the call back to `Pallet`)
+- 并且实现了 `UnfilteredDispatchable`（它只是将调用转发回 `Pallet`）
 
 ---v
 
-### Expanding A Pallet
+### 扩展一个 Pallet
 
-- Make sure you understand why these 3 are the same!
+- 确保你明白为什么这三个是相同的！
 
 ```rust
 let origin = ..;
 
-// function call
+// 函数调用
 Pallet::<T>::set_value(origin, 10);
 
-// dispatch
+// 调度
 Call::<T>::set_value(10).dispatch_bypass_filter(origin);
 
-// fully qualified syntax.
+// 完全限定语法。
 <Call<T> as UnfilteredDispatch>::dispatch_bypass_filter(Call::<T>::set_value(10), origin);
 ```
 
 ---
 
-## `construct_runtime!` and Runtime Amalgamator.
+## `construct_runtime!` 和 Runtime Amalgamator。
 
-- Now, let's look at a minimal runtime amalgamator.
+- 现在，让我们来看一个最小化的运行时合并器。
 
 ---v
 
-### `construct_runtime!` and Runtime Amalgamator.
+### `construct_runtime!` 和 Runtime Amalgamator。
 
-- struct `Runtime`
-- implements the `Config` trait of all pallets.
-- implements all of the runtime APIs as functions.
-- `type System`, `type SimplePallet`.
-- `AllPalletsWithSystem` etc.
-  - and recall that all pallets implement things like `Hooks`, `OnInitialize`, and all of these traits are tuple-able.
-- enum `RuntimeCall`
-- enum `RuntimeEvent`, `GenesisConfig`, etc. but we don't have them here.
+- 结构体 `Runtime`
+- 实现所有 Pallet 的 `Config` 特征。
+- 将所有运行时 API 实现为函数。
+- `type System`，`type SimplePallet`。
+- `AllPalletsWithSystem` 等等。
+  - 并且回想一下，所有 Pallet 都实现了诸如 `Hooks`、`OnInitialize` 之类的功能，并且所有这些特征都是可组合成元组的。
+- 枚举 `RuntimeCall`
+- 枚举 `RuntimeEvent`、`GenesisConfig` 等等，但这里我们没有涉及。
 
 ---
 
 ## Executive
 
-- This part is somewhat optional to know in advance, but I want you to re-visit it in a week and then understand it all.
+- 这部分提前了解的话有点可选性，但我希望你一周后再回顾它，然后完全理解它。
 
-- I present to you, Executive struct:
+- 我向你介绍 Executive 结构体：
 
 ```rust
 pub struct Executive<
@@ -97,15 +97,15 @@ pub struct Executive<
 
 ---v
 
-#### Expanding The Generic Types.
+#### 扩展泛型类型。
 
 ```rust
 impl<
-    // System config, we know this now.
+    // 系统配置，我们现在知道这个了。
     System: frame_system::Config,
-    // The block type.
+    // 块类型。
     Block: sp_runtime::traits::Block<Header = System::Header, Hash = System::Hash>,
-    // Something that has all the hooks. We don't know anything else about pallets here.
+    // 包含所有钩子的东西。这里我们对 Pallet 其他方面并不了解。
     AllPalletsWithSystem: OnRuntimeUpgrade
       + OnInitialize<System::BlockNumber>
       + OnIdle<System::BlockNumber>
@@ -114,7 +114,7 @@ impl<
     COnRuntimeUpgrade: OnRuntimeUpgrade,
   > Executive<System, Block, Context, UnsignedValidator, AllPalletsWithSystem, COnRuntimeUpgrade>
 where
-  // This is the juicy party, and we have to learn more sp_runtime traits to follow.
+  // 这是关键部分，我们需要学习更多 sp_runtime 特征才能继续。
   Block::Extrinsic: Checkable,
   <Block::Extrinsic as Checkable>::Checked: Applyable
   <<Block::Extrinsic as Checkable>::Checked as Applyable>::Call: Dispatchable<_>,
@@ -125,9 +125,8 @@ where
 
 #### `Block::Extrinsic: Checkable`
 
-- Who implements `Checkable`?
-- That's right, the `generic::UncheckedExtrinsic` that we indeed used as `Block::Extrinsic` in the
-  top level runtime. Recall:
+- 谁实现了 `Checkable`？
+- 没错，就是我们在顶层运行时中确实用作 `Block::Extrinsic` 的 `generic::UncheckedExtrinsic`。回想一下：
 
 ```rust
 type UncheckedExtrinsic = generic::UncheckedExtrinsic<_, _, _, _>;
@@ -138,13 +137,13 @@ type Executive = frame_executive::Executive<_, Block, ...>;
 
 ---v
 
-#### What Does `Checkable<_>` Do?
+#### `Checkable<_>` 是做什么的？
 
-- Signature verification!
+- 签名验证！
 
 ```rust
 impl Checkable<_> for UncheckedExtrinsic<_, _, _, _> {
-  // this is the output type.
+  // 这是输出类型。
   type Checked = CheckedExtrinsic<AccountId, Call, Extra>;
 
   fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityError> {
@@ -157,27 +156,27 @@ impl Checkable<_> for UncheckedExtrinsic<_, _, _, _> {
 
 #### `<Block::Extrinsic as Checkable>::Checked: Applyable`
 
-- `UncheckedExtrinsic::Checked` is `CheckedExtrinsic`.
-- And it surely does implement `Applyable`.
+- `UncheckedExtrinsic::Checked` 是 `CheckedExtrinsic`。
+- 并且它确实实现了 `Applyable`。
 
 ---v
 
-#### What Does `Applyable<_>` Do?
+#### `Applyable<_>` 是做什么的？
 
-- TLDR: `Ok(self.call.dispatch(maybe_who.into()))`
-
----v
-
-#### Lastly: `<<Block::Extrinsic as Checkable>::Checked as Applyable>::Call: Dispatchable`
-
-- And guess who implemented `Dispatchable`, which we already looked at!
-- The `enum Call` that we had in our expanded file!
+- 简而言之：`Ok(self.call.dispatch(maybe_who.into()))`
 
 ---v
 
-### Circling Back..
+#### 最后：`<<Block::Extrinsic as Checkable>::Checked as Applyable>::Call: Dispatchable`
 
-So, to recap:
+- 猜猜谁实现了 `Dispatchable`，我们之前已经看过了！
+- 就是我们在扩展文件中有的 `enum Call`！
+
+---v
+
+### 回顾一下...
+
+所以，总结一下：
 
 ```rust
 struct Runtime;
@@ -211,3 +210,4 @@ let unchecked = UncheckedExtrinsic::new();
 let checked = unchecked.check();
 let _ = checked.apply();
 ```
+

@@ -1,4 +1,4 @@
-# Outer Enum
+# 外部枚举
 
 <!-- markdown-link-check-disable -->
 <center>

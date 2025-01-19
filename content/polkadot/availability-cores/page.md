@@ -1,4 +1,4 @@
-# Availability Cores
+# 深入探究可用性核心
 
 <!-- markdown-link-check-disable -->
 <center>

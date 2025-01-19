@@ -4,23 +4,23 @@ description: A review of the parts of Polkadot which develop its ecosystem and e
 duration: 1 hour
 ---
 
-# Ecosystem and Economy
+# 生态系统与经济
 
 ---
 
-## Ecosystem and Economy
+## 生态系统与经济
 
-This presentation will give you a high level overview of the ecosystem and economy of the Polkadot Network.
+本次演讲将为你提供 Polkadot 网络生态系统和经济的高级概述。
 
-Unfortunately this presentation could never be fully exhaustive, but perhaps it will shed light on areas previously unknown.
-
----
-
-# Economy
+不幸的是，本次演讲不可能涵盖所有内容，但或许它能为你揭示一些此前未知的领域。
 
 ---
 
-## The DOT Token
+# 经济
+
+---
+
+## DOT代币
 
 <div class="grid grid-cols-2">
 
@@ -32,11 +32,11 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 
 <div class="text-left">
 
-The DOT token can be in one of the following states:
+DOT代币可以处于以下状态之一：
 
-1. Transferable
-2. Locked (Frozen)
-3. Reserved (Held)
+1. 可转移
+2. 锁定（冻结）
+3. 预留（持有）
 
 </div>
 
@@ -44,56 +44,56 @@ The DOT token can be in one of the following states:
 
 ---
 
-## Reserved vs Locked Balance
+## 预留余额与锁定余额
 
-- New terms "Frozen" and "Held" are not quite used in Polkadot yet...
-- Both states belong to the user... but cannot be spent / transferred.
-- Reserved balances stack on top of one another.
-  - Useful for user deposits, or other use cases where there is sybil concerns.
-  - Ex: Deposit for storing data on-chain,
-- Locked balances can overlap each other.
-  - Useful when you want to use the same tokens for multiple use cases.
-  - Ex: Using the same tokens for both staking and voting in governance.
+- 新术语“冻结”和“持有”在 Polkadot 中尚未广泛使用……
+- 这两种状态下的余额都属于用户……但不能用于支出或转移。
+- 预留余额可以叠加。
+  - 这对于用户存款或存在女巫攻击风险的其他用例很有用。
+  - 例如：在链上存储数据的押金。
+- 锁定余额可以重叠。
+  - 当你想将相同的代币用于多个用例时，这很有用。
+  - 例如：将相同的代币同时用于质押和治理投票。
 
 ---
 
-## Storage Bloat
+## 存储膨胀
 
-One blockchain scaling problem is storage bloat over time.
+区块链扩容的一个问题是随着时间推移的存储膨胀。
 
 <br />
 
-Consider the "cost" of storing data on Ethereum:
+考虑在以太坊上存储数据的“成本”：
 
-- A one time gas fee based on the amount of data stored.
-- Once is it placed on the network, it lives there forever, with no additional costs.
-- Over a long enough period of time, the cost of storage per time will reduce to zero.
-
----
-
-## Storage Deposits
-
-To solve this problem, Polkadot additionally takes a storage deposit (in the form of Reserved Balance) for any data stored in the blockchain.
-
-- This deposit is returned to the user when the user removes the data from the chain.
-
-- This deposit can be quite extreme, since it is returned to the user, and can represent the impermanence or lack of "importance" of the data.
+- 基于存储数据量的一次性gas费用。
+- 一旦数据被放置在网络上，它就会永远存在，不再产生额外费用。
+- 在足够长的时间后，单位时间的存储成本将降至零。
 
 ---
 
-## Dust Accounts & Existential Deposit
+## 存储押金
 
-The most bloat-ful storage on most blockchains are user accounts:
+为了解决这个问题， Polkadot 对于存储在区块链中的任何数据都额外收取存储押金（以预留余额的形式）。
 
-- Both Ethereum and Bitcoin are riddled with "dust accounts" which have such a small balance, they are not worth "cleaning up".
+- 当用户从链上移除数据时，这笔押金将退还给用户。
 
-- Polkadot solves this by having an "existential deposit" that all users must hold a minimum amount of DOT, else their account data will be cleaned up.
-
-- Existential deposit can be thought of as a storage deposit for account data.
+- 这笔押金可能相当高，因为它会退还给用户，这也体现了数据的临时性或“不重要性”。
 
 ---
 
-## DOT is a Utility Token
+## 粉尘账户与存在性押金
+
+大多数区块链中最占用存储空间的是用户账户：
+
+- 以太坊和比特币都充斥着“粉尘账户”，这些账户的余额非常小，不值得“清理”。
+
+-  Polkadot 通过设置“存在性押金”来解决这个问题，所有用户必须持有最低数量的DOT，否则他们的账户数据将被清理。
+
+- 存在性押金可以被视为账户数据的存储押金。
+
+---
+
+## DOT是一种实用型代币
 
 <div class="grid grid-cols-3">
 
@@ -105,33 +105,33 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 <div class="text-left col-span-2">
 
-The DOT token serves multiple purposes to help the Polkadot network function:
+DOT代币有多种用途，以帮助 Polkadot 网络正常运行：
 
-- Staking
-- Bonding for Parachain Slots / Execution Cores
-- On-Chain Decision Making
-- Value Bearing for Trading / Using
+- 质押
+- 为平行链插槽/执行核心提供抵押
+- 链上决策
+- 用于交易/使用的价值承载
 
 </div>
 </div>
 
 ---
 
-## Ideal Usage of DOT Tokens
+## DOT代币的理想用途
 
 <img src="./img/ideal-token-distribution.svg" style="width: 1000px;">
 
-Approximately...
+大致比例如下：
 
 Notes:
 
-- 50% Staking / Governance
-- 30% Parachains
-- 20% Tradable / Useable
+- 50% 用于质押/治理
+- 30% 用于平行链
+- 20% 可用于交易/使用
 
 ---
 
-## DOT Inflation
+## DOT通胀
 
 <div class="grid grid-cols-2">
 
@@ -143,9 +143,9 @@ Notes:
 
 <div class="text-left">
 
-DOT is currently configured to have a fixed inflation rate of 10% per year.
+DOT目前的配置是每年固定10%的通胀率。
 
-Newly minted tokens are distributed to stakers (validators / nominators) and the treasury.
+新铸造的代币会分发给质押者（验证者/提名者）和国库。
 
 </div>
 
@@ -153,73 +153,73 @@ Newly minted tokens are distributed to stakers (validators / nominators) and the
 
 ---
 
-## Ideal Staking Rate
+## 理想质押率
 
-We cannot force / tell users how to use their tokens, so we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
+我们不能强迫或告诉用户如何使用他们的代币，因此我们通过将DOT代币的使用与通胀分配方式相关联来鼓励“理想”行为。
 
-There’s a function that redirects some of the 10% inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
+当`理想质押率 != 实际质押率`时，有一个函数会将10%通胀中的一部分重新分配到国库，而不是质押者手中。
 
-Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
+代币持有者在经济上有动力最大化他们的质押回报，从而合理分配他们的代币。
 
 ---
 
-## DOT Inflation vs Staking
+## DOT通胀与质押
 
 <img src="./img/staking-rate.png" style="width: 900px;">
 
-> Blue: Inflation vs Staking Rate
+> 蓝色：通胀率与质押率的关系
 >
-> Green: APY of Stakers vs Staking Rate
+> 绿色：质押者的年化收益率与质押率的关系
 >
-> Black: Total Inflation vs Staking Rate
+> 黑色：总通胀率与质押率的关系
 
 ---
 
-## DOT Utility: Parachains
+## DOT的实用价值：平行链
 
-Polkadot provides many utilities, but arguably its most important utility is providing flexible, secure, and scalable blockspace.
+ Polkadot 提供了许多实用功能，但可以说其最重要的实用功能是提供灵活、安全且可扩展的区块空间。
 
-Developers can purchase this blockspace as fixed-term or on-demand Parachains, **only** with the DOT token.
+开发者可以使用DOT代币购买固定期限或按需使用的平行链来获取这些区块空间。
 
 <br />
 
-> If you believe that flexible and secure blockspace has value, then you agree that DOT also has value.
+> 如果你认为灵活且安全的区块空间有价值，那么你就会认同DOT也有价值。
 
 ---
 
-## Expected Parachain Costs
+## 预计平行链成本
 
-Back of the napkin math:
+简单估算：
 
-- ~1 Billion DOT
-- 30% Locked Up for Parachains = 300 Million
-- ~100 Parachain = 3 Million DOT per Parachain Slot
+- 约10亿DOT
+- 30% 用于平行链锁定 = 3亿
+- 约100条平行链 = 每个平行链插槽300万DOT
 
-At equilibrium...
-
----
-
-## Parachain Economics Updates
-
-There is a lot of ongoing discussion about updating the economics of Parachains.
-
-Likely, these mechanics will update pretty soon, and continually over time.
+在达到平衡状态时……
 
 ---
 
-## DOT Utility: Staking
+## 平行链经济机制更新
+
+关于更新平行链的经济机制有很多讨论。
+
+很可能这些机制会很快更新，并且会随着时间不断调整。
+
+---
+
+## DOT的实用价值：质押
 
 <div class="grid grid-cols-3">
 
 <div class="col-span-2 text-left">
 
-Given the existence of a value bearing token, it can be used to provide security to Polkadot:
+鉴于存在一种具有价值承载功能的代币，它可以用于为 Polkadot 提供安全性：
 
-- If users want to provide security to the network, they can stake their tokens.
+- 如果用户想要为网络提供安全性，他们可以质押自己的代币。
 
-- Stakers are rewarded for good behavior, and punished for bad behavior.
+- 质押者会因良好行为获得奖励，因不良行为受到惩罚。
 
-- Punishments are aggressive enough that rational actors would never act maliciously.
+- 惩罚措施足够严厉，以至于理性的参与者不会采取恶意行为。
 
 <https://www.polkadot.network/features/staking/>
 
@@ -235,18 +235,18 @@ Given the existence of a value bearing token, it can be used to provide security
 
 ---
 
-## Staking: Validators and Nominators
+## 质押：验证者和提名者
 
 <div class="grid grid-cols-3">
 
 <div class="col-span-2 text-left">
 
-In the staking system, there are two roles:
+在质押系统中，有两个角色：
 
-- Validators: Those who run block producing / parachain validating nodes for Polkadot.
-- Nominators: Users who place their tokens behind validators they think will perform their job well.
+- 验证者：那些为 Polkadot 运行区块生产/平行链验证节点的人。
+- 提名者：将自己的代币支持给他们认为能够出色完成工作的验证者的用户。
 
-Validators (and their nominators) are rewarded based on work done for the network. Rewards may vary day to day, but should be consistent over long periods of time.
+验证者（及其提名者）会根据为网络所做的工作获得奖励。奖励可能每天都有所不同，但在较长时间内应该是稳定的。
 
 </div>
 
@@ -260,21 +260,21 @@ Validators (and their nominators) are rewarded based on work done for the networ
 
 ---
 
-## DOT Utility: Governance
+## DOT的实用价值：治理
 
 <div class="grid grid-cols-3">
 
 <div class="col-span-2 text-left">
 
-The future of Polkadot is decided by token holders.
+ Polkadot 的未来由代币持有者决定。
 
-Polkadot has an on-chain governance system called OpenGov which is used to:
+ Polkadot 有一个名为OpenGov的链上治理系统，用于：
 
-- Spend Treasury Funds
-- Upgrade the Network
-- Manage the Fellowship
-- Support Parachain Teams
-- etc...
+- 支出国库资金
+- 升级网络
+- 管理研究员团队
+- 支持平行链团队
+- 等等……
 
 <https://www.polkadot.network/features/opengov/>
 
@@ -290,21 +290,21 @@ Polkadot has an on-chain governance system called OpenGov which is used to:
 
 ---
 
-## Conviction Voting
+## 信念投票
 
-Polkadot utilizes an idea called voluntary locking / conviction voting.
+ Polkadot 采用了一种名为自愿锁定/信念投票的机制。
 
-This allows token holders to increase their voting power by locking up their tokens for a longer period of time.
+这允许代币持有者通过更长时间地锁定他们的代币来增加他们的投票权。
 
 ```text
-votes = tokens * conviction_multiplier
+投票数 = 代币数 * 信念乘数
 ```
 
-The conviction multiplier increases the vote multiplier by one every time the number of lock periods double.
+信念乘数会在锁定周期数每次翻倍时将投票乘数增加1。
 
 <div class="text-small">
 
-| Lock Periods | Vote Multiplier | Length in Days |
+| 锁定周期数 | 投票乘数 | 时长（天） |
 | ------------ | --------------- | -------------- |
 | 0            | 0.1             | 0              |
 | 1            | 1               | 7              |
@@ -318,109 +318,109 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 
 ---
 
-## Tracks
+## 投票轨道
 
-The OpenGov system has different voting tracks which have different levels of power, and proportionally different level of difficulty to pass.
+OpenGov系统有不同的投票轨道，它们具有不同的权力级别，并且通过的难度也成比例不同。
 
-Here are just some of the currently 15 tracks:
+以下是目前15个轨道中的一部分：
 
-| ID  |       Origin       | Decision Deposit | Prepare Period | Decision Period | Confirm Period | Min Enactment Period |
+| ID  |       来源       | 决策押金 | 准备期 | 决策期 | 确认期 | 最短生效期 |
 | :-: | :----------------: | :--------------: | :------------: | :-------------: | :------------: | :------------------: |
-|  0  |        Root        |    100000 DOT    |    2 Hours     |     28 Days     |     1 Day      |        1 Day         |
-|  1  | Whitelisted Caller |    10000 DOT     |   30 Minutes   |     28 Days     |   10 Minutes   |      10 Minutes      |
-| 10  |   Staking Admin    |     5000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |      10 Minutes      |
-| 11  |     Treasurer      |     1000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |        1 Day         |
-| 12  |    Lease Admin     |     5000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |      10 Minutes      |
+|  0  |        根         |    100000 DOT    |    2小时     |     28天     |     1天      |        1天         |
+|  1  | 白名单调用者 |    10000 DOT     |   30分钟   |     28天     |   10分钟   |      10分钟      |
+| 10  |   质押管理员    |     5000 DOT     |    2小时     |     28天     |    3小时     |      10分钟      |
+| 11  |     财务主管      |     1000 DOT     |    2小时     |     28天     |    3小时     |        1天         |
+| 12  |    租赁管理员     |     5000 DOT     |    2小时     |     28天     |    3小时     |      10分钟      |
 
 ---
 
-## Approval and Support Curves
+## 批准和支持曲线
 
-Each track has their own set of curves which determine if the proposal has passed or failed.
+每个轨道都有自己的一组曲线，用于确定提案是通过还是失败。
 
-All votes will eventually resolve one way or another.
+所有投票最终都会以某种方式得到解决。
 
 <img src="./img/pjs-curves.png" style="width: 1000px;">
 
-You can find these curves on the Polkadot JS Developer Console.
+你可以在 Polkadot JS开发者控制台中找到这些曲线。
 
 ---
 
-## Example: Root
+## 示例：根
 
-The origin with the highest level of privileges. Requires extremely high levels of approval and support for early passing. The prepare and enactment periods are also large.
+具有最高特权级别的来源。要想在早期通过提案，需要极高的批准率和支持率。准备期和生效期也较长。
 
 <img src="./img/root-curve.png" style="width: 800px;">
 
-For instance, a referendum proposed in this track needs to amass 48.2% support (total network issuance) by the end of the first day with over 93.5% approval to be considered to be part of the confirm period.
+例如，在这个轨道上提出的公投提案需要在第一天结束时获得48.2%的支持率（全网发行量），且批准率超过93.5%，才能进入确认期。
 
 ---
 
-## Governance Token Mechanics
+## 治理代币机制
 
-- DOT tokens are locked when you vote on a proposal.
-- You can reuse your locked tokens across multiple proposals.
-  - Voting for one proposal does not affect your ability to vote on another proposal.
-- You can also reuse staked tokens (which are also just locked).
-- You can update your vote while the proposal is ongoing.
-- If you used conviction voting, your tokens might be locked for long periods of time passed the end of a proposal.
-
----
-
-## Treasury
-
-Polkadot has an on-chain treasury which is used to support permissionless and decentralized development of the network.
-
-Treasury gets its funds through inefficiencies in the inflation curve, slashing, and by taking 80% transaction fees.
-
-Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
+- 当你对提案进行投票时，DOT代币会被锁定。
+- 你可以在多个提案中重复使用锁定的代币。
+  - 对一个提案进行投票不会影响你对其他提案的投票能力。
+- 你还可以重复使用质押的代币（这些代币也只是被锁定）。
+- 在提案进行期间，你可以更新你的投票。
+- 如果你使用了信念投票，你的代币可能会在提案结束后被锁定很长时间。
 
 ---
 
-## Treasury Outlets
+## 国库
 
-- Proposals: Instant payments to individuals approved by governance.
-- Bounties: Multi-stage payments to individuals managed by governance and an appointed bounty curator.
-- Tips: Small payments to individuals that can be made more easily through specific governance tracks.
+ Polkadot 有一个链上国库，用于支持网络的无许可和去中心化开发。
 
-The Polkadot Treasury currently has over 45,000,000 DOT.
+国库的资金来源包括通胀曲线的低效部分、惩罚扣除以及80%的交易费用。
 
----
-
-# Ecosystem
+国库会在每个支出周期（24天）自动销毁其资金的1%，这会促使资金的使用。
 
 ---
 
-## Alternative Polkadot Clients
+## 国库支出渠道
 
-The main Polkadot Client is built using Rust in Substrate.
+- 提案：经治理批准后向个人的即时支付。
+- 赏金：由治理和指定的赏金管理员管理的分阶段向个人支付。
+- 小费：可以通过特定治理轨道更轻松地向个人支付的小额款项。
 
-However, other clients for Polkadot are under development:
-
-- Kagome (C++17): <https://github.com/qdrvm/kagome>
-- Gossamer (Go): <https://github.com/ChainSafe/gossamer>
-
-Over time, this can help provide additional resilience to the network from software bugs.
+ Polkadot 国库目前拥有超过45,000,000 DOT。
 
 ---
 
-## Types of Parachains
+# 生态系统
 
-- Polkadot System Chains
-- Market Bought Parachains
+---
+
+##  Polkadot 的替代客户端
+
+ Polkadot 的主要客户端是使用Rust语言在Substrate上构建的。
+
+然而，其他 Polkadot 客户端正在开发中：
+
+- Kagome (C++17)：<https://github.com/qdrvm/kagome>
+- Gossamer (Go)：<https://github.com/ChainSafe/gossamer>
+
+随着时间的推移，这可以帮助网络从软件漏洞中获得额外的弹性。
+
+---
+
+## 平行链的类型
+
+-  Polkadot 系统链
+- 平行链的购买市场
 
 <br />
 
-Perhaps this list will grow once more agile core allocation systems are implemented.
+一旦实施更灵活的核心分配系统，这个列表可能会进一步扩展。
 
 ---
 
-## System Chains
+## 系统链
 
-- System parachains contain core Polkadot protocol features, on a parachain rather than the Relay Chain.
-- Polkadot uses its own parallel execution scaling technology scale itself.
-- System parachains remove transactions from the Relay Chain, allowing more Relay Chain blockspace to be used for Polkadot's primary purpose: validating parachains.
-- System Chains are allocated by governance.
+- 系统平行链包含 Polkadot 核心协议功能，这些功能位于平行链而非中继链上。
+-  Polkadot 使用自己的并行执行扩展技术来实现自身的扩展。
+- 系统平行链将交易从中继链中移除，从而使更多的中继链区块空间可用于 Polkadot 的主要目的：验证平行链。
+- 系统链由治理机构分配。
 
 Notes:
 
@@ -428,219 +428,154 @@ Notes:
 
 ---
 
-## Current and Future System Chains
+## 当前和未来的系统链
 
-Current:
+当前：
 
-- Asset Hub: Allows creation and registration of tokens (FT & NFTs).
-- Collectives: Acts as a place for coordination of the Polkadot DAOs.
-- Bridge Hub: A chain for managing bridges to other networks.
-- Encointer: A third-party built chain providing Proof of Personhood.
+- 资产中心：允许创建和注册代币（FT和NFT）。
+- 集体：作为 Polkadot 去中心化自治组织（DAO）的协调场所。
+- 桥接中心：用于管理与其他网络的桥接的链。
+- Encointer：第三方构建的提供身份验证的链。
 
-Future:
+未来：
 
-- Staking: Manage all the validator and nominator logic, rewards, etc...
-- Governance: Manage all the various proposals and tracks.
-- Eventually everything...
+- 质押：管理所有验证者和提名者的逻辑、奖励等……
+- 治理：管理所有各种提案和轨道。
+- 最终会涵盖所有方面……
 
 Notes:
-
 <https://wiki.polkadot.network/docs/learn-system-chains>
 
 ---
 
-## Market Bought Parachains
-
+## 平行链的购买市场
 <div class="grid grid-cols-2">
-
-<div>
-
-Anyone with a great idea, and access to DOT token, can launch a parachain on Polkadot.
-
-Dozens of teams from around the world have already done that, and are taking advantage of the features that Polkadot provides.
-
+  <div>
+    任何有好想法且拥有DOT代币的人，都可以在 Polkadot 上启动一条平行链。
+    全球已有数十个团队这么做了，他们正在利用 Polkadot 提供的各种功能。
+  </div>
+  <div>
+    <img src="./img/polkadot-parachains.svg" style="width: 500px;">
+  </div>
 </div>
-
-<div>
-
-<img src="./img/polkadot-parachains.svg" style="width: 500px;">
-
-</div>
-
-</div>
-
 Notes:
-
 <https://polkadot.subscan.io/parachain>
 
 ---
 
-## Ecosystem Verticals
-
-While this list is not exhaustive, some of the verticals we have seen appear in Polkadot are:
-
+## 生态系统垂直领域
+虽然这个列表并不详尽，但我们在 Polkadot 生态中看到的一些垂直领域包括：
 <div class="grid grid-cols-5">
-
-<div class="col-span-3">
-
-- Smart Contract Chains
-- Decentralized Finance (DeFi)
-- Decentralized Social (DeSo)
-- Decentralized Identity (DID) Services
-- Tokenization (Real World Assets)
-
+  <div class="col-span-3">
+    - 智能合约链
+    - 去中心化金融（DeFi）
+    - 去中心化社交（DeSo）
+    - 去中心化身份（DID）服务
+    - 通证化（现实世界资产）
+  </div>
+  <div class="col-span-2">
+    - 游戏
+    - 非同质化代币（NFT，如音乐、艺术等领域）
+    - 跨链桥
+    - 文件存储
+    - 隐私保护
+  </div>
 </div>
-
-<div class="col-span-2">
-
-- Gaming
-- NFTs (Music, Art, etc...)
-- Bridges
-- File Storage
-- Privacy
-
-</div>
-
-</div>
-
 Notes:
-
 <https://substrate.io/ecosystem/projects/>
 
 ---
 
-## Wallets
-
-Thanks to the treasury and Polkadot community, a number of different wallets have been developed across the ecosystem.
-
+## 钱包
+得益于 Polkadot 财政部和社区，生态系统中开发出了许多不同的钱包。
 <div class="text-small">
-
-|     Wallet      |                  Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
+| 钱包名称 | 支持平台 | 质押和提名池 | NFT支持 | 众贷支持 | Ledger硬件钱包支持 | 治理支持 |
 | :-------------: | :-----------------------------------------: | :--------------------------: | :--: | :--------: | :------------: | :--------: |
-|     Enkrypt     | Brave, Chrome, Edge, Firefox, Opera, Safari |            No, No            | Yes  |     No     |      Yes       |     No     |
-|    PolkaGate    |        Brave, Chrome, Firefox, Edge         |           Yes, Yes           |  No  |    Yes     |      Yes       |    Yes     |
-|    SubWallet    | Brave, Chrome, Edge, Firefox, iOs, Android  |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-|    Talisman     |        Brave, Chrome, Edge, Firefox         |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-| Fearless Wallet |         Brave, Chrome, iOS, Android         |           Yes, Yes           |  No  |     No     |       No       |     No     |
-|   Nova Wallet   |                iOS, Android                 |           Yes, Yes           | Yes  |    Yes     |      Yes       |    Yes     |
-|   Polkawallet   |                iOS, Android                 |           Yes, Yes           |  No  |    Yes     |       No       |    Yes     |
-
+| Enkrypt | Brave、Chrome、Edge、Firefox、Opera、Safari | 否，否 | 是 | 否 | 是 | 否 |
+| PolkaGate | Brave、Chrome、Firefox、Edge | 是，是 | 否 | 是 | 是 | 是 |
+| SubWallet | Brave、Chrome、Edge、Firefox、iOS、Android | 是，是 | 是 | 是 | 是 | 否 |
+| Talisman | Brave、Chrome、Edge、Firefox | 是，是 | 是 | 是 | 是 | 否 |
+| Fearless Wallet | Brave、Chrome、iOS、Android | 是，是 | 否 | 否 | 否 | 否 |
+| Nova Wallet | iOS、Android | 是，是 | 是 | 是 | 是 | 是 |
+| Polkawallet | iOS、Android | 是，是 | 否 | 是 | 否 | 是 |
 </div>
-
-<!-- FIXME TODO ensure this is updated! Consider more pretty with icons or other images -->
-
+<!-- FIXME TODO确保信息更新！考虑使用图标或其他图片让表格更好看 -->
 Notes:
 
 ---
 
-## Ledger Support w/ Metadata
-
+## 带有元数据的Ledger支持
 <div class="grid grid-cols-3">
-
-<div class="col-span-2">
-
-Polkadot has been working with Ledger to provide rich support for the Polkadot network.
-
-Users can get clear visibility into the transactions they are signing, and perform complicated tasks such as batching, multisigs, staking, governance, and more.
-
-</div>
-
-<div>
-
-<img src="./img/ledger.webp" style="width: 500px;">
-
-</div>
-
+  <div class="col-span-2">
+     Polkadot 一直在与Ledger合作，为 Polkadot 网络提供丰富的支持。
+    用户可以清晰地查看他们正在签署的交易，并执行诸如批量操作、多重签名、质押、参与治理等复杂任务。
+  </div>
+  <div>
+    <img src="./img/ledger.webp" style="width: 500px;">
+  </div>
 </div>
 
 ---
 
-## Block Explorers
-
-- Polkadot-JS Apps Explorer - Polkadot dashboard block explorer. Supports dozens of other networks, including Kusama, Westend, and other remote or local endpoints.
-- Polkascan - Blockchain explorer for Polkadot, Kusama, and other related chains.
-- Subscan - Blockchain explorer for Substrate chains.
-- DotScanner - Polkadot & Kusama Blockchain explorer.
-- 3xpl.com - Fastest ad-free universal block explorer and JSON API with Polkadot support.
-- Blockchair.com - Universal blockchain explorer and search engine with Polkadot support.
-- Polkaholic.io - Polkadot & Kusama Blockchain explorer with API and DeFi support across 40+ parachains.
-
+## 区块浏览器
+- Polkadot-JS Apps Explorer -  Polkadot 仪表盘式的区块浏览器。支持数十个其他网络，包括Kusama、Westend以及其他远程或本地端点。
+- Polkascan - 用于 Polkadot 、Kusama及其他相关链的区块链浏览器。
+- Subscan - 用于Substrate链的区块链浏览器。
+- DotScanner -  Polkadot 和Kusama区块链浏览器。
+- 3xpl.com - 最快的无广告通用区块浏览器和支持 Polkadot 的JSON API。
+- Blockchair.com - 支持 Polkadot 的通用区块链浏览器和搜索引擎。
+- Polkaholic.io - 支持 Polkadot 和Kusama的区块链浏览器，提供API和对40多条平行链的DeFi支持。
 Notes:
-
 <https://wiki.polkadot.network/docs/build-tools-index#block-explorers>
 
 ---
 
-## Governance Dashboards
-
-The most popular ones at the moment:
-
+## 治理仪表盘
+目前最受欢迎的有：
 <div class="grid grid-cols-2">
-
-<div>
-
-### Polkassembly
-
-<img src="./img/polkassembly.png" style="width: 600px;">
-
-</div>
-
-<div>
-
-### Subsquare
-
-<img src="./img/subsquare.png" style="width: 600px;">
-
-</div>
-
+  <div>
+    ### Polkassembly
+    <img src="./img/polkassembly.png" style="width: 600px;">
+  </div>
+  <div>
+    ### Subsquare
+    <img src="./img/subsquare.png" style="width: 600px;">
+  </div>
 </div>
 
 ---
 
-## Polkadot Forum
-
+##  Polkadot 论坛
 <img src="./img/forum.png" style="width: 1200px;">
-
 Notes:
-
 <https://forum.polkadot.network/>
 
 ---
 
-## Fellowship
-
-The Polkadot Fellowship is a decentralized technical collective on the Polkadot network designed to recognize, nurture, and incentivize contributors to the core Polkadot protocol.
+##  Polkadot 开发者社区（Fellowship）
+ Polkadot 开发者社区是 Polkadot 网络上的一个去中心化技术团体，旨在认可、培养并激励 Polkadot 核心协议的贡献者。
 
 ---
 
-## Fellowship Manifesto
-
+## 开发者社区宣言
 <img src="./img/fellowship-manifesto.png" style="width: 1200px;">
-
 Notes:
-
 <https://github.com/polkadot-fellows>
 
 ---
 
-## Fellowship Members
-
+## 开发者社区成员
 <img src="./img/fellowship-members.png" style="width: 1200px;">
-
 Notes:
-
 <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/fellowship>
 
 ---
 
-## RFCs
-
+## 请求评论（RFCs）
 <img src="./img/rfcs.png" style="width: 1200px;">
 
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
+# 问题
 
-# Questions
-
-Did I miss anything?
+有遗漏什么内容吗？ 

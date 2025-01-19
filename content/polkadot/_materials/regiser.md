@@ -1,10 +1,10 @@
-# Register a Parachain
+# 注册一条平行链
 
-Follow along the docs here: <https://docs.substrate.io/tutorials/build-application-logic/use-macros-in-a-custom-pallet/>
+参考此文档 : <https://docs.substrate.io/tutorials/build-application-logic/use-macros-in-a-custom-pallet/>
 
-Specifically you will need to:
+特别是下列文档 :
 
-1. Setup a relay chain - <https://docs.substrate.io/tutorials/build-a-parachain/prepare-a-local-relay-chain/>
-1. Connect a parachain - <https://docs.substrate.io/tutorials/build-a-parachain/connect-a-local-parachain/>
+1. 设置一条中继链 - <https://docs.substrate.io/tutorials/build-a-parachain/prepare-a-local-relay-chain/>
+1. 平行链连接到中继链 - <https://docs.substrate.io/tutorials/build-a-parachain/connect-a-local-parachain/>
 
-The remainder are extra fun.
+剩下的就是尽情享受吧。

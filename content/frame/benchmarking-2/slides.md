@@ -4,90 +4,96 @@ description: How to benchmark Pallets in FRAME.
 duration: 1 hours
 ---
 
-# FRAME Benchmarking
+---
+标题: FRAME基准测试2
+描述: 如何在FRAME中进行基准测试。
+时长: 1小时
+---
 
-## Lesson 2
+# FRAME 基准测试
+
+## 第2课
 
 ---
 
-## Overview
+## 概述
 
-- Databases
-- Our Learnings Throughout Development
-- Best Practices and Common Patterns
+- 数据库
+- 我们在开发过程中的收获
+- 最佳实践和常见模式
 
 ---
 
-# Databases
+# 数据库
 
 ---
 
 ### RocksDB
 
-A Persistent Key-Value Store for Flash and RAM Storage.
+一个用于闪存和内存存储的持久化键值存储系统。
 
-- Keys and values are arbitrary byte arrays.
-- Fast for a general database.
+- 键和值是任意字节数组。
+- 对于通用数据库来说速度较快。
 
-See: <https://rocksdb.org/>.
+参见: <https://rocksdb.org/>.
 
-Big project, can be very tricky to configure properly.
+大型项目，要正确配置可能非常棘手。
 
-Notes:
+备注:
 
-(also a big part of substrate compilation time).
+（也是Substrate编译时间的一个重要组成部分）。
 
 ---
 
 ### ParityDB
 
-An Embedded Persistent Key-Value Store Optimized for Blockchain Applications.
+一个针对区块链应用优化的嵌入式持久化键值存储系统。
 
-- Keys and values are arbitrary byte arrays.
-- Designed for efficiently storing Patricia-Merkle trie nodes.
-  - Mostly Fixed Size Keys.
-  - Mostly Small Values.
-  - Uniform Distribution.
-- Optimized for read performance.
+- 键和值是任意字节数组。
+- 专为高效存储Patricia-Merkle树节点而设计。
+  - 大多是固定大小的键。
+  - 大多是小值。
+  - 均匀分布。
+- 针对读取性能进行了优化。
 
-Notes:
+备注:
 
-See: <https://github.com/paritytech/parity-db/issues/82
+参见: <https://github.com/paritytech/parity-db/issues/82
 
-Main point is that paritydb suit the triedb model.
-Indeed triedb store encoded key by their hash.
-So we don't need rocksdb indexing, no need to order data.
-Parity db index its content by hash of key (by default), which makes access faster (hitting entry of two file generally instead of possibly multiple btree indexing node).
-Iteration on state value is done over the trie structure: having a KVDB with iteration support isn't needed.
+主要观点是ParityDB适合triedb模型。
+实际上，triedb通过哈希值存储编码后的键。
+所以我们不需要RocksDB的索引，也不需要对数据进行排序。
+ParityDB默认通过键的哈希值对其内容进行索引，这使得访问速度更快（通常只需访问两个文件的条目，而不是可能的多个B树索引节点）。
+对状态值的迭代是通过树结构进行的：不需要使用支持迭代的键值数据库。
 
-Both rocksdb and paritydb uses "Transactions" as "writes done in batches".
-We typically run a transaction per block (all in memory before), things are fast (that's probably what you meant).
-In blockchains, writes are typically performed in large batches, when the new block is imported and must be done atomically.
-See: <https://github.com/paritytech/parity-db>
+RocksDB和ParityDB都使用“事务”作为“批量写入”。
+我们通常每个区块运行一个事务（之前所有操作都在内存中进行），速度很快（这可能就是你所指的）。
+在区块链中，写入通常是以大批量进行的，当导入新的区块时，必须以原子方式完成。
+参见: <https://github.com/paritytech/parity-db>
 
-Concurrency does not matter in this, paritydb lock access to single writer (no concurrency).
-Similarly code strive at being simple and avoid redundant feature: no cache in parity db (there is plenty in substrate).
+在这种情况下，并发并不重要，ParityDB会锁定对单个写入者的访问（不支持并发）。
+同样，代码力求简单，避免冗余功能：ParityDB中没有缓存（Substrate中有很多缓存）。
 
-'Quick commit' : all changes are stored in memory on commit , and actual writing in the WriteAheadLog is done in an asynchronous way.
+'快速提交'：提交时，所有更改都存储在内存中，而实际写入WriteAheadLog是以异步方式进行的。
 
-TODO merge with content from <https://github.com/paritytech/parity-db/issues/82>
-
----
-
-### ParityDB: Probing Hash Table
-
-ParityDB is implemented as a probing hash table.
-
-- As opposed to a log-structured merge (LSM) tree.
-  - Used in Apache AsterixDB, Bigtable, HBase, LevelDB, Apache Accumulo, SQLite4, Tarantool, RocksDB, WiredTiger, Apache Cassandra, InfluxDB, ScyllaDB, etc...
-- Because we do not require key ordering or iterations for trie operations.
-- This means read performance is constant time, versus $O(\log{n})$.
+待办事项：合并<https://github.com/paritytech/parity-db/issues/82>中的内容
 
 ---
 
-### ParityDB: Fixed Size Value Tables
+### ParityDB: 探测哈希表
 
-- Each column stores data in a set of 256 value tables, with 255 tables containing entries of certain size range up to 32 KB limit.
+ParityDB是作为一个探测哈希表实现的。
+
+- 与日志结构合并（LSM）树不同。
+  - 用于Apache AsterixDB、Bigtable、HBase、LevelDB、Apache Accumulo、SQLite4、Tarantool、RocksDB、WiredTiger、Apache Cassandra、InfluxDB、ScyllaDB等。
+- 因为我们在树操作中不需要键排序或迭代。
+- 这意味着读取性能是常数时间，而不是$O(\log{n})$。
+
+---
+
+### ParityDB: 固定大小值表
+
+- 每列数据存储在一组256个值表中，其中255个表包含大小范围在32 KB以内的条目。
 
 <div class="text-smaller">
 
@@ -113,48 +119,48 @@ const SIZES: [u16; SIZE_TIERS - 1] = [
 
 </div>
 
-- The last 256th value table size stores entries that are over 32 KB split into multiple parts.
+- 第256个值表存储大小超过32 KB的条目，这些条目会被分成多个部分。
 
 ---
 
-### ParityDB: Fixed Size Value Tables
+### ParityDB: 固定大小值表
 
-- More than 99% of trie nodes are less than 32kb in size.
-- Small values only require 2 reads: One index lookup and one value table lookup.
-- Values over 32kb may require multiple value table reads, but these are rare.
-- Helps minimize unused disk space.
-- For example, if you store a 670 byte value, it won't fit into 662 bucket, but will into 680 bucket, wasting only 10 bytes of space.
+- 超过99%的树节点大小小于32kb。
+- 小值只需要两次读取：一次索引查找和一次值表查找。
+- 大小超过32kb的值可能需要多次值表读取，但这种情况很少见。
+- 有助于最小化未使用的磁盘空间。
+- 例如，如果你存储一个670字节的值，它不会放入662字节的存储桶中，但会放入680字节的存储桶中，只浪费10字节的空间。
 
-Notes:
+备注:
 
-That fact that most values are small allows us to address each value by its index and have a simple mechanism for reusing the space of deleted values without fragmentation and periodic garbage collection.
-
----
-
-### ParityDB: Asynchronous Writes
-
-- Parity DB API exposes synchronous functions, but underlying IO is async.
-- The `commit` function adds the database transaction to the write queue, updates the commit overlay, and returns as quickly as possible.
-- The actual writing happens in the background.
-- The commit overlay allows the block import pipeline to start executing the next block while the database is still writing changes for the previous block.
+大多数值都很小，这一事实使我们能够通过索引来定位每个值，并有一种简单的机制来重用已删除值的空间，而不会产生碎片，也不需要定期进行垃圾回收。
 
 ---
 
-### Practical Benchmarks and Considerations
+### ParityDB: 异步写入
 
-Let's now step away from concepts and talk about cold hard data.
+- ParityDB API公开的是同步函数，但底层的IO是异步的。
+- `commit`函数将数据库事务添加到写入队列中，更新提交覆盖层，并尽快返回。
+- 实际的写入操作在后台进行。
+- 提交覆盖层允许区块导入管道在数据库仍在为前一个区块写入更改时，开始执行下一个区块。
 
 ---
 
-### Common Runtime Data Size and Performance
+### 实际基准测试和注意事项
+
+现在让我们抛开概念，谈谈实际的数据。
+
+---
+
+### 常见运行时数据大小和性能
 
 <br />
 
 <div class="flex-container">
 <div class="left">
 
-- Most runtime values are 80 bytes, which are user accounts.
-- Of course, this would depend on your chain's logic.
+- 大多数运行时值是80字节，这些值是用户账户。
+- 当然，这取决于你链的逻辑。
 
 </div>
 <div class="right" style="padding-left: 10px;">
@@ -165,60 +171,60 @@ Let's now step away from concepts and talk about cold hard data.
 </div>
 </div>
 
-Notes:
+备注:
 
-Impact of keys size is slightly bigger encoded node.
-Since eth scaling issue, we usually focus on state nodes.
-Other content access can be interesting to audit enhance though (with paritydb).
+键大小的影响是稍微大一点的编码节点。
+自从以太坊的扩展性问题出现后，我们通常关注状态节点。
+不过，使用ParityDB对其他内容的访问进行审计和增强可能也很有趣。
 
-See more details here:
+查看更多详细信息:
 
 <https://substrate.stackexchange.com/questions/525/how-expensive-is-it-to-access-storage-items/526#526>
 
 ---
 
-### RocksDB vs ParityDB Performance
+### RocksDB与ParityDB的性能对比
 
-At 32 KB, performance decreases for each additional 4 KB.
+在32 KB时，每增加4 KB，性能就会下降。
 
 <img style="height: 500px" src="./img/paritydb-vs-rocksdb-read.png" />
 
 ---
 
-### RocksDB Inconsistency
+### RocksDB的不一致性
 
 <img style="width: 1200px;" src="./img/rocksdb-hiccups.png" />
 
-When doing benchmarking, we saw some really bizarre, but reproducible problems with RocksDB.
+在进行基准测试时，我们发现了RocksDB的一些非常奇怪但可重现的问题。
 
 ---
 
-## Things we tried
+## 我们尝试过的事情
 
-## Things we learned
+## 我们学到的东西
 
 ---
 
-## Isolating DB Benchmarks (PR #5586)
+## 隔离数据库基准测试（PR #5586）
 
 <pba-cols>
 <pba-col>
 
-### We tried…
+### 我们尝试过…
 
-To benchmark the entire extrinsic, including the weight of DB operations directly in the benchmark. We wanted to:
+对整个外部调用进行基准测试，包括直接在基准测试中对数据库操作的权重进行测试。我们想要:
 
-- Populate the DB to be “full”
-- Flush the DB cache
-- Run the benchmark
+- 填充数据库使其“满”
+- 刷新数据库缓存
+- 运行基准测试
 
 </pba-col>
 <pba-col>
 
-### We learned…
+### 我们学到了…
 
-RocksDB was too inconsistent to give reproducible results, and really slow to populate.
-So we use an in-memory DB for benchmarking.
+RocksDB太不稳定，无法给出可重现的结果，而且填充速度非常慢。
+所以我们使用内存数据库进行基准测试。
 
 <img style="height: 200px;" src="./img/rocksdb-hiccups.png" />
 
@@ -227,25 +233,25 @@ So we use an in-memory DB for benchmarking.
 
 ---
 
-## Fixing Nonlinear Events (PR #5795)
+## 修复非线性事件（PR #5795）
 
 <pba-cols>
 <pba-col>
 
-### We tried…
+### 我们尝试过…
 
-Executing a whole block, increasing the number of txs in each block. We expected to get linear growth of execution time, but in fact it was superlinear!
+执行整个区块，增加每个区块中的事务数量。我们原本期望执行时间呈线性增长，但实际上是超线性增长！
 
 <img style="height: 250px;" src="./img/nonlinear-events.png" />
 
 </pba-col>
 <pba-col>
 
-### We learned…
+### 我们学到了…
 
-Each time we appended a new event, we were passing the growing event object over the Wasm barrier.
+每次我们追加一个新事件时，我们都在Wasm边界上传递不断增长的事件对象。
 
-We updated the append api so only new data is pushed.
+我们更新了追加API，以便只推送新数据。
 
 <img style="height: 200px;" src="./img/event-fix.png" />
 
@@ -254,57 +260,57 @@ We updated the append api so only new data is pushed.
 
 ---
 
-## Enabling Weight Refunds (PR #5584)
+## 启用权重退款（PR #5584）
 
 <pba-cols>
 <pba-col>
 
-### We tried…
+### 我们尝试过…
 
-To assign weights to all extrinsics for the absolute worst case scenario in order to be safe.
+为了安全起见，为所有外部调用分配最坏情况下的权重。
 
-In many cases, we cannot know accurately what the weight of the extrinsic will be without reading storage… and this is not allowed!
+在许多情况下，如果不读取存储，我们就无法准确知道外部调用的权重……而这是不允许的！
 
 </pba-col>
 <pba-col>
 
-### We learned…
+### 我们学到了…
 
-That many extrinsics have a worst case weight much different than their average weight.
+许多外部调用的最坏情况权重与它们的平均权重有很大不同。
 
-So we allow extrinsics to return the actual weight consumed and refund that weight and any weight fees.
+所以我们允许外部调用返回实际消耗的权重，并退还该权重以及任何权重费用。
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## Customizable Weight Info (PR #6575)
+## 可定制的权重信息（PR #6575）
 
 <pba-cols>
 <pba-col>
 
-### We tried…
+### 我们尝试过…
 
-To record weight information and benchmarking results directly in the pallet.
+直接在pallet中记录权重信息和基准测试结果。
 
 </pba-col>
 <pba-col>
 
-### We learned…
+### 我们学到了…
 
-This was hard to update, not customizable, and not accurate for custom pallet configurations.
+这很难更新，不可定制，并且对于自定义pallet配置来说不准确。
 
 </pba-col>
 </pba-cols>
 
-So we moved the weight definition into customizable associated types configured in the runtime trait.
+所以我们将权重定义移到了在运行时特征中配置的可定制关联类型中。
 
 ```rust
 #[weight = 45_000_000 + T::DbWeight::get().reads_writes(1,1)]
 ```
 
-turned into...
+变成了...
 
 ```rust
 #[weight = T::WeightInfo::transfer()]
@@ -312,7 +318,7 @@ turned into...
 
 ---
 
-## Inherited Call Weight Syntax (PR #13932)
+## 继承调用权重语法（PR #13932）
 
 ```rust
 #[pallet::call(weight(<T as Config>::WeightInfo))]
@@ -324,7 +330,7 @@ impl<T: Config> Pallet<T> {
 
 ---
 
-## Custom Benchmark Returns / Errors (PR #9517)
+## 自定义基准测试返回/错误（PR #9517）
 
 ```rust
 override_benchmark {
@@ -344,122 +350,122 @@ override_benchmark {
 
 ---
 
-## Negative Y Intercept Handling (PR #11806)
+## 负 Y 轴截距处理（PR #11806）
 
 ---
 
-## Multi-Dimensional Weight (Issue #12176)
+## 多维权重（问题 #12176）
 
 ```rust
 #[derive(
-	Encode, Decode, MaxEncodedLen, TypeInfo, Eq, PartialEq, Copy, Clone, RuntimeDebug, Default,
+    Encode, Decode, MaxEncodedLen, TypeInfo, Eq, PartialEq, Copy, Clone, RuntimeDebug, Default,
 )]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Weight {
-	#[codec(compact)]
-	/// The weight of computational time used based on some reference hardware.
-	ref_time: u64,
-	#[codec(compact)]
-	/// The weight of storage space used by proof of validity.
-	proof_size: u64,
+    #[codec(compact)]
+    /// 基于某些参考硬件使用的计算时间的权重。
+    ref_time: u64,
+    #[codec(compact)]
+    /// 有效性证明所使用的存储空间的权重。
+    proof_size: u64,
 }
 ```
 
 ---
 
-# Best Practices & Common Patterns
+# 最佳实践和常见模式
 
 ---
 
-## Initial Weight Calculation Must Be Lightweight
+## 初始权重计算必须轻量级
 
-- In the TX queue, we need to know the weight to see if it would fit in the block.
-- This weight calculation must be lightweight!
-- No storage reads!
+- 在交易队列中，我们需要知道权重以确定它是否适合放入区块。
+- 此权重计算必须轻量级！
+- 不允许存储读取！
 
-Example:
+示例：
 
-- Transfer Base: ~50 µs
-- Storage Read: ~25 µs
-
----
-
-## Set Bounds and Assume the Worst!
-
-- Add a configuration trait that sets an upper bound to some item, and in weights, initially assume this worst case scenario.
-- During the extrinsic, find the actual length/size of the item, and refund the weight to be the actual amount used.
+- 转账基础：约 50 微秒
+- 存储读取：约 25 微秒
 
 ---
 
-## Separate Benchmarks Per Logical Path
+## 设置边界并假设最坏情况！
 
-- It may not be clear which logical path in a function is the “worst case scenario”.
-- Create a benchmark for each logical path your function could take.
-- Ensure each benchmark is testing the worst case scenario of that path.
+- 添加一个配置特征，为某些项设置一个上限，并且在权重中，最初假设为这种最坏情况。
+- 在外部函数执行期间，找出项的实际长度/大小，并将权重退还为实际使用的量。
 
 ---
 
-## Comparison Operators in the Weight Definition
+## 为每个逻辑路径分离基准测试
+
+- 可能不清楚函数中的哪个逻辑路径是“最坏情况”。
+- 为函数可能采用的每个逻辑路径创建一个基准测试。
+- 确保每个基准测试都在测试该路径的最坏情况。
+
+---
+
+## 权重定义中的比较运算符
 
 ```rust
 #[pallet::weight(
-   T::WeightInfo::path_a()
-   .max(T::WeightInfo::path_b())
-   .max(T::WeightInfo::path_c())
+    T::WeightInfo::path_a()
+  .max(T::WeightInfo::path_b())
+  .max(T::WeightInfo::path_c())
 )]
 ```
 
 ---
 
-## Keep Extrinsics Simple
+## 保持外部函数简单
 
-- The more complex your extrinsic logic, the harder it will be to accurately weigh.
-- This leads to larger up-front weights, potentially higher tx fees, and less efficient block packing.
-
----
-
-## Use Multiple Simple Extrinsics
-
-- Take advantage of UI/UX, batch calls, and similar downstream tools to simplify extrinsic logic.
-
-Example:
-
-- Vote and Close Vote (“last vote”) are separate extrinsics.
+- 外部函数逻辑越复杂，准确衡量其权重就越困难。
+- 这会导致更高的前期权重、潜在的更高交易费用以及更低效的区块打包。
 
 ---
 
-## Minimize Usage of On Finalize
+## 使用多个简单的外部函数
 
-- `on_finalize` is the last thing to happen in a block, and must execute for the block to be successful.
-- Variable weight needs at can lead to overweight blocks.
+- 利用 UI/UX、批处理调用和类似的下游工具来简化外部函数逻辑。
+
+示例：
+
+- 投票和关闭投票（“最后一次投票”）是独立的外部函数。
+
+---
+
+## 最小化 `on_finalize` 的使用
+
+- `on_finalize` 是区块中最后发生的事情，并且必须执行以使区块成功。
+- 可变权重可能导致超重的区块。
 
 <img style="height: 200px;" src="./img/on-finalize.svg" />
 
 ---
 
-## Transition Logic and Weights to On Initialize
+## 将逻辑和权重转移到 `on_initialize`
 
-- `on_initialize` happens at the beginning of the block, before extrinsics.
-- The number of extrinsics can be adjusted to support what is available.
-- Weight for `on_finalize` should be wrapped into on_initialize weight or extrinsic weight.
-
----
-
-## Understand Limitations of Pallet Hooks
-
-- A powerful feature of Substrate is to allow the runtime configuration to implement pallet configuration traits.
-- However, it is easy for this feature to be abused and make benchmarking inaccurate.
+- `on_initialize` 发生在区块开始时，在外部函数之前。
+- 可以调整外部函数的数量以支持可用资源。
+- `on_finalize` 的权重应该包含在 `on_initialize` 权重或外部函数权重中。
 
 ---
 
-## Keep Hooks Constant Time
+## 理解模块钩子的限制
 
-- Example: Balances hook for account creation and account killed.
-- Benchmarking has no idea how to properly set up your state to test for any arbitrary hook.
-- So you must keep hooks constant time, unless specified by the pallet otherwise.
+- Substrate 的一个强大功能是允许运行时配置来实现模块配置特征。
+- 然而，这个功能很容易被滥用，导致基准测试不准确。
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## 保持钩子为常量时间
 
-# Questions
+- 示例：用于账户创建和账户销毁的余额钩子。
+- 基准测试不知道如何正确设置状态来测试任意钩子。
+- 因此，你必须保持钩子为常量时间，除非模块另有规定。
+
+---
+
+<!--.slide: data-background-color="#4A2439" -->
+
+# 问题

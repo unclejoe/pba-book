@@ -3,38 +3,38 @@ title: Migrations and Try Runtime
 description: Runtime upgrades and how to survive them
 ---
 
-# Migrations and Try Runtime
+# 迁移与尝试运行时
 
 ---
 
-## Runtime upgrades...
+## 运行时升级...
 
-### _and how to survive them_
-
----
-
-### _At the end of this lecture, you will be able to:_
-
-- Justify when runtime migrations are needed.
-- Write a the full a runtime upgrade that includes migrations, end-to-end.
-- Test runtime upgrades before executing on a network using `try-runtime` and `remote-externalities`.
+### _以及如何应对这些升级_
 
 ---
 
-## When is a Migration Required?
+### _在本讲座结束时，你将能够：_
+
+- 说明何时需要运行时迁移。
+- 编写一个完整的包含迁移的运行时升级，端到端。
+- 在网络上执行之前，使用 `try-runtime` 和 `remote-externalities` 测试运行时升级。
+
+---
+
+## 何时需要迁移？
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
-- In a typical runtime upgrade, you typically only replace `:code:`. This is _**Runtime Upgrade**_.
-- If you change the _storage layout_, then this is also a _**Runtime Migration**_.
+- 在典型的运行时升级中，你通常只替换 `:code:`。这就是 _**运行时升级**_。
+- 如果你改变了 _存储布局_，那么这也是 _**运行时迁移**_。
 
-> Anything that changes **encoding** is a migration!
+> 任何改变 **编码** 的操作都是迁移！
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -42,19 +42,19 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub struct Foo(u32)
-// new
+// 新
 pub struct Foo(u64)
 ```
 
-- A clear migration.
+- 一个明显的迁移。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -62,21 +62,21 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub struct Foo(u32)
-// new
+// 新
 pub struct Foo(i32)
-// or
+// 或者
 pub struct Foo(u16, u16)
 ```
 
-- The data still _fits_, but the _interpretations_ is almost certainly different!
+- 数据仍然 _适配_，但 _解释_ 几乎肯定不同！
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -84,19 +84,19 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub struct Foo { a: u32, b: u32 }
-// new
+// 新
 pub struct Foo { a: u32, b: u32, c: u32 }
 ```
 
-- This is still a migration, because `Foo`'s decoding changed.
+- 这仍然是一个迁移，因为 `Foo` 的解码发生了变化。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -104,19 +104,19 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub struct Foo { a: u32, b: u32 }
-// new
+// 新
 pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 ```
 
-- If for whatever reason `c` has a type that its encoding is like `()`, then this would work.
+- 如果由于某种原因 `c` 的类型其编码类似于 `()`，那么这将可行。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -124,23 +124,23 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub enum Foo { A(u32), B(u32) }
-// new
+// 新
 pub enum Foo { A(u32), B(u32), C(u128) }
 ```
 
-- Extending an enum is even more interesting, because if you add the variant to the end, no migration is needed.
+- 扩展枚举更有趣，因为如果你将变体添加到末尾，则不需要迁移。
 
 <!-- .element: class="fragment" -->
 
-- Assuming that no value is initialized with `C`, this is _not_ a migration.
+- 假设没有值初始化为 `C`，这 _不是_ 一个迁移。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -148,28 +148,28 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-// old
+// 旧
 pub enum Foo { A(u32), B(u32) }
-// new
+// 新
 pub enum Foo { A(u32), C(u128), B(u32) }
 ```
 
-- You probably _never_ want to do this, but it is a migration.
+- 你可能 _永远_ 都不想这么做，但这是一个迁移。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### 🦀 Rust Recall 🦀
+### 🦀 Rust 回顾 🦀
 
-Enums are encoded as the variant enum, followed by the inner data:
+枚举被编码为变体枚举，后跟内部数据：
 
-- The order matters! Both in `struct` and `enum`.
-- Enums that implement `Encode` cannot have more than 255 variants.
+- 顺序很重要！在 `struct` 和 `enum` 中都是如此。
+- 实现 `Encode` 的枚举不能有超过 255 个变体。
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -177,16 +177,16 @@ pub type FooValue = StorageValue<_, u32>;
 ```
 
 ```rust
-// new
+// 新
 #[pallet::storage]
 pub type BarValue = StorageValue<_, u32>;
 ```
 
-- So far everything is changing the _value_ format.<br />
+- 到目前为止，一切都在改变 _值_ 的格式。<br />
 
 <div>
 
-- The _key_ changing is also a migration!
+- _键_ 的改变也是一个迁移！
 
 </div>
 
@@ -194,7 +194,7 @@ pub type BarValue = StorageValue<_, u32>;
 
 ---v
 
-### When is a Migration Required?
+### 何时需要迁移？
 
 ```rust
 #[pallet::storage]
@@ -202,56 +202,56 @@ pub type FooValue = StorageValue<_, u32>;
 ```
 
 ```rust
-// new
+// 新
 #[pallet::storage_prefix = "FooValue"]
 #[pallet::storage]
 pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 ```
 
-- Handy macro if you must rename a storage type.<br />
-- This does _not_ require a migration.
+- 如果你必须重命名存储类型，这是一个方便的宏。<br />
+- 这 _不需要_ 迁移。
 
 <!-- .element: class="fragment" -->
 
 ---
 
-## Writing Runtime Migrations
+## 编写运行时迁移
 
-- Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
-
----v
-
-### Writing Runtime Migrations
-
-- Once you upgrade a runtime, the code is expecting the data to be in a new format.
-- Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
+- 现在我们知道了如何检测存储更改是否为 **迁移**，让我们看看如何编写一个迁移。
 
 ---v
 
-### Writing Runtime Migrations
+### 编写运行时迁移
 
-- We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
-- But before **ANY** other code (on_initialize, any transaction) with the new runtime is migrated.
+- 一旦你升级了运行时，代码期望数据采用新格式。
+- 任何 `on_initialize` 或事务可能会在解码数据时失败，并可能导致 `panic!`
 
-> This is `OnRuntimeUpgrade`.
+---v
+
+### 编写运行时迁移
+
+- 我们需要一个 **_钩子_**，它作为新运行时的一部分 **只执行一次**...
+- 但要在使用新运行时的 **任何** 其他代码（`on_initialize`、任何事务）迁移之前执行。
+
+> 这就是 `OnRuntimeUpgrade`。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Writing Runtime Migrations
+### 编写运行时迁移
 
-- Optional activity: Go into `executive` and `system`, and find out how `OnRuntimeUpgrade` is called only when the code changes!
+- 可选活动：进入 `executive` 和 `system`，找出 `OnRuntimeUpgrade` 是如何仅在代码更改时调用的！
 
 ---
 
-## Pallet Internal Migrations
+## 模块内部迁移
 
 ---v
 
-### Pallet Internal Migrations
+### 模块内部迁移
 
-One way to write a migration is to write it inside the pallet.
+编写迁移的一种方法是在模块内部编写。
 
 ```rust
 #[pallet::hooks]
@@ -262,13 +262,13 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 }
 ```
 
-> This approach is likely to be deprecated and is no longer practiced within Parity either.
+> 这种方法可能会被弃用，并且 Parity 也不再使用。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Pallet Internal Migrations
+### 模块内部迁移
 
 ```rust [4-8]
 #[pallet::hooks]
@@ -277,24 +277,24 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
     if guard_that_stuff_has_not_been_migrated() {
       migrate_stuff_and_things_here_and_there<T>();
     } else {
-      // nada
+      // 无操作
     }
   }
 }
 ```
 
-- If you execute `migrate_stuff_and_things_here_and_there` twice as well, then you are doomed 😫.
+- 如果你执行 `migrate_stuff_and_things_here_and_there` 两次，那你就惨了 😫。
 
 ---v
 
-### Pallet Internal Migrations
+### 模块内部迁移
 
-**Historically**, something like this was used:
+**从历史上看**，使用的是类似这样的代码：
 
 ```rust [1-7|9-19]
 #[derive(Encode, Decode, ...)]
 enum StorageVersion {
-  V1, V2, V3, // add a new variant with each version
+  V1, V2, V3, // 每个版本添加一个新的变体
 }
 
 #[pallet::storage]
@@ -304,10 +304,10 @@ pub type Version = StorageValue<_, StorageVersion>;
 impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {
     if let StorageVersion::V2 = Version::<T>::get() {
-      // do migration
+      // 执行迁移
       Version::<T>::put(StorageVersion::V3);
     } else {
-      // nada
+      // 无操作
     }
   }
 }
@@ -315,12 +315,12 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 
 ---v
 
-### Pallet Internal Migrations
+### 模块内部迁移
 
-- FRAME introduced macros to manage migrations: `#[pallet::storage_version]`.
+- FRAME 引入了宏来管理迁移：`#[pallet::storage_version]`。
 
 ```rust
-// your current storage version.
+// 你当前的存储版本。
 const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 
 #[pallet::pallet]
@@ -328,20 +328,20 @@ const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 pub struct Pallet<T>(_);
 ```
 
-- This adds two function to the `Pallet<_>` struct:
+- 这为 `Pallet<_>` 结构体添加了两个函数：
 
 ```rust
-// read the current version, encoded in the code.
+// 读取当前版本，编码在代码中。
 let current = Pallet::<T>::current_storage_version();
-// read the version encoded onchain.
+// 读取链上编码的版本。
 Pallet::<T>::on_chain_storage_version();
-// synchronize the two.
+// 同步这两个版本。
 current.put::<Pallet<T>>();
 ```
 
 ---v
 
-### Pallet Internal Migrations
+### 模块内部迁移
 
 ```rust
 #[pallet::hooks]
@@ -351,7 +351,7 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
     let onchain = Pallet::<T>::on_chain_storage_version();
 
     if current == 1 && onchain == 0 {
-      // do stuff
+      // 执行操作
       current.put::<Pallet<T>>();
     } else {
     }
@@ -359,46 +359,46 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 }
 ```
 
-Stores the version as u16 in [`twox(pallet_name) ++ twox(:__STORAGE_VERSION__:)`](https://github.com/paritytech/polkadot-sdk/blob/c7c5fc7/substrate/frame/support/src/traits/metadata.rs#L163).
+将版本存储为 u16 类型，存储位置为 [`twox(pallet_name) ++ twox(:__STORAGE_VERSION__:)`](https://github.com/paritytech/polkadot-sdk/blob/c7c5fc7/substrate/frame/support/src/traits/metadata.rs#L163)。
 
 ---
 
-## External Migrations
+## 外部迁移
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- Managing migrations within a pallet could be hard.
-- Especially for those that want to use external pallets.
+- 在模块内部管理迁移可能会很困难。
+- 特别是对于那些想要使用外部模块的人来说。
 
-Alternative:
+替代方案：
 
-- Every runtime can explicitly pass anything that implements `OnRuntimeUpgrade` to `Executive`.
-- End of the day, Executive does:
-  - `<(COnRuntimeUpgrade, AllPalletsWithSystem) as OnRuntimeUpgrade>::on_runtime_upgrade()`.
+- 每个运行时都可以显式地将任何实现 `OnRuntimeUpgrade` 的内容传递给 `Executive`。
+- 最终，`Executive` 会执行：
+  - `<(COnRuntimeUpgrade, AllPalletsWithSystem) as OnRuntimeUpgrade>::on_runtime_upgrade()`。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- The main point of external migrations is making it more clear:
-- "_What migrations did exactly execute on upgrade to spec_version xxx_"
+- 外部迁移的主要目的是更清晰地表明：
+- “_在升级到 spec_version xxx 时，到底执行了哪些迁移_”
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- Expose your migration as a standalone function or struct implementing `OnRuntimeUpgrade` inside a `pub mod v<version_number>`.
+- 将你的迁移作为一个独立的函数或实现 `OnRuntimeUpgrade` 的结构体暴露在 `pub mod v<版本号>` 中。
 
 ```rust
 pub mod v3 {
   pub struct Migration;
   impl OnRuntimeUpgrade for Migration {
     fn on_runtime_upgrade() -> Weight {
-      // do stuff
+      // 执行操作
     }
   }
 }
@@ -406,10 +406,10 @@ pub mod v3 {
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- Guard the code of the migration with `pallet::storage_version`
-- Don't forget to write the new version!
+- 使用 `pallet::storage_version` 保护迁移的代码
+- 别忘了编写新版本！
 
 ```rust
 pub mod v3 {
@@ -420,7 +420,7 @@ pub mod v3 {
       let onchain = Pallet::<T>::on_chain_storage_version();
 
       if current == 1 && onchain == 0 {
-        // do stuff
+        // 执行操作
         current.put::<Pallet<T>>();
       } else {
       }
@@ -431,9 +431,9 @@ pub mod v3 {
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- Pass it to the runtime per-release.
+- 按版本将其传递给运行时。
 
 ```rust
 pub type Executive = Executive<
@@ -448,153 +448,153 @@ pub type Executive = Executive<
 
 ---v
 
-### External Migrations
+### 外部迁移
 
-- Discussion: Can the runtime upgrade scripts live forever? Or should they be removed after a few releases?
+- 讨论：运行时升级脚本可以永远保留吗？还是应该在几个版本后删除？
 
-Notes:
+备注：
 
-Short answer is, yes, but it is a LOT of work. See here: <https://github.com/paritytech/polkadot-sdk/issues/296>
+简短的回答是可以，但这需要做很多工作。详见此处：<https://github.com/paritytech/polkadot-sdk/issues/296>
 
 ---
 
-### Utilities in `frame-support`.
+### `frame-support` 中的实用工具。
 
-- `translate` methods:
-  - For `StorageValue`, `StorageMap`, etc.
+- `translate` 方法：
+  - 适用于 `StorageValue`、`StorageMap` 等。
 - <https://paritytech.github.io/substrate/master/frame_support/storage/migration/index.html>
 
-* `#[storage_alias]` macro to create storage types for removed for those that are being removed.
+* `#[storage_alias]` 宏用于为那些要被移除的存储类型创建存储类型。
 
-Notes:
+备注：
 
-Imagine you want to remove a storage map and in a migration you want to iterate it and delete all items. You want to remove this storage item, but it would be handy to be able to access it one last time in the migration code. This is where `#[storage_alias]` comes into play.
-
----
-
-## Case Studies
-
-1. The day we destroyed all balances in Polkadot.
-1. First ever migration ([`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)).
-1. Fairly independent migrations in `pallet-elections-phragmen`.
+想象一下，你想要移除一个存储映射，并且在迁移中你想要遍历它并删除所有项。你想要移除这个存储项，但在迁移代码中最后一次访问它会很方便。这就是 `#[storage_alias]` 发挥作用的地方。
 
 ---
 
-## Testing Upgrades
+## 案例研究
+
+1. 我们摧毁 Polkadot 中所有余额的那一天。
+1. 第一次迁移（[`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)）。
+1. `pallet-elections-phragmen` 中相当独立的迁移。
+
+---
+
+## 测试升级
 
 ---v
 
-### Testing Upgrades
+### 测试升级
 
-- `try-runtime` + `RemoteExternalities` allow you to examine and test a runtime in detail with a high degree of control over the environment.
+- `try-runtime` + `RemoteExternalities` 允许你详细检查和测试运行时，并且可以高度控制环境。
 
-- It is meant to try things out, and inspired by traits like `TryFrom`, the name `TryRuntime` was chosen.
-
----v
-
-### Testing Upgrades
-
-Recall:
-
-- The runtime communicates with the client via host functions.
-- Moreover, the client communicates with the runtime via runtime APIs.
-- An environment that provides these host functions is called `Externalities`.
-- One example of which is `TestExternalities`, which you have already seen.
+- 它旨在进行试验，并且受诸如 `TryFrom` 之类的特性启发，选择了 `TryRuntime` 这个名称。
 
 ---v
 
-### Testing Upgrades: `remote-externalities`
+### 测试升级
 
-`remote-externalities` ia a builder pattern that loads the state of a live chain inside `TestExternalities`.
+回顾：
+
+- 运行时通过主机函数与客户端通信。
+- 此外，客户端通过运行时 API 与运行时通信。
+- 提供这些主机函数的环境称为 `Externalities`。
+- 其中一个例子是 `TestExternalities`，你已经见过了。
+
+---v
+
+### 测试升级：`remote-externalities`
+
+`remote-externalities` 是一种构建器模式，它将一个实时链的状态加载到 `TestExternalities` 中。
 
 ```rust
 let mut ext = Builder::<Block>::new()
-  .mode(Mode::Online(OnlineConfig {
-  	transport: "wss://rpc.polkadot.io",
-  	pallets: vec!["PalletA", "PalletB", "PalletC", "RandomPrefix"],
-  	..Default::default()
+ .mode(Mode::Online(OnlineConfig {
+  	运输方式: "wss://rpc.polkadot.io",
+  	模块: vec!["模块A", "模块B", "模块C", "随机前缀"],
+  	..默认值
   }))
-  .build()
-  .await
-  .unwrap();
+ .构建()
+ .等待
+ .unwrap();
 ```
 
-Reading all this data over RPC can be slow!
+通过 RPC 读取所有这些数据可能会很慢！
 
 ---v
 
-### Testing Upgrades: `remote-externalities`
+### 测试升级：`remote-externalities`
 
-`remote-externalities` supports:
+`remote-externalities` 支持：
 
-- Custom prefixes -> Read a specific pallet
-- Injecting custom keys -> Read `:code:` as well.
-- Injecting custom key-values -> Overwrite `:code:` with `0x00`!
-- Reading child-tree data -> Relevant for crowdloan pallet etc.
-- Caching everything in disk for repeated use.
+- 自定义前缀 -> 读取特定的模块
+- 注入自定义键 -> 也读取 `:代码:`。
+- 注入自定义键值对 -> 用 `0x00` 覆盖 `:代码:`。
+- 读取子树数据 -> 与众筹模块等相关。
+- 将所有内容缓存在磁盘中以便重复使用。
 
 ---v
 
-### Testing Upgrades: `remote-externalities`
+### 测试升级：`remote-externalities`
 
-`remote-externalities` is in itself a very useful tool to:
+`remote-externalities` 本身是一个非常有用的工具，可用于：
 
-- Go back in time and re-running some code.
-- Write unit tests that work on the real-chain's state.
+- 回到过去并重新运行一些代码。
+- 编写基于真实链状态的单元测试。
 
 ---
 
-## Testing Upgrades: `try-runtime`
+## 测试升级：`try-runtime`
 
-- `try-runtime` is a CLI and a set of custom runtime APIs integrated in substrate that allows you to do detailed testing..
+- `try-runtime` 是一个 CLI 命令，也是一组集成在 substrate 中的自定义运行时 API，允许你进行详细的测试。
 
-- .. including running `OnRuntimeUpgrade` code of a new runtime, on top of a real chain's data.
-
----v
-
-### Testing Upgrades: `try-runtime`
-
-- A lot can be said about it, the best resource is the [rust-docs](https://paritytech.github.io/substrate/master/try_runtime_cli/index.html).
+-... 包括在真实链的数据上运行新运行时的 `OnRuntimeUpgrade` 代码。
 
 ---v
 
-### Testing Upgrades: `try-runtime`
+### 测试升级：`try-runtime`
 
-- You might find some code in your runtime that is featured gated with `#[cfg(feature = "try-runtime")]`. These are always for testing.
-- `pre_upgrade` and `post_upgrade`: Hooks executed before and after `on_runtime_upgrade`.
-- `try_state`: called in various other places, used to check the invariants the pallet.
+- 关于它可以说很多，最好的资源是 [rust 文档](https://paritytech.github.io/substrate/master/try_runtime_cli/index.html)。
 
 ---v
 
-### Testing Upgrades: `try-runtime`: Live Demo.
+### 测试升级：`try-runtime`
 
-- Let's craft a migration on top of poor node-template 😈..
-- and migrate the balance type from u128 to u64.
+- 你可能会在你的运行时中找到一些使用 `#[cfg(feature = "try-runtime")]` 特性门控的代码。这些代码总是用于测试。
+- `pre_upgrade` 和 `post_upgrade`：在 `on_runtime_upgrade` 之前和之后执行的钩子。
+- `try_state`：在各种其他地方调用，用于检查模块的不变量。
+
+---v
+
+### 测试升级：`try-runtime`：现场演示。
+
+- 让我们在简陋的 node-template 上精心设计一个迁移 😈...
+- 并将余额类型从 u128 迁移到 u64。
 
 ---
 
-## Additional Resources 😋
+## 额外资源 😋
 
-> Check speaker notes (click "s" 😉)
-
-Notes:
-
-- Additional work on automatic version upgrades: <https://github.com/paritytech/substrate/issues/13107>
-- A Great talk about try-runtime and further testing of your runtime: <https://www.youtube.com/watch?v=a_u3KMG-n-I>
-
-#### Reference material:
-
-- 📺 [Substrate Seminar on Migrations](https://www.youtube.com/watch?v=MQgDV37JrIY>)
+> 查看演讲笔记（点击 "s" 😉）
 
 Notes:
 
-FIXME: `docs.google.com/presentation/d/1hr3fiqOI0JlXw0ISs8uV9BXiDQ5mGOQLc3b_yWK6cxU/edit#slide=id.g43d9ae013f_0_82` was listed here as a reference but is not public!
+- 关于自动版本升级的额外工作：<https://github.com/paritytech/substrate/issues/13107>
+- 一个关于 `try-runtime` 和进一步测试运行时的精彩演讲：<https://www.youtube.com/watch?v=a_u3KMG-n-I>
 
-#### Exercise ideas:
+#### 参考资料：
 
-- Find the storage version of nomination pools pallet in Kusama.
-- Give them a poorly written migration code, and try and fix it. Things they need to fix:
-  - The migration depends on `<T: Config>`
-  - Does not manage version properly
-  - is hardcoded in the pallet.
-- Re-execute the block at which the runtime went OOM in May 25th 2021 Polkadot.
+- 📺 [Substrate 关于迁移的研讨会](https://www.youtube.com/watch?v=MQgDV37JrIY>)
+
+Notes:
+
+FIXME：这里将 `docs.google.com/presentation/d/1hr3fiqOI0JlXw0ISs8uV9BXiDQ5mGOQLc3b_yWK6cxU/edit#slide=id.g43d9ae013f_0_82` 列为参考资料，但它不是公开的！
+
+#### 练习思路：
+
+- 找到 Kusama 中提名池模块的存储版本。
+- 给它们一段编写糟糕的迁移代码，并尝试修复它。它们需要修复的问题：
+  - 迁移依赖于 `<T: Config>`
+  - 未正确管理版本
+  - 在模块中硬编码。
+- 重新执行 2021 年 5 月 25 日 Polkadot 运行时发生 OOM 的那个区块。

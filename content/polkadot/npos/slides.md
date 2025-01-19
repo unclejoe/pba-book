@@ -4,329 +4,323 @@ description: An introduction to Nominated Proof of Stake in Polkadot
 duration: 1 hour
 ---
 
-# Nominated Proof of Stake
+# 提名权益证明
 
-## _in Polkadot_
+## _ Polkadot 网络中的_
 
 ---
 
-## Why Proof of Stake Ser?
+## 为什么要采用权益证明呢？
 
-Why do we use PoS?
+我们为什么要使用权益证明（PoS）呢？
 
 <div>
 
-- Tokens locked + prone to being slashed.
-- Economic Security 💸🤑.
+- 代币被锁定 + 可能会被削减。
+- 经济安全 💸🤑。
 
 </div>
 
 <!-- .element: class="fragment" -->
 
-- Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
+- 其他所有的（如最终确定性、平行链等）都是建立在这个经济安全的基础层之上的。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Why Proof of Stake Ser?
+### 为什么要采用权益证明呢？
 
-- Remember that Polkadot is at the end of the day a validator-set-as-a-service.
-- Secure Blockspace, the main product of Polkadot is provided by these validators.
+- 要记住， Polkadot 网络本质上是一种验证者集合即服务。
+- 安全的区块空间， Polkadot 网络的主要产品，是由这些验证者提供的。
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-vsas.svg" />
 
 ---
 
-## What is NPoS: Assumptions
+## 什么是NPoS：假设
 
-Assumptions:
+假设：
 
-- **Validators**: those who intend to author blocks. i.e. _Validator candidate_.
-
-<!-- .element: class="fragment" -->
-
-- **Nominators/Delegators**: Those who intend to support wanna-be authors.
+- **验证者**：那些打算创建区块的人。即 _验证者候选人_。
 
 <!-- .element: class="fragment" -->
 
-- Validation and nomination intentions can change, therefore we need **periodic elections** to
-  always choose the **active/winner validators/delegators** + hold them slashable.
+- **提名者/委托者**：那些打算支持想要成为验证者的人。
 
 <!-- .element: class="fragment" -->
 
-- Every election period is called an **_Era_**, e.g. 24hrs in Polkadot.
+- 验证和提名的意愿可能会发生变化，因此我们需要进行**定期选举**，以始终选出**活跃/获胜的验证者/委托者**，并让他们能够被削减（惩罚）。
+
+<!-- .element: class="fragment" -->
+
+- 每个选举周期被称为一个**_纪元_**，例如在 Polkadot 网络中为24小时。
 
 <!-- .element: class="fragment" -->
 
 ---
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
 ---v
 
-**Solo-POS**
+**单人权益证明（Solo-POS）**
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-0.svg" />
 
 ---v
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
-- Authority-wanna-bees aka. validators bring their own stake. No further participation. Top validators are elected.
+- 想要成为权威节点的人，也就是验证者，拿出自己的权益。没有其他参与方式。选出权益最高的验证者。
 
-- Problems?
+- 有什么问题呢？
 
 Notes:
 
-Low amount of stake that we can capture, impossible for those who don't want to run the hardware to join.
+我们能够获得的权益数量较少，对于那些不想运行硬件设备的人来说，无法参与。
 
 ---v
 
-**Single-Delegation-POS**
+**单一委托权益证明（Single-Delegation-POS）**
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-1.svg" />
 
 ---v
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
-- Anyone can dilute themselves in any given validators. Top validator based on total stake are
-  elected.
-- Voters are called **delegators**.
+- 任何人都可以将自己的权益分散到任何给定的验证者那里。根据总权益选出排名靠前的验证者。
+- 投票者被称为 **委托者**。
 
-- Problems?
+- 有什么问题呢？
 
 Notes:
 
-- Better, but funds might be delegated to non-winners, which get wasted.
-- In other words, there is no incentive to delegate to those that are non-winners.
+- 这种方式更好一些，但资金可能会被委托给未获胜的验证者，从而被浪费。
+- 换句话说，没有激励措施去委托给那些未获胜的验证者。
 
 ---v
 
-**Multi-Delegation-POS**
+**多重委托权益证明（Multi-Delegation-POS）**
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-2.svg" />
 
 ---v
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
-Your stake is divided $\frac{1}{N}$ (or arbitrarily) among $N$ validators.
+你的权益被平均分成 $\frac{1}{N}$（或任意比例）分配给 $N$ 个验证者。
 
-Problems?
+有什么问题呢？
 
 Notes:
 
-Same issue as before.
+和之前的问题一样。
 
 ---v
 
-**Nominated Proof of Stake**
+**提名权益证明**
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-3.svg" />
 
 ---v
 
-**Nominated Proof of Stake**
+**提名权益证明**
 
 <img style="width: 1000px" src="./img/dev-6-x-npos-4.svg" />
 
 ---v
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
-- You name up to `N` nominees, an _algorithm_, computed either onchain or offchain, decides
-  the **winners** and **how to distribute the stake among them**.
-- Voters are called **Nominators**.
+- 你可以提名最多 `N` 个候选人，一个 _算法_（可以在链上或链下计算）会决定 **获胜者** 以及 **如何在他们之间分配权益**。
+- 投票者被称为 **提名者**。
 
 ---v
 
-### What is NPoS: Re-inventing the Wheel
+### 什么是NPoS：重新设计
 
-- ✅ As a nominator, you are free to express your desire to back non-winners as well. Once enough people have expressed the same desire, the non-winner will become a winner.
-
-<!-- .element: class="fragment" -->
-
-- ✅ Has a much higher chance to make sure staked tokens won't get wasted.
+- ✅ 作为一名提名者，你可以自由地表达你支持未获胜者的意愿。一旦有足够多的人表达了同样的意愿，未获胜者就会成为获胜者。
 
 <!-- .element: class="fragment" -->
 
-- ✅ Can optimize other criteria other than "who had more approval votes".
+- ✅ 有更大的机会确保抵押的代币不会被浪费。
+
+<!-- .element: class="fragment" -->
+
+- ✅ 可以优化除了“谁获得的赞成票最多”之外的其他标准。
 
 <!-- .element: class="fragment" -->
 
 ---
 
-## NPoS Drawbacks
+## NPoS的缺点
 
-- We decided to solve an np-hard, multi-winner, approval based, election problem onchain 🤠.
+- 我们决定在链上解决一个NP难的、多获胜者的、基于批准的选举问题 🤠。
 
 <pba-flex center>
 
-- scalability. <!-- .element: class="fragment" -->
-- scalability. <!-- .element: class="fragment" -->
-- scalability. <!-- .element: class="fragment" -->
-- scalability. <!-- .element: class="fragment" -->
-- and scalability. <!-- .element: class="fragment" -->
+- 可扩展性。 <!-- .element: class="fragment" -->
+- 可扩展性。 <!-- .element: class="fragment" -->
+- 可扩展性。 <!-- .element: class="fragment" -->
+- 可扩展性。 <!-- .element: class="fragment" -->
+- 还是可扩展性。 <!-- .element: class="fragment" -->
 
 </widget-text>
 
-- But we (strive to) get much better economic security measures in return 🌈.
+- 但作为回报，我们（努力）获得了更好的经济安全措施 🌈。
 
 <!-- .element: class="fragment" -->
 
-- Long term, this can in itself be solved by what Polkadot provides best, more Blockspace 🎉!
+- 从长远来看，这个问题本身可以通过 Polkadot 网络最擅长提供的东西——更多的区块空间来解决 🎉！
 
 ## <!-- .element: class="fragment" -->
 
-### NPoS Protocol Overview
+### NPoS协议概述
 
-- The current NPoS protocol revolves around an **election round**, which is itself made up of 4
-  episodes.
-- This gives you an idea about how we solved the scalability issue for the time being.
-
----v
-
-### NPoS Protocol Overview: Episode 1
-
-**Snapshot**
-
-- Enables multi-block election.
-- Allows us to not need to "freeze" the staking system.
-- Allows us to index stakers, not `AccountIds`.
+- 当前的NPoS协议围绕着一个 **选举轮次** 展开，这个轮次本身由4个阶段组成。
+- 这让你对我们目前是如何解决可扩展性问题有了一个大致的了解。
 
 ---v
 
-### NPoS Protocol Overview: Episode 2
+### NPoS协议概述：阶段1
 
-**Signed Submissions**
+**快照**
 
-- Any signed account can come up with a **NPoS solution** based on that snapshot.
-- Deposits, rewards, slash, other game-theoretic tools incorporated to make to secure.
-
----v
-
-### NPoS Protocol Overview: Episode 3
-
-**Validator Submissions as Fallback**
-
-- As the first backup, any validator can also submit a solution as a part of their block authoring.
+- 实现多区块选举。
+- 使我们无需“冻结”抵押系统。
+- 允许我们对抵押者进行索引，而不是对 `AccountIds` 进行索引。
 
 ---v
 
-### NPoS Protocol Overview: Episode 4
+### NPoS协议概述：阶段2
 
-**Fallbacks**
+**签名提交**
 
-- If all of the above fails, the chain won't rotate validators and the governance can either:
-  - dictate the next validator set.
-  - trigger an onchain election (limited in what it can do).
+- 任何经过签名的账户都可以根据该快照提出一个 **NPoS解决方案**。
+- 引入了押金、奖励、削减等其他博弈论工具，以确保安全性。
 
-## This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜.
+---v
 
-## NPoS Objective
+### NPoS协议概述：阶段3
 
-- Given the powerful tool of NPoS, what should we aim for?
-- Let's first recap:
+**验证者提交作为备用方案**
 
-1. Polkadot validators are the source of truth for the state transition of both the relay chain and all of the parachains + bridges.
+- 作为第一个备用方案，任何验证者都可以在创建区块时提交一个解决方案。
+
+---v
+
+### NPoS协议概述：阶段4
+
+**备用方案**
+
+- 如果上述所有方法都失败了，链将不会轮换验证者，治理机构可以选择：
+  - 指定下一组验证者。
+  - 触发一个链上选举（其功能有限）。
+
+## 这最近在Kusama网络中被使用过 [点击查看](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜。
+
+## NPoS的目标
+
+- 鉴于NPoS这个强大的工具，我们应该追求什么目标呢？
+- 让我们先来回顾一下：
+
+1.  Polkadot 网络的验证者是中继链以及所有平行链和桥的状态转换的可信来源。
 
 <!-- .element: class="fragment" -->
 
-2. Polkadot validator are assigned to parachains as backing group, and swapped over time.
+2.  Polkadot 网络的验证者被分配到平行链作为支持组，并随着时间进行轮换。
 
 <!-- .element: class="fragment" -->
 
-3. Polkadot validators all author the same number of blocks, i.e. they are of same importance.
+3.  Polkadot 网络的所有验证者创建的区块数量相同，也就是说，他们的重要性是相同的。
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Point 2 is not to imply that the polkadot validator set's security is partitioned among parachains,
-security comes from approval voters.
+第2点并不意味着 Polkadot 网络验证者集合的安全性是在平行链之间进行划分的，安全性来自于批准投票者。
 <https://www.polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/>
 
 ---v
 
-### NPoS Objective: Election Score
+### NPoS目标：选举得分
 
 ```rust
 pub struct ElectionScore {
-  /// The minimal winner, in terms of total backing stake.
+  /// 按总支持权益计算的最小获胜者。
   ///
-  /// This parameter should be maximized.
+  /// 这个参数应该被最大化。
   pub minimal_stake: u128,
-  /// The sum of the total backing of all winners.
+  /// 所有获胜者的总支持权益之和。
   ///
-  /// This parameter should maximized
+  /// 这个参数应该被最大化。
   pub sum_stake: u128,
-  /// The sum squared of the total backing of all winners, aka. the variance.
+  /// 所有获胜者的总支持权益的平方和，也就是方差。
   ///
-  /// Ths parameter should be minimized.
+  /// 这个参数应该被最小化。
   pub sum_stake_squared: u128,
 }
 ```
 
 ---v
 
-### NPoS Objective: Election Score
+### NPoS目标：选举得分
 
-- NPoS allows us to incentivize the formation of a validator set that optimized the aforementioned `ElectionScore`.
+- NPoS允许我们激励形成一个能够优化上述 `ElectionScore` 的验证者集合。
 
-- This score is ALWAYS calculate and checked onchain. This is why we can accept solutions from the outer world.
+- 这个得分总是在链上进行计算和检查。这就是为什么我们可以接受来自外部世界的解决方案。
 
 Notes:
 
-A common example: we allow signed submissions. What if they send solutions that are censoring a particular validator? if it can achieve a better score, so be it! we don't care.
+一个常见的例子：我们允许签名提交。如果他们发送的解决方案排除了某个特定的验证者怎么办？如果它能获得更好的得分，那就没问题！我们不在乎。
 
 ---v
 
-### NPoS Objective: Election Score
+### NPoS目标：选举得分
 
-- The default algorithm used in both the onchain/offchain solvers is the [Phragmen algorithm](https://en.wikipedia.org/wiki/Phragmen%27s_voting_rules).
-- Proved to provide high fairness and justified representation properties whilst being verifiable in
-  linear time.
+- 链上和链下求解器中使用的默认算法是 [Phragmen算法](https://en.wikipedia.org/wiki/Phragmen%27s_voting_rules)。
+- 该算法被证明可以提供高度的公平性和合理的代表性，同时可以在线性时间内进行验证。
 
 ---
 
-## NPoS Future
+## NPoS的未来
 
-- Fresh from the oven (Jan 2023): [Future of Polkadot Staking in the Polkadot forum](https://forum.polkadot.network/t/the-future-of-polkadot-staking/1848/2).
-- [Github issue-tracker/project](https://github.com/orgs/paritytech/projects/33)
+- 新鲜出炉（2023年1月）：[ Polkadot 网络论坛中关于 Polkadot 网络抵押的未来](https://forum.polkadot.network/t/the-future-of-polkadot-staking/1848/2)。
+- [Github问题跟踪器/项目](https://github.com/orgs/paritytech/projects/33)
 
 <hr>
 
-- Nomination Pools
-- Multi-page election submission
-- Operators as first class citizens.
-- fast-unstake.
+- 提名池
+- 多页选举提交
+- 运营商作为一等公民。
+- 快速解除抵押。
 
 ---
 
-## Additional Resources! 😋
+## 更多资源！ 😋
 
 <img width="300px" rounded src="../../substrate/scale/img/thats_all_folks.png" />
 
-> Check speaker notes (click "s" 😉)
+> 查看演讲者备注（点击“s” 😉）
 
 Notes:
 
-### Further Reading
+### 进一步阅读
 
-- Recent Kusama slashing: https://forum.polkadot.network/t/kusama-era-4543-slashing/1410
-- [A verifiably secure and proportional committee election rule](https://arxiv.org/abs/2004.12990)
-- 4.1 in [Overview of Polkadot and its Design Considerations](https://arxiv.org/abs/2005.13456)
-- [Proportional Justified Representation](https://arxiv.org/abs/1611.09928)
-- [Justified representation - Wikipedia](https://en.wikipedia.org/wiki/Justified_representation)
+- 最近Kusama网络的削减事件：https://forum.polkadot.network/t/kusama-era-4543-slashing/1410
+- [一种可验证安全且按比例的委员会选举规则](https://arxiv.org/abs/2004.12990)
+- 《 Polkadot 网络概述及其设计考虑》中的4.1节：https://arxiv.org/abs/2005.13456
+- [比例合理代表制](https://arxiv.org/abs/1611.09928)
+- [合理代表制 - 维基百科](https://en.wikipedia.org/wiki/Justified_representation)
 
-### NPoS Protocol: More Details, Backup Slides
+### NPoS协议：更多细节，备用幻灯片
 
-- `bags-list`: how to store an unbounded semi-sorted linked-list onchain.
-- Nomination pools: best of both.
-- Minimum-untrusted score.
-- PJR checking: why we don't do it.
-- `reduce` optimization.
+- `bags-list`：如何在链上存储一个无界的半排序链表。
+- 提名池：两全其美。
+- 最小不可信得分。
+- PJR检查：我们为什么不做。
+- `reduce` 优化。
 
-### Feedback After Lecture:
+### 讲座后的反馈：

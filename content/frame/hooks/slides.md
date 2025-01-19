@@ -4,12 +4,6 @@ description: FRAME/Pallet Hooks
 duration: 1 hour
 ---
 
----
-title: FRAME/Pallet Hooks
-description: FRAME/Pallet Hooks
-duration: 1小时
----
-
 # 🪝 FRAME/Pallet Hooks 🪝
 
 ---

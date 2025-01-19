@@ -1,4 +1,4 @@
-# Blockchain Scaling - Modular and Heterogeneous
+# 区块链扩容 ---模块化与异构化
 
 <!-- markdown-link-check-disable -->
 <center>

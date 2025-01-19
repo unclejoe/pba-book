@@ -1,4 +1,4 @@
-# What is Shared Security?
+# 什么是共享安全？
 
 <!-- markdown-link-check-disable -->
 <center>

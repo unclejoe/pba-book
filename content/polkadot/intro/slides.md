@@ -6,168 +6,168 @@ duration: 1 hour
 
 <!-- .slide: data-background-color="#000" -->
 
-# Introduction to Polkadot
+#  Polkadot 简介
 
 ---
 
-## What is Polkadot?
+## 什么是 Polkadot ？
 
-> Polkadot is a scalable, heterogeneous, sharded, multi-chain network.
+>  Polkadot 是一个可扩展的、异构的、分片的多链网络。
 
-> Polkadot is a permissionless and ubiquitous computer
+>  Polkadot 是一个无需许可的、无处不在的计算机。
 
-> Polkadot is a decentralized open-source community
+>  Polkadot 是一个去中心化的开源社区。
 
-> Polkadot is a digital-native sovereign network
-
----
-
-## Environment
-
-Polkadot has many faces, both technical and social.
-
-It is the real-world instantiation of the technology described within this module.
-
-These technologies only define the limits of the environment.
-Polkadot is everything which happens within it.
+>  Polkadot 是一个数字原生的主权网络。
 
 ---
 
-### Agents
+## 环境
 
-Within the environment, various types of agents may take action according to its rules.
+ Polkadot 有许多不同的方面，包括技术和社会层面。
 
-These may be human users, silicon users, governments, or legal entities.
+它是本模块中所描述技术在现实世界中的实例化。
 
-They likely have different agendas and activity levels, and may be located anywhere in the world.
-
-Polkadot is an online economy for smart agents.
-
----
-
-### Games
-
-Polkadot fulfills its goals with a combination of mechanisms and games which provide incentives and disincentives for nodes to work together and construct this environment.
+这些技术仅定义了环境的边界。
+ Polkadot 是在这个环境中发生的一切。
 
 ---
 
-### All Together
+### 参与者
+
+在这个环境中，各种类型的参与者可以根据其规则采取行动。
+
+这些参与者可能是人类用户、硅基用户、政府或法律实体。
+
+他们可能有不同的议程和活动水平，并且可能位于世界上的任何地方。
+
+ Polkadot 是智能参与者的在线经济。
+
+---
+
+### 博弈论
+
+ Polkadot 通过一系列机制和博弈论来实现其目标，这些机制和博弈论为节点提供激励和惩罚措施，促使它们共同构建这个环境。
+
+---
+
+### 一切融合
 
 <img rounded width="1200px" src="./img/gav_header_photo.jpg" />
 
 Notes:
 
-source: banner image from <https://twitter.com/gavofyork>
+图片来源：<https://twitter.com/gavofyork> 的横幅图片
 
 ---
 
-## Goals of the Environment
+## 环境的目标
 
-1. Real-time, secure, global consensus on system state
-1. Trustless, censorship-resistant, and permissionless transaction at scale
-1. Explicit network-wide governance and co-evolution
-1. General programmable computation with full security
-1. Secure and trust-minimized interoperability between processes
+1. 对系统状态达成实时、安全的全球共识
+1. 大规模的无需信任、抗审查和无需许可的交易
+1. 明确的全网治理和共同演进
+1. 具有完全安全性的通用可编程计算
+1. 进程之间安全且信任最小化的互操作性
 
 ---
 
-## Goals: Breakdown
+## 目标：详细解析
 
-> (1) Real-time, secure, global consensus on system state
+> （1）对系统状态达成实时、安全的全球共识
 
-Polkadot's state should update as close to real-time as possible.
+ Polkadot 的状态应尽可能接近实时地更新。
 
-A global, unique history of everything that has happened is maintained.
+维护一个全球唯一的、记录所有已发生事件的历史记录。
 
 Notes:
 
-State consisting of account balances, chains, governance votes, etc.
+状态包括账户余额、链、治理投票等。
 
 ---
 
-## Goals: Breakdown
+## 目标：详细解析
 
-> (2) Trustless, censorship-resistant, and permissionless transaction at scale
+> （2）大规模的无需信任、抗审查和无需许可的交易
 
-Only a private key and a balance is needed to interact with the network, and without trusting any single third party.
+与网络进行交互只需要一个私钥和一定的余额，并且无需信任任何单一的第三方。
 
-It aims to do so at high scale.
-
----
-
-## Goals: Breakdown
-
-> (3) Explicit network-wide governance and co-evolution
-
-Polkadot stakeholders explicitly govern and evolve the network,<br />with the ability to set new rules.
+它旨在大规模地实现这一点。
 
 ---
 
-## Goals: Breakdown
+## 目标：详细解析
 
-> (4) General programmable computation with full security
+> （3）明确的全网治理和共同演进
 
-Polkadot is extended by general programs, usually taking the form of blockchains which themselves may be programmable environments.
-
-Generalized computation allows the capabilities of the network to be extended arbitrarily, while inheriting the full security of the network.
+ Polkadot 的利益相关者明确地对网络进行治理和演进，<br />并有能力制定新规则。
 
 ---
 
-## Goals: Breakdown
+## 目标：详细解析
 
-> (5) Secure and trust-minimized interoperability between processes
+> （4）具有完全安全性的通用可编程计算
 
-Processes deployed on Polkadot need to:
+ Polkadot 通过通用程序进行扩展，这些程序通常以区块链的形式存在，而这些区块链本身可能是可编程的环境。
+
+通用计算允许网络的功能得到任意扩展，同时继承网络的全部安全性。
+
+---
+
+## 目标：详细解析
+
+> （5）进程之间安全且信任最小化的互操作性
+
+部署在 Polkadot 上的进程需要：
 
 <pba-flex center>
 
-- Communicate with each other.
-- "Trade" with each other without entirely trusting them.
-- Protect trade routes and enforced trade agreements.
+- 相互通信。
+- 在不完全信任对方的情况下进行“交易”。
+- 保护交易路线并执行交易协议。
 
 </pba-flex >
 
 ---
 
-## Validators
+## 验证者
 
-Validators decide to participate in the upkeep of the network.
+验证者决定参与网络的维护。
 
-Validators participate in the core **games** of Polkadot.
+验证者参与 Polkadot 的核心**博弈论**。
 
 ---
 
-## Validators
+## 验证者
 
-Validators are _incentivized_ to do things like put user transactions in blocks or contribute to other activities, but may opt out of many of these tasks.
+验证者会受到**激励**去做一些事情，比如将用户交易打包进区块或参与其他活动，但他们也可以选择不执行其中许多任务。
 
-Validators are strongly punished for explicitly doing their job wrongly.
+验证者如果故意不履行职责，将会受到严厉的惩罚。
 
-The games work as long as enough validators are doing their job<br />and also not misbehaving.
+只要有足够多的验证者履行职责且不违规，这些博弈论就能正常运行。
 
 ---
 
 <!-- .slide: data-background-color="#000" -->
 
-# Polkadot Architecture
+#  Polkadot 架构
 
 Notes:
 
-A high level look into the architecture of Polkadot and the actors which maintain the network.
+对 Polkadot 架构及维护网络的参与者的高层概述。
 
 ---
 
-## Polkadot: Major Systems
+##  Polkadot ：主要系统
 
 <img rounded width="800px" src="./img/polkadot-components.svg" />
 
 ---
 
-Validators are made to provide accurate execution for processes deployed on top of Polkadot.
+验证者负责为部署在 Polkadot 之上的进程提供准确的执行。
 
-These processes, defined as WebAssembly Code, are colloquially known as **parachains**.
+这些进程，被定义为 WebAssembly 代码，通俗地称为**平行链**。
 
-Polkadot scales by sharing the load of validating these parachains across many validators.
+ Polkadot 通过让众多验证者分担验证这些平行链的负载来实现扩展。
 
 ---
 
@@ -179,161 +179,161 @@ Polkadot scales by sharing the load of validating these parachains across many v
 
 Notes:
 
-Simplified Polkadot Architecture (Parachains)
+简化的 Polkadot 架构（平行链）
 
 ---
 
-## The Relay Chain
+## 中继链
 
-The relay chain is the "hub" of Polkadot, providing the main games which validators play.
-It is built with Substrate.
+中继链是 Polkadot 的“枢纽”，提供了验证者参与的主要博弈论。
+它是使用 Substrate 构建的。
 
-Notably, the functionality of the relay chain is minimized,<br />with the expectation that more complex functionalities will be pushed to less critical parts of the system.
+值得注意的是，中继链的功能被最小化，预计更复杂的功能将被推到系统中不太关键的部分。
 
 ---
 
-## Relay Chain Functionality:
+## 中继链功能：
 
 <pba-flex center>
 
-- Governance (moving to parachain)
-- Staking
-- Registration, scheduling,<br />and advancement of parachains
-- Communication between parachains
-- Consensus Safety
-- Balance Transfers
+- 治理（转移到平行链）
+- 质押
+- 平行链的注册、调度和推进
+- 平行链之间的通信
+- 共识安全
+- 余额转移
 
 </pba-flex>
 
 ---
 
-## Relay Chain Games:
+## 中继链博弈论：
 
-The Relay Chain consists of two key games:
+中继链由两个关键博弈论组成：
 
 <pba-flex center>
 
-- Relay Chain Consensus
-- Parachain Consensus
+- 中继链共识
+- 平行链共识
 
 </pba-flex>
 
-These games are the enablers of all activity within Polkadot.
+这些博弈论是 Polkadot 内所有活动的推动者。
 
 ---
 
-## Game: Relay Chain Consensus (simplified)
+## 博弈论：中继链共识（简化版）
 
 <div style="font-size: 0.8em">
 
 <pba-flex left>
 
-**Goal:**
+**目标：**
 
-- Grow and finalize the relay chain, comprised of only valid blocks
+- 增长并最终确定中继链，使其仅由有效区块组成
 
 </pba-flex>
 <pba-flex left>
 
-**Rules:**
+**规则：**
 
 </pba-flex>
 
-- Validators put skin in the game in the form of tokens.
-- Validators are incentivized to make new relay chain blocks (BABE)
-- Validators are incentivized to vote to finalize recent relay chain blocks (GRANDPA)
-- Validators are incentivized to include user transactions in their relay chain blocks.
-- Validators get nothing for building bad blocks or building on top of them.
-- Validators are slashed for making blocks out of turn.
+- 验证者以代币的形式参与博弈论。
+- 验证者有动力创建新的中继链区块（BABE）
+- 验证者有动力对最近的中继链区块进行投票以最终确定（GRANDPA）
+- 验证者有动力将用户交易包含在他们的中继链区块中。
+- 验证者创建无效区块或在无效区块上继续构建不会获得任何奖励。
+- 验证者如果违规创建区块会被削减代币。
 
 </div>
 
 <br />
 
-**The game works whenever <1/3 of validators misbehave.**
+**只要违规的验证者少于三分之一，博弈论就能正常运行。**
 
 ---
 
-## Game: Parachain Consensus (simplified)
+## 博弈论：平行链共识（简化版）
 
 <div style="font-size: 0.8em">
 
 <pba-flex left>
 
-**Goal:**
+**目标：**
 
-- Grow registered parachains and post only valid updates to the Relay Chain
+- 使已注册的平行链增长，并仅向中继链发布有效更新
 
 </pba-flex>
 <pba-flex left>
 
-**Rules:**
+**规则：**
 
 </pba-flex>
 
-- Validators are incentivized to attest to new parachain updates
-- Whichever Validator makes the next Relay Chain block includes some attested parachain updates
-- Validators are slashed if they attest to incorrect parachain updates
-  - incorrect means "not according to the parachain's Wasm code"
-- Validators check each others' work to initiate the slashing procedure
+- 验证者有动力对新的平行链更新进行证明
+- 无论哪个验证者创建下一个中继链区块，都会包含一些已证明的平行链更新
+- 验证者如果对不正确的平行链更新进行证明，将会被削减代币
+  - 不正确是指“不符合平行链的 Wasm 代码”
+- 验证者会相互检查工作以启动削减代币的程序
 
 </div>
 
 <br />
 
-**The game works whenever <1/3 of validators misbehave.**
+**只要违规的验证者少于三分之一，博弈论就能正常运行。**
 
 ---
 
-All other functionalities of the relay chain (staking, governance, balances, etc.) are just baked into the definition of **valid block** and **valid transaction**.
+中继链的所有其他功能（质押、治理、余额等）都被融入到**有效区块**和**有效交易**的定义中。
 
 ---
 
-## Staking: Nominated Proof-of-Stake
+## 质押：提名权益证明
 
-As the Relay Chain progresses, it operates a system for selecting and accruing capital behind validators.
+随着中继链的发展，它运行着一个用于选择验证者并为其积累资本的系统。
 
-Accounts on Polkadot may issue a "nominate" transaction to select validators they support.
-Every day, an automated election selects the validators for the next 24 hours.
+ Polkadot 上的账户可以发出“提名”交易，以选择他们支持的验证者。
+每天，会有一个自动选举选出接下来 24 小时的验证者。
 
-Nominators share in both the reward and slashing of their nominees.
-
----
-
-## Message Passing: Trustless Communication
-
-The Relay Chain manages message queues and channels between parachains, as well as between each parachain and the Relay Chain itself.
-
-Part of the Validators' job is to ensure that message queues are properly maintained and updated.
+提名者会与他们提名的验证者共同分享奖励和承担削减风险。
 
 ---
 
-## Registering Parachains
+## 消息传递：无需信任的通信
 
-In 1.0: this is done via Slot Auctions to get a large bulk allocation
+中继链管理着平行链之间以及每个平行链与中继链本身之间的消息队列和通道。
 
-In the future: this will be done on a more granular / ad-hoc basis
+验证者的部分工作是确保消息队列得到正确维护和更新。
+
+---
+
+## 注册平行链
+
+在 1.0 版本中：这是通过插槽拍卖来获得大量批量分配完成的。
+
+在未来：这将以更细粒度/临时的方式进行。
 
 ---
 
 <!-- .slide: data-background-color="#000" -->
 
-## Governance & Evolution
+## 治理与演进
 
 ---
 
-## OpenGov
+## 开放式治理（OpenGov）
 
-Polkadot has on-chain governance by stakeholder referendum, voting on subjects such as:
+ Polkadot 通过利益相关者公投进行链上治理，投票主题包括：
 
 <pba-flex center>
 
-- Forkless upgrades of the network
-- Administration of the Treasury funds
-- Configuration of the Parachains protocol
-- Configuration of fees
-- Rescue & recovery operations
-- All other mechanisms of control over the platform
+- 网络的无分叉升级
+- 国库资金的管理
+- 平行链协议的配置
+- 费用的配置
+- 救援与恢复操作
+- 对平台的所有其他控制机制
 
 </pba-flex>
 
@@ -343,29 +343,29 @@ Notes:
 
 ---
 
-## Treasury
+## 国库
 
 <pba-flex center>
 
-- Polkadot ensures that a portion of network fees are collected treasury.
-- The treasury is managed by governance.
-- Tokens are burned if they are not spent.
+-  Polkadot 确保一部分网络费用被收集到国库中。
+- 国库由治理机构管理。
+- 如果代币未被使用，将会被销毁。
 
 </pba-flex>
 <br />
 
-The intention of the treasury is to pay people to help grow Polkadot itself.
-As tokens are burned, this creates pressure to fund public projects.
+国库的目的是向帮助 Polkadot 发展的人支付报酬。
+随着代币被销毁，这会产生资助公共项目的压力。
 
 ---
 
-### The Fellowship
+###  Polkadot 开发者社区（The Fellowship）
 
-A collective of developers, coordinated through on-chain activities.
+一个由开发者组成的集体，通过链上活动进行协调。
 
-These are node maintainers, developers, or researchers.
+这些人包括节点维护者、开发者或研究人员。
 
-They set the technical direction for the network through RFCs.
+他们通过请求评论（RFC）为网络设定技术方向。
 
 ---
 
@@ -383,75 +383,73 @@ They set the technical direction for the network through RFCs.
 
 <!-- .slide: data-background-color="#000" -->
 
-## Revisiting Goals
+## 回顾目标
 
 ---
 
-> (1) Real-time, secure, global consensus on system state
+> （1）对系统状态达成实时、安全的全球共识
 
-This is provided by the validators participating in **Relay Chain Consensus**.
-Every block they make and finalize advances the system state.
-
----
-
-> (2) Trustless and permissionless transaction at scale
-
-"at scale" is the caveat that drives most of the engineering in Polkadot.
-
-Polkadot scales by virtue of the **Parachain Consensus** game, where the parachains themselves process most of the transactions in the network.
-
-The more efficiently this game is implemented, the more Polkadot scales.
+这是由参与**中继链共识**的验证者提供的。
+他们创建和最终确定的每个区块都会推进系统状态。
 
 ---
 
-> (3) Explicit network-wide governance and co-evolution
+> （2）大规模的无需信任和无需许可的交易
 
-This is handled by OpenGov and the Treasury.
-Polkadot is a "meta-protocol" where OpenGov can update anything in the network, including the network's own rules.
+“大规模”是 Polkadot 大部分工程设计的关键考量因素。
 
----
-
-> (4) General programmable computation with full security
-
-This is provided by the **Parachain Consensus** game, as most parachains are registered by users and validators are on the hook for valid updates.
-
-Parachains themselves may also provide generalized computational functionality, e.g. EVM contracts.
+ Polkadot 通过**平行链共识**博弈论实现扩展，其中平行链本身处理网络中的大部分交易。
+这个博弈论的实现越高效， Polkadot 的扩展性就越强。
 
 ---
 
-> (5) Secure and trust-minimized interoperability between processes
+> （3）明确的全网治理和共同演进
 
-The Relay Chain maintains message queues between chains to provide interoperability (protected trade routes), however, full trust-minimization (enforced trade agreements) requires future protocol features to land.
+这由开放式治理（OpenGov）和国库来处理。
+ Polkadot 是一个“元协议”，OpenGov 可以更新网络中的任何内容，包括网络自身的规则。
+
+---
+
+> （4）具有完全安全性的通用可编程计算
+
+这由**平行链共识**博弈论提供，因为大多数平行链是由用户注册的，验证者负责验证更新。
+平行链本身也可以提供通用的计算功能，例如以太坊虚拟机（EVM）合约。
+
+---
+
+> （5）进程之间安全且信任最小化的互操作性
+
+中继链维护链之间的消息队列以提供互操作性（受保护的交易路线），然而，要实现完全的信任最小化（强制执行的交易协议）还需要未来的协议功能落地。
 
 ---
 
 <!-- .slide: data-background-color="#000" -->
 
-## At Scale: Polkadot's Value Proposition
+## 大规模应用： Polkadot 的价值主张
 
 ---
 
-## From This
+## 从这个
 
 <img rounded width="600px" src="./img/terrarium_bottle.jpg" />
 
 ---
 
-## To This
+## 到这个
 
 <img rounded width="800px" src="./img/amazon_terrarium.jpg" />
 
 ---
 
-## Blockchain Scalability Trilemma
+## 区块链可扩展性三难困境
 
 <pba-cols>
 <pba-col>
 <pba-flex center>
 
-1. Security: how much does it _cost_ to attack the network?
-1. Scalability: how much work can the network do?
-1. Decentralization: how decentralized is the network?
+1. 安全性：攻击网络的成本是多少？
+1. 可扩展性：网络能处理多少工作量？
+1. 去中心化：网络的去中心化程度如何？
 
 </pba-flex>
 </pba-col>
@@ -462,72 +460,72 @@ The Relay Chain maintains message queues between chains to provide interoperabil
 </pba-col>
 </pba-cols>
 
-Challenge: Scale while navigating the trilemma.
+挑战：在应对三难困境的同时实现扩展。
 
 ---
 
-## Scaling vs. Scheduling
+## 扩展与调度
 
-Scaling is important, but resources must be _allocated_ efficiently to make best use of that.
+扩展很重要，但必须高效地**分配**资源，以充分利用它。
 
-Polkadot allocates its resources to parachains through **Execution Cores**.
+ Polkadot 通过**执行核心**将资源分配给平行链。
 
 ---
 
-## Execution Cores
+## 执行核心
 
-Just like a decentralized CPU, Polkadot multiplexes many processes across cores.
+就像一个去中心化的中央处理器（CPU）， Polkadot 通过核心对多个进程进行多路复用。
 
-When a parachain is assigned to a core, it can advance.<br />
-Otherwise, it lies dormant.
+当一个平行链被分配到一个核心时，它可以继续运行。<br />
+否则，它将处于休眠状态。
 
-Execution Cores enable efficient allocation through _Coretime_ trading.
+执行核心通过**核心时间**交易实现高效分配。
 
 ---
 
 <!-- .slide: data-background-color="#000000" -->
 
-## One Chain Per Core
+## 每个核心一条链
 
 <img rounded width="1000px" src="./img/dumb_coretime.png" />
 
-Time -->
+时间 -->
 
 ---
 
 <!-- .slide: data-background-color="#000000" -->
 
-## Execution Cores: Endgame
+## 执行核心：最终目标
 
 <img rounded width="1000px" src="./img/smart_coretime.png" />
 
-Time -->
+时间 -->
 
 ---
 
-## Coretime: Polkadot's Product
+## 核心时间： Polkadot 的产品
 
-Coretime is what applications buy to build on Polkadot.<br />
-Goal: be like cloud.
+核心时间是应用程序在 Polkadot 上构建所需购买的资源。<br />
+目标：像云服务一样。
 
-Primary and secondary markets are key enablers.
+一级市场和二级市场是关键推动因素。
 
-Scalability + Scheduling
+可扩展性 + 调度
 
 ---
 
-## Full Circle
+## 回归原点
 
-> Polkadot is a scalable, heterogeneous, sharded, multi-chain network.
+>  Polkadot 是一个可扩展的、异构的、分片的多链网络。
 
-> Polkadot is a permissionless and ubiquitous computer
+>  Polkadot 是一个无需许可的、无处不在的计算机。
 
-> Polkadot is a decentralized open-source community
+>  Polkadot 是一个去中心化的开源社区。
 
-> Polkadot is a digital-native sovereign network
+>  Polkadot 是一个数字原生的主权网络。
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题

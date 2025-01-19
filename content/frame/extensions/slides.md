@@ -3,65 +3,66 @@ title: Signed Extensions
 description: Signed Extensions, Transaction Priority.
 ---
 
-# Signed Extensions
+
+# 签名扩展
 
 ---v
 
-- In this lecture you will learn above one of the most advance FRAME concepts, _Signed Extensions_.
+- 在本讲座中，你将学习到FRAME中最先进的概念之一：签名扩展。
 
-* They allow for a multitude of custom features to be added to FRAME transactions.
+* 它们允许为FRAME交易添加多种自定义功能。
 
 ---
 
-## History
+## 历史
 
-- Signed Extensions originally where added to implement tipping in a reasonable way.
+- 签名扩展最初是为了以合理的方式实现小费功能而添加的。
 
-* Originally, your dumb instructor (@kianenigma) had the idea of hard-coding it into the `UncheckedExtrinsic`, until @gavofyork jumped in with the idea of signed extensions.
+* 最初，你那愚蠢的讲师（@kianenigma）曾有过将其硬编码到 `UncheckedExtrinsic` 中的想法，直到@gavofyork提出了签名扩展的想法。
 
-> [Tipped Transaction Type. by kianenigma · Pull Request #2930 · paritytech/substrate](https://github.com/paritytech/substrate/pull/2930/files) > [Extensible transactions (and tips) by gavofyork · Pull Request #3102 · paritytech/substrate](https://github.com/paritytech/substrate/pull/3102/files)
+> [带小费的交易类型。由kianenigma发起的拉取请求 #2930 · paritytech/substrate](https://github.com/paritytech/substrate/pull/2930/files) > [可扩展交易（和小费）由gavofyork发起的拉取请求 #3102 · paritytech/substrate](https://github.com/paritytech/substrate/pull/3102/files)
 
 ---v
 
-### History
+### 历史
 
-- In essence, they are a generic way to **extend** the transaction. Moreover, if they have additional payload, it is signed, therefore _`SignedExtension`_.
+- 本质上，它们是一种扩展交易的通用方式。此外，如果它们有额外的负载，这些负载会被签名，因此称为“签名扩展”。
 
 ---
 
-## Anatomy
+## 结构
 
-A signed extension can be either combination of the following things:
+一个签名扩展可以是以下内容的任意组合：
 
-- Some additional data that is attached to the transaction.
-  - The tip!
-
-<!-- .element: class="fragment" -->
-
-- Some hooks that are executed before and after the transaction is executed.
-  - Before each transaction is executed, it must pay its fee upfront.
-  - Perhaps refund the fee partially 🤑.
+- 附加到交易中的一些额外数据。
+  - 小费！
 
 <!-- .element: class="fragment" -->
 
----v
-
-### Anatomy
-
-- Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
-  - Set priority of transaction priority based on some metric!
-
-<!-- .element: class="fragment" -->
-
-- Some additional data that must be present in the signed payload of each transaction.
-  - Data that the sender has, the chain also has, it is not communicated itself, but it is part of the signature payload.
-  - Spec version and genesis hash is part of all transaction's signature payload!
+- 在交易执行前后执行的一些钩子。
+  - 在每次交易执行之前，必须预先支付费用。
+  - 或许可以部分退还费用 🤑。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Anatomy: Let's Peek at the Trait
+### 结构
+
+- 用于验证交易并向交易池提供反馈的一些额外验证逻辑。
+  - 根据某些指标设置交易优先级！
+
+<!-- .element: class="fragment" -->
+
+- 每个交易的签名负载中必须存在的一些额外数据。
+  - 发送方拥有的数据，链上也有，这些数据本身不会被传输，但它是签名负载的一部分。
+  - 规范版本和创世哈希是所有交易签名负载的一部分！
+
+<!-- .element: class="fragment" -->
+
+---v
+
+### 结构：让我们来看看这个特性
 
 ```rust [1-100|4|6-7|9-10|12]
 pub trait SignedExtension:
@@ -81,26 +82,26 @@ pub trait SignedExtension:
 
 ---
 
-## Grouping Signed Extension
+## 分组签名扩展
 
-- Is also a signed extension itself!
+- 它本身也是一个签名扩展！
 
-- You can look at the implementation yourself.. but the TLDR is:
+- 你可以自己查看具体实现……但简而言之：
 
-- Main takeaways:
-  - `type AdditionalSigned = (SE1::AdditionalSigned, SE2::AdditionalSigned)`,
-  - all of hooks:
-    - Executes each individually, combines results
+- 主要要点：
+  - `type AdditionalSigned = (SE1::AdditionalSigned, SE2::AdditionalSigned)`，
+  - 所有钩子：
+    - 分别执行每个钩子，然后合并结果
 
 Notes:
 
-TODO: how `TransactionValidity` is `combined_with` is super important here, but probably something to cover more in 4.3 and recap here.
+待办事项：这里 `TransactionValidity` 是如何 `combined_with` 的非常重要，但可能需要在4.3节中更详细地介绍，然后在这里回顾。
 
 ---v
 
-## Usage In The Runtime
+## 在运行时中的使用
 
-- Each runtime has a bunch of signed extensions. They can be grouped as a tuple
+- 每个运行时都有一组签名扩展。它们可以组合成一个元组
 
 ```rust
 pub type SignedExtra = (
@@ -114,17 +115,15 @@ pub type SignedExtra = (
 type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
 ```
 
-- Signed extensions might originate from a pallet, but are applied to ALL EXTRINSICS 😮‍💨!
+- 签名扩展可能源于一个模块，但会应用于所有外部交易 😮‍💨！
 
 Notes:
 
-We will get to this later as well, but recall that SignedExtensions are not a _FRAME/Pallet_
-concept per se. FRAME just implements them. This also implies that everything regarding signed
-extensions is applied to **all transactions**, throughout the runtime.
+我们稍后会详细介绍，但要记住，签名扩展本身并不是一个FRAME/模块的概念。FRAME只是对其进行了实现。这也意味着，与签名扩展相关的所有内容都会在整个运行时应用于**所有交易**。
 
 ---
 
-## Encoding
+## 编码
 
 ```rust
 struct Foo(u32, u32);
@@ -142,21 +141,21 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 }
 ```
 
-- 2 u32 are decoded as, `42u32` is expected to be in the signature payload.
+- 两个 `u32` 被解码，`42u32` 应该在签名负载中。
 
 Notes:
 
-Here's the `check` function of `CheckedExtrinsic` extensively documented to demonstrate this:
+这里是 `CheckedExtrinsic` 的 `check` 函数，有详细的注释来演示这一点：
 
 ```rust
 // SignedPayload::new
 pub fn new(call: Call, extra: Extra) -> Result<Self, TransactionValidityError> {
-	// asks all signed extensions to give their additional signed data..
+	// 要求所有签名扩展提供它们的额外签名数据...
 	let additional_signed = extra.additional_signed()?;
-	// this essentially means: what needs to be signed in the signature of the transaction is:
-	// 1. call
-	// 2. signed extension data itself
-	// 3. any additional signed data.
+	// 这本质上意味着：交易签名中需要签名的内容是：
+	// 1. 调用
+	// 2. 签名扩展数据本身
+	// 3. 任何额外的签名数据。
 	let raw_payload = (call, extra, additional_signed);
 	Ok(Self(raw_payload))
 }
@@ -166,18 +165,18 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 	Ok(match self.signature {
 		Some((signed, signature, extra)) => {
 			let signed = lookup.lookup(signed)?;
-			// this is the payload that we expect to be signed, as explained above.
+			// 这是我们期望被签名的负载，如上所述。
 			let raw_payload = SignedPayload::new(self.function, extra)?;
-			// encode the signed payload, and check it against the signature.
+			// 对签名负载进行编码，并与签名进行验证。
 			if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
 				return Err(InvalidTransaction::BadProof.into())
 			}
 
-			// the extra is passed again to `CheckedExtrinsic`, see in the next section.
+			// extra 再次传递给 `CheckedExtrinsic`，见下一节。
 			let (function, extra, _) = raw_payload.deconstruct();
 			CheckedExtrinsic { signed: Some((signed, extra)), function }
 		},
-		// we don't care about signed extensions at all.
+		// 我们根本不关心签名扩展。
 		None => CheckedExtrinsic { signed: None, function: self.function },
 	})
 }
@@ -185,10 +184,10 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 
 ---
 
-## Transaction Pool Validation
+## 交易池验证
 
-- Each pallet also has `#[pallet::validate_unsigned]`.
-- This kind of overlaps with creating a signed extension and implementing `validate_unsigned`.
+- 每个模块也有 `#[pallet::validate_unsigned]`。
+- 这与创建签名扩展并实现 `validate_unsigned` 有一定的重叠。
 
 Notes:
 
@@ -197,62 +196,61 @@ Notes:
 
 ---v
 
-### Transaction Pool Validation
+### 交易池验证
 
-- Recall that transaction pool validation should be minimum effort and static.
-- In `executive`, we only do the following:
-  - check signature.
-  - call `Extra::validate`/`Extra::validate_unsigned`
-  - call `ValidateUnsigned::validate`, if unsigned.
-  - NOTE dispatching ✅!
+- 记住，交易池验证应该是最小工作量且静态的。
+- 在 `executive` 中，我们只做以下事情：
+  - 检查签名。
+  - 调用 `Extra::validate`/`Extra::validate_unsigned`
+  - 如果是无签名交易，调用 `ValidateUnsigned::validate`。
+  - Notes:调度 ✅！
 
 Notes:
 
-> Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
-> too much work in validation of transactions is essentially opening a door to be DOS-ed.
+> 交易队列不是共识系统的一部分。交易验证是**免费**的。在交易验证中做太多工作本质上是为被拒绝服务攻击（DOS）打开了大门。
 
 ---v
 
-### Transaction Pool Validation
+### 交易池验证
 
-- Crucially, you should make sure that you re-execute anything that you do in transaction pool validation in dispatch as well:
+- 关键是，你要确保在调度中也重新执行你在交易池验证中所做的任何操作：
 
 ```rust
-/// Do any pre-flight stuff for a signed transaction.
+/// 对有签名的交易进行任何预执行操作。
 ///
-/// Make sure to perform the same checks as in [`Self::validate`].
+/// 确保执行与 [`Self::validate`] 中相同的检查。
 fn pre_dispatch() -> Result<Self::Pre, TransactionValidityError>;
 ```
 
-- Because conditions that are not stateless might change over time!
+- 因为非静态条件可能会随时间变化！
 
 ---
 
-## Post Dispatch
+## 调度后处理
 
-- The dispatch result, plus generic type (`type Pre`) returned from `pre_dispatch` is passed to `post_dispatch`.
-- See [`impl Applyable for CheckedExtrinsic`](https://github.com/paritytech/polkadot-sdk/blob/bc53b9a/substrate/primitives/runtime/src/generic/checked_extrinsic.rs#L69) for more info.
+- 调度结果，加上从 `pre_dispatch` 返回的泛型类型（`type Pre`）会传递给 `post_dispatch`。
+- 更多信息请参见 [`impl Applyable for CheckedExtrinsic`](https://github.com/paritytech/polkadot-sdk/blob/bc53b9a/substrate/primitives/runtime/src/generic/checked_extrinsic.rs#L69)。
 
 ---
 
-## Notable Signed Extensions
+## 值得注意的签名扩展
 
-- These are some of the default signed extensions that come in FRAME.
-- See if you can predict how they are made!
+- 这些是FRAME中一些默认的签名扩展。
+- 看看你能否预测它们是如何实现的！
 
 ---v
 
 ### `ChargeTransactionPayment`
 
-Charge payments, refund if `Pays::Yes`.
+收取费用，如果是 `Pays::Yes` 则退款。
 
 ```rust
 type Pre = (
-  // tip
+  // 小费
   BalanceOf<T>,
-  // who paid the fee - this is an option to allow for a Default impl.
+  // 谁支付了费用 - 这是一个可选值，以允许默认实现。
   Self::AccountId,
-  // imbalance resulting from withdrawing the fee
+  // 提取费用产生的不平衡
   <<T as Config>::OnChargeTransaction as OnChargeTransaction<T>>::LiquidityInfo,
 );
 ```
@@ -263,13 +261,13 @@ type Pre = (
 
 ### `check_genesis`
 
-Wants to make sure you are signing against the right chain.
+确保你是针对正确的链进行签名。
 
-Put the genesis hash in `additional_signed`.
+将创世哈希放入 `additional_signed` 中。
 
 <!-- .element: class="fragment" -->
 
-`check_spec_version` and `check_tx_version` work very similarly.
+`check_spec_version` 和 `check_tx_version` 的工作原理非常相似。
 
 <!-- .element: class="fragment" -->
 
@@ -277,9 +275,9 @@ Put the genesis hash in `additional_signed`.
 
 ### `check_non_zero_sender`
 
-- interesting story: any account can sign on behalf of the `0x00` account.
-- discovered by [@xlc](https://github.com/xlc).
-- uses `pre_dispatch` and `validate` to ensure the signing account is not `0x00`.
+- 有趣的故事：任何账户都可以代表 `0x00` 账户进行签名。
+- 由 [@xlc](https://github.com/xlc) 发现。
+- 使用 `pre_dispatch` 和 `validate` 来确保签名账户不是 `0x00`。
 
 Notes:
 
@@ -289,16 +287,16 @@ Notes:
 
 ### `check_nonce`
 
-- `pre_dispatch`: check nonce and actually update it.
-- `validate`: check the nonce, DO NOT WRITE ANYTHING, set `provides` and `requires`.
+- `pre_dispatch`：检查随机数并实际更新它。
+- `validate`：检查随机数，不要写入任何内容，设置 `provides` 和 `requires`。
 
 <!-- .element: class="fragment" -->
 
 <div>
 
-- remember that:
-  - `validate` is only for lightweight checks, no read/write.
-  - anything you write to storage is reverted anyhow.
+- 记住：
+  - `validate` 仅用于轻量级检查，不进行读写操作。
+  - 你写入存储的任何内容都会被回滚。
 
 </div>
 
@@ -308,35 +306,31 @@ Notes:
 
 ### `check_weight`
 
-- Check there is enough weight in `validate`.
-- Check there is enough weight, and update the consumed weight in `pre_dispatch`.
-- Updated consumed weight in `post_dispatch`.
+- 在 `validate` 中检查是否有足够的权重。
+- 在 `pre_dispatch` 中检查是否有足够的权重，并更新已消耗的权重。
+- 在 `post_dispatch` 中更新已消耗的权重。
 
 <!-- .element: class="fragment" -->
 
 ---
 
-## Big Picture: Pipeline of Extension
+## 全局概览：扩展的管道
 
-- Signed extensions (or at least the `pre_dispatch` and `validate` part) remind me of the extension
-  system of `express.js`, if any of you know what that is
+- 签名扩展（或者至少是 `pre_dispatch` 和 `validate` 部分）让我想起了 `express.js` 的扩展系统，如果你们有人知道那是什么的话。
 
 ---v
 
-## Big Picture: Pipeline of Extension
+## 全局概览：扩展的管道
 
 <img rounded src="./img/signed-extensions.svg" />
 
 ---
 
-## Exercises
+## 练习
 
-- Walk over the notable signed extensions above and riddle each other about how they work.
-- SignedExtensions are an important part of the transaction encoding. Try and encode a correct
-  transaction against a template runtime in any language that you want, using only a scale-codec
-  library.
-- SignedExtensions that logs something on each transaction
-- SignedExtension that keeps a counter of all transactions
-- SignedExtensions that keeps a counter of all successful/failed transactions
-- SignedExtension that tries to refund the transaction from each account as long as they submit less
-  than 1tx/day.
+- 仔细研究上面提到的值得注意的签名扩展，互相猜测它们是如何工作的。
+- 签名扩展是交易编码的重要组成部分。尝试使用任何你想要的语言，仅使用scale-codec库，针对一个模板运行时编码一个正确的交易。
+- 一个在每次交易时记录日志的签名扩展
+- 一个记录所有交易次数的签名扩展
+- 一个记录所有成功/失败交易次数的签名扩展
+- 一个尝试为每个账户退还交易费用的签名扩展，只要他们每天提交的交易少于1笔。

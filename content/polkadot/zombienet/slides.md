@@ -22,83 +22,83 @@ duration: 1 hour
 
 ---
 
-## What is Zombienet?
+## 什么是 Zombienet？
 
-Zombienet is an <span class="colored">integration testing tool</span> that allows users to _<span class="colored">spawn</span>_ and _<span class="colored">test</span>_ ephemeral substrate based networks.
+Zombienet 是一个 <span class="colored">集成测试工具</span>，允许用户 _<span class="colored">创建</span>_ 和 _<span class="colored">测试</span>_ 临时的基于 Substrate 的网络。
 
 ---
 
-## Why Zombienet?
+## 为什么要使用 Zombienet？
 
-Integration tests are always <span class="colored">complex</span>:
+集成测试总是 <span class="colored">复杂的</span>：
 
 <br />
 
-- Setup Configuration
+- 配置设置
 
 <!-- .element: class="fragment" -->
 
-- Port management
+- 端口管理
 
 <!-- .element: class="fragment" -->
 
-- Ready state off all artifacts
+- 所有工件的就绪状态
 
 <!-- .element: class="fragment" -->
 
-- Observability
+- 可观测性
 
 <!-- .element: class="fragment" -->
 
-- Leaking resources
+- 资源泄漏
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-## Friction to resolve
+## 需要解决的麻烦
 
 <br />
 
-- Config flexibility
-- Local environment
-- Maintenance
-- CI friendly
-- Scaling
-- Test-runner
+- 配置灵活性
+- 本地环境
+- 维护
+- 对 CI 友好
+- 扩展性
+- 测试运行器
 
 ---v
 
-## Goals
+## 目标
 
 <br />
 
 <pba-cols style="align-items:normal">
     <pba-col>
 
-##### Hassle free setup
+##### 轻松设置
 
 - Toml / json
-- Nice defaults
-- Templating lang.
+- 良好的默认值
+- 模板语言
 
 </pba-col>
 <pba-col>
 
-##### Multiple envs
+##### 多种环境
 
-- **Local**
+- **本地**
 - **k8s**
 - **podman**
 
 </pba-col>
 <pba-col>
 
-##### Extensible
+##### 可扩展
 
-- Custom assertions
-- Intuitive <span class="colored">D.S.L</span>
-- Templating lang.
+- 自定义断言
+- 直观的 <span class="colored">领域特定语言（D.S.L）</span>
+- 模板语言
 
   </pba-col>
   </pba-cols>
@@ -107,32 +107,32 @@ Integration tests are always <span class="colored">complex</span>:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Phases
+# 阶段
 
 ---
 
-## Phases
+## 阶段
 
 <pba-cols style="align-items:normal">
 <pba-col>
 
-Spawn
+创建
 
-- Custom chain-specs
-- Custom command
-- Port-mapping
-- Parachains registration
+- 自定义链规范
+- 自定义命令
+- 端口映射
+- 平行链注册
 
 </pba-col>
 <!-- .element: class="fragment" -->
 <pba-col>
 
-Test
+测试
 
-- Custom <span class="colored">D.S.L</span>
-- Multiple assertions
-- Extensible
-- Custom reporting
+- 自定义 <span class="colored">领域特定语言（D.S.L）</span>
+- 多种断言
+- 可扩展
+- 自定义报告
 
 </pba-col>
 <!-- .element: class="fragment" -->
@@ -140,28 +140,28 @@ Test
 
 ---
 
-## Zombienet Options
+## Zombienet 选项
 
 <pba-flex center>
 
-- As binary ([releases](https://github.com/paritytech/zombienet/releases))
-- As library (@zombienet)
-- As container (published in docker hub)
-- From source ([zombienet](https://github.com/paritytech/zombienet) repo)
+- 作为二进制文件（[发布版本](https://github.com/paritytech/zombienet/releases)）
+- 作为库（@zombienet）
+- 作为容器（发布在 Docker Hub 上）
+- 从源代码（[zombienet](https://github.com/paritytech/zombienet) 仓库）
 
 </pba-flex>
 
 Notes:
 
-- As binary: Binaries for Linux and MacOS are available in each release in Github.
-- npm packages: cli, orchestrator, utils
-- image: docker.io/paritytech/zombienet
-  code is available in GitHub with the instructions on how to build and run Zombienet.
-  (https://github.com/paritytech/zombienet)
+- 作为二进制文件：Linux 和 MacOS 的二进制文件可在 GitHub 的每个发布版本中获取。
+- npm 包：cli、编排器、实用工具
+- 镜像：docker.io/paritytech/zombienet
+  代码可在 GitHub 上获取，其中包含有关如何构建和运行 Zombienet 的说明。
+  （https://github.com/paritytech/zombienet）
 
 ---v
 
-### Download Zombienet
+### 下载 Zombienet
 
 ```sh
 # macOS
@@ -172,7 +172,7 @@ curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.63/zombie
 curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.63/zombienet-linux
 -o ./zombienet
 
-# make executable
+# 使其可执行
 chmod +x zombienet
 ```
 
@@ -180,15 +180,15 @@ chmod +x zombienet
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Let’s spawn a new network!
+# 让我们创建一个新网络！
 
 ---v
 
-## But first, try manually…
+## 但首先，尝试手动操作……
 
 <br />
 <div>
-<ul><li>Create chain-spec (parachain)</li></ul>
+<ul><li>创建链规范（平行链）</li></ul>
 
 ```sh
 parachain-template-node build-spec --chain local \
@@ -199,7 +199,7 @@ parachain-template-node build-spec --chain local \
 <!-- .element: class="fragment" -->
 <br />
 <div>
-<ul><li>Create chain-spec (relay chain)</li></ul>
+<ul><li>创建链规范（中继链）</li></ul>
 
 ```sh
 polkadot build-spec --chain rococo-local \
@@ -211,22 +211,22 @@ polkadot build-spec --chain rococo-local \
 
 Notes:
 
-Tutorials <https://docs.substrate.io/tutorials/build-a-parachain/>
+教程 <https://docs.substrate.io/tutorials/build-a-parachain/>
 
 ---v
 
-### Add keys\*
+### 添加密钥*
 
 <br />
 
-When not using --alice or --bob, you need to provide additional `aura` and `grandpa` keys and inject them into the keystore! (**per node**)
+当不使用 `--alice` 或 `--bob` 时，你需要提供额外的 `aura` 和 `grandpa` 密钥，并将它们注入到密钥库中！（**每个节点**）
 
 ```sh
 ./target/release/polkadot \
 key insert --base-path /tmp/node01 \
   --chain /tmp/relay.json \
   --scheme Sr25519 \
-  --suri <your-secret-seed> \
+  --suri <你的秘密种子> \
   --password-interactive \
   --key-type aura
 ```
@@ -238,21 +238,21 @@ key insert --base-path /tmp/node01 \
   --base-path /tmp/node01 \
   --chain /tmp/relay.json \
   --scheme Ed25519 \
-  --suri <your-secret-key> \
+  --suri <你的秘密密钥> \
   --password-interactive \
   --key-type gran
 ```
 
 Notes:
 
-This step is optional if you use the dev accounts (e.g. alice, bob, charlie, dave, etc)
+如果你使用开发账户（例如 alice、bob、charlie、dave 等），此步骤是可选的。
 
 ---v
 
-- Start relay chain nodes
+- 启动中继链节点
 
 ```sh[1-2|4-10|12-18]
-# create nodes dirs
+# 创建节点目录
   mkdir -p /tmp/relay/{alice,bob}
 
   ./target/release/polkadot \
@@ -274,14 +274,14 @@ This step is optional if you use the dev accounts (e.g. alice, bob, charlie, dav
 
 Notes:
 
-Why do we need to use different ports for Alice and Bob?
+为什么我们需要为 Alice 和 Bob 使用不同的端口？
 
 ---v
 
-- Start collator
+- 启动校对节点
 
 ```sh
-# create nodes dirs
+# 创建节点目录
 mkdir -p /tmp/para/alice
 
 parachain-template-node \
@@ -301,11 +301,11 @@ parachain-template-node \
 
 ---v
 
-- Register ParaId on relay chain
+- 在中继链上注册 ParaId
 
-1. Modify parachain chain-spec and create raw format
-1. Generate genesis wasm and state
-1. Register parachain using sudo call
+1. 修改平行链链规范并创建原始格式
+1. 生成创世 wasm 和状态
+1. 使用 sudo 调用注册平行链
 
 <br />
 
@@ -324,35 +324,35 @@ para-2000-genesis-state
 
 <!-- .slide: data-background-color="#4A2439" data-visibility="hidden" -->
 
-# Activity
+# 活动
 
-Follow the [connect a local parachain](https://docs.substrate.io/tutorials/build-a-parachain/connect-a-local-parachain/) to launch your own network.
+按照 [连接本地平行链](https://docs.substrate.io/tutorials/build-a-parachain/connect-a-local-parachain/) 的步骤启动你自己的网络。
 
 ---
 
-## Non-trivial chore
+## 非平凡的繁琐工作
 
 <pba-cols style="align-items:normal">
 <pba-col>
 
-- Error prone.
-- Multiple commands.
-- Port management.
-- Multiple process.
+- 容易出错。
+- 多个命令。
+- 端口管理。
+- 多个进程。
 
 </pba-col>
 <pba-col>
 
-<div class="fragment center" style="font-size:150%;">Zombienet allow you to set everything in <span style="color: var(--r-link-color);font-weight:bold;">just</span> 1 file.</div>
+<div class="fragment center" style="font-size:150%;">Zombienet 允许你将所有设置都放在 <span style="color: var(--r-link-color);font-weight:bold;">仅</span> 一个文件中。</div>
 
 </pba-col>
 </pba-cols>
 
 ---v
 
-## Zombienet network definition
+## Zombienet 网络定义
 
-Zombienet allow to [define your network](https://paritytech.github.io/zombienet/network-definition-spec.html) with a simple configuration file.
+Zombienet 允许你使用一个简单的配置文件 [定义你的网络](https://paritytech.github.io/zombienet/network-definition-spec.html)。
 
 Notes:
 
@@ -390,7 +390,7 @@ Notes:
 
 ---v
 
-### Spawn the network
+### 启动网络
 
 ```sh
 ./zombienet spawn examples/0001-small-network.toml
@@ -400,9 +400,9 @@ Notes:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Activity
+# 活动
 
-Try to launch a network with `2` parachains.
+尝试启动一个包含 `2` 个平行链的网络。
 
 <br />
 
@@ -410,10 +410,10 @@ Try to launch a network with `2` parachains.
 
 ---
 
-## Make the network config dynamic
+## 使网络配置动态化
 
-The network definition supports using [nunjucks](https://mozilla.github.io/nunjucks/) templating language (similar to [tera](https://github.com/Keats/tera)).
-Where <span class="colored-green">{{variables}}</span> are replaced with <span class="colored-green">env vars</span> and you can use all the built-in features.
+网络定义支持使用 [nunjucks](https://mozilla.github.io/nunjucks/) 模板语言（类似于 [tera](https://github.com/Keats/tera)）。
+其中 <span class="colored-green">{{变量}}</span> 会被 <span class="colored-green">环境变量</span> 替换，并且你可以使用所有内置功能。
 
 <br />
 
@@ -425,15 +425,15 @@ default_command = "polkadot"
 
 ---v
 
-## Make the network config dynamic
+## 使网络配置动态化
 
 <img rounded style="width: 1200px" src="./img/zombienet-env-vars.png" />
 
 ---
 
-## Providers
+## 提供商
 
-Zombienet <span class="colored">providers</span> allow to <span class="colored-green">spawn and test</span> networks with in different environments.
+Zombienet <span class="colored">提供商</span> 允许在不同环境中 <span class="colored-green">创建和测试</span> 网络。
 
 ---v
 
@@ -444,8 +444,8 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <span class="colored">Kubernetes</span>
 <br />
 
-- Used internally, integrated with the [Grafana](https://grafana.com/oss/grafana/) stack.
-- You need to provide your infra stack.
+- 内部使用，与 [Grafana](https://grafana.com/oss/grafana/) 栈集成。
+- 你需要提供自己的基础设施栈。
 
 </pba-col>
 
@@ -454,8 +454,8 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <span class="colored">Podman</span>
 <br />
 
-- Automatically spawn and wire an instance of [Grafana](https://grafana.com/oss/grafana/) stack.
-- Attach a jaeger instance if enabled in the network definition.
+- 自动创建并连接 [Grafana](https://grafana.com/oss/grafana/) 栈的实例。
+- 如果在网络定义中启用，则附加一个 jaeger 实例。
 
 </pba-col>
 
@@ -464,8 +464,8 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <span class="colored">Native</span>
 <br />
 
-- Allow to attach to a running [Grafana](https://grafana.com/oss/grafana/) stack.
-  **(wip)**
+- 允许连接到正在运行的 [Grafana](https://grafana.com/oss/grafana/) 栈。
+  **（开发中）**
 
 </pba-col>
 
@@ -475,109 +475,90 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
 ---
 
-## Meet the Test-runner
+## 认识测试运行器
 
-Zombienet’s built-in <span class="colored">test-runner</span> allows users to use a simple <span class="colored-green">D.S.L.</span> to easily and intuitively write tests with a set of natural language expressions to make assertions.
+Zombienet 内置的 <span class="colored">测试运行器</span> 允许用户使用简单的 <span class="colored-green">领域特定语言（D.S.L.）</span> 轻松直观地编写测试，使用一组自然语言表达式进行断言。
 
 ---v
 
-### Built-in assertions
+### 内置断言
 
 <br />
 
-- <span class="colored">Prometheus</span>: Query the exposed metrics/histograms and assert on their values.
+- <span class="colored">Prometheus</span>：查询暴露的指标/直方图并对其值进行断言。
 
-- <span class="colored">Chain</span>: Query/subscribe chain's storage/events.
+- <span class="colored">Chain</span>：查询/订阅链的存储/事件。
 
-- <span class="colored">Custom scripts</span>: Run custom js scripts or bash scripts (inside the pod).
+- <span class="colored">Custom scripts</span>：运行自定义的 JavaScript 脚本或 Bash 脚本（在容器内）。
 
-- <span class="colored">Node's logs</span>: Match regex/glob patterns in the node's logs.
+- <span class="colored">Node's logs</span>：在节点日志中匹配正则表达式/全局模式。
 
-- <span class="colored">Integrations</span>: Zombienet supports multiple integrations, like jaeger spans, polkadot introspector and the backchannel.
+- <span class="colored">Integrations</span>：Zombienet 支持多种集成，如 jaeger 跨度、Polkadot 检查器和反向通道。
 
 ---v
 
 ```[1-3|6|7|14-16|18-20|22-24|26-28]
-Description: Small Network Paras
-Network: ./0002-small-network-paras.toml
-Creds: config # Only used with k8s
+描述：小型网络平行链
+网络：./0002-small-network-paras.toml
+凭证：config  # 仅在k8s中使用
 
-# well known functions
-validator: is up # check all the validators in the group
-validator-0: parachain 1000 is registered within 225 seconds
-validator-0: parachain 1001 is registered within 225 seconds
+# 常用函数
+validator: is up  # 检查组中的所有验证者是否正常运行
+validator-0: parachain 1000在225秒内完成注册
+validator-0: parachain 1001在225秒内完成注册
 
-# ensure parachains are producing blocks
-validator-0: parachain 1000 block height is at least 5 within 300 seconds
-validator-0: parachain 1001 block height is at least 5 within 300 seconds
+# 确保平行链正在生成区块
+validator-0: parachain 1000的区块高度在300秒内至少达到5
+validator-0: parachain 1001的区块高度在300秒内至少达到5
 
-# metrics
-validator-0: reports node_roles is 4
-validator-0: reports block height is at least 2 within 15 seconds
+# 指标
+validator-0: reports node_roles的值为4
+validator-0: reports的区块高度在15秒内至少达到2
 
-# logs (patterns are transformed to regex)
-validator-1: log line matches glob "*rted #1*" within 10 seconds
-validator-1: log line matches "Imported #[0-9]+" within 10 seconds
+# 日志（模式会转换为正则表达式）
+validator-1: 日志行在10秒内匹配通配符“*rted #1*”
+validator-1: 日志行在10秒内匹配“Imported #[0-9]+”
 
-# system events (patterns are transformed to regex)
-validator-2: system event contains "A candidate was included" within 10 seconds
-validator-2: system event matches glob "*was backed*" within 10 seconds
+# 系统事件（模式会转换为正则表达式）
+validator-2: 系统事件在10秒内包含“A candidate was included”
+validator-2: 系统事件在10秒内匹配通配符“*was backed*”
 
-# custom scripts
-validator-0: js-script ./custom.js with "alice" within 200 seconds
-validator-0: run ./custom.sh within 200 seconds
+# 自定义脚本
+validator-0: 在200秒内使用“alice”运行js-script ./custom.js
+validator-0: 在200秒内运行./custom.sh
 ```
-
 Notes:
-
-First three lines are the header
-
-Each line represents an assertion
-
-Each assertion is executed sequentially
-
-Assertions on a group check each node
-
-within keyword allows to keep-trying until time expires
+前3行是头部信息。
+每一行代表一个断言。
+每个断言按顺序执行。
+对一个组的断言会检查组中的每个节点。
+“within”关键字表示持续尝试，直到时间到期。
 
 ---
-
-## DSL extension
-
-Learning a new DSL can be tedious, but if you are using vscode we develop an [extension](https://github.com/paritytech/zombienet-vscode-extension) that can help you to write test easily.
-
+## DSL扩展
+学习新的领域特定语言（DSL）可能会很枯燥，但如果你使用的是Visual Studio Code，我们开发了一个[扩展](https://github.com/paritytech/zombienet-vscode-extension)，可以帮助你轻松编写测试。
 Notes:
-
-Show the extension link
-<https://github.com/paritytech/zombienet-vscode-extension>
+展示扩展链接：<https://github.com/paritytech/zombienet-vscode-extension>
 
 ---
-
-# Demo time
-
+# 演示时间
 ```sh
 ./zombienet -p native test examples/0002-small-network-paras.zndsl
 ```
 
 ---
-
-# Extensibility
-
-<span class="colored">Zombienet</span> allow users to use the custom-js assertion to extend and run custom tests.
-
+# 可扩展性
+<span class="colored">Zombienet</span>允许用户使用自定义js断言来扩展并运行自定义测试。
 ---v
-
-## Custom-js
-
+## 自定义js
 ```sh
-# custom scripts
-validator-0: js-script ./custom.js with "alice" within 200 seconds
+# 自定义脚本
+validator-0: 在200秒内使用“alice”运行js-script ./custom.js
 ```
-
 ```js
 async function run(nodeName, networkInfo, args) {
   const { wsUri, userDefinedTypes } = networkInfo.nodesByName[nodeName];
@@ -588,46 +569,30 @@ async function run(nodeName, networkInfo, args) {
 
 module.exports = { run };
 ```
-
 Notes:
-
-Zombienet will load your script and call the run function.
-
-Passing the node name, network info and an array of arguments from the assertion
-
-Your function have access to the zombie object exposing utilities like connect, ApiPromise, Keyring, etc \*
-
-The assertions can validate the return value or the completions of your script.
-
-\*similar to the way that scripts are written in PolkadotJS apps - developer page (https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frpc.polkadot.io#/js)
+Zombienet会加载你的脚本并调用run函数。
+它会传递节点名称、网络信息以及断言中的参数数组。
+你的函数可以访问zombie对象，该对象提供了connect、ApiPromise、Keyring等工具 。
+断言可以验证你脚本的返回值或执行结果。
+\*这与在PolkadotJS应用程序的开发者页面编写脚本的方式类似(https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frpc.polkadot.io#/js)。
 
 ---
-
-## More extensibility
-
-<span class="colored">Zombienet</span> also allow users to use as a library to create their own interactions with the running network.
-
+## 更多可扩展性
+<span class="colored">Zombienet</span>还允许用户将其作为库使用，以便与正在运行的网络进行自定义交互。
 ---v
-
-### As a Library
-
-- <span class="colored">@zombienet/orchestrator</span> module expose the start function as entrypoint.
-
-- Returning a [network](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/network.ts#L77) instance, with all the information about the running topology.
-
-- You can also use the [test](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/orchestrator.ts#L853) function passing a callback to run your test.
-
-- <span class="colored">@zombienet/utils</span> module expose misc utils functions like _readNetworkConfig_.
-
+### 作为库使用
+- <span class="colored">@zombienet/orchestrator</span>模块将start函数作为入口点。
+- 返回一个[network](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/network.ts#L77)实例，其中包含有关正在运行的网络拓扑的所有信息。
+- 你还可以使用[test](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/orchestrator.ts#L853)函数，并传入一个回调函数来运行你的测试。
+- <span class="colored">@zombienet/utils</span>模块提供了诸如_readNetworkConfig_等各种实用函数。
 ---v
-
 ```js[1|2|6-7|10-12|14|]
 import {start} from "@zombienet/orchestrator";
 import { readNetworkConfig } from "@zombienet/utils";
 
 const ZOMBIENET_CREDENTIALS = "";
 
-// can be toml or json
+// 可以是toml或json格式
 const launchConfig = readNetworkConfig("../examples/0001-small-network.toml");
 
 ( async () => {
@@ -635,61 +600,44 @@ const launchConfig = readNetworkConfig("../examples/0001-small-network.toml");
         spawnConcurrency: 5,
     });
 
-    // write your own test, `network` will have all the network info
+    // 编写你自己的测试，`network`将包含所有网络信息
 })();
 ```
 
 ---
-
-## The road ahead...
-
-🚧 🚧 <span class="colored"><b>Zombienet v2</b> (a.k.a [SDK](https://github.com/paritytech/zombienet-sdk))</span> is currently under construction 🚧 🚧
-
-The [SDK](https://github.com/paritytech/zombienet-sdk) will provide a set of building blocks that users can combine to spawn and interact with the network and also a fluent API for crafting different topologies and assertions for the running network.
-
+## 未来发展方向...
+🚧 🚧 <span class="colored"><b>Zombienet v2</b>（又名[SDK](https://github.com/paritytech/zombienet-sdk)）</span>目前正在开发中 🚧 🚧
+[SDK](https://github.com/paritytech/zombienet-sdk)将提供一组构建模块，用户可以组合这些模块来创建网络并与之交互，还会提供一个流畅的API，用于为正在运行的网络构建不同的拓扑结构和断言。
 Notes:
-
-SDK repo: https://github.com/paritytech/zombienet-sdk
-
----
-
-## Acknowledgement & Contributions
-
-<span class="colored"><b>Zombienet</b></span> take inspiration and some patterns from <span class="colored-light-green">polkadot-launch</span> and <span class="colored-light-green">SimNet</span>.
-
-We encourage everyone to test it, provide feedback, ask question and contribute.
+SDK仓库：https://github.com/paritytech/zombienet-sdk
 
 ---
+## 致谢与贡献
+<span class="colored"><b>Zombienet</b></span>从<span class="colored-light-green">polkadot-launch</span>和<span class="colored-light-green">SimNet</span>中汲取了灵感并借鉴了一些模式。
+我们鼓励大家对其进行测试、提供反馈、提出问题并做出贡献。
 
+---
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 问题
+---
+## 活动
+- 启动一个包含两个验证者和一个平行链的网络。
+- 添加测试以确保：
+  - 区块生成
+  - 对等节点数量
+  - 节点角色
 
 ---
-
-## Activity
-
-- Launch a network with two validators and one parachain.
-
-- Add a test to ensure:
-  - block producing
-  - peers number
-  - node's role
-
----
-
-## Additional Resources!
-
-> Check speaker notes (click "s" 😉)
-
+## 更多资源！
+> 查看演讲者备注（点击“s” 😉）
 Notes:
+Zombienet相关资源：
+- [仓库](https://github.com/paritytech/zombienet/)
+- [文档](https://paritytech.github.io/zombienet/)
+- [v2路线图](https://github.com/orgs/paritytech/projects/55/)
+- [sub0演讲幻灯片](https://docs.google.com/presentation/d/1wPjbrqLg9MCfygvBYV5gDra39cSr5TXg/edit)
+- [sub0演讲](https://www.youtube.com/watch?v=QKTZZCpdGH4)
+- [演示示例](https://github.com/pepoviola/zombienet-presentation-examples)
+- [设置本地测试网](https://hackmd.io/kSFS2ButRESeJ7hu_iKKoA) 
 
-Zombienet:
 
-- [repo](https://github.com/paritytech/zombienet/)
-- [docs](https://paritytech.github.io/zombienet/)
-- [v2 Roadmap](https://github.com/orgs/paritytech/projects/55/)
-- [sub0 slides](https://docs.google.com/presentation/d/1wPjbrqLg9MCfygvBYV5gDra39cSr5TXg/edit)
-- [sub0 presentation](https://www.youtube.com/watch?v=QKTZZCpdGH4)
-- [Presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
-- [Setting up a local testnet](https://hackmd.io/kSFS2ButRESeJ7hu_iKKoA)

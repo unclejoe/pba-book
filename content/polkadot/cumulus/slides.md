@@ -4,46 +4,42 @@ description: Cumulus, architecture and function
 duration: 1.25 hours
 ---
 
-# Cumulus Deep Dive
+# Cumulus 深度剖析
 
 Notes:
 
-Cumulus is the glue which attaches substrate based chains to Polkadot, converting them into parachains.
+Cumulus 是将基于 Substrate 的链连接到 Polkadot 的粘合剂，将它们转换为平行链。
 
 ---
 
-### Outline
+### 大纲
 
 <pba-flex center>
 
-1. What is Cumulus?
-1. Cumulus and Para-Relay Communication
+1. 什么是 Cumulus？
+1. Cumulus 与平行链 - 中继链通信
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-1. How Cumulus Keeps a Parachain Node Informed
-
+1. Cumulus 如何让平行链节点保持信息同步
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-1. Collation Generation and Advertisement
-
+1. 收集生成与通告
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-1. How Cumulus Collations Enable Parablock Validation
-
+1. Cumulus 收集如何实现平行链块验证
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-1. How Cumulus Enables Runtime Upgrades
-
+1. Cumulus 如何实现运行时升级
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 </pba-flex>
 
 ---
 
-## What is Cumulus
+## 什么是 Cumulus
 
-A collection of code libraries extending a Substrate FRAME chain so that it can interface with the Polkadot API, run relay chain based consensus, and submit parachain blocks for validation.
+一组代码库，扩展了 Substrate FRAME 链，使其能够与 Polkadot API 进行交互，基于中继链的共识机制运行，并提交平行链块进行验证。
 
 ---
 
@@ -57,60 +53,60 @@ A collection of code libraries extending a Substrate FRAME chain so that it can 
 
 Notes:
 
-- Substrate is a framework for building blockchains
-- But only "solo" chains
-- Split into runtime/node side
-- Both Polkadot and Cumulus extend substrate
-- Polkadot provides APIs to collators
+- Substrate 是一个用于构建区块链的框架
+- 但只能构建“独立”链
+- 分为运行时和节点端
+- Polkadot 和 Cumulus 都对 Substrate 进行了扩展
+- Polkadot 为收集者提供了 API
 
 ---
 
-## Review, Collators and Collations
+## 回顾：收集者和收集
 
 <pba-flex center>
 
-> What is a collator?
+> 什么是收集者？
 
-> What is a collation?
+> 什么是收集？
 
-> What is the PoV?
+> 什么是 PoV？
 
 </pba-flex>
 
 Notes:
 
-- Collator:
-  - Part of consensus authority set
-  - Author and submit collations
-- Collation: Info necessary for validators to process and validate a parachain block.
-- Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)
-- PoV: The smallest bundle of information sufficient to validate a block.
-  Will revisit in more detail.
+- 收集者：
+  - 共识权威集的一部分
+  - 创作并提交收集
+- 收集：验证者处理和验证平行链块所需的信息。
+- 收集包括：上行和横向消息、新的验证代码、结果头数据、有效性证明、已处理的下行消息以及 hrmp_watermark（所有 hrmp 消息都已处理的中继链块）
+- PoV：足以验证一个块的最小信息包。
+  稍后将更详细地介绍。
 
 ---
 
-## Cumulus' Key Processes
+## Cumulus 的关键流程
 
-- Follow relay "new best head" to update para "new best head"
-- Follow relay finalized block to update para finalized block
+- 跟随中继链的“最新最佳头块”来更新平行链的“最新最佳头块”
+- 跟随中继链的最终块来更新平行链的最终块
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Request parablocks not shared by peers from relay (data recovery)
+- 从中继链请求对等节点未共享的平行链块（数据恢复）
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- Collation generation and announcement
+- 收集生成和通告
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
-- New best head: New block at the head of the fork most preferred by BABE
+- 最新最佳头块：BABE 最偏好的分叉链头部的新块
 
 ---
 
-## Cumulus and Para-Relay Communication
+## Cumulus 与平行链 - 中继链通信
 
 <div class="r-stack">
 <img src="./img/para-relay_communication_1.svg" style="width: 1100px" />
@@ -120,56 +116,56 @@ Notes:
 
 Notes:
 
-- How do these communication channels service our key processes?
+- 这些通信渠道是如何服务于我们的关键流程的？
 
 ---
 
-## Handling Incoming Relay Information
+## 处理传入的中继链信息
 
-Before addressing collation generation let's first address the other three key Cumulus processes.
-These drive parachain consensus and ensure the availability of parachain blocks.
+在讨论收集生成之前，让我们先讨论 Cumulus 的其他三个关键流程。
+这些流程驱动平行链共识并确保平行链块的可用性。
 
 <br />
-Together they keep parachain nodes up to date such that collating is possible.
+它们共同确保平行链节点保持最新状态，从而使收集成为可能。
 
 Notes:
 
-To recap, these key processes are:
+回顾一下，这些关键流程是：
 
-- Follow relay "new best head" to update para "new best head"
-- Follow relay finalized block to update para finalized block
-- Request parablocks not shared by peers from relay (data recovery)
+- 跟随中继链的“最新最佳头块”来更新平行链的“最新最佳头块”
+- 跟随中继链的最终块来更新平行链的最终块
+- 从中继链请求对等节点未共享的平行链块（数据恢复）
 
 ---
 
-### Consensus Mechanism
+### 共识机制
 
-Parachain consensus is modified to:
+平行链共识机制被修改为：
 
 <pba-flex center>
 
-- Achieve sequencing consensus
-- Leave finality to the relay chain
+- 实现排序共识
+- 将最终性交给中继链
 
 </pba-flex>
 
 Notes:
 
-- Sequencing consensus: Decide on an accepted ordering of blocks and of transactions within a block
-- Sequencing consensus requires that we update our knowledge of the new best head of the parachain.
-  That way nodes are in agreement about which block to build on top of.
-- Sequencing options: Aura consensus, tendermint style consensus
-- When a parablock is included in a relay block that becomes finalized, that parablock is finalized by extension.
+- 排序共识：确定块以及块内交易的接受顺序
+- 排序共识要求我们更新关于平行链最新最佳头块的认知。
+  这样，节点就可以就基于哪个块进行构建达成一致。
+- 排序选项：Aura 共识、Tendermint 风格共识
+- 当一个平行链块被包含在一个最终确定的中继链块中时，该平行链块也随之最终确定。
 
 ---
 
-### Import Driven Block Authoring
+### 导入驱动的块创作
 
-Collators are responsible for authoring new blocks, and they do so when importing relay blocks.
-Honest Collators will choose to author blocks descending from the best head.
+收集者负责创作新块，他们在导入中继链块时进行创作。
+诚实的收集者会选择从最佳头块派生的块进行创作。
 
 ```rust[|4-8]
-// Greatly simplified
+// 极大简化
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
 
@@ -188,20 +184,20 @@ loop {
 
 Notes:
 
-- `parachain_trigger_block_authoring` itself can decide if it wants to build a block.
-- e.g. the parachain having a block time of 30 seconds
-- With asynchronous backing, parachain block authoring is untethered from relay block import.
+- `parachain_trigger_block_authoring` 本身可以决定是否要构建一个块。
+- 例如，平行链的块时间为 30 秒
+- 有了异步支持，平行链块的创作就不再依赖于中继链块的导入。
 
 ---
 
-### Finality
+### 最终性
 
-To facilitate shared security, parachains inherit their finality from the relay chain.
+为了实现共享安全，平行链从中继链继承其最终性。
 
 <br />
 
 ```rust[|4-8]
-// Greatly simplified
+// 极大简化
 loop {
     let finalized = finalized_relay_chain_blocks_stream.next().await;
 
@@ -217,40 +213,40 @@ loop {
 
 ---
 
-### Ensuring Block Availability
+### 确保块的可用性
 
-As a part of the parachains protocol, Polkadot makes parachain blocks available for several hours after they are backed.
+作为平行链协议的一部分，Polkadot 会在平行链块被支持后的几个小时内使其保持可用状态。
 <br /><br />
 
 <pba-flex center>
 
-- Why is this needed?
-  - Approvals
-  - Malicious collator
+- 为什么需要这样做？
+  - 批准
+  - 恶意收集者
 
 </pba-flex>
 
 Notes:
 
-- Approvers need the PoV to validate
-- Can't just trust backers to distribute the PoV faithfully
-- Malicious or faulty collators may advertise collations to validators without sharing them with other parachain nodes.
-- Cumulus is responsible for requesting missing blocks in the latter case
+- 批准者需要 PoV 来进行验证
+- 不能仅仅信任支持者忠实地分发 PoV
+- 恶意或有故障的收集者可能会向验证者通告收集，而不与其他平行链节点共享。
+- 在这种情况下，Cumulus 负责请求缺失的块
 
 ---
 
-#### Brief Aside, Candidate Receipt
+#### 简短题外话：候选收据
 
-The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Receipt** to represent the freshly validated block and its outputs
+当一个平行链块被支持时，PoV 太大而无法包含在链上，因此验证者会生成一个固定大小的**候选块收据**来表示刚验证的块及其输出
 
 Notes:
 
-The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
-The Candidate Receipt only references a PoV, it does not substitute it
+候选收据主要包含哈希值，因此其唯一有价值的用途是用于验证已知 PoV 的正确性
+候选收据仅引用 PoV，不能替代它
 
 ---
 
-### Malicious collator example
+### 恶意收集者示例
 
 <div class="r-stack">
 <img src="./img/malicious_collator_1.svg" style="width: 900px" />
@@ -263,26 +259,26 @@ The Candidate Receipt only references a PoV, it does not substitute it
 
 Notes:
 
-- On a Parachain, a block only needs to be accepted by the relay chain validators to be part of the canonical chain,
-- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
-- So, the relay chain could expect some parent block for the next block that no one is aware of
+- 在平行链上，一个块只需被中继链验证者接受即可成为规范链的一部分，
+- 问题在于，收集者可以将一个块发送到中继链，而不在平行链网络中分发它
+- 因此，中继链可能期望某个父块作为下一个块的基础，而没有人知道这个父块
 
 ---
 
-### The Availability Process
+### 可用性流程
 
 <pba-flex center>
 
-- Erasure coding is applied to the PoV, breaking it into chunks
-- 3x original PoV size, vs 300x to store copies
+- 对 PoV 应用纠删编码，将其分解为多个块
+- 是原始 PoV 大小的 3 倍，而存储副本则需要 300 倍的空间
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- 1/3 of chunks sufficient to assemble PoV
+- 1/3 的块足以组装 PoV
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-- 2/3 of validators must claim to have their chunks
+- 2/3 的验证者必须声明拥有他们的块
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -290,36 +286,36 @@ Notes:
 
 ---
 
-## Availability Outcome
+## 可用性结果
 
 <img src="./img/malicious_collator_4.svg" style="width: 70%" />
 
 ---
 
-# Collation Generation and Advertisement
+# 收集生成与通告
 
 ---
 
-## Collation Generation
+## 收集生成
 
-The last of our key processes
+我们的最后一个关键流程
 
 <pba-flex center>
 
-1. Relay node imports block in which parachain's avail. core was vacated
-1. `CollationGeneration` requests a collation from the collator
+1. 中继节点导入一个块，在该块中平行链的可用性核心被释放
+1. `CollationGeneration` 向收集者请求一个收集
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-1. Parachain consensus decides whether this collator can author
+1. 平行链共识决定这个收集者是否可以创作块
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-1. Collator proposes, seals, and imports a new block
+1. 收集者提议、密封并导入一个新块
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-1. Collator bundles the new block and information necessary to process and validate it, a **collation!**
+1. 收集者将新块和处理及验证所需的信息打包在一起，形成一个**收集！**
 
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
@@ -327,25 +323,25 @@ The last of our key processes
 
 Notes:
 
-- Aura is current default parachain consensus, but this consensus is modular and changeable
+- Aura 是当前默认的平行链共识机制，但这个共识机制是模块化且可更改的
 
 ---
 
-## Collation Distribution
+## 收集分发
 
 <img src="./img/para-relay_communication_1.svg" style="width: 1100px" />
 
 Notes:
 
-A subset of Para-Relay communication
+平行链 - 中继链通信的一个子集
 
 ---
 
-#### From Collator to Relay Node and Parachain Nodes
+#### 从收集者到中继节点和平行链节点
 
-- Sent from Collator, which owns both `CollatorService` and `ParachainConsensus`
-- Sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to validators
-- Sent to parachain node import queues
+- 由收集者发送，收集者同时拥有 `CollatorService` 和 `ParachainConsensus`
+- 发送到绑定的中继节点的 `CollationGeneration` 子系统，以便重新打包并转发给验证者
+- 发送到平行链节点的导入队列
 
 ```rust[1|5]
 let result_sender = self.service.announce_with_barrier(block_hash);
@@ -357,19 +353,19 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 
 ---
 
-# How Cumulus Collations Enable Parablock Validation
+# Cumulus 收集如何实现平行链块验证
 
 ---
 
-### What is Runtime Validation?
+### 什么是运行时验证？
 
 <pba-flex center>
 
-- The relay chain ensures that every parachain block follows the rules defined by that parachain's current code.
+- 中继链确保每个平行链块都遵循该平行链当前代码所定义的规则。
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Constraint: The relay chain must be able to execute runtime validation of a parachain block without access to the entirety of that parachain's state
+- 约束条件：中继链必须能够在不访问该平行链全部状态的情况下，对平行链块进行运行时验证
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -385,7 +381,7 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 
 <pba-flex center>
 
-- Building Blocks to make this possible, the PVF and PoV, are delivered within collations
+- 使这成为可能的构建模块，即 PVF 和 PoV，是在收集中传递的
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -393,14 +389,14 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 
 ---
 
-#### Parachain Validation Function - PVF
+#### 平行链验证函数 - PVF
 
-- The current STF of each Parachain is stored on the Relay Chain, wrapped as a PVF
+- 每个平行链的当前 STF 存储在中继链上，封装为 PVF
 
 ```rust [6]
-/// A struct that carries code of a parachain validation function and its hash.
+/// 一个结构体，携带平行链验证函数的代码及其哈希值。
 ///
-/// Should be cheap to clone.
+/// 应该易于克隆。
 #[derive(Clone)]
 pub struct Pvf {
     pub(crate) code: Arc<Vec<u8>>,
@@ -410,15 +406,15 @@ pub struct Pvf {
 
 <br />
 
-- New state transitions that occur on a parachain must be validated against the PVF
+- 平行链上发生的新状态转换必须根据 PVF 进行验证
 
 Notes:
 
-The code is hashed and saved in the storage of the relay chain.
+代码被哈希处理后存储在中继链的存储中。
 
 ---
 
-#### Why PVF Rather than STF?
+#### 为什么是 PVF 而不是 STF？
 
 <pba-cols>
 <pba-col center>
@@ -428,15 +424,15 @@ The code is hashed and saved in the storage of the relay chain.
 </pba-col>
 <pba-col center>
 
-- The PVF is not just a copy paste of the parachain Runtime
+- PVF 不是简单地复制粘贴平行链运行时
 
 <br />
 
-- The PVF contains an extra function, `validate_block`
+- PVF 包含一个额外的函数，`validate_block`
 
 <br />
 
-**WHY!?**
+**为什么？**
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -445,275 +441,212 @@ The code is hashed and saved in the storage of the relay chain.
 
 Notes:
 
-PVF not only contains the runtime but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation.
-This extra information is unique to each parachain and opaque to the relay chain.
+PVF 不仅包含运行时，还包含一个 `validate_block` 函数，该函数用于解释 PoV 中验证所需的所有额外信息。
+这些额外信息对于每个平行链来说是唯一的，并且对中继链来说是不透明的。
 
 ---
 
-#### Validation Path Visualized
-
+#### 验证路径可视化
 <div class="r-stack">
-<img src="./img/collation_path_1.svg" style="width: 70%" />
-<img src="./img/collation_path_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
+    <img src="./img/collation_path_1.svg" style="width: 70%" />
+    <img src="./img/collation_path_2.svg" style="width: 70%" />
+    <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
 Notes:
-
-The input of the runtime validation process is the PoV and the function called in the PVF is 'validate_block', this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, which is called a CandidateReceipt.
+运行时验证过程的输入是有效性证明（PoV），在平行链验证函数（PVF）中调用的函数是`validate_block`，该函数会利用PoV来调用有效的运行时，然后创建一个表示状态转换的输出，这个输出被称为候选收据（CandidateReceipt）。
 
 ---
 
-#### What Does validate_block Actually Do?
-
+#### validate_block实际做什么？
 <pba-flex center>
-
-- The parachain runtime expects to run in conjunction with a parachain client
-- But validation is occurring in a relay chain node
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- We need to implement the API the parachain client exposes to the runtime, known as host functions
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-- The host functions most importantly allow the runtime to query its state, so we need a light weight replacement for the parachain's state sufficient for the execution of this single block
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-- `validate_block` prepares said state and host functions
-
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
+    - 平行链运行时期望与平行链客户端协同运行。
+    - 但验证是在中继链节点中进行的。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+    - 我们需要实现平行链客户端向运行时暴露的API，即宿主函数。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
+    - 宿主函数最重要的作用是允许运行时查询其状态，所以我们需要一个轻量级的平行链状态替代方案，足以支持单个区块的执行。
+    <!-- .element: class="fragment" data-fragment-index="3" -->
+    - `validate_block`会准备上述状态和宿主函数。
+    <!-- .element: class="fragment" data-fragment-index="4" -->
 </pba-flex>
 
 ---
 
-#### Validate Block in Code
-
+#### 代码中的验证块
 ```rust [2|3-4|6|8-11]
-// Very simplified
+// 非常简化的代码
 fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+    // 首先初始化状态
+    let state = input.storage_proof.into_state().expect("存储证明无效");
 
     replace_host_functions();
 
-    // Run Substrate's `execute_block` on top of the state
+    // 在该状态之上运行Substrate的`execute_block`
     with_state(state, || {
-        execute_block(input.block).expect("Block is invalid")
+        execute_block(input.block).expect("区块无效")
     })
 
-    // Create the output of the result
+    // 创建结果输出
     create_output()
 }
 ```
-
 <br />
-
-> But where does `storage_proof` come from?
+> 但是`storage_proof`从何而来呢？
 
 Notes:
-
-We construct the sparse in-memory database from the storage proof and
-then ensure that the storage root matches the storage root in the `parent_head`.
+我们根据存储证明构建稀疏的内存数据库，然后确保存储根与`parent_head`中的存储根匹配。
 
 ---
 
-##### Host Function Replacement Visualized
-
+##### 宿主函数替换可视化
 <div class="r-stack">
-<img src="./img/replace_host_function_1.svg" style="width: 70%" />
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="./img/replace_host_function_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
+    <img src="./img/replace_host_function_1.svg" style="width: 70%" />
+    <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+    <img src="./img/replace_host_function_2.svg" style="width: 70%" />
+    <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
 ---
 
-### Collation Revisited
-
+### 再看收集
 ```rust[1|2-5|12-15|6-7|8-11]
 pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
-	/// Messages destined to be interpreted by the Relay chain itself.
-	pub upward_messages: UpwardMessages,
-	/// The horizontal messages sent by the parachain.
-	pub horizontal_messages: HorizontalMessages,
-	/// New validation code.
-	pub new_validation_code: Option<ValidationCode>,
-	/// The head-data produced as a result of execution.
-	pub head_data: HeadData,
-	/// Proof to verify the state transition of the parachain.
-	pub proof_of_validity: MaybeCompressedPoV,
-	/// The number of messages processed from the DMQ.
-	pub processed_downward_messages: u32,
-	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
-	pub hrmp_watermark: BlockNumber,
+    /// 旨在由中继链自身解释的消息。
+    pub upward_messages: UpwardMessages,
+    /// 平行链发送的横向消息。
+    pub horizontal_messages: HorizontalMessages,
+    /// 新的验证代码。
+    pub new_validation_code: Option<ValidationCode>,
+    /// 执行产生的头部数据。
+    pub head_data: HeadData,
+    /// 用于验证平行链状态转换的证明。
+    pub proof_of_validity: MaybeCompressedPoV,
+    /// 从下行消息队列（DMQ）处理的消息数量。
+    pub processed_downward_messages: u32,
+    /// 标记，表示所有入站HRMP消息已处理到的区块编号。
+    pub hrmp_watermark: BlockNumber,
 }
 ```
-
 Notes:
-
-Code highlighting:
-
-- CandidateCommitments: Messages passed upwards, Downward messages processed, New code (checked against validation outputs)
-- head_data & PoV (the validation inputs)
+代码重点说明：
+ - 候选承诺（CandidateCommitments）：向上传递的消息、已处理的下行消息、新代码（与验证输出进行对比）
+ - head_data和PoV（验证输入）
 
 ---
 
-### Proof of Validity (Witness Data)
-
-- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
-- It allows the reconstruction of a sparse in-memory merkle trie
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- State root can then be compared to that from parent header
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
+### 有效性证明（见证数据）
+ - 用于在验证单个区块时替代平行链的前状态。
+ - 它允许重建稀疏的内存默克尔树。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+ - 然后可以将状态根与父区块头中的状态根进行比较。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
-### Example of Witness Data Construction
-
+### 见证数据构建示例
 <div class="r-stack">
-<img src="./img/pov_witness_data_1.svg" style="width: 70%" />
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="./img/pov_witness_data_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
+    <img src="./img/pov_witness_data_1.svg" style="width: 70%" />
+    <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+    <img src="./img/pov_witness_data_2.svg" style="width: 70%" />
+    <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
-
 <br />
-
-- Only includes the data modified in this block along with hashes of the data from the rest of the trie
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-- This makes up the majority of the data in a collation (max 5MiB)
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
+ - 仅包含本区块中修改的数据以及默克尔树其余部分数据的哈希值。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
+ - 这构成了收集中的大部分数据（最大5MiB）。
+    <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-
-orange: Data values modified in this block
-green: Hash of the siblings node required for the pov
-white: Hash of the nodes that are constructed with orange and green nodes
-red: Unneeded hash
-blue: Head of the trie, hash present in the previous block header
+橙色：本区块中修改的数据值
+绿色：PoV所需的兄弟节点哈希值
+白色：由橙色和绿色节点构建的节点哈希值
+红色：不需要的哈希值
+蓝色：默克尔树的头部，即前一个区块头中的哈希值
 
 ---
 
-#### Parablock Validation in Summary
-
+#### 平行链块验证总结
 ```rust [2|3-4|6]
-// Very simplified
+// 非常简化的代码
 fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+    // 首先初始化状态
+    let state = input.storage_proof.into_state().expect("存储证明无效");
 
     replace_host_functions();
 
-    // Run `execute_block` on top of the state
+    // 在该状态之上运行`execute_block`
     with_state(state, || {
-        execute_block(input.block).expect("Block is invalid")
+        execute_block(input.block).expect("区块无效")
     })
 
-    // Create the output of the result
+    // 创建结果输出
     create_output()
 }
 ```
-
-- Now we know where the **storage_proof** comes from!
-- **into_state** constructs our storage trie
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- Host functions written to access this new storage
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
+ - 现在我们知道**存储证明**从何而来了！
+ - **into_state**构建了我们的存储默克尔树。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+ - 编写宿主函数以访问这个新存储。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
-## Cumulus and Parachain Runtime Upgrades
-
+## Cumulus与平行链运行时升级
 <pba-flex center>
-
-- Every Substrate blockchain supports runtime upgrades
-
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
-##### Problem
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- What happens if PVF compilation takes too long?
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-  - Approval no-shows
-  - In disputes neither side may reach super-majority
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-> Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
+    - 每个Substrate区块链都支持运行时升级。
+    <!-- .element: class="fragment" data-fragment-index="0" -->
+    ##### 问题
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+    - 如果PVF编译时间过长会怎样？
+        <!-- .element: class="fragment" data-fragment-index="1" -->
+        - 批准环节出现“未出席”情况。
+        - 在争议中，双方可能都无法达到超级多数。
+        <!-- .element: class="fragment" data-fragment-index="1" -->
+    > 更新平行链运行时并不像更新独立区块链运行时那么容易。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-flex>
 
 ---
 
-### Solution
-
-The relay chain needs a fairly hard guarantee that PVFs can be compiled within a reasonable amount of time.
-
+### 解决方案
+中继链需要有一个较为可靠的保证，即PVF能够在合理时间内完成编译。
 <!-- .element: class="fragment" data-fragment-index="0" -->
-
 <br />
-
-- Collators execute a runtime upgrade but it is not applied
-- Collators send the new runtime code to the relay chain in a collation
-- The relay chain executes the **PVF Pre-Checking Process**
-- The first parachain block to be included after the end of the process applies the new runtime
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-> Cumulus follows the relay chain, waiting for a go ahead signal to apply the runtime change
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
+ - 收集者执行运行时升级，但暂不应用。
+ - 收集者在收集中将新的运行时代码发送给中继链。
+ - 中继链执行**PVF预检查流程**。
+ - 该流程结束后，第一个被包含的平行链块应用新的运行时。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+> Cumulus跟随中继链，等待继续进行的信号来应用运行时更改。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
-
 <https://github.com/paritytech/polkadot-sdk/blob/9aa7526/cumulus/docs/overview.md#runtime-upgrade>
 
 ---
 
-##### PVF Pre-Checking Process
-
-- The relay chain keeps track of all the new PVFs that need to be checked
-- Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-  - binary vote: accept or reject
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-- Super majority concludes the vote
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-- The state of the new PVF is updated on the relay chain
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
+##### PVF预检查流程
+ - 中继链跟踪所有需要检查的新PVF。
+ - 每个验证者检查PVF的编译是否有效且耗时不长，然后进行投票。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+    - 二元投票：接受或拒绝。
+    <!-- .element: class="fragment" data-fragment-index="1" -->
+ - 超级多数决定投票结果。
+    <!-- .element: class="fragment" data-fragment-index="2" -->
+ - 新PVF的状态在中继链上更新。
+    <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-
-Reference: <https://paritytech.github.io/polkadot/book/pvf-prechecking.html>
+参考：<https://paritytech.github.io/polkadot/book/pvf-prechecking.html>
 
 ---
 
-## References
-
-1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201), who was a huge help putting together these slides
+## 参考文献
+1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201)，他为整理这些幻灯片提供了巨大帮助
 1. <https://github.com/paritytech/polkadot-sdk/blob/9aa7526/cumulus/docs/overview.md>
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 问题

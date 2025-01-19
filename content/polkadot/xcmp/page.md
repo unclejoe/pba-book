@@ -1,4 +1,4 @@
-# Cross-Chain Message Passing (XCMP)
+# XCMP: 跨链消息传递
 
 <!-- markdown-link-check-disable -->
 <center>

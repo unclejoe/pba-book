@@ -4,19 +4,19 @@ description: A High Level Review of the Key Decisions of Polkadot
 duration: 1 hour
 ---
 
-# The Decisions of Polkadot
+#  Polkadot 的决策
 
 ---
 
-## The Decisions of Polkadot
+##  Polkadot 的决策
 
-This presentation will try to explain the core decisions which define the Polkadot network.
+本次演讲将尝试解释定义 Polkadot 网络的核心决策。
 
 ---
 
-## Creating an “Invention Machine”
+## 打造一台“发明机器”
 
-Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches decision making, by categorizing decisions as either Type 1 or Type 2 decisions.
+杰夫·贝索斯在致亚马逊股东的年度信中阐述了他的决策方法，即将决策分为一类决策和二类决策。
 
 Notes:
 
@@ -24,46 +24,46 @@ Notes:
 
 ---
 
-## Type 1 Decisions
+## 一类决策
 
-> Some decisions are consequential and irreversible or nearly irreversible – <span style="color:#d92f78"> **one-way doors**</span> – and these decisions must be made methodically, carefully, slowly, with great deliberation and consultation. If you walk through and don't like what you see on the other side, you can't get back to where you were before. We can call these Type 1 decisions.
-
----
-
-## Type 2 Decisions
-
-> But most decisions aren't like that – they are changeable, reversible – <span style="color:#d92f78"> **they're two-way doors**</span>. If you've made a suboptimal Type 2 decision, you don't have to live with the consequences for that long. You can reopen the door and go back through. Type 2 decisions can and should be made quickly by high judgment individuals or small groups.
+> 有些决策会产生重大影响，且不可逆转或几乎不可逆转——<span style="color:#d92f78"> **单向门**</span>——对于这些决策，必须有条不紊、谨慎、缓慢地做出，要经过深思熟虑并充分咨询。如果你穿过这扇门后，不喜欢门另一边的景象，你也无法回到原来的地方。我们可以将这些决策称为一类决策。
 
 ---
 
-## In the context of blockchains...
+## 二类决策
+
+> 但大多数决策并非如此——它们是可变的、可逆的——<span style="color:#d92f78"> **它们是双向门**</span>。如果你做出了一个不太理想的二类决策，你不必长期承受其后果。你可以重新打开这扇门，回到原来的状态。二类决策可以而且应该由判断力强的个人或小团体迅速做出。
+
+---
+
+## 在区块链的背景下……
 
 <pba-cols>
 <pba-col>
 
-### Type 1 Decisions
+### 一类决策
 
-Decisions that cannot easily be changed in the future.
+未来不容易改变的决策。
 
-- Must be a part of the original protocol design.
-- Changes might as well be considered a new protocol.
+- 必须是原始协议设计的一部分。
+- 更改可能被视为一个新的协议。
 
 </pba-col>
 <pba-col>
 
-### Type 2 Decisions
+### 二类决策
 
-Decisions that can be easily changed in the future.
+未来容易改变的决策。
 
-- Can be included into the protocol at a later time.
-- Changes can be considered as part of the evolution of the protocol.
+- 可以在稍后的时间纳入协议中。
+- 更改可以被视为协议演进的一部分。
 
 </pba-col>
 </pba-cols>
 
 ---
 
-## The Philosophies of Polkadot
+##  Polkadot 的理念
 
 ---
 
@@ -71,35 +71,35 @@ Decisions that can be easily changed in the future.
 
 Notes:
 
-This is the slogan of the Web3 Summit, and seeing that Polkadot is our biggest bet on a Web3 future, it is apt that we use this phrase as a staple of the philosophy which backs Polkadot. The whole reason we have developed blockchain technologies was to address the trust problems that we face with those who wield power in our world.
+这是Web3峰会的口号，鉴于 Polkadot 是我们对Web3未来的最大押注，将这句话作为支撑 Polkadot 的核心理念是恰当的。我们开发区块链技术的根本原因是为了解决我们在面对世界上掌握权力的人时所面临的信任问题。
 
-I want to note the phrase is NOT “No Trust, Only Truth”. This, from what I can tell so far, is mostly impossible. We should not use points of trust to invalidate working solutions. For example, it is not an expectation everyone who uses Polkadot will read each individual line of open source code before they run it. Our goal should be to minimize trust, where possible, and make it obvious to everyone who uses our tools what kinds of trust assumptions they run on
+我想强调的是，这句话不是“无需信任，唯有真相”。就我目前所知，这几乎是不可能的。我们不应该用信任问题来否定可行的解决方案。例如，我们不期望每个使用 Polkadot 的人在运行它之前都要阅读开源代码的每一行。我们的目标应该是在可能的情况下尽量减少信任，并让每个使用我们工具的人都清楚他们所依赖的信任假设是什么。
 
 ---
 
-## Against Blockchain Maximalism
+## 反对区块链最大化主义
 
 <img width="1000px" src="../../substrate/intro/img/dev-4.1-maximalism.png" />
 
 Notes:
 
-Polkadot fundamentally believes in a multi-chain future. One where chains cooperate and provide greater value to one another, rather than where they strictly compete and try to kill one another. This is rare to find today, since cryptocurrencies are prone to becoming “investment vehicles”, where the creation of a new blockchain can be seen as a threat to the existing “investments”. With the blockchain maximalism mentality, people are choosing to value their “investments” over innovation and progression, and this isn’t best for our goals to provide the best technologies to the world.
+ Polkadot 从根本上相信多链未来。在这个未来中，各条链相互协作，为彼此创造更大的价值，而不是相互竞争，试图消灭对方。这种情况在今天并不常见，因为加密货币往往会成为“投资工具”，新的区块链的创建可能会被视为对现有“投资”的威胁。在区块链最大化主义的思维下，人们会选择看重他们的“投资”，而不是创新和进步，这对我们向世界提供最佳技术的目标来说并非最优选择。
 
 ---
 
-## “The best blockchain today will not be the best blockchain tomorrow.”
+## “今天最好的区块链明天可能就不是最好的了。”
 
 Notes:
 
-This philosophy is a realization that building a blockchain is trying to build a piece of software which will last forever. The we will not be successful engineering Polkadot simply for the problems we find today. By the time we have built X, the world will need Y, and so on. This is why we have invested so much time building platforms and SDKs, not just products. We need to make sure these technologies are able to adapt and evolve in order to stay relevant for users
+这个理念认识到，构建区块链就像是要构建一个可以永久使用的软件。如果我们仅仅为了解决当下的问题而设计 Polkadot ，那我们不会成功。当我们构建出X的时候，世界可能已经需要Y了，以此类推。这就是为什么我们花了这么多时间来构建平台和软件开发工具包（SDK），而不仅仅是产品。我们需要确保这些技术能够适应和发展，以保持对用户的相关性。
 
 ---
 
-## The Goals of Polkadot
+##  Polkadot 的目标
 
 ---
 
-## The Blockchain Scalability Trilemma
+## 区块链可扩展性三难困境
 
 <div class="grid grid-cols-2">
 
@@ -111,11 +111,9 @@ This philosophy is a realization that building a blockchain is trying to build a
 
 <div>
 
-- Security: How much does it cost to attack the network?
-
-- Scalability: How much work can the network do?
-
-- Decentralization: How decentralized is the network?
+- 安全性：攻击网络的成本是多少？
+- 可扩展性：网络能处理多少工作量？
+- 去中心化：网络的去中心化程度如何？
 
 </div>
 
@@ -123,35 +121,35 @@ This philosophy is a realization that building a blockchain is trying to build a
 
 ---
 
-## In one sentence...
+## 用一句话概括……
 
-> Polkadot’s mission is to provide secure, scalable, and resilient infrastructure for Web3 applications and services.
+>  Polkadot 的使命是为Web3应用程序和服务提供安全、可扩展且有弹性的基础设施。
 
 Notes:
 
-Note the difference between “decentralization” as a mission vs "resilience".
+注意“去中心化”作为使命和“弹性”之间的区别。
 
 ---
 
-Polkadot tries to accomplish that mission by solving three problems:
+ Polkadot 试图通过解决三个问题来实现这一使命：
 
 <pba-flex center>
 
-1. Computational Scalability
-1. Shared Security
-1. Interoperability
+1. 计算可扩展性
+1. 共享安全
+1. 互操作性
 
 </pba-flex>
 
 ---
 
-## The Decisions
+## 决策
 
-What are the type 1 decisions which make Polkadot... Polkadot?
+哪些一类决策造就了 Polkadot ……使其成为 Polkadot ？
 
 ---
 
-## Wasm
+## WebAssembly（Wasm）
 
 <div class="grid grid-cols-3">
 
@@ -163,9 +161,9 @@ What are the type 1 decisions which make Polkadot... Polkadot?
 
 <div class="col-span-2">
 
-WebAssembly is the backbone of Polkadot. It is a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
+WebAssembly是 Polkadot 的支柱。它是一种快速、安全、开放的元协议，为我们的生态系统中的所有状态转换提供动力。
 
-It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
+它规范了链的执行方式，通过沙盒隔离执行以提高安全性，并允许团队使用任何可以编译成Wasm的语言在 Polkadot 上进行开发。
 
 </div>
 
@@ -173,15 +171,15 @@ It standardizes how chains execute, sandboxes that execution for improved securi
 
 ---
 
-## Sharding
+## 分片
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Polkadot scales primarily by parallelizing execution on separate data shards.
+ Polkadot 主要通过在不同的数据分片上并行执行来实现扩展。
 
-These parallel chains (shards) are called Parachains.
+这些并行链（分片）称为平行链。
 
 </div>
 
@@ -195,7 +193,7 @@ These parallel chains (shards) are called Parachains.
 
 ---
 
-## App-Chains
+## 应用链
 
 <div class="grid grid-cols-2">
 
@@ -207,9 +205,9 @@ These parallel chains (shards) are called Parachains.
 
 <div>
 
-Another key scaling decision is the choice of heterogeneous shards, allowing for application specific chains.
+另一个关键的扩展决策是选择异构分片，以支持特定于应用程序的链。
 
-Specialized solutions for problems are more performant than generalized solutions, as they can incorporate more details about the problem space.
+针对特定问题的专门解决方案比通用解决方案性能更高，因为它们可以纳入更多关于问题领域的细节。
 
 </div>
 
@@ -217,15 +215,15 @@ Specialized solutions for problems are more performant than generalized solution
 
 ---
 
-## Interoperability
+## 互操作性
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Individual application chains will inherently lack the ability to provide a full suite of optimized solutions for end users.
+单个应用链本身往往无法为终端用户提供一套完整的优化解决方案。
 
-Interoperability allows parachains to work together to complete, complex end-to-end scenarios.
+互操作性允许平行链协同工作，完成复杂的端到端场景。
 
 </div>
 
@@ -233,7 +231,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <img style="height: 500px;" src="./img/xcmp-2.svg" />
 
-A visual of XCMP channels between Parachains.
+平行链之间的XCMP通道示意图。
 
 </div>
 
@@ -241,15 +239,15 @@ A visual of XCMP channels between Parachains.
 
 ---
 
-## Shared Security
+## 共享安全
 
 <div class="grid grid-cols-2">
 
 <div>
 
-An often overlooked problem is economic scaling of the entire blockchain ecosystem.
+一个经常被忽视的问题是整个区块链生态系统的经济扩展性。
 
-Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
+ Polkadot 的独特之处在于，它为所有连接的平行链提供与中继链本身相同的安全保障。
 
 </div>
 
@@ -263,23 +261,23 @@ Polkadot is unique in that it provides all connected parachains with the same se
 
 Notes:
 
-Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
+在权益证明网络中，安全性取决于经济因素，因此世界上的安全性是有限的，因为经济价值从定义上来说是有限的。随着由于单链的扩展性问题而导致区块链数量的增加，它们的经济价值——进而它们的安全性——会分散到多个链上，使得每个链都比以前更脆弱。
 
-Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
+ Polkadot 引入了一种共享安全模型，这样各条链在与其他链交互时，就能清楚地知道其交互对象拥有与自己的链相同的安全保障。基于桥接的解决方案——即每条链自行处理其安全性——会迫使接收方信任发送方。 Polkadot 的安全模型提供了必要的保障，使得跨链消息具有实际意义，而无需信任发送方的安全性。
 
 ---
 
-## Execution Cores
+## 执行核心
 
-Polkadot's Shared Security is powered through the creation and allocation of execution cores.
+ Polkadot 的共享安全是通过创建和分配执行核心来实现的。
 
 <img style="width: 1000px;" src="./img/exotic-scheduling.png" />
 
-Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
+执行核心提供块空间即服务，并且设计为可以与任何类型的共识系统配合使用。
 
 ---
 
-## Trust-Free Interactions
+## 无信任交互
 
 <div class="grid grid-cols-3">
 
@@ -291,13 +289,13 @@ Execution cores provide blockspace-as-a-service, and are designed to work with a
 
 <div class="col-span-2 text-left">
 
-A key result of shared security through the Relay Chain is that it keeps track of the state of all parachains and keeps them in lock step.
+通过中继链实现共享安全的一个关键结果是，它可以跟踪所有平行链的状态，并使它们保持同步。
 
-That means blocks which are finalized on Polkadot imply **finalization of all interactions** between all parachains at the same height.
+这意味着在 Polkadot 上最终确定的区块意味着**所有平行链之间在同一高度的所有交互都已最终确定**。
 
-So, shared security not only secures the individual chains, but the interactions between chains too.
+因此，共享安全不仅保障了单个链的安全，还保障了链与链之间的交互安全。
 
-This is continuing to evolve with the addition of "accords" / SPREE.
+随着“协议”/ SPREE的加入，这一点还在不断发展。
 
 </div>
 
@@ -305,27 +303,27 @@ This is continuing to evolve with the addition of "accords" / SPREE.
 
 ---
 
-## Hybrid Consensus
+## 混合共识
 
 <div class="grid grid-cols-2">
 
 <div>
 
-### Block Production
+### 区块生成
 
 <img style="width: 500px;" src="./img/babe.svg" />
 
-Current implementation is BABE, which is forkful with probabilistic finality.
+当前的实现是BABE，它具有分叉且概率性最终确定的特点。
 
 </div>
 
 <div>
 
-### Finality Gadget
+### 最终确定性工具
 
 <img style="width: 400px;" src="./img/grandpa.png" />
 
-Current implementation is GRANDPA, which is robust and scalable against network partitions.
+当前的实现是GRANDPA，它对网络分区具有强大的适应性和可扩展性。
 
 </div>
 
@@ -333,33 +331,33 @@ Current implementation is GRANDPA, which is robust and scalable against network 
 
 ---
 
-## Light Client First Mentality
+## 轻客户端优先理念
 
 <div class="text-left">
 
-Polkadot has a strong belief that light clients are a necessary component for a Web3 future. It has been uncompromising in enabling first class light client support as a primary part of its development process:
+ Polkadot 坚信轻客户端是Web3未来的必要组成部分。在其开发过程中， Polkadot 一直坚定不移地将一流的轻客户端支持作为首要任务：
 
-- In-Browser Wasm Client (Substrate Connect)
-  - Wasm state transition function too!
-- Consensus data integrated into block headers
-- Merkle Tries and other LC compatible data structures
-- Maximizing statically known metadata to offset reliance on full nodes.
+- 浏览器内Wasm客户端（Substrate Connect）
+  - 还有Wasm状态转换函数！
+- 共识数据集成到区块头中
+- 默克尔树和其他轻客户端兼容的数据结构
+- 最大限度地利用静态已知元数据，以减少对全节点的依赖。
 
 </div>
 
 ---
 
-## On-Chain Runtime & Forkless Upgrades
+## 链上运行时与无分叉升级
 
 <div class="grid grid-cols-3">
 
 <div class="col-span-2 text-left">
 
-The Polkadot protocol specification defines a clear separation between the blockchain client and runtime (state transition function).
+ Polkadot 协议规范明确区分了区块链客户端和运行时（状态转换函数）。
 
-This is primarily useful to implement the Parachains protocol, but also allows for chains to “forklessly” upgrade their code.
+这主要用于实现平行链协议，但也允许链“无分叉”地升级其代码。
 
-This gives the Polkadot Relay Chain and all connected parachains an evolutionary advantage over others in the blockchain space.
+这使得 Polkadot 中继链和所有连接的平行链在区块链领域相对于其他链具有进化优势。
 
 </div>
 
@@ -373,16 +371,16 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 ---
 
-## On-Chain Governance
+## 链上治理
 
 <div class="grid grid-cols-3">
 
 <div class="col-span-2 text-left">
 
-Polkadot and its parachains need to change over time to stay relevant, and the network was designed from the beginning to have a transparent and sophisticated process to not only approve or reject changes but also **enact them automatically**.
+ Polkadot 及其平行链需要随着时间的推移不断变化以保持相关性，并且该网络从一开始就被设计为具有透明且复杂的流程，不仅可以批准或拒绝更改，还可以**自动实施这些更改**。
 
-- Governance decisions can literally change the underlying code of the chain (since it is on-chain).
-- 50% of the total stake in the system should be able to control the future of the system.
+- 治理决策实际上可以改变链的底层代码（因为它是链上的）。
+- 系统中总质押的50%应该能够控制系统的未来。
 
 </div>
 
@@ -396,15 +394,15 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 ---
 
-## On-Chain Treasury
+## 链上国库
 
 <div class="grid grid-cols-2">
 
 <div class="text-left">
 
-Polkadot has designed at its core a self-funded treasury pool to incentivize the development and evolution of the protocol.
+ Polkadot 在其核心设计了一个自筹资金的国库池，以激励协议的开发和演进。
 
-It is entirely controlled on-chain by the governance system of Polkadot, which means that it is immune to the regulations which would normally be imposed to centralized entities.
+它完全由 Polkadot 的治理系统在链上控制，这意味着它不受通常施加于中心化实体的监管限制。
 
 </div>
 
@@ -418,15 +416,15 @@ It is entirely controlled on-chain by the governance system of Polkadot, which m
 
 ---
 
-## The Implementation of Polkadot
+##  Polkadot 的实现
 
-What are the type 2 decisions of Polkadot?
+ Polkadot 的二类决策有哪些？
 
 ---
 
-## Parachains
+## 平行链
 
-Polkadot was designed around Parachains, but the exact meaning and manifestation of a Parachain is evolving.
+ Polkadot 是围绕平行链设计的，但平行链的确切含义和表现形式正在不断演变。
 
 <div class="grid grid-cols-2">
 
@@ -446,9 +444,9 @@ Polkadot was designed around Parachains, but the exact meaning and manifestation
 
 <br />
 
-- Originally, parachains would be long term applications-chains.
-- On-Demand Parachains (formerly parathreads) changed that viewpoint to also include chains which can spin-up and spin-down at will.
-- The future protocol will have even more exotic core scheduling and even more agile core usage, all because the type 1 decision around parachains is actually **execution cores**.
+- 最初，平行链将是长期的应用链。
+- 按需平行链（以前称为平行线程）改变了这种观点，现在也包括可以随时启动和停止的链。
+- 未来的协议将具有更加奇特的核心调度和更加灵活的核心使用方式，这一切都是因为关于平行链的一类决策实际上是**执行核心**。
 
 Notes:
 
@@ -458,120 +456,84 @@ Notes:
 ---
 
 ## XCM
-
-### Cross-Consensus Message Format
-
+### 跨共识消息格式
 <div class="grid grid-cols-2">
-
-<div>
-
-<img style="height: 500px;" src="./img/xcm-stack.svg" />
-
-Instructions to teleport an asset between parachains.
-
+  <div>
+    <img style="height: 500px;" src="./img/xcm-stack.svg" />
+    在平行链之间转移资产的指令。
+  </div>
+  <div>
+    虽然跨链互操作性（XCMP）是一类决策，但链与链之间具体交互所使用的语言却并非如此。
+    XCM是Parity当前采用的一种跨共识消息格式，不过我们已经看到其他团队在尝试他们自己的想法，或者推动XCM格式规范的更新。
+  </div>
 </div>
-
-<div>
-
-While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to each other is not.
-
-XCM is Parity's current flavor of a cross-consensus message format, but we already see other teams try out their own ideas, or push updates to the XCM format specification.
-
-</div>
-
-</div>
-
 Notes:
-
 <https://github.com/paritytech/xcm-format>
 
 ---
 
-## Nominated Proof-of-Stake
-
+## 提名权益证明
 <div class="grid grid-cols-3 text-small">
-<div>
-
-One of Polkadot’s primary functions is to provide security not only to itself, but also to the connected Parachains.
-
-The staking system is a critical focus of the network, and we have one of the most advanced staking systems to date.
-
+  <div>
+     Polkadot 的主要功能之一，不仅是为自身提供安全性保障，还为连接的平行链提供安全防护。
+    质押系统是该网络的关键关注点，并且我们拥有目前最先进的质押系统之一。
+  </div>
+  <div class="col-span-2">
+    - 采用提名权益证明（NPoS）而非委托权益证明（DPoS），以便更好地分配质押权益。
+      - 与DPoS相比，NPoS中当选验证者背后的质押权益多出约25%。
+      - 代价是复杂度增加和可扩展性受限。
+    - 通过经济激励措施，让资金在验证者之间平均分配。
+    - 采用超线性惩罚机制，抑制验证者的中心化趋势。
+    - 质押产生实际价值，使奖励机制合理。
+  </div>
 </div>
-
-<div class="col-span-2">
-
-- NPoS over DPoS to better allocate stake.
-  - We see ~25% more stake behind the elected set on NPoS compared with DPoS.
-  - At the cost of complexity and scaling.
-- Economic incentives to distribute funds evenly across validators.
-- Super-linear slashing system to discourage validator centralization.
-- Actual value being generated by staking, justifying rewards.
-
-</div>
-
-</div>
-
 <br />
-
-The protocol has been actively evolving over time, making it more performant and accessible to users, for example with nomination pools.
+随着时间推移，该协议一直在积极发展，例如通过引入提名池，使其性能更高且更便于用户使用。
 
 ---
 
 ## SASSAFRAS
+虽然混合共识是一类决策，但底层协议可以持续演进，例如从BABE演变为SASSAFRAS。
+> 用于固定时间节奏性时隙分配的质押受让人半匿名抽签
 
-While hybrid consensus is a type 1 decision, the underlying protocols can continue to evolve, such as from BABE to SASSAFRAS.
-
-> Semi Anonymous Sortition of Staked Assignees For Fixed-time Rhythmic Assignment of Slots
-
-An extension of BABE and acts as a constant-time block production protocol. This approach tries to address the shortcomings of BABE by ensuring that exactly one block is produced with time-constant intervals. The protocol utilizes zk-SNARKs to construct a ring-VRF and is a work in progress.
+这是BABE的扩展，是一种恒定时间出块协议。这种方法试图解决BABE的缺点，确保以恒定时间间隔准确生成一个区块。该协议利用零知识证明（zk-SNARKs）构建环VRF（可验证随机函数），目前仍在开发中。
 
 ---
 
 ## OpenGov
-
-The specifics of Polkadot's on-chain governance system has changed multiple times in its history.
-
-- To bootstrap the network, a Sudo account was used to initialize the chain.
-- Then a multi-party system, including token holders, an elected council, and a technical council was used.
-- Most recently, the councils have been removed, and token holders are now in full control of the Polkadot governance systems.
+ Polkadot 链上治理系统的具体细节在其发展历程中多次变更。
+- 为启动网络，曾使用Sudo账户初始化链。
+- 之后采用了多方系统，参与者包括代币持有者、选举产生的理事会以及技术理事会。
+- 最近，这些理事会被取消，代币持有者现在完全掌控 Polkadot 的治理系统。
 
 ---
 
-## Treasury and Fellowships
-
-An on-chain treasury has and will always exist; but how exactly it spends funds and to whom has evolved over time:
-
-- Initially there were just simple proposals which were approved by the governance system.
-- Then Bounties and Tips were introduced, increasing access to larger and smaller funding mechanisms.
-- Most recently, fellowships have started to form, which represent organizations who can earn regular salaries from the network itself.
+## 国库与 Polkadot 开发者社区（Fellowships）
+链上国库一直存在，并将持续存在；但资金的具体使用方式和受益对象随时间发生了变化：
+- 最初只有简单的提案，需经治理系统批准。
+- 随后引入了悬赏（Bounties）和小费（Tips）机制，增加了获取大额和小额资金的途径。
+- 最近， Polkadot 开发者社区开始形成，这些社区代表着能够从网络本身获得固定收入的组织。
 
 ---
 
-## and many more...
-
-Polkadot is **designed** to evolve, and make type 2 decision making fast and easy.
-
-An invention machine.
+## 还有更多……
+ Polkadot 旨在不断发展，并让二类决策的制定快速且轻松。
+它是一台“发明机器”。
 
 ---
 
-## A Format for Discussing Decisions
-
-What questions should you ask when learning about the decisions of a Protocol?
-
+## 讨论决策的框架
+在了解一个协议的决策时，你应该提出哪些问题呢？
 <br />
-
-- What is (the decision)?
-- What do we need to consider when making (the decision)?
-  - Is it a Type 1 or Type 2 decision?
-- What decisions has (chain) decided to make and why?
-  - What tradeoffs have they chosen?
-- What decisions have others decided to make?
-  - How might those decisions be better or worse?
-- Where can the blockchain community still improve on (the decision)?
+- （这个决策）是什么？
+- 做出（这个决策）时我们需要考虑什么？
+  - 它是一类决策还是二类决策？
+- （这条链）做出了哪些决策，原因是什么？
+  - 他们选择了哪些权衡取舍？
+- 其他人做出了哪些决策？
+  - 那些决策可能有哪些优点或缺点？
+- 区块链社区在（这个决策）方面还有哪些可以改进的地方？
 
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 问题

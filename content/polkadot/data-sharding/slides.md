@@ -4,83 +4,83 @@ description: Data Availability Problem, Erasure coding, Data sharding.
 duration: 30-45 mins
 ---
 
-# Data Availability and Sharding
+# 数据可用性和分片
 
 ---
 
-### Outline
+### 大纲
 
 <pba-flex center>
 
-1. [Data Availability Problem](#data-availability-problem)
-1. [Erasure coding](#erasure-coding)
-1. [Data Availability Sampling](#data-availability-sampling)
-1. [References](#references)
+1. [数据可用性问题](#数据可用性问题)
+1. [纠删编码](#纠删编码)
+1. [数据可用性采样](#数据可用性采样)
+1. [参考文献](#参考文献)
 
 </pba-flex>
 
 ---
 
-## Data Availability Problem
+## 数据可用性问题
 
-How do we ensure a piece of data is retrievable without storing it on every single node forever?
+我们如何确保在不将某条数据永久存储在每个节点上的情况下，该数据仍然是可检索的呢？
 
-Incorrectness can be proven (fraud proofs), but unavailability can't.
+错误可以被证明（欺诈证明），但数据不可用却无法被证明。
 
 ---v
 
-### Data Availability Problem: Parachains
+### 数据可用性问题：平行链
 
-Imagine a parachain collator produces a block, but only sends it to relay chain validators to verify.
+想象一下，一个平行链收集人产生了一个区块，但只将其发送给中继链验证者进行验证。
 
-What could such a collator do?
+这样的收集人可能会做什么呢？
 
 <pba-flex center>
 
-- Prevent nodes and users from learning the parachain state
-- Prevent other collators from being able to create blocks
+- 阻止节点和用户了解平行链的状态
+- 阻止其他收集人创建区块
 
 </pba-flex>
 
-We want other collators to be able to reconstruct the block from the relay chain.
+我们希望其他收集人能够从中继链中重构该区块。
 
 ---v
 
-### Data Availability Problem: Relay Chain
+### 数据可用性问题：中继链
 
-If that block's PoV is only stored by a few validators, what if they go offline or rogue?
+如果该区块的证明（PoV）仅由少数验证者存储，那么如果这些验证者离线或行为异常会怎样呢？
 
 <pba-flex center>
 
-- Honest approval-checkers are not able to verify validity
+- 诚实的批准检查者无法验证其有效性
 
 </pba-flex>
 
 Notes:
 
-This is really bad.
-It means we could finalize an invalid parachain block.
+这可太糟糕了。
+这意味着我们可能会最终确认一个无效的平行链区块。
 
 ---
 
-## Problem
+## 问题
 
 <img rounded style="width: 800px" src="./img/comic.png" />
 
 Notes:
 
-I really like this comic from the paradigm article about Data Availability Sampling. But it works for our case as well with data sharding.
+我真的很喜欢范式（Paradigm）关于数据可用性采样的文章中的这幅漫画。但它也适用于我们的数据分片情况。
 
 ---
 
-## Erasure coding
+## 纠删编码
 
-The goal:
+目标：
 
 <pba-flex center>
 
-- Encode data of K chunks into a larger encoded data of N chunks
-- Any K-subset of N chunks can be used to recover the data
+- 将 K 个数据块编码为更大的 N 个数据块
+- N 个数据块中的任意 K 个子集都可以用于恢复数据
 
 </pba-flex>
 
@@ -88,171 +88,172 @@ The goal:
 
 ---v
 
-### In code
+### 代码实现
 
 ```rust
 type Data = Vec<u8>;
 
 pub struct Chunk {
-	pub index: usize,
-	pub bytes: Vec<u8>,
+    pub index: usize,
+    pub bytes: Vec<u8>,
 }
 
 pub fn encode(_input: &Data) -> Vec<Chunk> {
-	todo!()
+    todo!()
 }
 
 pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> {
-	todo!()
+    todo!()
 }
 ```
 
 ---
 
-### Polynomials
+### 多项式
 
 <img rounded style="width: 1000px" src="./img/line.svg" />
 
 ---v
 
-### Polynomials: Line
+### 多项式：直线
 
 <img rounded style="width: 1000px" src="./img/line-extra.svg" />
 
 ---v
 
-### Even More Polynomials
+### 更多多项式
 
 <img rounded style="width: 1000px" src="./img/polynomial-2.png" />
 
 ---v
 
-### Polynomial we need
+### 我们需要的多项式
 
 <img rounded style="width: 800px" src="./img/reed-solomon.png" />
 
-We want to have a polynomial, such that:
+我们想要一个多项式，使得：
 
 $$ p(x_i) = y_i$$
 
 Notes:
 
-Question: what is x_i and y_i wrt to our data?
+问题：就我们的数据而言，$x_i$ 和 $y_i$ 分别是什么？
 
 ---
 
-### Lagrange interpolating polynomial
+### 拉格朗日插值多项式
 
 <!-- prettier-ignore -->
-$$ \ell_j(x) = \frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j - 1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_k)}{(x_j-x_k)} $$
+$$ \ell_j(x) = \frac{(x - x_0)}{(x_j - x_0)} \cdots \frac{(x - x_{j - 1})}{(x_j - x_{j - 1})} \frac{(x - x_{j + 1})}{(x_j - x_{j + 1})} \cdots \frac{(x - x_k)}{(x_j - x_k)} $$
 
 <!-- prettier-ignore -->
-$$ L(x) = \sum_{j=0}^{k} y_j \ell_j(x) $$
+$$ L(x) = \sum_{j = 0}^{k} y_j \ell_j(x) $$
 
 ---
 
-### Reed-Solomon codes
+### 里德 - 所罗门码
 
-Congrats! You've just learned Reed-Solomon encoding (almost).
+恭喜！你几乎已经学会了里德 - 所罗门编码。
 
-Actual Reed-Solomon codes are defined over finite-fields.
+实际的里德 - 所罗门码是在有限域上定义的。
 
-It can detect and correct combinations of errors and erasures.
+它可以检测并纠正错误和擦除的组合。
 
 Notes:
 
-The simplest example of a finite field is arithmetic mod prime number.
-Computers are quite bad at division by prime numbers.
-Reed-Solomon codes are used in CDs, DVDs, QR codes and RAID 6.
+有限域的最简单例子是模素数运算。
+计算机在进行素数除法时表现不佳。
+里德 - 所罗门码用于 CD、DVD、二维码和 RAID 6 中。
 
 ---v
 
-### Reed-Solomon with Lagrange interpolation
+### 带有拉格朗日插值的里德 - 所罗门码
 
-1. Divide the data into elements of size $P$ bits.
-1. Interpret the bytes as (big) numbers $\mod P$.
-1. Index of each element is $x_i$ and the element itself is $y_i$.
-1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
-1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
+1. 将数据划分为大小为 $P$ 位的元素。
+1. 将这些字节解释为模 $P$ 的（大）数。
+1. 每个元素的索引是 $x_i$，元素本身是 $y_i$。
+1. 构造插值多项式 $p(x)$ 并在另外的 $n - k$ 个点上进行求值。
+1. 编码为 $(y_0, ..., y_{k - 1}, p(k), ... p(n - 1))$ 以及相应的索引。
 
 Notes:
 
-How do we do reconstruction?
+我们该如何进行重构呢？
 
 ---
 
-## Polkadot's Data Availability Protocol
+## Polkadot:的数据可用性协议
 
 <pba-flex center>
 
-- Each PoV is divided into $N_{validator}$ chunks
-- Validator with index i gets a chunk with the same index
-- Validators sign statements when they receive their chunk
-- Once we have $\frac{2}{3} + 1$ of signed statements,<br />PoV is considered available
-- Any subset of $\frac{1}{3} + 1$ of chunks can recover the data
+- 每个证明（PoV）被分为 $N_{validator}$ 个数据块
+- 索引为 i 的验证者获取索引相同的数据块
+- 验证者在收到其数据块时签署声明
+- 一旦我们有了 $\frac{2}{3} + 1$ 个已签名的声明，
+  则证明（PoV）被认为是可用的
+- 任何 $\frac{1}{3} + 1$ 个数据块的子集都可以恢复数据
 
 </pba-flex>
 
 Notes:
 
-The total amount of data stored by all validators is PoV \* 3.
-With 5MB PoV and 1k validators, each validator only stores 15KB per PoV.
-With this protocol, we've killed two birds with one stone!
+所有验证者存储的数据总量为 PoV × 3。
+对于 5MB 的 PoV 和 1000 个验证者，每个验证者每个 PoV 仅存储 15KB。
+通过这个协议，我们一举两得！
 
 ---
 
-### CandidateIncluded
+### 候选者已包含
 
 <img rounded style="width: 1000px" src="./img/candidate-included.png" />
 
 ---
 
-### Availability Bitfields
+### 可用性位字段
 
 <img rounded style="width: 600px" src="./img/availability-bitfields.png" />
 
 Notes:
 
-Each validator actually signs a statement per relay chain block, not per PoV to reduce the number of signatures.
-These statements are gossiped off-chain and included in a block in a ParachainsInherent.
+每个验证者实际上是为每个中继链区块签署一个声明，而不是为每个 PoV 签署声明，以减少签名数量。
+这些声明在链下进行传播，并包含在一个平行链固有数据（ParachainsInherent）的区块中。
 
 ---
 
-### Challenge 1
+### 挑战 1
 
-How does a validator know if a chunk corresponds to the committed data?
+验证者如何知道一个数据块是否与已提交的数据相对应呢？
 
 <img rounded style="width: 600px" src="./img/not-that-merkel.jpg" />
 
 ---v
 
-### Not that Merkle!
+### 不是那个默克尔！
 
 <img rounded style="width: 600px" src="./img/Ralph_Merkle.png" />
 
 ---
 
-### Challenge 2
+### 挑战 2
 
-How do we know if what can be reconstructed from chunks is the same data that was encoded with Reed-Solomon?
+我们如何知道从数据块中重构出来的数据与使用里德 - 所罗门码编码的数据是相同的呢？
 
 <pba-flex center>
 
-- Polkadot uses approval-voting/disputes mechanism for that
-- Celestia uses Fraud Proofs
-- Danksharding uses KZG commitments
+- Polkadot:使用批准投票/争议机制来解决这个问题
+- Celestia 使用欺诈证明
+- Danksharding 使用 KZG 承诺
 
 </pba-flex>
 
 ---
 
-## Data Availability Sampling
+## 数据可用性采样
 
-Ethereum (Danksharding) and Celestia adopt an approach of Data Availability Sampling, where each light client makes its own judgement of availability by sampling and distributing a few random chunks.
+以太坊（Danksharding）和 Celestia 采用了数据可用性采样的方法，其中每个轻客户端通过采样和分发一些随机数据块来自行判断数据的可用性。
 
-This can eliminate honest majority assumption!
+这种方法可以消除诚实多数假设！
 
-This approach guarantees there's at least one honest full nodes that has the data with high probability.
+这种方法以高概率保证至少有一个诚实的完整节点拥有这些数据。
 
 <br />
 
@@ -260,53 +261,52 @@ This approach guarantees there's at least one honest full nodes that has the dat
 
 ---
 
-## Safety of Polkadot's protocol
+## Polkadot:协议的安全性
 
-If we have at most $f$ out of $3f + 1$ malicious + offline validators, then if the data is marked as available, it **can** be recovered.
+如果在 $3f + 1$ 个验证者中，最多有 $f$ 个恶意或离线的验证者，那么如果数据被标记为可用，它**可以**被恢复。
 
-What if that assumption is broken?
+如果这个假设被打破会怎样呢？
 
-If $2f + 1$ are malicious, every PoS is doomed anyway.
+如果有 $2f + 1$ 个验证者是恶意的，那么任何权益证明（PoS）系统都注定要失败。
 
 Notes:
 
-We'll see in the next lesson, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
+我们将在下一课中看到，即使有超过 $f$ 个恶意节点，批准投票如何防止不可用的区块被最终确认。
 
 ---
 
-## 2D Reed-Solomon Encoding
+## 二维里德 - 所罗门编码
 
 <img rounded style="width: 800px" src="./img/2d-reed-solomon.png" />
 
 Notes:
 
-The approach of 2D Reed-Solomon Encoding can reduce the size of
-a Fraud Proof used by Celestia.
-But it adds an overhead computationally and on the amount of data stored.
+二维里德 - 所罗门编码的方法可以减少 Celestia 使用的欺诈证明的大小。
+但它会在计算和数据存储量方面增加开销。
 
 ---
 
-## Comparison with other approaches
+## 与其他方法的比较
 
-- Both Danksharding and Celestia use 2D encoding and DAS
-- Celestia doesn't implement data sharding
-- Data availability is only part of ensuring validity
-- Polkadot's DA is able to process dozens of MB per second
+- Danksharding 和 Celestia 都使用二维编码和数据可用性采样（DAS）
+- Celestia 没有实现数据分片
+- 数据可用性只是确保有效性的一部分
+- Polkadot:的数据可用性协议能够每秒处理数十 MB 的数据
 
 Notes:
 
-Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
+Danksharding 的目标是 1.3 MB/s，而 Celestia 小于 1 MB/s。
 
 ---
 
-## Ideas to Explore
+## 待探索的想法
 
 <pba-flex center>
 
-- Data Availability Sampling for parachain<br />light clients and full nodes
-- Consider using KZG commitments
-- Reducing the number of signatures to verify
-- A Data Availability Parachain
+- 针对平行链轻客户端和完整节点的数据可用性采样
+- 考虑使用 KZG 承诺
+- 减少需要验证的签名数量
+- 一个数据可用性平行链
 
 </pba-flex>
 
@@ -314,16 +314,16 @@ Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
 ---
 
-### Bonus
+### 额外内容
 
 <pba-flex center>
 
-- Polkadot uses a field of size $2^{16}$ with efficient arithmetic
-- Polkadot uses an FFT-based Reed-Solomon algorithm (no Lagrange)
+- Polkadot:使用大小为 $2^{16}$ 的域进行高效算术运算
+- Polkadot:使用基于快速傅里叶变换（FFT）的里德 - 所罗门算法（不使用拉格朗日方法）
 
 </pba-flex>
 
@@ -331,7 +331,7 @@ Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
 
 ---
 
-## References
+## 参考文献
 
 1. <https://www.youtube.com/watch?v=1pQJkt7-R4Q>
 1. <https://notes.ethereum.org/@vbuterin/proto_danksharding_faq>

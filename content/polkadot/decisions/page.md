@@ -1,4 +1,4 @@
-# The Decisions of Polkadot
+# Polkadot 的决策
 
 <!-- markdown-link-check-disable -->
 <center>

@@ -1,4 +1,4 @@
-# Blockchain Scaling - Monolithic and Homogeneous
+# 区块链扩容 - 单体式与同构式
 
 <!-- markdown-link-check-disable -->
 <center>
