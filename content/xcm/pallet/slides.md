@@ -8,85 +8,85 @@ duration: 1 hour
 
 ---
 
-#### Lesson goals:
+#### 课程目标：
 
-- Understand what the interface of the pallet is and its implementation.
-- How versioning discovery works.
-- How receiving responses work.
-- Understand how to craft XCM in FRAME pallets.
-
----
-
-## The XCM pallet
-
-We have now learnt about the XCVM and FRAME.
-
-The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
-
-**It also allows us to send/execute XCM and interact with the XCM executor**.
+- 理解该Pallet的接口及其实现。
+- 版本发现是如何工作的。
+- 接收响应是如何工作的。
+- 理解如何在 FRAME Pallet中编写 XCM。
 
 ---
 
-## How XCM is expected to be used
+## XCM Pallet
 
-XCM is not intended to be written by end-users.
+我们现在已经了解了 XCVM 和 FRAME。
 
-Instead, _developers_ write XCVM programs, and package them up into FRAME extrinsics.
+XCM Pallet是 XCVM 子系统和 FRAME 子系统之间的桥梁。
+
+**它还允许我们发送/执行 XCM 并与 XCM 执行器进行交互**。
+
+---
+
+## XCM 的预期使用方式
+
+XCM 并非供终端用户编写。
+
+相反，**开发者** 编写 XCVM 程序，并将其打包成 FRAME 外部调用。
 
 Notes:
 
-How do wallets wallet providers use XCM ?
+钱包提供商如何使用 XCM ？
 
-We will see examples of XCM being built in the runtime when exploring `teleport_assets` and `reserve_transfer_assets` extrinsics.
+在探索 `teleport_assets` 和 `reserve_transfer_assets` 外部调用时，我们将看到在运行时构建 XCM 的示例。
 
 ---
 
-### Key roles of `pallet-xcm`
+### `pallet-xcm` 的关键作用
 
 <pba-flex center>
 
-1. Allows to interact with the `xcm-executor` by executing xcm messages.
-   These can be filtered through the `XcmExecuteFilter`.
-1. Allows sending arbitrary messages to other chains for certain origins.
-   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
-1. Provides an easier interface to do reserve based transfers and teleports.
-   The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
-1. Handles XCM version negotiation duties.
-1. Handles asset-trap/claim duties.
-1. And other state based requirements of the XCVM.
+1. 允许通过执行 XCM 消息与 `xcm-executor` 进行交互。
+   这些消息可以通过 `XcmExecuteFilter` 进行过滤。
+1. 允许为某些来源向其他链发送任意消息。
+   允许发送消息的来源可以通过 `SendXcmOrigin` 进行过滤。
+1. 提供了一个更简单的接口来进行基于储备的转移和传送。
+   能够执行这些操作的来源可以通过 `XcmTeleportFilter` 和 `XcmReserveTransferFilter` 进行过滤。
+1. 处理 XCM 版本协商职责。
+1. 处理资产陷阱/认领职责。
+1. 以及 XCVM 的其他基于状态的要求。
 
 </pba-flex>
 
 Notes:
 
-- Even when the XCM pallet allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
-  In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
+- 即使 XCM Pallet允许任何 FRAME 来源发送 XCM，它也会区分根调用和其他任何来源的调用。
+  在后一种情况下，它会附加 `DescendOrigin` 指令，以确保非根来源不能代表平行链行事。
 
 ---
 
-## The XCM Pallet
+## XCM Pallet
 
-`pallet-xcm` provides default implementations for many traits required by `XcmConfig`.
+`pallet-xcm` 为 `XcmConfig` 所需的许多特征提供了默认实现。
 
-`pallet-xcm` also provides an interface containing 10 different extrinsics, which can be split into three categories:
+`pallet-xcm` 还提供了一个包含 10 个不同外部调用的接口，这些外部调用可以分为三类：
 
-- Primitive functions to locally `execute` or `send` an XCM.
-- High-level functions for asset transfers between systems, e.g. teleportation and reserve asset transfers.
-- Extrinsics aimed exclusively at version negotiation.
+- 用于本地 `execute` 或 `send` 一个 XCM 的基本函数。
+- 用于系统间资产转移的高级函数，例如传送和储备资产转移。
+- 专门用于版本协商的外部调用。
 
 ---
 
-## `pallet-xcm` Primitive extrinsics
+## `pallet-xcm` 基本外部调用
 
 - `execute`
 
-  Direct access to the XCM executor.
-  Executed on behalf of FRAME's signed origin.
+  直接访问 XCM 执行器。
+  代表 FRAME 的签名来源执行。
 
 <diagram class="mermaid limit size-40">
 flowchart TD
-subgraph paraA[Parachain A              .]
-  executor --"success?"--> palletxcm
+subgraph paraA[平行链 A              .]
+  executor --"成功？"--> palletxcm
   palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
 end
 execute("execute(xcm)") --> palletxcm
@@ -94,25 +94,25 @@ execute("execute(xcm)") --> palletxcm
 
 Notes:
 
-It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution.
-It executes the message **locally** and returns the outcome as an event.
+它会检查来源，以确保配置的 `SendXcmOrigin` 过滤器不会阻止执行。
+它会在本地执行该消息，并将结果作为一个事件返回。
 
 ---v
 
-## `pallet-xcm` Primitive extrinsics
+## `pallet-xcm` 基本外部调用
 
 - `send`
 
-Sends a message to the provided destination.
+向提供的目的地发送一条消息。
 
 <diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
 flowchart LR
-subgraph paraA[Parachain A]
+subgraph paraA[平行链 A]
   palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
-  routera --> mqueuea("message queue")
+  routera --> mqueuea("消息队列")
 end
-subgraph paraB[Parachain B]
-mqueueb("message queue") --> executorb("xcm-executor")
+subgraph paraB[平行链 B]
+mqueueb("消息队列") --> executorb("xcm-executor")
 end
 send("send(xcm)") --> palletxcma
 mqueuea --> mqueueb
@@ -120,13 +120,13 @@ mqueuea --> mqueueb
 
 Notes:
 
-This extrinsic is a function to send a message to a destination.
-It checks the origin, the destination and the message.
-Then it lets the `XcmRouter` handle the forwarding of the message.
+这个外部调用是一个向目的地发送消息的函数。
+它会检查来源、目的地和消息。
+然后它会让 `XcmRouter` 处理消息的转发。
 
 ---
 
-## `pallet-xcm` Asset Transfer extrinsics
+## `pallet-xcm` 资产转移外部调用
 
 <pba-cols>
 <pba-col>
@@ -140,25 +140,25 @@ Then it lets the `XcmRouter` handle the forwarding of the message.
 
 Notes:
 
-We have already seen what teleports and reserve transfers mean in lesson 7.1; A quick reminder.
+我们在第 7.1 课中已经了解了传送和储备转移的含义；这里快速回顾一下。
 
 ---v
 
-## `pallet-xcm` Asset Transfer extrinsics
+## `pallet-xcm` 资产转移外部调用
 
 `limited_teleport_assets`
 
-This extrinsic allows the user to perform an asset teleport.
+这个外部调用允许用户执行资产传送。
 
 <diagram class="mermaid">
 flowchart LR
-subgraph paraA[Parachain A]
-  palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
-  executora --"send"--> sendera("xcm-sender")
+subgraph paraA[平行链 A]
+  palletxcma("pallet-xcm") --"1. 执行"--> executora("xcm-executor")
+  executora --"发送"--> sendera("xcm-sender")
 end
-subgraph tdestination[Trusted Destination]
+subgraph tdestination[可信目的地]
 end
-lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 sendera --"2."--> tdestination
 classDef left text-align:left
 </diagram>
@@ -169,7 +169,7 @@ classDef left text-align:left
 
 <ol>
 
-<li> <code>pallet-xcm</code> composes the following XCM and passes it to <code>xcm&#8209;executor</code></li>
+<li> `pallet-xcm` 组合以下 XCM 并将其传递给 `xcm-executor`</li>
 
 ```rust
 Xcm(vec![
@@ -179,7 +179,7 @@ Xcm(vec![
 ])
 ```
 
-<li>Parachain A then sends the following message to the trusted destination</li>
+<li>平行链 A 然后向可信目的地发送以下消息</li>
 
 ```rust
 Xcm(vec![
@@ -194,21 +194,21 @@ Xcm(vec![
 
 ---v
 
-## `pallet-xcm` Asset Transfer extrinsics
+## `pallet-xcm` 资产转移外部调用
 
 `limited_reserve_transfer_assets`
 
-Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
+允许用户从储备链向目的地执行储备支持的转移。
 
 <diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
 flowchart LR
-subgraph reserve[Reserve Chain]
-  palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
-  executora --"send"--> sendera("xcm-sender")
+subgraph reserve[储备链]
+  palletxcma("pallet-xcm") --"1. 执行"--> executora("xcm-executor")
+  executora --"发送"--> sendera("xcm-sender")
 end
-subgraph destination[Destination]
+subgraph destination[目的地]
 end
-lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 sendera --"2."--> destination
 classDef left text-align:left
 </diagram>
@@ -219,7 +219,7 @@ classDef left text-align:left
 
 <ol>
 
-<li> <code>pallet-xcm</code> composes the following XCM and passes it to <code>xcm&#8209;executor</code></li>
+<li> `pallet-xcm` 组合以下 XCM 并将其传递给 `xcm-executor`</li>
 
 ```rust
 Xcm(vec![
@@ -228,7 +228,7 @@ Xcm(vec![
 ])
 ```
 
-<li>Reserve Chain then sends the following mesasge to the destination</li>
+<li>储备链然后向目的地发送以下消息</li>
 
 ```rust
 Xcm(vec![
@@ -243,13 +243,13 @@ Xcm(vec![
 
 ---
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🗣️ 使用 `pallet-xcm` 进行版本协商
 
-XCM is a **versioned message format**.
+XCM 是一种**版本化的消息格式**。
 
-One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using.
+一个版本可能包含比另一个版本更多或不同的指令，因此对于各方通过 XCM 进行通信来说，了解对方使用的版本非常重要。
 
-The version subscription mechanism allows parties to subscribe to version updates from others.
+版本订阅机制允许各方订阅来自其他方的版本更新。
 
 <pba-flex center>
 
@@ -262,14 +262,14 @@ pub enum VersionedXcm {
 
 Notes:
 
-- V0 and V1 were removed with the addition of XCM v3.
+- 随着 XCM v3 的加入，V0 和 V1 已被移除。
 
 ---v
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🗣️ 使用 `pallet-xcm` 进行版本协商
 
-But chains need to be aware of the version supported by each other.
-`SubscribeVersion` and `QueryResponse` play a key role here:
+但链需要知道彼此支持的版本。
+`SubscribeVersion` 和 `QueryResponse` 在这里起着关键作用：
 
 <pba-flex center>
 
@@ -291,15 +291,15 @@ enum Instruction {
 
 Notes:
 
-- `query_id` would be identical in the `SubscribeVersion` and `QueryResponse` instructions.
-- Likewise, `max_response_weight` should also match `max_weight` in the response
+- `query_id` 在 `SubscribeVersion` 和 `QueryResponse` 指令中应该是相同的。
+- 同样，`max_response_weight` 也应该与响应中的 `max_weight` 匹配。
 
 ---v
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🗣️ 使用 `pallet-xcm` 进行版本协商
 
-- `ResponseHandler`: The component in charge of handling response messages from other chains.
-- `SubscriptionService`: The component in charge of handling version subscription notifications to other chains
+- `ResponseHandler`：负责处理来自其他链的响应消息的组件。
+- `SubscriptionService`：负责处理向其他链发送版本订阅通知的组件。
 
 <pba-flex center>
 
@@ -313,89 +313,89 @@ impl Config for XcmConfig {
 
 Notes:
 
-- `PalletXcm` keeps track of the versions of each chain when it receives a response.
-- It also keeps track of which chains it needs to notify whenever we change our version
+- `PalletXcm` 在收到响应时会跟踪每个链的版本。
+- 它还会跟踪每当我们更改版本时需要通知的链。
 
 ---
 
-## Subscription Service
+## 订阅服务
 
-Any system can be notified of when another system changes its latest supported XCM version.
-This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
+任何系统都可以在另一个系统更改其最新支持的 XCM 版本时得到通知。
+这是通过 `SubscribeVersion` 和 `UnsubscribeVersion` 指令实现的。
 
-The `SubscriptionService` type defines what action to take when processing a `SubscribeVersion` instruction.
+`SubscriptionService` 类型定义了在处理 `SubscribeVersion` 指令时应采取的操作。
 
 Notes:
 
-`pallet-xcm` provides a default implementation of this trait.
-When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
+`pallet-xcm` 提供了这个特征的默认实现。
+当收到 `SubscribeVersion` 时，链会发送一个包含 `QueryResponse` 指令的 XCM，其中包含其当前版本。
 
 ---
 
-## Version Negotiation
+## 版本协商
 
-The subscription service leverages any kind of exchange of XCMs between two systems to begin the process of version negotiation.
+订阅服务利用两个系统之间的任何 XCM 交换来开始版本协商过程。
 
-Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`.
-This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
+每次系统需要向一个支持的 XCM 版本未知的目的地发送消息时，其位置将存储在 `VersionDiscoveryQueue` 中。
+然后，在下一个区块中会检查这个队列，并向队列中存在的那些位置发送 `SubscribeVersion` 指令。
 
 Notes:
 
-SubscribeVersion - instructs the local system to notify the sender whenever the former has its XCM version upgraded or downgraded.
-UnsubscribeVersion - if the sender was previously subscribed to XCM version change notifications for the local system, then this instruction tells the local system to stop notifying the sender on version changes.
+SubscribeVersion - 指示本地系统在前者的 XCM 版本升级或降级时通知发送方。
+UnsubscribeVersion - 如果发送方之前订阅了本地系统的 XCM 版本更改通知，则此指令告诉本地系统停止在版本更改时通知发送方。
 
 ---v
 
-## 🗣️ XCM Version Negotiation
+## 🗣️ XCM 版本协商
 
-XCM version negotiation:
+XCM 版本协商：
 <pba-flex center>
 
-1. Chain A sends `SubscribeVersion` to chain B.
-1. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
-1. Chain A stores chain B's supported version on storage.
-1. The same procedure happens from chain B to chain A.
-1. Communication is established using the highest mutually supported version.
+1. 链 A 向链 B 发送 `SubscribeVersion`。
+1. 链 B 向链 A 发送 `QueryResponse`，使用相同的 `query_id` 和 `max_weight` 参数，并在响应中放入 XCM 版本。
+1. 链 A 将链 B 支持的版本存储在存储中。
+1. 从链 B 到链 A 也会进行相同的过程。
+1. 使用双方都支持的最高版本建立通信。
 
 ---v
 
-## 🗣️ XCM Version Negotiation
+## 🗣️ XCM 版本协商
 
-In the following scenario Chain A is using XCM v2
+在以下场景中，链 A 使用 XCM v2
 
 <diagram class="mermaid limit size-80">
 flowchart BT
-subgraph registryA[Chain A's Registry]
-  chainB("Chain B \n\n v2")
-  chainC("Chain C \n\n v3")
-  chainD("Chain D \n\n v1")
-  chainE("Chain E \n\n v3")
+subgraph registryA[链 A 的注册表]
+  chainB("链 B \n\n v2")
+  chainC("链 C \n\n v3")
+  chainD("链 D \n\n v1")
+  chainE("链 E \n\n v3")
 end
 </diagram>
 
 <diagram class="mermaid limit size-70">
 flowchart LR
-chainARequest("Chain A") --"Chain E ? \n\n v2"--> chainERequest("Chain E")
+chainARequest("链 A") --"链 E ？ \n\n v2"--> chainERequest("链 E")
 </diagram>
 
 ---
 
-## Response Handler
+## 响应处理器
 
-Version negotiation is just one example among many kinds of queries one chain can make to another.
-Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
-
----v
-
-## Response Handler
-
-We have talked about XCM being asymmetric, so why are there responses ?
+版本协商只是一条链可以向另一条链发出的众多查询类型中的一个示例。
+无论进行的是哪种查询，响应通常都采用 `QueryResponse` 指令的形式。
 
 ---v
 
-## Information Reporting
+## 响应处理器
 
-Every instruction used for information reporting contains `QueryResponseInfo`.
+我们已经讨论过 XCM 是不对称的，那么为什么会有响应呢？
+
+---v
+
+## 信息报告
+
+每个用于信息报告的指令都包含 `QueryResponseInfo`。
 
 <pba-flex center>
 
@@ -409,79 +409,64 @@ pub struct QueryResponseInfo {
 
 Notes:
 
-All Information Reporting instructions contain a `QueryResponseInfo` struct, which contains information about the intended destination of the response, the ID of the query, and the maximum weight that the dispatchable call function can use.
-The dispatchable call function is an optional operation that XCM author can specify, and is executed upon receiving the response, effectively acting as a lifecycle hook on response.
+所有信息报告指令都包含一个 `QueryResponseInfo` 结构体，其中包含有关响应的预期目的地、查询的 ID 以及可调度调用函数可以使用的最大权重的信息。
 
 ---v
 
-## Information retrieval
-
+## 信息检索
 <pba-flex center>
-
 ```rust
 enum Instruction {
-    // --snip--
+    // --略--
     QueryResponse {
         query_id: QueryId,
         response: Response,
         max_weight: Weight,
         querier: Option<MultiLocation>,
     },
-    // --snip--
+    // --略--
 }
 ```
-
 Notes:
 
-The above instruction is the one used for offering some requested information that the local system is expecting.
-`querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
+上述指令用于提供本地系统期望的某些请求信息。
 
+应该检查`querier`参数，以确保请求信息的系统与预期相符。
 ---
 
-## Asset Trap/Claims with `pallet-xcm`
+## 使用`pallet-xcm`处理资产陷阱/认领
+在执行完所有指令后，如果持有寄存器中仍有资金会怎样？
 
-What happens when there are still funds in the holding register after the execution of every instruction is done?
+在XCM消息执行完毕后，只要持有寄存器中还包含资产，就会导致资产陷阱。
 
-Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
-
-These traps need to be **stored** to allow for future claiming of these trapped assets, FRAME provide us with means for this.
+这些被“困住”的资产需要被**存储**起来，以便未来认领，FRAME为我们提供了相关方法。
 
 Notes:
 
-- This is handled in the `post_execute` function of the xcm-executor.
-
+- 这在xcm - 执行器的`post_execute`函数中处理。
 ---v
 
-## Asset Trap/Claims with `pallet-xcm`
-
-- **`pallet-xcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by origin and assets
-
-- **`pallet-xcm` asset claimer**: `pallet-xcm` also allows for claiming trapped assets, providing that:
-  - the origin claiming the assets is identical to the one that trapped them.
-  - the `Asset` being claimed is identical to the one that was trapped
+## 使用`pallet-xcm`处理资产陷阱/认领
+- **`pallet-xcm`资产陷阱处理**: 被陷阱困住的资产存储在`AssetTraps`存储项中，并按来源和资产进行索引。
+- **`pallet-xcm`资产认领**: `pallet-xcm`也允许认领被陷阱困住的资产，但需满足以下条件：
+  - 认领资产的来源与导致资产被困住的来源相同。
+  - 被认领的`Asset`与被困住的资产相同。
 
 Notes:
-
-- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `Asset`.
-- Every time such `Asset` gets reclaimed, the counter decrements by one.
-
+- `AssetTraps`中的每个映射元素都保存着一个计数器，记录该来源困住该`Asset`的次数。
+- 每次该`Asset`被重新认领时，计数器就会减一。
 ---
 
-## Extrinsic breakdown
-
-Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
-
-[source 🔍](https://github.com/paritytech/polkadot-sdk/blob/342d720/polkadot/xcm/pallet-xcm/src/lib.rs#L1099)
-
+## 外部调用解析
+让我们深入代码，看看`limited_teleport_assets`外部调用。
+[查看源代码🔍](https://github.com/paritytech/polkadot-sdk/blob/342d720/polkadot/xcm/pallet-xcm/src/lib.rs#L1099)
 ---
 
-## Summary
-
-In this lecture, we learnt:
-
-- What the XCM pallet is and what it's used for.
-- How XCM is intended to be used, both by wallet and runtime developers.
-- The useful extrinsics in the XCM pallet.
-- How XCM versioning works.
-- How the XCM pallet is used to receive responses.
-- How assets might be trapped and how to use the XCM pallet to claim them.
+## 总结
+在本课程中，我们学习到：
+- XCM模块是什么以及它的用途。
+- 钱包开发者和运行时开发者预期如何使用XCM。
+- XCM模块中有用的外部调用。
+- XCM版本控制的工作原理。
+- 如何使用XCM模块接收响应。
+- 资产可能如何被困住，以及如何使用XCM模块认领它们。 

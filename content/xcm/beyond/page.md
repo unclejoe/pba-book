@@ -1,4 +1,4 @@
-# XCM Beyond Asset Transfers
+# 资产转移和桥接之外的高级XCM用例
 
 <!-- markdown-link-check-disable -->
 <center>

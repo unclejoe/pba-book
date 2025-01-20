@@ -8,43 +8,43 @@ duration: 1 hour
 
 ---
 
-# 🫀 The XCVM
+# 🫀 XCVM
 
-At the core of XCM lies the **Cross-Consensus Virtual Machine (XCVM)**.
+XCM的核心是**跨共识虚拟机（XCVM）**。
 
-A “message” in XCM is an XCVM program, which is a sequence of instructions.
+XCM中的“消息”是一个XCVM程序，它是一系列指令。
 
-The XCVM is a state machine, state is kept track in **registers**.
+XCVM是一个状态机，状态通过**寄存器**进行跟踪。
 
 Notes:
 
-It’s an ultra-high level non-Turing-complete computer.
-Messages are one or more XCM instructions.
-The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
-An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
+它是一个超高级别的非图灵完备计算机。
+消息是一个或多个XCM指令。
+程序会一直执行，直到运行结束或遇到错误，此时程序会完成并停止。
+Parity提供了一个遵循XCVM规范的XCM执行器，它可以进行扩展或定制，甚至可以完全忽略，用户可以创建自己遵循XCVM规范的结构。
 
 ---
 
-# 📜 XCVM Instructions
+# 📜 XCVM指令
 
-XCVM Instructions might change a register, they might change the state of the consensus system or both.
+XCVM指令可能会改变寄存器，可能会改变共识系统的状态，或者两者都会改变。
 
 ---v
 
-## Kinds of instructions
+## 指令类型
 
 <pba-flex center>
 
-- Command
-- Trusted Indication
-- Information
-- System Notification
+- 命令
+- 可信指示
+- 信息
+- 系统通知
 
 ---v
 
-## Example: TransferAsset
+## 示例：TransferAsset
 
-An instruction used to transfer assets to some other address.
+一个用于将资产转移到其他地址的指令。
 
 <pba-flex center>
 
@@ -57,12 +57,12 @@ TransferAsset {
 
 Notes:
 
-This instruction is a command.
-It needs to know which assets to transfer and to which account to transfer them to.
+这个指令是一个命令。
+它需要知道要转移哪些资产以及要将这些资产转移到哪个账户。
 
 ---
 
-# XCVM Registers
+# XCVM寄存器
 
 <diagram class="mermaid">
 graph LR
@@ -75,35 +75,35 @@ graph LR
 
 Notes:
 
-Registers _are_ the state of XCVM.
-Note that they are temporary/transient.
-We'll talk about are the `holding` and `origin` registers, but there are more.
+寄存器**就是**XCVM的状态。
+请注意，它们是临时的/瞬态的。
+我们将讨论`holding`和`origin`寄存器，但还有更多其他寄存器。
 
 ---v
 
-## 📍 The Origin Register
+## 📍 原点寄存器
 
-Contains an `Option<Location>` of the cross-consensus origin where the message originated from.
+包含一个`Option<Location>`，表示消息的跨共识起源位置。
 
 Notes:
 
-This `Location` can change over the course of program execution.
+这个`Location`在程序执行过程中可能会发生变化。
 
-It might be `None` because some instructions clear the origin register.
+它可能是`None`，因为某些指令会清除原点寄存器。
 
 ---v
 
-### 💸 The Holding Register
+### 💸 持有寄存器
 
-Expresses a number of assets in control of the xcm execution that have no on-chain representation.
+表示XCM执行过程中控制的一些资产的数量，这些资产没有链上表示。
 
-They don't belong to any account.
+它们不属于任何账户。
 
-It can be seen as the register holding "unspent assets".
+可以将其视为持有“未花费资产”的寄存器。
 
 ---
 
-# Basic XCVM Operation
+# 基本XCVM操作
 
 <diagram class="mermaid">
 graph LR
@@ -125,27 +125,27 @@ graph LR
 
 Notes:
 
-The XCVM fetches instruction from the program and executes them one by one.
+XCVM从程序中获取指令并逐个执行。
 
 ---v
 
-## XCVM vs. Standard State Machine
+## XCVM与标准状态机的对比
 
 <pba-flex center>
 
-1. Error _handler_ register
-2. Appendix register
+1. 错误**处理程序**寄存器
+2. 附录寄存器
 
 Notes:
 
-1. Code that is run in the case where the XCM program fails or errors.
-   Regardless of the result, when the program completes, the error handler register is cleared.
-   This ensures that error handling logic from a previous program does not affect any appended code (i.e. the code in the error handler register does not loop infinitely, the code in the Appendix register cannot access the result of the code execution in the error handler).
-2. Code that is run regardless of the execution result of the XCM program.
+1. 在XCM程序失败或出错时执行的代码。
+   无论结果如何，当程序完成时，错误处理程序寄存器都会被清除。
+   这确保了前一个程序的错误处理逻辑不会影响任何附加代码（即错误处理程序寄存器中的代码不会无限循环，附录寄存器中的代码无法访问错误处理程序中代码执行的结果）。
+2. 无论XCM程序的执行结果如何都会执行的代码。
 
 ---v
 
-## More complete XCVM operation
+## 更完整的XCVM操作
 
 <diagram class="mermaid">
 graph LR
@@ -176,11 +176,11 @@ graph LR
 
 ---
 
-# 💁 XCM by example
+# 💁 XCM示例
 
 ---v
 
-## The `WithdrawAsset` instruction
+## `WithdrawAsset`指令
 
 <pba-flex center>
 
@@ -194,19 +194,17 @@ enum Instruction {
 
 Notes:
 
-There are a number of instructions
-which place assets on the Holding Register.
-One very simple one is the
-`WithdrawAsset` instruction.
+有许多指令可以将资产放置到持有寄存器中。
+一个非常简单的指令是`WithdrawAsset`指令。
 
-It withdraws some assets from the account of the location specified in the Origin Register.
-But what does it do with them?
-If they don’t get deposited anywhere then it's a pretty useless operation.
-These assets are held in the holding register until something is done with them, for example, using the following instruction.
+它从原点寄存器中指定位置的账户中提取一些资产。
+但它对这些资产做了什么呢？
+如果这些资产没有被存入任何地方，那么这就是一个相当无用的操作。
+这些资产会被保存在持有寄存器中，直到对它们进行某些操作，例如使用以下指令。
 
 ---v
 
-## The `BuyExecution` instruction
+## `BuyExecution`指令
 
 <pba-flex center>
 
@@ -223,16 +221,16 @@ enum Instruction {
 
 Notes:
 
-This instruction uses the specified assets in the Holding register to buy weight for the execution of the following instructions.
-It's used in systems that pay fees.
+这个指令使用持有寄存器中指定的资产来为后续指令的执行购买权重。
+它用于需要支付费用的系统中。
 
-`weight_limit` is a sanity check, to make sure that the execution errors if you would buy more than that weight.
-The estimate for the weight has to come from using the recipient's weigher, not the sender's.
-The recipient is the one who actually executes the message.
+`weight_limit`是一个合理性检查，以确保如果购买的权重超过该限制，执行会出错。
+权重的估计必须来自使用接收方的权重计算器，而不是发送方的。
+接收方是实际执行消息的一方。
 
 ---v
 
-## The `DepositAsset` instruction
+## `DepositAsset`指令
 
 <pba-flex center>
 
@@ -249,12 +247,12 @@ enum Instruction {
 
 Notes:
 
-Takes assets from the holding register and deposits them in a beneficiary.
-Typically an instruction that places assets into the holding register would have been executed previously.
+从持有寄存器中取出资产并将其存入受益人账户。
+通常，之前会执行一个将资产放入持有寄存器的指令。
 
 ---v
 
-## Putting it all together
+## 综合运用
 
 <pba-flex center>
 
@@ -271,11 +269,11 @@ Xcm(vec![
 
 Notes:
 
-All examples in these slides use the latest xcm version.
+这些幻灯片中的所有示例都使用最新的XCM版本。
 
 ---v
 
-## Good pattern
+## 良好的模式
 
 <pba-flex center>
 
@@ -294,7 +292,7 @@ Xcm(vec![
 
 ---
 
-# Reserve asset transfer
+# 储备资产转移
 
 <pba-flex center>
 
@@ -304,41 +302,41 @@ Xcm(vec![
     InitiateReserveWithdraw {
         assets: All.into(),
         reserve: reserve_location,
-        xcm: /* ...what to do with the funds in the reserve... */,
+        xcm: /* ...如何处理储备中的资金... */,
     },
 ])
 ```
 
 Notes:
 
-This message is executed locally.
-Then, a message is sent to the `reserve` location.
-That message contains the custom `xcm` provided along with other instructions.
+此消息在本地执行。
+然后，会向`reserve`位置发送一条消息。
+该消息包含提供的自定义`xcm`以及其他指令。
 
 ---v
 
-## Message received in reserve
+## 储备收到的消息
 
 <pba-flex center>
 
 ```rust
 Xcm(vec![
     WithdrawAsset(reanchored_asset),
-    ClearOrigin, // <- Why is this needed?
-    /* ...custom instructions... */
+    ClearOrigin, // <- 为什么需要这个？
+    /* ...自定义指令... */
 ])
 ```
 
 Notes:
 
-This is the message the reserve receives.
+这是储备收到的消息。
 
-The `ClearOrigin` instruction deletes the content of the origin register.
-This is needed because we don't trust the origin to do anything other than move its own assets.
+`ClearOrigin`指令会删除原点寄存器的内容。
+这是必要的，因为我们不相信原点可以做除了转移自己的资产之外的任何事情。
 
 ---v
 
-## Custom XCM
+## 自定义XCM
 
 <pba-flex center>
 
@@ -359,52 +357,51 @@ let xcm_for_reserve = Xcm(vec![
 
 Notes:
 
-For a simple reserve asset transfer, this message will work.
+对于简单的储备资产转移，此消息将起作用。
 
 ---v
 
-## Message received in destination
+## 目的地收到的消息
 
 <pba-flex center>
 
 ```rust
 Xcm(vec![
     ReserveAssetDeposited(reanchored_asset),
-    ClearOrigin, // <- Why is this needed?
-    /* ...custom instructions... */
+    ClearOrigin, // <- 为什么需要这个？
+    /* ...自定义指令... */
 ])
 ```
 
 Notes:
 
-A very clear exploit in not having `ClearOrigin` here is syphoning all funds from
-the reserve's sovereign account in the destination.
-The destination can't trust the reserve to totally speak for the source, only for the assets.
+如果这里没有`ClearOrigin`，一个非常明显的漏洞就是从目的地的储备主权账户中抽走所有资金。
+目的地不能完全相信储备可以代表源，只能相信其代表资产。
 
 ---
 
-# Summary
+# 总结
 
 <pba-flex center>
 
 - XCVM
-- Kinds of instructions
-- Registers
-  - Origin
-  - Holding
-  - Error handler
-  - Appendix
-- Instructions
-  - WithdrawAsset, BuyExecution, DepositAsset
+- 指令类型
+- 寄存器
+  - 原点
+  - 持有
+  - 错误处理程序
+  - 附录
+- 指令
+  - WithdrawAsset、BuyExecution、DepositAsset
   - RefundSurplus
-  - InitiateReserveWithdraw, ReserveAssetDeposited
+  - InitiateReserveWithdraw、ReserveAssetDeposited
 
 ---v
 
-## Next steps
+## 下一步
 
 <pba-flex center>
 
-1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
-1. XCM Format [repository](https://github.com/paritytech/xcm-format)
-1. XCM [Docs](https://paritytech.github.io/xcm-docs/)
+1. 介绍XCM的博客系列：第[1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392)、[2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83)和[3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166)部分。
+2. XCM格式[仓库](https://github.com/paritytech/xcm-format)
+3. XCM [文档](https://paritytech.github.io/xcm-docs/)

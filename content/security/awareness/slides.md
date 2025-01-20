@@ -4,409 +4,416 @@ description: A sentence for what these slides are about.
 duration: 45 minutes
 ---
 
-# Security Awareness in web3
-
-## The context, impacts, and mitigations
+# web3 中的安全意识
 
 ---
 
-### _Lesson Objectives:_
+## 背景、影响和应对措施
+
+---
+
+### _课程目标：_
 
 <pba-flex center>
 
-- Be able to describe the threats which exist in the web3 space
-- Navigate the risks posed with confidence
-- Understand the measures taken to minimize impact
+- 能够描述 web3 领域存在的威胁
+- 自信地应对所面临的风险
+- 了解为降低影响所采取的措施
 
 </pba-flex>
 
 ---
 
-## The Inevitable Jargon
+## 不可避免的行话
 
-Time for a quick speedrun
+快速了解一下
 
 Notes:
 
-Security folks love their jargon and acronyms, you may be familiar with some of these, but no worries if not.
+安全人员喜欢使用行话和缩写词，你可能对其中一些比较熟悉，如果不熟悉也没关系。
 
 ---v
 
-#### Threat Actor
+#### 威胁行为者
 
-Any individual, group, or entity that poses a potential risk or threat to the security of a system or organization.
+任何对系统或组织的安全构成潜在风险或威胁的个人、团体或实体。
 
 Notes:
 
-Threat actors can be hackers, cybercriminals, social engineers, insiders, state-sponsored groups, or other malicious actors.
+威胁行为者可以是黑客、网络犯罪分子、社会工程师、内部人员、国家支持的团体或其他恶意行为者。
 
 ---v
 
-#### Attack Surface
+#### 攻击面
 
-The points of entry, or potential vulnerabilities in a system that could be exploited by a threat actor to compromise or gain unauthorized access.
+系统中威胁行为者可以利用来破坏或获取未经授权访问的切入点或潜在漏洞。
 
 Notes:
 
-This ranges from network interfaces, APIs, software, hardware and infrastructure, through to human factors.
+这包括从网络接口、应用程序编程接口（API）、软件、硬件和基础设施，到人为因素等各个方面。
 
 ---v
 
-#### Attack Vector
+#### 攻击向量
 
-Specific paths or methods that threat actors use to launch attacks against a system or organization.
+威胁行为者用来对系统或组织发起攻击的特定路径或方法。
 
 Notes:
 
-These can include various techniques, some of which could be phishing emails, software vulnerabilities, social engineering, malware, or brute-force attacks.
+这些可以包括各种技术，其中一些可能是网络钓鱼邮件、软件漏洞、社会工程、恶意软件或暴力攻击。
 
 ---
 
-## Eyes are on us
+## 我们备受关注
 
 <pba-flex center>
 
-- Crypto Market Capitalization: $1,231,359,133,397
-- 24 Hour Trading Volume: $39,807,353,848
+- 加密货币市值：1,231,359,133,397 美元
+- 24 小时交易量：39,807,353,848 美元
 
 </pba-flex>
 
 Notes:
 
-Those are some big numbers, that's $1.23 Trillion.
-As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and web3.
-These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
+这些数字可不小，那可是 1.23 万亿美元。
+因此，整个行业都备受关注——不仅仅是因为人们对去中心化和 web3 感到兴奋。
+这些项目承载着巨大的影响力和责任，从维护基础设施到保障资金安全。
 
 ---
 
-## In the real world
+## 在现实世界中
 
-#### _there is no scope_
-
-Notes:
-
-In the real world, there is minimal scope - financially motivated attackers do not follow a code of ethics, and will monetize whatever they can get their hands on.
-
----v
-
-#### Funds
-
-Quickest and easiest way to make money: attack wallets and services
+#### _没有限制_
 
 Notes:
 
-Financially motivated attacks are among the most common, earnings from these can be used to fund more advanced future attacks, for market manipulation, or directly cashed out
+在现实世界中，限制很少——受经济利益驱动的攻击者不会遵循道德准则，他们会想尽办法将能到手的东西变现。
 
 ---v
 
-#### Networks & Infrastructure
+#### 资金
+
+最快、最容易的赚钱方式：攻击钱包和服务
+
+Notes:
+
+受经济利益驱动的攻击是最常见的攻击类型之一，从这些攻击中获得的收益可以用于资助未来更高级的攻击、进行市场操纵，或者直接套现。
+
+---v
+
+#### 网络与基础设施
 
 <pba-flex center>
 
-- Smart Contracts
-- Ransomware
-- Impact on network availability
-- Malicious code injection/node creation
+- 智能合约
+- 勒索软件
+- 对网络可用性的影响
+- 恶意代码注入/节点创建
 
 </pba-flex>
 
 Notes:
 
-Attackers can and will exploit anything, these can be on-chain attacks - such as exploitation of vulnerabilities in smart contracts, or even crafting and sending their own malicious smart contracts
+攻击者可以并且会利用任何漏洞，这些攻击可能是链上攻击——比如利用智能合约中的漏洞，甚至编写和发送自己的恶意智能合约。
 
-Ransomware and denial of service attacks can be utilized to reduce confidence in or extort funds from projects
+勒索软件和拒绝服务攻击可以用来降低人们对项目的信心或向项目勒索资金。
 
-Mechanics of protocols themselves can be taken advantage of through 51% attacks, double spends, or malicious validation
+协议本身的机制也可能被利用，比如 51% 攻击、双重支付或恶意验证。
 
 ---v
 
-#### Personally Identifiable Information
+#### 个人身份信息
 
 <pba-flex center>
 
-- Account takeover
-- Identity theft
-- Impersonation
+- 账户接管
+- 身份盗窃
+- 冒充
 
 </pba-flex>
 
 Notes:
 
-You know you're you, and your teams know you're you - this trust can be taken advantage of by attackers, impersonating people with social capital and good social standing to pivot deeper into organizations and networks - or even something as simple as identity theft to launder money.
+你知道自己是谁，你的团队也知道你是谁——但攻击者可以利用这种信任，冒充那些有社会资本和良好社会地位的人，从而深入渗透到组织和网络中——或者甚至是简单的身份盗窃来洗钱。
 
-It may sound far-fetched, but this is a very real problem in the web3 ecosystem - so if a request seems a bit bizarre, it's never a bad idea to check in and verify via an alternative line of communication which has already been established.
+这听起来可能有些牵强，但在 web3 生态系统中，这是一个非常现实的问题——所以，如果某个请求看起来有点奇怪，通过已经建立的其他沟通渠道进行核实永远不是一个坏主意。
 
 ---
 
-## A look at potential adversaries
+## 看看潜在的对手
 
 <pba-flex center>
 
-- Lazarus Group (APT 38)
-- Sanctioned Nation States
-- Future Adversaries
+- 拉撒路集团（APT 38）
+- 受制裁的国家
+- 未来的对手
 
 </pba-flex>
 
 Notes:
 
-So now we know some of the ways that threat actors can strike, let's take a moment to look at who and why.
-As mentioned before, a lot of attacks in the web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in.
-While that's true, we can't rule out politically motivated attacks.
+现在我们已经了解了威胁行为者的一些攻击方式，让我们花点时间来看看是谁在进行攻击以及他们的动机。
 
-- Lazarus Group
-  - $400m in 2021
-  - $1.7b in 2022
-- Russia
-- US in future
-- More advanced & persistent
-  - Resources
-  - Driven
+如前所述，web3 生态系统中的许多攻击都是受经济利益驱动的——尤其是那些因为参与各种地缘政治活动而受到金融制裁的国家。
 
----
+虽然这是事实，但我们不能排除出于政治动机的攻击。
 
-## Up to date devices are great
-
-### _but there's more to it than that_
+- 拉撒路集团
+  - 2021 年获利 4 亿美元
+  - 2022 年获利 17 亿美元
+- 俄罗斯
+- 未来的美国
+- 更先进、更持久
+  - 资源丰富
+  - 有强烈的动机
 
 ---
 
-# Types of Adversaries
+## 设备保持更新固然好
 
-### A Deeper Dive
+### _但这还不够_
+
+---
+
+# 对手的类型
+
+### 深入了解
 
 ---v
 
-#### Opportunists
+#### 机会主义者
 
-Individuals or small groups who take advantage of easily exploitable vulnerabilities without significant planning, often targeting low-hanging fruit and utilizing readily available tools and techniques.
+个人或小团体，他们利用容易被利用的漏洞，通常没有进行大量的规划，往往针对那些容易得手的目标，并使用现成的工具和技术。
 
 Notes:
 
-Opportunists can impact us from phishing through to being in the wrong place at the wrong time.
-Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
+机会主义者可以通过网络钓鱼等方式对我们造成影响，甚至在不合适的时间出现在不合适的地方也可能带来威胁。
+
+在出行或身处公共场所时要保持警惕，一时的疏忽就可能导致设备被盗。
 
 ---v
 
-#### I Pickpocketed a Pickpocket
+#### 我扒窃了一个扒手
 
 <img rounded style="width: 1100px" src="./img/pickpocket.gif" />
 
 Notes:
 
-Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a Pickpocket</a>
+来源：<a href="https://www.youtube.com/watch?v=j25VkESewZg">我扒窃了一个扒手</a>
 
 ---v
 
-#### Organized Crime Groups (OCGs)
+#### 有组织犯罪集团（OCGs）
 
-More sophisticated adversaries with dedicated resources and a more defined focus.
-They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
+更复杂的对手，拥有专门的资源和更明确的目标。
+他们的运作方式类似于传统的犯罪组织，经常进行大规模、受经济利益驱动的攻击。
 
 Notes:
 
-OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc.
-This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
+有组织犯罪集团比单纯的机会主义者拥有更多的信息，他们会花更多的时间评估目标——包括影响网络领域的漏洞，甚至是社交媒体信息，以更好地了解目标——例如：了解目标的频繁旅行地点、办公室、活动等。
 
-These details can be used for extortion, be it compromising information or physical threats, through to kidnap for those higher value targets.
+这些信息可以用于实施更高级的网络钓鱼攻击，也称为鱼叉式网络钓鱼——稍后会详细介绍。
+
+这些细节可以用于敲诈勒索，无论是泄露信息还是进行人身威胁，甚至对那些高价值目标进行绑架。
 
 ---v
 
-#### Nation States
+#### 国家
 
-The most sophisticated and well-resourced adversaries in the landscape.
-They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
+这个领域中最复杂、资源最丰富的对手。
+他们拥有强大的技术能力，可能会进行网络间谍活动、破坏或战争。
 
 Notes:
 
-Nation states can act similarly to OCGs, but with increased skill and greater financial backing, with the added benefit of additional operating locations: think airports, border crossings, police forces.
+国家的行为可能类似于有组织犯罪集团，但他们的技能更强大，资金支持更雄厚，而且还有更多的行动地点：比如机场、边境口岸、警察部队等。
 
-In the context of web3, nation states may be interested in:
+在 web3 的背景下，国家可能对以下方面感兴趣：
 
-- Money
-- Service Disruption
-- Undermining Integrity
+- 资金
+- 服务中断
+- 破坏完整性
 
 ---
 
-# Methods of Adversaries
+# 对手的攻击方法
 
 ---v
 
-#### Theft
+#### 盗窃
 
 <pba-cols>
 <pba-col center>
 
-- Laptops
-- Phones
-- Keys
+- 笔记本电脑
+- 手机
+- 钥匙
 
 </pba-col>
 <pba-col center>
 
-- Auld Wallets
-- ID Documents
-- Hardware Wallets
+- 老式钱包
+- 身份证件
+- 硬件钱包
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-A lot is at stake, even when an opportunist strikes - for most people our entire lives are on our devices these days.
-Losing a device can mean lost, and potentially compromised, second factor authentication - locking you out, but letting a crook in, but also the potential exposure of your wallet seeds, along with whatever is signed in.
+很多东西都处于危险之中，即使是机会主义者的攻击也可能造成严重后果——如今，对大多数人来说，我们的整个生活都存储在设备上。
 
-Lost or stolen keys and ID documents pose an increased physical threat: the leak of your home address and the means to access it, which can also extend to workplaces or infrastructure locations
+丢失设备可能意味着丢失甚至可能泄露双重身份验证信息——将你拒之门外，却让骗子得逞，还可能暴露你的钱包种子以及所有登录信息。
+
+丢失或被盗的钥匙和身份证件会带来更大的人身威胁：泄露你的家庭住址和进入途径，这可能会延伸到工作场所或基础设施地点。
 
 ---v
 
-#### Tampering
+#### 篡改
 
 <iframe width="1440" height="646" src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
 
 Notes:
 
-Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
+计算机体积小但功能强大——想想阿波罗飞行计算机的大小，而如今我们口袋里的计算机处理能力要强大得多，而且技术还在不断进步——有强大的片上系统（SoC），攻击者可以利用这些系统。
 
-They range from devices, such as the Rubber Ducky, through to a simple USB-USB cable which looks innocuous enough, but can wreak havoc - and even exfiltrate data or allow for remote control.
+这些设备范围从诸如橡皮鸭（一种恶意 USB 设备），到看似无害的 USB - USB 电缆，它们都可能造成严重破坏——甚至可以窃取数据或实现远程控制。
 
-These can put your devices - be it phone, laptop, or hardware wallet - at risk of malware injection or firmware integrity
+这些都可能使你的设备——无论是手机、笔记本电脑还是硬件钱包——面临恶意软件注入或固件完整性受损的风险。
 
 ---v
 
-#### Tampering: Mitigations
+#### 篡改：应对措施
 
 <img rounded style="width: 500px" src="./img/cables.png" />
 
 Notes:
 
-So what can we do to mitigate these attacks?
-For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
+那么我们该如何应对这些攻击呢？
+首先，使用我们自己信任的电缆——可以考虑用独特的方式对它们进行标识：比如在电缆末端缠上一些胶带，拿出旧的记号笔（也可以使用其他永久性标记笔），或者涂上一层指甲油。
 
-Don't use that charger you found randomly left in a café, even if it was offered to you by a nice businessman, and it's probably best to not pick up that mysterious USB on the side of the road anyway.
+不要使用你在咖啡馆里随便找到的充电器，即使是一个友好的商人提供给你的，而且最好也不要在路边捡起那个神秘的 USB 设备。
 
 ---v
 
-#### Hacking
+#### 黑客攻击
 
 <pba-flex center>
 
-- Direct attacks
-- DNS poisoning
-- Targeted Man in the Middle attacks
+- 直接攻击
+- 域名系统（DNS）污染
+- 针对性的中间人攻击
 
 </pba-flex>
 
 Notes:
 
-If you're on a network that isn't your own or trusted (home, hotspot, place of work), pop on your VPN for additional protection and privacy.
+如果你使用的是不属于自己或不可信的网络（比如家庭网络、热点、工作场所网络），请打开虚拟专用网络（VPN）以获得额外的保护和隐私。
 
 ---v
 
-#### Social Engineering
+#### 社会工程
 
-Phishing and its counterparts, vishing, smishing, etc.
+网络钓鱼及其相关攻击，如语音钓鱼（vishing）、短信钓鱼（smishing）等。
 
 Notes:
 
-Phishing and attacks under its umbrella are still a very real threat, but often downplayed - but more on them later.
+网络钓鱼及其相关攻击仍然是一个非常现实的威胁，但往往被人们低估了——稍后会详细介绍。
 
 ---
 
-# Situational Awareness
+# 态势感知
 
 ---v
 
-### Shoulder Surfing
+### 肩窥
 
 Notes:
 
-Privacy screens are a mitigation, but they're not infallible - they reduce the viewing angle, but those behind you still have the best seats in the house.
+隐私屏幕是一种应对措施，但它们并非万无一失——它们可以缩小可视角度，但你身后的人仍然有最好的视角。
 
 ---v
 
-### Shoulder Surfing
+### 肩窥
 
-<img rounded style="width: 350px" src="./img/com-truise.png" />
+<img rounded style="width: 350px" src="./img/com-truise.jpg" />
 
 Notes:
 
-Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy screens useless.
+毕竟，我们知道汤姆·克鲁斯是以 22° 的角度奔跑的，这使得隐私屏幕毫无用处。
 
 ---v
 
-### Shoulder Surfing
+### 肩窥
 
 <img rounded style="width: 700px" src="./img/shoulder-pads.jpg" />
 
 Notes:
 
-It's unrealistic that you can wear shoulder pads all the time to block the view of your sweet sweet screen real estate.
+不现实的是，你不可能一直穿着肩垫来遮挡你宝贵的屏幕空间。
 
 ---v
 
-### Shoulder Surfing
+### 肩窥
 
 <img rounded style="width: 700px" src="./img/scousers.jpg" />
 
 Notes:
 
-Nor are you going to be able to rapidly grow out your hair
+你也不可能迅速让头发变长。
 
 ---v
 
-### Shoulder Surfing
+### 肩窥
 
 <img rounded style="width: 700px" src="./img/shouldersurf.jpg" />
 
 Notes:
 
-In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk.
-A solid wall represents support, stability, and protection.
+在风水学中，背后有一堵坚实的墙被认为是有利的，尤其是当你坐在办公桌前时。
+一堵坚实的墙代表着支持、稳定和保护。
 
-There's truth to this, it also adds privacy - so if you happen to be working in a public place, consider the flow of energy and listen to Feng Shui - find a nice wall to sit against.
+这是有道理的，它还能增加隐私——所以，如果你在公共场所工作，考虑一下能量的流动，听从风水学的建议——找一堵好墙靠着坐。
 
 ---
 
-# Visual Cues
+# 视觉线索
 
 Notes:
 
-It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides.
-There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?
+众所周知，科技人员都喜欢贴纸，它们让我们的设备与朋友和同事的设备有所不同——但这也有一些弊端。
+在随意的兴趣和直接的关联之间有一个临界点：贴纸就像指纹一样，但我们能从它们中获取什么信息呢？
 
 ---v
 
-### Device Stickers
+### 设备贴纸
 
-Some things can be identified from these, such as:
+从这些贴纸中可以识别出一些信息，例如：
 
 <pba-flex center>
 
-- Role
-- Industry
-- Employer/Projects
+- 角色
+- 行业
+- 雇主/项目
 
 </pba-flex>
 
 Notes:
 
-- Role
-  - Developers: Framework/Language/Software stickers
-  - DevOps: Cloud service/provider stickers
-  - Security: Security tools and software
-- Employer
-  - Lots of brand-specific stickers can indicate affiliation to an organization or project
+- 角色
+  - 开发者：框架/语言/软件贴纸
+  - 运维人员：云服务/提供商贴纸
+  - 安全人员：安全工具和软件贴纸
+- 雇主
+  - 大量的品牌特定贴纸可以表明与某个组织或项目的关联
 
-Cover in transit - benefit of protected device
+在出行时要遮盖好——保护设备有好处。
 
 ---v
 
 <pba-cols>
   <pba-col>
-    <h3>Clothing, Swag, Drip</h3>
-    Call it what you will, but it can be a source of information disclosure
+    <h3>服装、周边、行头</h3>
+    不管你怎么称呼它们，它们都可能成为信息泄露的源头
   </pba-col>
   <pba-col center>
     <img rounded style="width: 500px" src="./img/btc-coat.png" />
@@ -415,118 +422,79 @@ Cover in transit - benefit of protected device
 
 Notes:
 
-Donning the latest swag is turning yourself into a billboard
+穿着最新的周边产品就相当于把自己变成了一个广告牌
 
-- Advertising the project mentioned
-- Advertising potential affiliations
-- Advertising why you would make a financially sound target
+- 宣传所提到的项目
+- 宣传潜在的关联
+- 宣传为什么你会是一个有经济价值的目标
 
-The last point applies to tattoos too, unless it's a Dogecoin tattoo.
+最后一点也适用于纹身，除非是狗狗币纹身。
 
 ---
 
-# Digital Footprint
+# 数字足迹
 
 ---v
 
-### Social Media
+### 社交媒体
 
 <pba-cols>
 <pba-col center>
 
-#### The Usual Suspects
+#### 常见平台
 
-- Twitter
-- Meta
-- Linkedin
+- 推特
+- 脸书（Meta）
+- 领英
 
 </pba-col>
 <pba-col center>
 
-#### The Less Obvious
+#### 不太明显的平台
 
-- Telegram
-- WhatsApp
-- Discord
+- 电报
+- 微信（WhatsApp）
+-  Discord
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-Data can be inferred through social media, listing your position on LinkedIn gives attackers confirmation of your presence, the format of email addresses is likely easily discoverable, opening the door to spearphishing attacks.
+可以通过社交媒体推断出数据，在领英上列出你的职位会让攻击者确认你的存在，电子邮件地址的格式很可能很容易被发现，从而为鱼叉式网络钓鱼攻击打开大门。
 
-Messaging apps are rapidly becoming social media, remember that posts and stories aren't necessarily private and can be viewed by anyone with your number.
-We can mitigate the impact of these by ensuring device separation - which is also great for work-life balance, which is a great opportunity to revisit phishing.
+即时通讯应用程序正迅速成为社交媒体，记住，帖子和动态不一定是私密的，任何有你号码的人都可以看到。
 
 ---
 
-# Phishing
-
-Humans get distracted, stressed, and tired, this is when phishers thrive.
-
-If it didn't work, they would have stopped by now.
-
+# 网络钓鱼
+人们会分心、感到压力和疲惫，而这正是网络钓鱼者活跃的时候。如果网络钓鱼没有效果，他们现在早就收手了。
 Notes:
-
-Phishing is still highly effective, at the end of the day we're only human.
-The cost of phishing is constantly dropping, making it easier for the masses to be reached
-Actions and decisions are circumstantial
-
+网络钓鱼仍然非常有效，毕竟我们都是普通人。网络钓鱼的成本在不断下降，使得更多人更容易成为目标。人们的行为和决策往往受到具体情境的影响。
 ---v
-
-### Rise of AI
-
-Phishing is easier than ever, just ask ChatGPT:
-
+### 人工智能的兴起
+网络钓鱼比以往任何时候都更容易，问问ChatGPT就知道了：
 <img rounded style="width: 1000px" src="./img/gpt-github-email.png" />
-
 Notes:
-
-Not only is phishing getting cheaper, the bar to entry has been significantly lowered.
-Existing trusted email infrastructure and its exploitation leads to more and more convincing attacks, paired with the rise of services like ChatGPT, the risk is increasing.
-
+网络钓鱼不仅成本越来越低，其门槛也大幅降低。现有的可信电子邮件基础设施被利用，导致越来越多令人信服的攻击出现，再加上像ChatGPT这样的服务兴起，风险正在不断增加。
 ---v
-
-### Beyond the Nigerian prince
-
-Phishers are getting smarter, and your digital footprint is on their radar.
-
+### 不再只是 “尼日利亚王子” 式骗局
+网络钓鱼者越来越精明，你的数字足迹已被他们盯上。
 <img rounded style="width: 800px" src="./img/gpt-travel-email.png" />
-
 Notes:
-
-Posting online comes with its share of danger, broadcasting your location to the world.
-Think again before you post, could an adversary use this information to target you, your family, or colleagues - is it advertising that your team is all in one place, or perhaps alerting them to the fact that your team is distracted and probably stressed with travel?
-
-There is also the issue of consent - avoid blindly tagging people and tainting their operational security, ask first - it's also just a nice thing to do, rather than making bold assumptions about what they are on board with.
-
-Not to say don't post, but add a delay to obscure your live location and minimize physical risks
-
+在网上发布内容存在风险，因为这相当于向全世界公布你的位置。在发布之前要三思，对手能否利用这些信息来针对你、你的家人或同事呢？比如，这是否会透露你的团队都在同一个地方，或者提醒他们你的团队因旅行而分心且可能压力很大？
+这里还有一个征得他人同意的问题，避免盲目给别人打标签，以免影响他们的操作安全，先询问一下——这也是礼貌之举，而不是擅自假设他们愿意被你这样做。这并不是说不要发布内容，而是可以延迟发布以隐藏你的实时位置，从而将人身风险降至最低。
 ---v
-
-### Reacting to a Phish
-
+### 应对网络钓鱼的方法
 <pba-flex center>
-
-1. Stop
-1. Take a moment
-1. Verify
-1. Report
-
+1. 停下
+1. 冷静一下
+1. 核实
+1. 报告
 </pba-flex>
-
 Notes:
-
-So why is phishing suddenly important?
-It's not, it's always been important - but downplayed.
-We're in a rapidly evolving space, which comes with a lot of eyes - for better or for worse.
-
-It's always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it'll even put a big smile on the faces of security folks all over.
-After all, we're there to help, rather than preach from our ivory towers and reprimand those who make mistakes.
-
+那么，为什么网络钓鱼突然变得重要了呢？其实它一直都很重要，只是被人们忽视了。我们所处的领域发展迅速，受到了很多关注——不管是好是坏。
+在遇到潜在的网络钓鱼企图时，最好是停下来听听他人的意见，而不是等到事情发生了才反应过来，这甚至会让所有安全人员都感到欣慰。毕竟，我们是来提供帮助的，而不是站在高处说教，指责犯错的人。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 问题

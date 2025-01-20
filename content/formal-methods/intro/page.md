@@ -1,4 +1,4 @@
-# Formal Methods for Rust
+# Rust形式化方法入门
 
 <!-- markdown-link-check-disable -->
 <center>

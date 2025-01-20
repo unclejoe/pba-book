@@ -4,158 +4,156 @@ description: Introductory lesson on formal methods for Rust verification
 duration: 60 minutes
 ---
 
-# Introduction to Formal Methods for Rust
+# Rust形式化方法入门
 
 ---
 
-## Outline
+## 大纲
 
 <pba-flex center>
 
-1. Intro to Formal Methods
-1. Landscape of Techniques for Rust
-1. Focus on Kani: Bounded Model Checker
-1. Applications to Substrate
+1. 形式化方法简介
+1. Rust技术全景
+1. 聚焦Kani：有界模型检查器
+1. 在Substrate中的应用
 
 </pba-flex>
 
 ---
 
-## Introduction to Formal Methods
+## 形式化方法简介
 
-#### _Story Time!_
+#### _故事时间！_
 
 ---v
 
-### _Ariane 5 Rocket - Flight 501_
+### _阿丽亚娜5号火箭 - 第501次飞行_
 
 <img rounded style="width: 400px" src="./img/ariane.jpg" />
 
-- in **1996**, the launcher rocket disintegrated 39 secs after take-off.
-- **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
-- **Mistake**: reusing inertial reference platform of Ariane-4, where overflow cannot happen due to different operational conditions
-- **Cost**: `$`500M payload, `$`8B development program
+- 在**1996年**，这枚运载火箭在发射后39秒解体。
+- **故障**：一次_溢出_，由64位到16位浮点数的转换引起。
+- **失误**：复用了阿丽亚娜4号的惯性参考平台，在该平台上，由于不同的运行条件，不会发生溢出。
+- **损失**：5亿美元的有效载荷，80亿美元的开发计划。
 
 Notes:
 
-Link to article: (https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
+相关文章链接：(https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
 
 ---v
 
-## Software Correctness is _very_ important
+## 软件正确性非常重要
 
-> Program testing can be used to show the presence of bugs,<br />but never to show their absence!
+> 程序测试可以用来显示错误的存在，<br />但永远不能显示错误的不存在！
 >
-> --Edgard Dijkstra--
+> —— 埃兹格·迪科斯彻
 
-**_Hence, the necessity to go beyond testing_** <!-- .element: class="fragment" -->
+**_因此，有必要超越测试_** <!-- .element: class="fragment" -->
 
 ---v
 
-## Formal Methods to the Rescue!
+## 形式化方法来救援！
 
-- Given a system (code) and Specification (behavior), verify/prove correctness with reasonable mathematical guarantees.
-- **Traditionally**, costs and efforts were justifiable in _safety-critical_ software like avionics, nuclear reactors, medical imaging, etc.
-- however, things have changed ...
+- 给定一个系统（代码）和规范（行为），以合理的数学保证来验证/证明其正确性。
+- **传统上**，在诸如航空电子设备、核反应堆、医学成像等_安全关键_软件中，成本和精力是合理的。
+- 然而，情况已经发生了变化……
 
 Notes:
 
-this is how Formal Methods were motivated; to prove the absence of Bugs! A bit of fear-mongering in my opinion.
+这就是形式化方法的动机；证明错误的不存在！在我看来，有点危言耸听。
 
 ---v
 
-## It is no longer Rocket Science!
+## 这不再是火箭科学！
 
-- AWS formally verifies Key-Value storage nodes in Amazon S3 (Rust Implementation).
-- Meta detects resource leaks and race conditions in Android apps
-- Uber uses static analysis to find Null-pointer exceptions
-- Ethereum's Beacon chain and Tendermint consensus formally verified for safety and liveness guarantees
+- 亚马逊网络服务（AWS）对亚马逊S3中的键值存储节点（Rust实现）进行形式化验证。
+- Meta检测安卓应用中的资源泄漏和竞态条件。
+- Uber使用静态分析来查找空指针异常。
+- 以太坊的信标链和Tendermint共识协议在安全性和活性保证方面进行了形式化验证。
 
 Notes:
 
-- Personally think of formal methods as a more systematic way of detecting bugs.
-- Ideally, verifying if your property holds on all possible inputs.
+- 个人认为形式化方法是一种更系统的错误检测方式。
+- 理想情况下，验证你的属性在所有可能的输入上是否成立。
 
 ---v
 
-## Formal Methods Today
+## 当今的形式化方法
 
-From being theoretical research interests<br /> to delivering practical cost-effective tools
+从理论研究兴趣<br />到提供实用且经济高效的工具
 
 <pba-flex center>
 
-- goals more focused, promises less lofty
-- verification tools more efficient
-- combination of analysis techniques
+- 目标更聚焦，承诺不那么夸张
+- 验证工具更高效
+- 分析技术的组合
 
 </pba-flex>
 
 Notes:
 
-- Limiting attention to a particular class of bugs, resource leaks, data-races, etc.
-- Drastic Speed-up in Underlying Constraint-Solver engines.
-  For example, Z3 by microsoft, can solve constraints with billions of variables.
-- Unified theory with blurring lines; Combining both static and dynamic techniques.
+- 关注特定类别的错误，如资源泄漏、数据竞争等。
+- 底层约束求解器引擎的速度大幅提升。例如，微软的Z3可以求解包含数十亿个变量的约束。
+- 统一的理论，界限模糊；结合了静态和动态技术。
 
 ---v
 
-## More like _Light-weight Formal Methods_
+## 更像是_轻量级形式化方法_
 
-1. Rigorously **detecting bugs** → proving overall correctness of system.
-1. Developer-centric **Usability** (e.g. workflow integration)
+1. 严格地**检测错误** → 证明系统的整体正确性。
+1. 以开发者为中心的**可用性**（例如，工作流程集成）。
 
 Notes:
 
-- Realized the importance of Developer experience.
-- No more obscure logic that the developer has to learn to write specifications.
-- You will see how intuitive it is to verify code.
+- 意识到了开发者体验的重要性。
+- 开发者不再需要学习晦涩的逻辑来编写规范。
+- 你将看到验证代码是多么直观。
 
 ---v
 
-## Formal Methods ↔ Blockchains
+## 形式化方法 ↔ 区块链
 
-**Hammer finally found the nail!**
+**终于找到了合适的应用场景！**
 
-- Lot at stake, justifies the cost and efforts
-- Business logic is compact and modular, within limits
+- 利害攸关，成本和精力是值得的。
+- 业务逻辑紧凑且模块化，在一定范围内。
 
-Note:
+Notes:
 
-- Reputation along with money at stake.
-- A simple android app has 100k java classes.
-  Techniques are not scalable on large codebases.
-- Complexity of runtime business logic is magnitude lower.
-  Lot of interest in Smart Contract verification.
-- Check out Certora, Echidna, Securify, and more [here](https://ethereum.org/en/developers/docs/smart-contracts/formal-verification/)
+- 声誉和金钱都处于风险之中。
+- 一个简单的安卓应用有10万个Java类。这些技术在大型代码库上不可扩展。
+- 运行时业务逻辑的复杂性要低得多。
+- 对智能合约验证有很多兴趣。
+- 查看Certora、Echidna、Securify等工具，[链接在此](https://ethereum.org/en/developers/docs/smart-contracts/formal-verification/)
 
 ---v
 
-## Key Takeaways
+## 关键要点
 
 <pba-flex center>
 
-**_Formal Methods are..._**
+**_形式化方法是……_**
 
-- **Not a Panacea** but can improve software quality
-- Getting more and more **accessible**
-- Useful for increasing **reliability and security** of blockchains
+- **不是万能药**，但可以提高软件质量。
+- 越来越**易于使用**。
+- 对提高区块链的**可靠性和安全性**很有用。
   </pba-flex>
 
 Notes:
 
-- [Great blog](https://web.archive.org/web/20230209000724/www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/) that explains the trade-offs between soundness and tractability
+- [很棒的博客](https://web.archive.org/web/20230209000724/www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/)，解释了正确性和可处理性之间的权衡。
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Tools Landscape
+## 工具全景
 
 <img style="width: 700px" src="./img/Landscape.svg"/>
 
 Notes:
 
-Links to listed tools
+列出工具的链接
 
 - [Isabelle](https://isabelle.in.tum.de/)
 - [Coq](https://coq.inria.fr/)
@@ -170,7 +168,7 @@ Links to listed tools
 
 ---v
 
-## Tools Landscape
+## 工具全景
 
 <pba-cols>
 <pba-col center>
@@ -181,25 +179,25 @@ Links to listed tools
 
 <pba-col center>
 
-#### Quint/ State-Right (Model-checkers)
+#### Quint/ State-Right（模型检查器）
 
-- Humongous effort modelling the system & specifying properties
-- Abstraction gap
-- Reason about complex properties: safety & liveness of consensus mechanism
+- 对系统进行建模和指定属性需要巨大的努力。
+- 存在抽象差距。
+- 对复杂属性进行推理：共识机制的安全性和活性。
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- Design-level, verifying protocol design.
-- Always a discrepancy in your model and actual code.
-- Safety: nothing bad ever happens; no two honest nodes agree on different state
-- Liveness: something good eventually happens; eventually 2/3rds reach consensus
+- 设计层面，验证协议设计。
+- 模型和实际代码之间总是存在差异。
+- 安全性：永远不会发生坏事；没有两个诚实节点会就不同的状态达成一致。
+- 活性：最终会有好事发生；最终2/3的节点会达成共识。
 
 ---v
 
-## Tools Landscape
+## 工具全景
 
 <pba-cols>
 <pba-col center>
@@ -210,27 +208,25 @@ Notes:
 
 <pba-col center>
 
-#### Static Analyzers
+#### 静态分析器
 
-- Code-level
-- Information/ dataflow properties; access control for code;
-- Specify expected behavior (properties).
-  Roundtrip property: decode (encode (x)) == x
-- Default checks: bugs like arithmetic overflow, out-of-bound access panics
+- 代码层面
+- 信息/数据流属性；代码的访问控制；
+- 指定预期行为（属性）。往返属性：decode (encode (x)) == x
+- 默认检查：诸如算术溢出、越界访问恐慌等错误。
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- Eg. for code access control: ensure that certain sensitive parts of runtime are only accessible by Root origin
-- MIRAI is developed by Meta uses technique called abstract interpretation;
-  specifically useful for detecting panics statically and information flow properties
-- Kani: we will dive deeper soon
+- 例如，对于代码访问控制：确保运行时的某些敏感部分仅可由根来源访问。
+- MIRAI由Meta开发，使用一种称为抽象解释的技术；特别适用于静态检测恐慌和信息流属性。
+- Kani：我们很快将深入探讨。
 
 ---v
 
-## Tools Landscape
+## 工具全景
 
 <pba-cols>
 <pba-col center>
@@ -241,53 +237,52 @@ Notes:
 
 <pba-col center>
 
-#### Linters
+#### 代码检查器
 
-- Code-level
-- Checks for code smells
-- Other syntactic Properties
+- 代码层面
+- 检查代码异味
+- 其他语法属性
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-- [Substrace](https://github.com/KaiserKarel/substrace) is a linter specifically for Substrate
-- Flowistry allows you to track dependency between variables; slices only the relevant portion for a given location.
+- [Substrace](https://github.com/KaiserKarel/substrace)是专门用于Substrate的代码检查器。
+- Flowistry允许你跟踪变量之间的依赖关系；仅对给定位置的相关部分进行切片。
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Our Focus: [Kani](https://github.com/model-checking/kani)
+# 我们的重点：[Kani](https://github.com/model-checking/kani)
 
 ---
 
-## Kani: Model Checking tool for Rust
+## Kani：Rust的模型检查工具
 
-- [Open-source Rust verifier](https://github.com/model-checking/kani) by AWS
-- Underlying technique used: Bounded Model Checking
-- Can be used to _prove_:
-  - Absence of arithmetic overflows
-  - Absence of runtime errors (index out of bounds, panics)
-  - User Specified Properties (enhanced PropTesting)
-  - Memory safety when using unsafe Rust
-- Provides a concrete test-case triggering the bug if verification fails
+- 由AWS开发的[开源Rust验证器](https://github.com/model-checking/kani)。
+- 使用的底层技术：有界模型检查。
+- 可用于_证明_：
+  - 不存在算术溢出。
+  - 不存在运行时错误（索引越界、恐慌）。
+  - 用户指定的属性（增强的属性测试）。
+  - 使用不安全的Rust时的内存安全性。
+- 如果验证失败，提供一个触发错误的具体测试用例。
 
 Notes:
 
-Link to Bounded Model Checking paper for interested folks [here](https://www.cs.cmu.edu/~emc/papers/Books%20and%20Edited%20Volumes/Bounded%20Model%20Checking.pdf).
-For example when you are accessing/modifying mutable static variable
+对于感兴趣的人，有界模型检查论文的链接在此[此处](https://www.cs.cmu.edu/~emc/papers/Books%20and%20Edited%20Volumes/Bounded%20Model%20Checking.pdf)。例如，当你访问/修改可变静态变量时。
 
 ---v
 
-### _Lets see some Magic first_
+### _先来看点神奇的东西_
 
-> Demo of the Rectangle-Example
+> 矩形示例演示
 
 ---v
 
-## Proof Harness
+## 证明框架
 
 <pba-col centre>
 
@@ -296,35 +291,35 @@ use my_crate::{function_under_test, meets_specification, precondition};
 
 #[kani::proof]
 fn check_my_property() {
-   // Create a nondeterministic input
+   // 创建一个非确定性输入
    let input = kani::any();
 
-   // Constrain it according to the function's precondition
+   // 根据函数的前置条件对其进行约束
    kani::assume(precondition(input));
 
-   // Call the function under verification
+   // 调用要验证的函数
    let output = function_under_test(input);
 
-   // Check that it meets the specification
+   // 检查它是否符合规范
    assert!(meets_specification(input, output));
 }
 ```
 
 <!-- .element: style="font-size:0.62em"-->
 
-- Kani tries to prove that all valid inputs produce outputs that meet specifications, without panicking.
-- Else, Kani generates a trace that points to the failure.
+- Kani尝试证明所有有效输入都能产生符合规范的输出，且不会引发恐慌。
+- 否则，Kani会生成一个指向失败的跟踪信息。
 
 </pba-col>
 
 ---v
 
-Property: `decode(encode(x)) == x`
+属性：`decode(encode(x)) == x`
 
 <pba-cols>
 <pba-col center>
 
-Test
+测试
 
 ```rust
 #[cfg(test)]
@@ -335,13 +330,13 @@ fn test_u32 {
 }
 ```
 
-fixed value `42`
+固定值`42`
 
 </pba-col>
 
 <pba-col center>
 
-Fuzzing
+模糊测试
 
 ```rust
 #[cfg(fuzzing)]
@@ -352,14 +347,14 @@ fuzz_target!(|data: &[u8]|) {
 }
 ```
 
-multiple random values of `u16`
+`u16`的多个随机值
 
 </pba-col>
 </pba-cols>
 
 <pba-col center>
 
-Kani Proof
+Kani证明
 
 ```rust
 #[cfg(kani)]
@@ -371,37 +366,37 @@ fn proof_u32_roundtrip {
 }
 ```
 
-verifies exhaustively all values of `u16`
+穷举验证`u16`的所有值
 </pba-col>
 
 ---v
 
-### Under the Hood: Bounded Model Checking
+### 底层原理：有界模型检查
 
-#### Idea:
+#### 思路：
 
-- Search for counterexamples in (bounded) executions paths
-- However, this search is an NP-hard problem
+- 在（有界的）执行路径中搜索反例。
+- 然而，这种搜索是一个NP难问题。
 
-#### Method:
+#### 方法：
 
-- Efficiently reduce problem to a Constraint Satisfaction (SAT) problem
-- verification reduced to problem of searching satisfiable assignment to a SAT formula.
-- leverages highly optimized SAT solvers making the search tractable.
+- 有效地将问题简化为约束满足（SAT）问题。
+- 验证简化为寻找SAT公式的可满足赋值问题。
+- 利用高度优化的SAT求解器使搜索变得可行。
 
 Notes:
 
-Kani uses miniSAT as the backend engine; a lot of other verification tools use Z3 solver.
+Kani使用miniSAT作为后端引擎；许多其他验证工具使用Z3求解器。
 
 ---v
 
-### Translation to constraints
+### 转换为约束
 
 <pba-cols>
 
 <pba-col centre>
 
-#### Code
+#### 代码
 
 ```rust
 fn foo(x: i32) -> i32 {
@@ -422,39 +417,39 @@ fn foo(x: i32) -> i32 {
 
 <pba-col centre>
 
-#### Constraints
+#### 约束
 
 ```rust
 y = 8,
 z = x? y-1: 0,
 w = x? y+1: 0,
-z != 7 /\ w != 9 (negation of the assert condition)
+z != 7 /\ w != 9 (assert条件的否定)
 ```
 
-- Constraints fed into a Solver (minisat)
-- For no value of `x` the constraints hold $\implies$ Assert conditions verified
-- Else the solver found a failing test (counterexample)
+- 约束被输入到求解器（minisat）中。
+- 对于`x`的任何值，约束都不成立 $\implies$ 断言条件得到验证。
+- 否则，求解器找到了一个失败的测试（反例）。
 
-<!-- show the number of clauses and variables used in the formula in the demo-->
+<!-- 在演示中显示公式中使用的子句和变量的数量 -->
 
 </pba-col>
 </pba-cols>
 
 ---v
 
-## How does it handle loops?
+## 它是如何处理循环的？
 
-- _Bounded_ in BMC to the rescue!
-- Loops are unwound up to a certain bounded depth $k$, else the verification does not terminate.
-- Determining the _sweet-spot_ $k$ is a trade-off between _tractability_ and _verification confidence_ .
+- 有界模型检查中的_有界_发挥作用！
+- 循环被展开到一定的有界深度$k$，否则验证不会终止。
+- 确定最佳的$k$值是在_可处理性_和_验证置信度_之间的权衡。
 
 ---v
 
-## Demo: Unwinding Loops
+## 演示：展开循环
 
 ```rust
 fn initialize_prefix(length: usize, buffer: &mut [u8]) {
-    // Let's just ignore invalid calls
+    // 让我们忽略无效调用
     if length > buffer.len() {
         return;
     }
@@ -466,7 +461,7 @@ fn initialize_prefix(length: usize, buffer: &mut [u8]) {
 
 #[cfg(kani)]
 #[kani::proof]
-#[kani::unwind(1)] // deliberately too low
+#[kani::unwind(1)] // 故意设置得太低
 fn check_initialize_prefix() {
     const LIMIT: usize = 10;
     let mut buffer: [u8; LIMIT] = [1; LIMIT];
@@ -482,20 +477,15 @@ fn check_initialize_prefix() {
 
 ---v
 
-## Dealing with Loops: Summary
-
-**Process:**
-
-- Start with unwinding $k$ times
-- If no bug is found, increase $k$ until either:
-  - A bug is found
-  - verifier times-out
-  - predetermined upper-bound $N$ for $k$ is reached
-
+## 处理循环：总结
+**流程：**
+- 从展开 $k$ 次开始。
+- 如果没有发现错误，增加 $k$，直到满足以下任一条件：
+  - 发现错误。
+  - 验证器超时。
+  - 达到预先设定的 $k$ 的上限 $N$ 。
 ---v
-
-## Implementing Arbitrary for custom type
-
+## 为自定义类型实现Arbitrary特质
 ```rust
 use arbitrary::{Arbitrary, Result, Unstructured};
 
@@ -515,37 +505,22 @@ impl<'a> Arbitrary<'a> for Rgb {
     }
 }
 ```
-
 ---
-
-## Exercise
-
-> Verify [Fixed-width](https://github.com/paritytech/parity-scale-codec/blob/master/src/codec.rs) & [Compact](https://github.com/paritytech/parity-scale-codec/blob/master/src/compact.rs) Encoding for integer types in SCALE.
-
+## 练习
+> 验证SCALE中整数类型的[固定宽度](https://github.com/paritytech/parity-scale-codec/blob/master/src/codec.rs)和[紧凑](https://github.com/paritytech/parity-scale-codec/blob/master/src/compact.rs)编码。
 <br />
 <br />
-
-**Open Ended properties!**
-
-- _RoundTrip_: `Decode (Encode (x)) == x`
+**开放性属性！**
+- _往返性_：`Decode (Encode (x)) == x`
 - `DecodeLength(x) == Decode(x).length()`
 - `EncodeAppend(vec,item) == Encode(vec.append(item))`
 - ......
-
 Notes:
-
-- Potentially, we might play around with a few of these properties during a workshop this weekend.
-
+- 本周末的研讨会上，我们可能会探讨其中一些属性。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# More Verification
-
-# Less Bugs
-
+# 更多验证，更少漏洞
 <br />
 <br />
 <br />
-
-**_Questions_**
+**_提问环节_**

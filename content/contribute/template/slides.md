@@ -4,41 +4,41 @@ description: Describe your slides here
 duration: 1 hour
 ---
 
-# Lecture Title
+# 讲座模板
 
 ---
 
-### Outline
+### 大纲
 
 <!--
-You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
+你可以通过使用标题来引用本演示文稿中的其他幻灯片，例如 [这个其他幻灯片](#at-the-end-of-this-lecture-you-will-be-able-to)。
 
-Please make your lecture precise.
+请使你的讲座内容精确。
 
-- Limit the main points in a lecture to five or fewer.
-- Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
-- Emphasize your objectives and key points in the beginning, as you get to them, and as a summary at the end.
+- 将讲座中的主要观点限制在五个或更少。
+- 创建有效的视觉效果、类比、演示和示例来强化主要观点。
+- 在开始时、讲到相关内容时以及最后总结时强调你的目标和关键点。
 
 -->
 
 <pba-flex center>
 
-1. [Pre-requisites](#pre-requisites)
-1. [Major Topic A](#major-topic-a)
-1. [Exercise X](#exercise-title)
-1. [Conclusion](#conclusion)
-1. [Next Steps](#next-steps)
-1. [References](#references)
+1. [先决条件](#pre-requisites)
+2. [主要主题 A](#major-topic-a)
+3. [练习 X](#exercise-title)
+4. [结论](#conclusion)
+5. [下一步](#next-steps)
+6. [参考文献](#references)
 
 </pba-flex>
 
 ---
 
-## Pre-requisites
+## 先决条件
 
-No background in X is necessary.
+不需要 X 方面的背景知识。
 
-However, the following are expected:
+然而，需要具备以下条件：
 
 <pba-flex center>
 
@@ -50,157 +50,157 @@ However, the following are expected:
 
 ---
 
-### _At the end of this lecture, you will be able to:_
+### _在本讲座结束时，你将能够：_
 
-<!-- TODO: fill this in  -->
+<!-- 待办事项：填写此内容  -->
 
 <pba-flex center>
 
-- Describe ...
-- Navigate ...
-- Justify ...
+- 描述......
+- 导航......
+- 证明......
 
 </pba-flex>
 
 ---
 
-## Major Topic A
+## 主要主题 A
 
 <pba-flex center>
 
-- Use some bullets
-- To make a few points
+- 使用一些项目符号
+- 阐述几个要点
 
 </pba-flex>
 
-More context here.
+这里有更多的上下文信息。
 
-And even more here... and more and more...
-
-Notes:
-
-Speaker view ONLY notes
-
----
-
-# An Important Point
-
-### _Make it clear_ <!-- .element: class="fragment" -->
+这里还有更多...... 越来越多......
 
 Notes:
 
-Stuff you should remember to say
+仅演讲者可见的备注
 
 ---
 
-## Some Image
+# 一个重要观点
+
+### _讲清楚_ <!-- .element: class="fragment" -->
+
+Notes:
+
+你应该记得要说的内容
+
+---
+
+## 一些图片
 
 <img rounded style="width: 60%;" src="./img/REMOVE-ME-example-img.png" />
 
 <!--
-Always place images and other media assets into `./img/`.
-If you want to reuse and image, please `ln -s <some other img path>` to include a soft link in the `./img/` dir for these slides.
+始终将图片和其他媒体资产放置在 `./img/` 目录中。
+如果你想重用一张图片，请使用 `ln -s <其他图片路径>` 在这些幻灯片的 `./img/` 目录中创建一个软链接。
 -->
 
 Notes:
 
 <!--
-Always always _always_ include the source you got any image from in the speaker notes for the first slide it is used in, and be sure to include explicitly what it's license is known to be.
+始终、始终、始终在首次使用图片的幻灯片的演讲者备注中包含图片的来源，并确保明确注明其已知的许可信息。
 -->
 
-Image source: (some URL here!)
-License: (some URL, annotated with the know license of this img. Eg: `[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)` - if unknown please mark `UNKNOWN` here)
+图片来源: （此处为某个 URL！）
+许可信息: （某个 URL，注明此图片的已知许可信息。例如：`[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)` - 如果未知，请在此处标记为 `UNKNOWN`）
 
 ---
 
-## Some Shared Image
+## 一些共享图片
 
 <img rounded style="width: 30%;" src="../copy-paste-slides/img/makeitmove.gif" />
 
 Notes:
 
 <!--
-No need for source and license info, as it should be in the first instance of the image.
+无需提供来源和许可信息，因为这些信息应该在图片首次出现的地方注明。
 -->
 
 ---
 
 ---
 
-# Exercise Title
+# 练习标题
 
-### _Describe it here_
+### _在此处描述_
 
 ---
 
-## Exercise Instructions
+## 练习说明
 
 <!--
-Detail what you want students to do in your exercise.
-Most exercises are less than 15 minuets in length.
+详细说明你希望学生在练习中做什么。
+大多数练习的时长不到 15 分钟。
 -->
 
 <pba-flex center>
 
-1. Uno
-1. Dos
-1. Tres
+1. 第一步
+2. 第二步
+3. 第三步
 
 </pba-flex>
 
 Notes:
 
-Make sure to include things here to say to students, perhaps a hint or two.
-Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
+确保在此处包含要对学生说的内容，也许可以给一两个提示。
+要知道学生将能够查看演讲者的备注，因为他们可以在自己的设备上访问这些备注。
 
 ---
 
-## Conclusion
+## 结论
 
 <!--
-Summarize what we just learned, and put it in the bigger picture of what the Academy and web3 are all about.
+总结我们刚刚学到的内容，并将其置于学院和 web3 的更大背景中。
 -->
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问答环节
 
 <!--
-Always plan on some time for Q&A 😀
+始终预留一些时间进行问答 😀
 -->
 
 ---
 
-## Next Steps
+## 下一步
 
 <!--
-Compile a list of:
-- topics not covered here but students should consider learning about independently
-- examples of the concepts covered in this lesson applied to a project, to case-study
-- useful resources related to the lesson
+编译一个列表，包含：
+- 此处未涵盖但学生应该考虑自主学习的主题
+- 本课程中所涵盖的概念应用于项目或案例研究的示例
+- 与本课程相关的有用资源
 
-- Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../content-templates/slides/copy-paste-reveal-template-slides.md)
+- 通过此仓库中的相对目录引用其他幻灯片/材料，例如 [复制粘贴幻灯片模板](../content-templates/slides/copy-paste-reveal-template-slides.md)
 -->
 
 <pba-flex center>
 
-1. Eins
-1. Zwei
-1. Drei
+1. 第一步
+2. 第二步
+3. 第三步
 
 </pba-flex>
 
 ---
 
-## References
+## 参考文献
 
 <!--
-Compile an **annotated** list of URLs to source material referenced in making these lessons.
-Ideally this is exhaustive, it can be cleaned up before delivery to students, but must include _why_ a reference is used.
-For example:
+编译一个带注释的 URL 列表，这些 URL 指向制作这些课程时所引用的原始材料。
+理想情况下，这个列表应该是详尽的，在交付给学生之前可以进行清理，但必须包含使用某个参考文献的原因。
+例如：
 
-- [ss58-registry](https://github.com/paritytech/ss58-registry) - A list of known SS58 account types as an enum, typically used by the Polkadot, Kusama or Substrate ecosystems.
-- [wiki on parathreads](https://wiki.polkadot.network/docs/learn-parathreads) - A description of the parathread model.
+- [ss58-registry](https://github.com/paritytech/ss58-registry) - 一个已知的 SS58 账户类型的枚举列表，通常由 Polkadot、Kusama 或 Substrate 生态系统使用。
+- [关于平行线程的维基百科](https://wiki.polkadot.network/docs/learn-parathreads) - 对平行线程模型的描述。
 -->

@@ -4,521 +4,437 @@ description: Describe your slides here
 duration: 45 min
 ---
 
-# User Centric Security in Web3
+# Web3中的以用户为中心的安全
 
 Notes:
 
-In this session we will cover the basic of wallet (private and public pairs of keys), key management (how to protect your public-private keys), how to protect the endpoint you are using to manage your keys, and some tips, tricks and security best practices and logics.
+在本次会议中，我们将涵盖钱包的基础知识（私钥和公钥对）、密钥管理（如何保护你的公私钥）、如何保护你用于管理密钥的端点，以及一些技巧、窍门、安全最佳实践和逻辑。
 
-In the end, we will give you some advice in case you are compromised.
+最后，我们将在你遭遇安全漏洞时为你提供一些建议。
 
-The objective of the session is to provide a set of guidelines and mental models to questions the operational security of your keys.
-Some of you might find these advices basic, while others will find it useful.
-Some of the ideas are just abstractions of more complex technical concepts, as we would like to approach it in a high level educational piece.
-But also give the opportunity to dig into the rabbit holes for those who may want to follow Alice in that direction.
+本次会议的目标是提供一系列指导方针和思维模式，以便你对密钥的操作安全性进行质疑。
+有些人可能会觉得这些建议很基础，而另一些人则会觉得它们很有用。
+其中一些想法只是更复杂技术概念的抽象，因为我们希望以一种高层次的教育方式来探讨这个问题。
+但同时也为那些想深入研究的人提供了机会。
 
 ---
 
-## Goal for today:
+## 今日目标：
 
 <pba-flex center>
 
-- Understand the different types of wallets - and the risks associated with them
-- Get the basic foundation to be able to outline a strategy to protect your private keys
-- Be familiar with the best practices to protect your computer and digital tools
+- 了解不同类型的钱包 - 以及与之相关的风险
+- 掌握基本原理，以便能够制定保护私钥的策略
+- 熟悉保护计算机和数字工具的最佳实践
 
 </pba-flex>
 
 ---
 
-> Security is a process, not a product.
+> 安全是一个过程，而非产品。
 
-_Bruce Scheiner ([Click here to kill everybody](https://en.wikipedia.org/wiki/Click_Here_to_Kill_Everybody), 2019)_
+_布鲁斯·施奈尔（《[点击此处杀死所有人](https://en.wikipedia.org/wiki/Click_Here_to_Kill_Everybody)》，2019年）_
 
 Notes:
 
-Security is not something that is set in stone, it some that is in changing from - it is framework/it is mental model that helps you to tackle the specific problem of protecting your assets.
-Security is something that is different for everyone, for every moment or use cases.
+安全不是一成不变的，它是不断变化的 - 它是一个框架/一种思维模式，帮助你应对保护资产的具体问题。
+安全对每个人、每个时刻或用例来说都是不同的。
 
 ---
 
-## Threats or what we need to be worried about
+## 威胁或我们需要担心的事情
 
 <pba-flex center>
 
-- Vulnerabilities on laptops/phones
-- Network vulnerabilities
-- Poor Operational Security
+- 笔记本电脑/手机上的漏洞
+- 网络漏洞
+- 糟糕的操作安全
 
 </pba-flex>
 
 Notes:
 
-What is a threat?
-It is a _potential_ danger that can trespass security and put your assets are risks.
-The threats are the events/things/personas in the horizon we need to have an eye on them.
+什么是威胁？
+它是一种潜在的危险，可能会突破安全防线，使你的资产面临风险。
+威胁是我们需要关注的未来可能发生的事件/事物/角色。
 
-Different security context - have a different security threats.
-Edward Snowden faces different security threats (changing geopolitical situations, nation state actors, ...) than a regular random internet user (script kidding phishing attempt, port scanning, non targeted malware, ...).
+不同的安全环境 - 有不同的安全威胁。
+爱德华·斯诺登面临的安全威胁（不断变化的地缘政治局势、国家行为体等）与普通的互联网用户（脚本小子式的网络钓鱼尝试、端口扫描、非针对性恶意软件等）不同。
 
 ---
 
-### Vulnerably on Laptop - What not to do
+### 笔记本电脑漏洞 - 不要做的事情
 
 <img rounded style="width: 800px" src="./img/vuln.jpg" />
 
 ---
 
-### Vulnerability on Network - What not to do
+### 网络漏洞 - 不要做的事情
 
 <img rounded style="width: 800px" src="./img/Network_vuln.jpg" />
 
 ---
 
-### Poor Operational Security - What not to do
+### 糟糕的操作安全 - 不要做的事情
 
 <img rounded style="width: 800px" src="./img/PoorOpSec.jpg" />
 
 ---
 
-# Risk
+# 风险
 
-... What is risk?
-
-Notes:
-
-What is a risk?
-
-According to Oxford English Dictionary is the _possibility_ of loss, injury, or other adverse or welcome circumstance; a chance or situation of situation of something bad happening.
-But that is what _bad_ means in security terms?
-
----
-
-## Let's visit the `C` `I` `A` triad
-
-- `C`onfidentiality - keep information private.
-- `A`vailability - have information accessible when you need it.
-- `I`ntegrity - keep information as you have note it down when you stored it.
+... 什么是风险？
 
 Notes:
 
-We will see this many times!
+什么是风险？
+
+根据《牛津英语词典》的解释，风险是指损失、伤害或其他不利或不受欢迎的情况的可能性；是指不好的事情发生的机会或情况。
+但在安全术语中，“不好”是什么意思呢？
 
 ---
 
-## Risks: what can go wrong
+## 让我们来了解一下“C”“I”“A”三元组
+
+- `C` 保密性 - 保持信息的私密性。
+- `A` 可用性 - 在需要时能够访问信息。
+- `I` 完整性 - 确保信息在存储时与你记录的一致。
+
+Notes:
+
+我们会多次看到这个概念！
+
+---
+
+## 风险：可能出现的问题
 
 <pba-flex center>
 
-- Keys compromised - Loss of confidentiality
-- Keys lost - Loss of availability/integrity
+- 密钥被泄露 - 保密性丧失
+- 密钥丢失 - 可用性/完整性丧失
 
 </pba-flex>
 
 Notes:
 
-In this case, which risks (things that can go wrong) we need to be aware?
-That someone else has access to our keys?
-Then they are compromised.
-Or that we cannot access back our keys because we cannot access them or they are noted/stored wrongly.
-By our fault or others fault.
+在这种情况下，我们需要注意哪些风险（可能出现的问题）？
+是不是有人能够访问我们的密钥？
+那么密钥就被泄露了。
+或者我们无法再访问我们的密钥，因为我们无法找到它们或者它们被错误地记录/存储了。
+这可能是我们自己的过错，也可能是其他人的过错。
 
-But - what are these keys?
+但是 - 这些密钥到底是什么？
 
 ---
 
-## Keys compromised - Bad risk management
+## 密钥被泄露 - 糟糕的风险管理
 
 <img rounded style="width: 800px" src="./img/compromised.jpg" />
 
 ---
 
-## Keys lost - Bad risk management
+## 密钥丢失 - 糟糕的风险管理
 
 <img rounded style="width: 800px" src="./img/keyslost.jpg" />
 
 ---
 
-### What are the private-public keys ?
+### 什么是公私钥？
 
-(in **web3** context)
+（在**Web3** 背景下）
 
 Notes:
 
-Simplifying, Private keys are a type of digital signature that allow you to prove ownership of your tokens on a blockchain network.
-The public key is used to receive tokens (this is the “address” where tokens are received).
+简单来说，私钥是一种数字签名，允许你证明你在区块链网络上对代币的所有权。
+公钥用于接收代币（这就是接收代币的“地址”）。
 
-These pairs of keys are generated by a cryptographic process, generating a public and private key.
-This key pair has a very particular relationship, the public key can be derived from the private key, but not the other way around (asymmetric encryption).
-In mathematical lingo it is called a one-way function, as it only works in one direction.
-Also, another property, using the public key you can verify that a message or a signature has been created by the associated private key without disclosing the private key itself.
-The public key is meant to be shared, the private key is meant to be kept, as its name states, private.
-
----
-
-## And the seeds?
-
-The seed is a list of random words that is generated when you create a new “wallet” (a pair of cryptographic keys).
-
-With the seed, you can generate a private and public key.
-This could mean a seed phrase is the mnemonic human readable version of a private key.
+这些密钥对是通过加密过程生成的，会生成一个公钥和一个私钥。
+这个密钥对有一种非常特殊的关系，公钥可以从私钥推导出来，但反过来不行（非对称加密）。
+用数学术语来说，这被称为单向函数，因为它只在一个方向上起作用。
+另外一个特性是，使用公钥你可以验证一条消息或一个签名是由相关的私钥创建的，而无需披露私钥本身。
+公钥是可以共享的，而私钥则需要像它的名字所表示的那样，保持私密。
 
 ---
 
-It is easier to note down this
+## 那么助记词呢？
+
+助记词是在你创建一个新的“钱包”（一对加密密钥）时生成的一组随机单词。
+
+使用助记词，你可以生成私钥和公钥。
+这意味着助记词短语是私钥的人类可读的助记版本。
+
+---
+
+记录下面这个会更容易
 
 "caution juice atom organ advance problem want pledge someone senior holiday very
 
-than the following private key.
+而不是下面这个私钥。
 
 0x056a6a4e203766ffbea3146967ef25e9daf677b14dc6f6ed8919b1983c9bebbc
 
 ---
 
-## Key management
+## 密钥管理
 
-A key is protected by
+密钥由以下因素保护
 
 <pba-flex center>
 
-- Strong math, overall length, ...
-- **Handling of the key (key management) by humans or machines**
+- 强大的数学算法、整体长度等
+- **人类或机器对密钥的处理（密钥管理）**
 
 </pba-flex>
 
 Notes:
 
-We have determined that this keys are important for the user to operate on the blockchain.
-But how secure they are?
-They are protected by strong math (the encryption algorithms that they confer their particular asymmetric properties).
-They are long, so any adversary will need to take longer to(if) calculate the original private key with a longer key than when a shorter key (is just a cases of attempts, cpu speed and probabilistic).
-And the most important - and most of the time the weakest: how we handle these keys.
+我们已经确定，这些密钥对于用户在区块链上进行操作非常重要。
+但它们有多安全呢？
+它们受到强大的数学算法（赋予它们特殊的非对称属性的加密算法）的保护。
+它们很长，所以任何攻击者都需要更长的时间（如果可能的话）来计算出原始的私钥，长密钥比短密钥更难破解（这只是尝试次数、CPU 速度和概率的问题）。
+而最重要的 - 同时也是最薄弱的环节：我们如何处理这些密钥。
 
 ---
 
-## Key management risks - again
+## 密钥管理风险 - 再次强调
 
 <pba-flex center>
 
-- Loss of confidentiality - your key is leaked or compromised.<br />
-  i.e: someone else has access to the wallet.
-- Loss of availability - you cannot access your key anymore.<br />
-  i.e: you don't know where you noted.
-- Loss of integrity - your key is wrong.<br />
-  i.e: you noted the key incorrectly.
+- 保密性丧失 - 你的密钥被泄露或被攻破。<br />
+  例如：其他人可以访问你的钱包。
+- 可用性丧失 - 你无法再访问你的密钥。<br />
+  例如：你不知道你把密钥记录在哪里了。
+- 完整性丧失 - 你的密钥有误。<br />
+  例如：你记录密钥时出错了。
 
 </pba-flex>
 
 Notes:
 
-When handling the keys, what we need are the 3 key points we mentioned earlier.
-The private key stays in secret (don't leaked in their internet, don't be part of a screenshot uploaded to a cloud service, ...).
-That they key is available - you can access to it when you need it - the hard disk where you have it noted is wrong, And that the key you stored is correct: That you noted it well, in these cases a "3 cannot be an 8, a 4 cannot be a 9", or we cannot forget to select the last character when copy and paste.
+在处理密钥时，我们需要注意前面提到的三个关键点。
+私钥要保持机密（不要在互联网上泄露，不要成为上传到云服务的截图的一部分等）。
+密钥要可用 - 你需要时能够访问它 - 存储密钥的硬盘没有问题，并且你存储的密钥是正确的：你记录得准确无误，在这种情况下，“3 不能写成 8，4 不能写成 9”，或者我们在复制粘贴时不能忘记选择最后一个字符。
 
 ---
 
-## _Keys overly simplified_
+## _密钥的过度简化_
 
-## Cryptocurrency user definitions
+## 加密货币用户定义
 
-- The public key is used to receive tokens (**public**)
-
-- The private key is used to sign transactions (**private**)
-
-- The seed is used to calculate the private key (**private**)
+- 公钥用于接收代币（**公开的**）
+- 私钥用于签署交易（**私有的**）
+- 助记词用于计算私钥（**私有的**）
 
 ---
 
-### Multisig accounts
+### 多重签名账户
 
 <img rounded style="width: 900px" src="./img/multiSig.jpg" />
 
 <pba-flex center>
 
-- One or more keys and a threshold
-- The threshold defines how many signatories<br />must sign for a sig check t be valid.
+- 一个或多个密钥和一个阈值
+- 阈值定义了需要多少个签名者<br />签署才能使签名检查有效。
 
 </pba-flex>
 
 Notes:
 
-These pub keys (addresses) can be distributed among different individuals - even in different locations - so a transaction is only validated when the minimum required of signatures are achieved.
-This way the individuals-parties need to agree on signing a particular transactional.
-This is a common way to protect corporate funds or big amount of tokens - and not to rely in one individual or single point of failure.
+这些公钥（地址）可以分发给不同的个人 - 甚至在不同的地点 - 这样只有当达到最低要求的签名数量时，交易才会被验证。
+这样，相关的个人或方需要就签署特定的交易达成一致。
+这是保护公司资金或大量代币的常见方法 - 而不是依赖于一个人或单点故障。
 
-Another method - for protecting individual funds, is that one individual is keeping different wallets of a multisig account.
-This way, if one of the wallets is exposed, compromise or lost.
-The individual can still operate with this wallet (and most recommended, migrate the tokens to another multi-sig wallet where they have control over all the addresses).
+另一种方法 - 用于保护个人资金，是一个人持有多重签名账户的不同钱包。
+这样，如果其中一个钱包被泄露、被攻破或丢失。
+这个人仍然可以使用这个钱包进行操作（最推荐的做法是，将代币转移到另一个多重签名钱包，在那里他们可以控制所有的地址）。
 
 ---
 
-## What is a wallet
+## 什么是钱包
 
 <img rounded style="width: 800px" src="./img/keymaker.jpg" />
 
-A wallet holds a pair of cryptographic keys (public and private).
+钱包持有一对加密密钥（公钥和私钥）。
 
 Notes:
 
-A wallet is a software application that stores your private keys and allows you to receive tokens through a public key.
-As the wallet contains the keys in order to operate with the tokens, a keychain could be a better metaphor.
+钱包是一个软件应用程序，用于存储你的私钥，并允许你通过公钥接收代币。
+由于钱包包含用于操作代币的密钥，密钥链可能是一个更恰当的比喻。
 
 ---
 
-## Wallets
+## 钱包
 
-Hot n Cold
+热钱包和冷钱包
 
 <img rounded style="width: 500px" src="./img/hotncold.jpg" />
 
 Notes:
 
-We have been talking about keys, and in the blockspace there is a great differentiation between to what are your keys exposed.
-Hot/Cold is a metaphor of the amount of risk we want to expose our private keys.
+我们一直在谈论密钥，在区块链领域，密钥的暴露程度有很大的区别。
+热/冷是一个比喻，表示我们愿意让私钥暴露的风险程度。
 
 ---
 
-## Hot wallets
+## 热钱包
 
 <pba-flex center>
 
-1. Heavy clients - full nodes (deprecated use as wallet)
-1. Light clients
+1. 重型客户端 - 全节点（已不建议用作钱包）
+1. 轻型客户端
 
 </pba-flex>
 
 Notes:
 
-Heavy client -
+重型客户端 -
 
-Light client - A light client or light node is a piece of software that connects to full nodes to interact with the blockchain.
-Unlike their full node counterparts, light nodes don’t need to run 24/7 or read and write a lot of information on the blockchain.
-In fact, light clients do not interact directly with the blockchain; they instead use full nodes as intermediaries.
-This is the todays standard for hot wallets.
+轻型客户端 - 轻型客户端或轻节点是一个软件，它连接到全节点以与区块链进行交互。
+与全节点不同，轻节点不需要 24/7 运行，也不需要在区块链上读取和写入大量信息。
+实际上，轻客户端不直接与区块链交互；相反，它们使用全节点作为中介。
+这是当今热钱包的标准。
 
 ---
 
-## Internet connection = _bigger_ risk
+## 互联网连接 = _更大的_ 风险
 
 <img rounded style="width: 800px" src="./img/listening.jpg" />
 
-The listening post (2005) - Exhibited in the British Museum
+《监听站》（2005 年） - 陈列于大英博物馆
 
 ---
 
-## Cold wallets
+## 冷钱包
 
 <pba-flex center>
 
-1. Full node offline (_old school_)
-1. Paper wallet (beware fo the change address!)
-1. (Hybrid?) Hardware wallet
-1. Offline seed backup
-1. EXTRA BALL: Polkadot Vault
+1. 离线全节点（_老派方法_）
+1. 纸钱包（注意找零地址！）
+1. （混合？）硬件钱包
+1. 离线助记词备份
+1. 额外福利：Polkadot Vault
 
 </pba-flex>
 
 Notes:
 
-On the other hand, the cold wallets are not connected to the internet, they are air-gapped from the network, substantially reducing all risks that might come from there.
-These wallet concepts are more suitable for long term storage, or wallets that don't need constant operation.
+另一方面，冷钱包不连接到互联网，它们与网络是物理隔离的，大大降低了所有可能来自网络的风险。
+这些钱包概念更适合长期存储，或者不需要频繁操作的钱包。
 
-Heavy client offline - is a the full implementation of a node.
-It is possible to use a "full" node in order to create a priv/public key pair.
-The client is disconnected from the internet - not even synced with the chain -, but is able to receive transactions.
-In order to operate with received tokens, we just need to connect the node to the net, and allow it syncing.
-Due to progressive weight (in Gigabytes) of the chains, this method is deprecated.
+离线重型客户端 - 是节点的完整实现。
+可以使用一个“完整”的节点来创建公私钥对。
+客户端与互联网断开连接 - 甚至不同步到链上 - 但能够接收交易。
+为了操作接收到的代币，我们只需要将节点连接到网络，并允许它进行同步。
+由于链的大小（以千兆字节计）不断增加，这种方法已经不建议使用了。
 
-Paper Wallet - A paper wallet is a paper document that contains your seed or private key and the public key.
-It would need to be accessed and copied to compromise your private keys, but at the same time the paper needs to be properly stored and/or backed up.
-As being a totally analog format, they are immune to digital attacks but subject to events on the physical world.
+纸钱包 - 纸钱包是一份纸质文档，包含你的助记词或私钥以及公钥。
+需要访问并复制它才能泄露你的私钥，但同时纸张需要妥善存储和/或备份。
+由于它是完全模拟的格式，它们不受数字攻击的影响，但会受到物理世界中的事件的影响。
 
-Depending on the chain there are some offline tools that allows you generate derived private or public keys while being offline.
+根据不同的链，有一些离线工具允许你在离线状态下生成派生的私钥或公钥。
 
-Ideally they are printed using an offline (ideally a dedicated clean air-gapped computer for this purpose) and local printer.
+理想情况下，它们是使用离线（最好是为此目的专门准备的干净的物理隔离计算机）和本地打印机打印的。
 
-A paper wallet cannot be used to transfer fund from the same address various times, it generates a change address that might not be in possession of the sender.
-It is possible to set the outputs of the transaction, but technical knowledge is required for this configuration.
+纸钱包不能多次从同一个地址转移资金，它会生成一个找零地址，发送者可能无法拥有这个地址。
+可以设置交易的输出，但进行此配置需要技术知识。
 
-Hardware wallets - There are several commercial projects that offer a reasonable level of protection when protecting your tokens.
-These are - usually - hardware devices that allow you to create a seed - for the whole device, and the rest of private keys (usually kept in the device) and public keys (to receive tokens).
+硬件钱包 - 有几个商业项目在保护你的代币时提供了合理的保护级别。
+这些通常是硬件设备，允许你创建一个助记词 - 用于整个设备，以及其他私钥（通常存储在设备中）和公钥（用于接收代币）。
 
-In most of the systems, the device includes some other manual controls that need to be physically manipulated in order to, for example, validate a transaction.
-The need to the physical interaction for this restricts the operation of the hardware wallet - as the rules of the objects of the physical world, to a certain place in a certain time.
+在大多数系统中，设备包括一些其他手动控制，需要进行物理操作，例如，验证交易。
+进行这种物理交互的需求限制了硬件钱包的操作 - 就像物理世界中的物体规则一样，只能在特定的时间和地点进行操作。
 
 ---
 
 ## [Polkadot Vault](https://signer.parity.io/)
-
 <img rounded style="width: 800px" src="./img/vault.jpg" />
 
-Polkadot Vault is a software app that transforms an Android or iOS device in an air-gapped hardware wallet.
-
+Polkadot Vault是一款软件应用程序，它能将安卓或iOS设备转变为一个与网络隔离的硬件钱包。
 Notes:
+交易签名是通过计算机与Vault设备之间的一系列二维码通信来完成的。该钱包不连接网络，甚至不与和区块链交互的设备相连。
 
-The signing of the transactions is made by a series of QR communications between computer and the Vault Device.
-The wallet is not connected to the net or even to the device which is interacting with the blockchain.
+有些硬件钱包是完全与网络隔离的，比如Polkadot Vault，它是安装在处于飞行模式下的安卓或iOS设备上的软件。
 
-Some hardware wallets are completely air-gapped - like Vault, software installed in a android or iOS device in Airplane mode -
-
-Other hardware wallets require connection between the computer/phone and the hardware wallet.
-This connection can be via a cabled connection (recommended) or wireless connection (not recommended, as we would like not to radiate - even in an encrypted form - anything related to these blockchain operations).
-
+其他硬件钱包则需要计算机/手机与硬件钱包进行连接。这种连接可以通过有线连接（推荐）或无线连接（不推荐，因为我们不希望传输任何与区块链操作相关的信息，即使是加密形式的也不行）。
 ---
-
-## Sharding (or divide and not be conquered)
-
-Sharding is a technique to divide your secret in different parts, so an adversary could not have access to the full secret in case one of the pieces is compromised.
-
+## 分片（即分而治之）
+分片是一种将你的秘密分割成不同部分的技术，这样一来，即使其中一部分被泄露，攻击者也无法获取完整的秘密。
 Notes:
-
-Traditional methods for encryption are ill-suited for simultaneously achieving high levels of confidentiality and reliability.
-This is because when storing the encryption key, one must choose between keeping a single copy of the key in one location for maximum secrecy, or keeping multiple copies of the key in different locations for greater reliability.
-Increasing reliability of the key by storing multiple copies lowers confidentiality by creating additional attack vectors; there are more opportunities for a copy to fall into the wrong hands.
-
+传统的加密方法不太适合同时实现高度的保密性和可靠性。这是因为在存储加密密钥时，人们必须在以下两者之间做出选择：为了最大程度的保密性，将密钥的单一副本保存在一个地方；或者为了更高的可靠性，将密钥的多个副本保存在不同的地方。通过存储多个副本来提高密钥的可靠性，会因为产生更多的攻击途径而降低保密性，因为副本落入坏人之手的机会更多了。
 ---
-
-### Sharding challenges:
-
-- Recovery
-- Fault tolerance - storage/persons
-- Still secret?
-
+### 分片面临的挑战：
+- 恢复
+- 容错性——存储/人员方面
+- 保密性能否保证？
 Notes:
-
-How to divide the secret in a way that is recoverable correctly, how to make it fault tolerant (as now they are many pieces to take care of, do we need to protect them all to ensure recovery, can I trust all people to keep their part secret all time?), how to make sure that with one of the pieces of the secret, the rest cannot be inferred.
-
+如何以一种能够正确恢复的方式分割秘密？如何使其具有容错性（因为现在有很多部分需要管理，我们是否需要保护所有部分以确保恢复？我能一直信任所有人都保守他们所负责的那部分秘密吗？）？如何确保仅通过秘密的一部分无法推断出其余部分？
 ---
-
-### Secret Sharing Technique
-
-Is a method to distribute a secret in different parts/persons, in a way that no part holds any intelligible information about the secret.
-But the secret can be reconstructed with a minimum number of shares.
-
-**And remember:** These secrets are managed by humans - that are driven by motivations.
-And motivations change.
-
+### 秘密共享技术
+这是一种将秘密分配到不同部分/人员的方法，使得任何一部分都不包含关于秘密的任何有意义的信息。但通过最少数量的份额就能重构秘密。
+**请记住：** 这些秘密是由人来管理的，而人会受到动机的驱使。而且动机是会改变的。
 ---
-
-### Requisites for successful secret sharing
-
-- Information should stay secure
-- Flexible (n of m pieces required)
-- Recoverable
-
+### 成功的秘密共享的必要条件
+- 信息应保持安全
+- 灵活（需要m份中的n份）
+- 可恢复
 Notes:
-
-We need a technology that will allow us, when we divide our secret:
-
-- That the secret stays _confidential_, and the different individual shards cannot be used to infer the original secret.
-- That the recovery is flexible, meaning that we would need only n of m pieces of the secret to recover it.
-  This can be because the secrets are no longer _available_ (are lost), or because we cannot trust the persons we gave the secret piece anymore.
-- That the secret is recoverable with no glitches/errors: Integrity.
-
+当我们分割秘密时，我们需要一种技术来确保：
+- 秘密保持 _机密性_，并且不同的单独分片不能用于推断原始秘密。
+- 恢复过程是灵活的，这意味着我们只需要秘密的m份中的n份就能恢复它。这可能是因为某些秘密不再 _可用_（丢失了），或者因为我们不再能信任那些我们给了秘密部分的人。
+- 秘密能够无差错地恢复：即完整性。
 ---
-
-### How we can achieve this?
-
-**Using strong Math**
-
+### 我们如何实现这一点？
+**运用强大的数学原理**
 ---
-
-### Shamir Secret Sharing - Banana Split
-
-Shamir Secret Sharing is an efficient Secret Sharing algorithm for distributing private information.
-
-The secret is mathematically divided into parts (the "shares") from which the secret can be reassembled only when a sufficient number of shares are combined.
-
-There are different implementation of it: we will take a look to Banana Split
-
+### 沙米尔秘密共享 - Banana Split
+沙米尔秘密共享是一种高效的用于分发私人信息的秘密共享算法。秘密在数学上被分割成多个部分（“份额”），只有当足够数量的份额组合在一起时，才能重新组合出原始秘密。
+它有不同的实现方式，我们来看看Banana Split。
 Notes:
-
-SSS is used to secure a secret in a distributed form, most often to secure encryption keys.
-The secret is split into multiple shares, which individually do not give any information about the secret.
-
-To reconstruct a secret secured by SSS, a number of shares is needed, called the threshold.
-No information about the secret can be gained from any number of shares below the threshold (a property called perfect secrecy).
-
-It was invented in the late 70's by the Israeli cryptographer.
-He is the S on the RSA algorithm (Rivest-Shamir-Adleman)
-
+沙米尔秘密共享（SSS）用于以分布式形式保护秘密，最常用于保护加密密钥。秘密被分割成多个份额，单独的每个份额都不会透露关于秘密的任何信息。
+要重构由SSS保护的秘密，需要一定数量的份额，这个数量被称为阈值。低于阈值数量的任何份额都无法获取关于秘密的任何信息（这一属性被称为完美保密性）。
+它是在20世纪70年代末由以色列密码学家发明的。他就是RSA算法（Rivest - Shamir - Adleman）中的S。
 ---
-
 ### Banana Split - [bs.parity.io](https://bs.parity.io)
-
-- Offline HTML file used to generate and recover secrets
-- To be used in air-gapped computers and local printers
-- Uses QR codes to store information and cameras to retrieve
-- It is flexible allowing n:m type of shared secret creation
-
+- 用于生成和恢复秘密的离线HTML文件
+- 可在与网络隔离的计算机和本地打印机上使用
+- 使用二维码存储信息，通过摄像头读取信息
+- 它具有灵活性，支持创建n:m类型的共享秘密
 ---
-
-### Key protection Operational Security Logics
-
-- Security is contextual
-- Define your risk appetite
-- Backups not only of information also for processes.<br />
-  Do not rely on single point of failure.
-- Don't put all your eggs in the same basket
-
+### 密钥保护的操作安全逻辑
+- 安全是因地制宜的
+- 明确你的风险承受能力
+- 不仅要备份信息，还要备份流程。<br>不要依赖单点。
+- 不要把所有鸡蛋放在同一个篮子里
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-### Some mental exercises (1)
-
-> What is the operational model to a wallet that is transferring funds to third parties every day?
-
+### 一些思考练习 (1)
+> 对于一个每天都要向第三方转账的钱包，其操作模式是怎样的？
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-### Some mental exercises (2)
-
-> How to protect a personal wallet with 10 million tokens?
-
+### 一些思考练习 (2)
+> 如何保护一个存有1000万枚代币的个人钱包？
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-### Some mental exercises (3)
-
-> How to protect an corporate wallet with 100 million tokens?
-
+### 一些思考练习 (3)
+> 如何保护一个存有1亿枚代币的企业钱包？
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-### Some mental exercises (4)
-
-> sHow to ensure `C` `I` `A` of a wallet, in a future when we would not be around?
-
+### 一些思考练习 (4)
+> 当我们不在的时候，如何确保钱包的保密性（Confidentiality）、完整性（Integrity）和可用性（Availability）？
 ---
-
-### Last but not least - Basic laptop/phone hygiene
-
-- Software up-to-date
-- Use of different profiles or even different computers
-- Avoid malicious environments (links containing malware)
-- Double-triple check the software we download for the internet
-- Second factor of authentication where possible - physical key preferred
-
+### 最后但同样重要的 - 基本的笔记本电脑/手机使用安全
+- 软件保持更新
+- 使用不同的配置文件，甚至不同的计算机
+- 避免恶意环境（包含恶意软件的链接）
+- 对从互联网下载的软件进行多次检查
+- 尽可能使用双因素身份验证——优先选择物理密钥
 ---
-
-### Never Assume - Practice a legitimate distrust.
-
-- Many actors or institutions have different objectives of the one you have.
-
-- Software have bugs and errors.
-  They are made by people like you and me,<br />which needs to eat and go to sleep.
-- No technology is agnostic.
-  This includes they technology we communicate with,<br />we work with or the one we use to keep us entertained.
-- Sometimes we are our worst adversary.
-
-> Be diligent. 🖖
-
+### 永远不要假设 - 保持合理的怀疑态度
+- 许多参与者或机构的目标与你不同。
+- 软件存在漏洞和错误。因为它们是由像你我这样要吃饭睡觉的人编写的。
+- 没有哪种技术是完全可靠的。这包括我们用于通信、工作或娱乐的技术。
+- 有时候，我们自己才是最大的安全威胁。
+> 保持警惕。🖖
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 提问环节

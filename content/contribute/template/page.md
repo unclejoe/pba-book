@@ -1,4 +1,4 @@
-# Lecture Template Slides
+# 课程模板
 
 <!-- markdown-link-check-disable -->
 <center>

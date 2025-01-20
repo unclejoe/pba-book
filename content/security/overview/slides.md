@@ -8,68 +8,68 @@ description: "Key drivers around Cyber Security, Introduction to the other modul
 duration: 30 minutes
 ---
 
-# Cybersecurity Overview
+# 网络安全概述
 
 ---
 
-## Outline
+## 大纲
 
 <pba-flex center>
 
-1. Threat landscape
-1. Risk management
-1. Development
-1. Conclusion
-1. Q&A
+1. 威胁态势
+2. 风险管理
+3. 发展
+4. 结论
+5. 问答
 
 </pba-flex>
 
 Notes:
 
-- Threat landscape
-  - Key threat actors
-  - Largest crypto heists
-  - Crypto incidents
-- Risk management
-  - Inherent & Residual
-  - Key steps of an attack
-  - Importance of culture
-- Development
-  - Development and key focus
-  - CI/CD
-- Conclusion
-- Q&A
+- 威胁态势
+  - 主要威胁行为者
+  - 最大的加密货币盗窃案
+  - 加密货币事件
+- 风险管理
+  - 固有风险与剩余风险
+  - 攻击的关键步骤
+  - 文化的重要性
+- 发展
+  - 发展及重点关注领域
+  - 持续集成/持续交付（CI/CD）
+- 结论
+- 问答
 
 ---
 
-#### Cyber Threat - 6 Main Actors
+#### 网络威胁 - 六大主要行为者
 
 <img rounded style="width: 1300px" src="./img/2-landscape.png" />
 
 Notes:
 
-Different actors with different drivers but commonalities on modus operandi.
+不同的行为者有不同的动机，但作案手法有共性。
 
 ---
 
-#### Largest Crypto Losses
+#### 最大的加密货币损失
 
 <img rounded style="width: 900px" src="./img/3-loss.png" />
 
-> Some were Ponzi schemes, most were breaches/exploits
+> 有些是庞氏骗局，大多数是漏洞/攻击事件
 
 Notes:
 
-On the crypto ecosystem there have been number of cyber events!
+在加密货币生态系统中已经发生了许多网络事件！
 <https://medium.com/ngrave/the-history-of-crypto-hacks-top-10-biggest-heists-that-shocked-the-crypto-industry-828a12495e76>
 
 ---
 
-#### More Recent Crypto Incidents
+#### 更多近期的加密货币事件
 
 <img rounded style="width: 1300px" src="./img/4-incidents.png" />
 
-> Strong cyber control foundation decrease exposure to incidents.
+> 强大的网络控制基础可以降低事件发生的风险。
 
 Notes:
 
@@ -91,124 +91,124 @@ Notes:
 
 ---
 
-#### InfoSec & Cyber Risk - Taxonomy
+#### 信息安全与网络风险 - 分类法
 
 <img rounded style="width: 1300px" src="./img/5-taxonomy.png" />
 
 Notes:
 
-When a threat is leveraging a vulnerability, the consequence is a risk.
-Usually Threats cannot be influenced, when vulnerabilities can be.
-Both Threats and Vulnerabilities are evolving over time based on multiple factors, so the importance of deploying controls to identify, prevent, detect and respond & recover against them (NIST)
+当威胁利用漏洞时，就会产生风险。
+通常，威胁是无法被影响的，而漏洞是可以被影响的。
+威胁和漏洞都会随着时间的推移，基于多种因素而演变，因此部署控制措施来识别、预防、检测以及应对和恢复这些威胁和漏洞非常重要（美国国家标准与技术研究院，NIST）。
 
 ---
 
-#### Taxonomy - Threats Examples
+#### 分类法 - 威胁示例
 
-- Cyber Criminal : In the last 12 months, cyber criminal activity +200%
-- Insider / Disgruntled employee : lot of evolution on resources
-- Hacktivist : Crypto projects and web3 have some detractors
-- Terrorist : they are increasingly using cyber as a weapon
-- Nation state : Geopolitical evolution with China, North Korean, Russia/Ukraine
-- "Government" : There is lot of regulatory scrutiny on crypto area
-- Media : Web3 & cryptocurrency evolutions are regularly in the media
-- Competitors : Polkadot approach is a game changer
+- 网络罪犯：在过去的12个月里，网络犯罪活动增加了200%。
+- 内部人员/心怀不满的员工：资源方面有了很大的变化。
+- 黑客活动分子：加密货币项目和Web3有一些反对者。
+- 恐怖分子：他们越来越多地将网络作为一种武器。
+- 国家：中国、朝鲜、俄罗斯/乌克兰等地缘政治的演变。
+- “政府”：对加密货币领域有很多监管审查。
+- 媒体：Web3和加密货币的发展经常出现在媒体上。
+- 竞争对手：波卡（Polkadot）的方法是一个游戏规则改变者。
 
 ---
 
-#### What Is Cyber Risk Management?
+#### 什么是网络风险管理？
 
 <img rounded style="width: 1300px" src="./img/7-risk.png" />
 
 ---
 
-#### What Is Cyber Risk Management?
+#### 什么是网络风险管理？
 
 <img rounded style="width: 1300px" src="./img/8-risk.png" />
 
 ---
 
-#### Inherent And Residual Risk
+#### 固有风险和剩余风险
 
 <img rounded style="width: 900px" src="./img/9-inherent.png" />
 
-> Having visibility of inherent risk facilitates a common view on area of focus and priorities.
+> 对固有风险的可见性有助于形成对重点关注领域和优先级的共识。
 
 Notes:
 
-- It is foundational to identify inherent risk. Including in partnership with asset owner. Especially from an impact perspective
+- 识别固有风险是基础。包括与资产所有者合作。特别是从影响的角度来看。
 
-- Controls are key to :
-  - Reduce likelihood of initial compromise
-  - Limit the impact of compromise once a foothold has been established
+- 控制措施的关键在于：
+  - 降低初始入侵的可能性。
+  - 一旦攻击者站稳脚跟，限制入侵的影响。
 
-And to enhance ability to detect compromise asap
+并且要提高尽快检测到入侵的能力。
 
-Starting from the inherent risk is foundational as the threat landscape will evolve including the effectiveness of the control
+从固有风险入手是基础，因为威胁态势会不断演变，包括控制措施的有效性。
 
 ---
 
-#### Attack Kill Chain
+#### 攻击杀伤链
 
 <img rounded style="height: 700px" src="./img/10-attack.png" />
 
 Notes:
 
-Usually an attacker is not attacking directly the target but :
+通常，攻击者不会直接攻击目标，而是：
 
-1. Collect information leveraging the digital footprint available (linkedin profile, dns records, website, repositories, 3rd parties, anything publicly available)
-2. Use information available and vulnerabilities to create a “weapon” to prepare an attack
-3. Deliver the “weapon” via available channels : email (prof./person.), usb, WhatsApp/Signal/Telegram, webpage (legit or squatting), code update, etc
-4. Use the “weapon” delivered on the victim’s system to execute code
-5. Get a foothold on the target
-6. Move laterally smoothly to reach the target objective including staying hidden for a period of time
-7. Execute final objective : ransom, denial or service, data exfiltration, corruption, fund stealing
+1. 利用可用的数字足迹（领英个人资料、DNS记录、网站、代码仓库、第三方信息，任何公开可用的信息）收集信息。
+2. 利用可用信息和漏洞创建“武器”来准备攻击。
+3. 通过可用渠道传递“武器”：电子邮件（专业/个人）、USB、WhatsApp/Signal/Telegram、网页（合法或域名劫持）、代码更新等。
+4. 在受害者系统上使用传递的“武器”来执行代码。
+5. 在目标上获得立足点。
+6. 顺利地横向移动以达到目标，包括在一段时间内保持隐藏。
+7. 执行最终目标：勒索、拒绝服务、数据泄露、数据破坏、资金盗窃。
 
 ---
 
-#### Importance Of Culture
+#### 文化的重要性
 
 <img rounded style="width: 1300px" src="./img/11-culture.png" />
 
 ---
 
-#### InfoSec & Cyber Risk - Embedded
+#### 信息安全与网络风险 - 嵌入式
 
-Security embedded and partnering at each steps with key success factors:
+在每个步骤中嵌入安全并与关键成功因素合作：
 
 <pba-cols>
 <pba-col>
 
-- Upfront threat modeling
-- Peers code review
-- Code scanning
-- Independent security code review
+- 前期威胁建模
+- 同行代码审查
+- 代码扫描
+- 独立安全代码审查
 
 </pba-col>
 <pba-col>
 
-- Penetration testing (pentest)
-- Secret management
-- Supply chain management
-- Monitoring
-- Playbooks
+- 渗透测试（pentest）
+- 密钥管理
+- 供应链管理
+- 监控
+- 操作手册
 
 </pba-col>
 </pba-cols>
 
 ---
 
-#### InfoSec & Cyber Risk - CI/CD
+#### 信息安全与网络风险 - 持续集成/持续交付（CI/CD）
 
 <img rounded style="width: 11 00px" src="./img/13-cicd.png" />
 
 Notes:
 
-This is a continuous process, at each step.
+这是一个持续的过程，在每个步骤中都要进行。
 
 ---
 
-#### Conclusion
+#### 结论
 
 <img rounded style="width: 1300px" src="./img/14-conclusion.png" />
 
@@ -216,23 +216,23 @@ This is a continuous process, at each step.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# 问题
 
 ---
 
-#### Next Practical Sessions
+#### 下一次实践课程
 
-- Security Awareness (40/50mn) :
-  Context and adversaries, Attack Surface and Social Engineering
-- User Centric Security in Web3 (40/50mn) :
-  Wallet landscape, Key management and User device protection
-- Infrastructure Security (40/50mn) :
-  Concentration, deplatforming, supply chain risks, Key management on the nodes and Passwords management for Infrastructure
-- Application Security (60mn) :
-  Securing SDLC, Components of AppSec and Known Attack Surfaces & Vectors
+- 安全意识（40 - 50分钟）：
+  背景和对手、攻击面和社会工程学
+- Web3中的以用户为中心的安全（40 - 50分钟）：
+  钱包格局、密钥管理和用户设备保护
+- 基础设施安全（40 - 50分钟）：
+  集中化、平台下架、供应链风险、节点上的密钥管理和基础设施的密码管理
+- 应用程序安全（60分钟）：
+  保障软件开发生命周期（SDLC）的安全、应用程序安全的组成部分以及已知的攻击面和攻击向量
 
 ---
 
-#### Appendix - Streetlight Effect
+#### 附录 - 路灯效应
 
 <img rounded style="width: 1100px" src="./img/18-street.png" />

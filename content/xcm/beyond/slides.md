@@ -4,34 +4,34 @@ description: Deep dive on advanced XCM use cases beyond asset transfers and brid
 duration: 1 hour
 ---
 
-# XCM Beyond Asset Transfers
+# 资产转移和桥接之外的高级XCM用例
 
 ---
 
-## Outline
+## 大纲
 
 <pba-flex center>
 
-1. Pre-requisites
-1. XCMultisig
-1. XCM Universal Interface
-1. General XCM Tips
-1. Conclusion
-1. Next Steps
-1. References
+1. 先决条件
+2. XCMultisig
+3. XCM通用接口
+4. 通用XCM技巧
+5. 结论
+6. 下一步
+7. 参考资料
 
 </pba-flex>
 
 ---
 
-## Pre-requisites
+## 先决条件
 
-The following are expected:
+以下是需要具备的条件：
 
 <pba-flex center>
 
-- Knowledge of core XCM concepts
-- Knowledge of XCM chain configuration
+- 了解XCM核心概念
+- 了解XCM链配置
 
 </pba-flex>
 
@@ -39,17 +39,17 @@ The following are expected:
 
 ## XCMultisig
 
-[InvArch Network](https://invarch.network/) has the concept of XCMultisigs, these are entities that exist on the InvArch Network runtime and provide advanced multisig capabilities to users across many other blockchains.
+[InvArch Network](https://invarch.network/) 有XCMultisig的概念，这些实体存在于InvArch Network运行时中，并为许多其他区块链上的用户提供高级多签功能。
 
-Let's go over how that works!
+让我们来看看它是如何工作的！
 
 Notes:
 
-The reason for the name comes from their XCM functionality, more specifically from the idea that these entities have their logic defined in the InvArch Network runtime, but exist in all other connected chains with the same exact account address, thus allowing them to transact in these chains through XCM.
+这个名称的由来是因为它们的XCM功能，更具体地说，是因为这些实体的逻辑是在InvArch Network运行时中定义的，但在所有其他连接的链中以相同的账户地址存在，从而允许它们通过XCM在这些链中进行交易。
 
 ---v
 
-### Overview
+### 概述
 
 <diagram class="mermaid">
 stateDiagram-v2
@@ -58,8 +58,8 @@ state Polkadot {
 
     state InvArch {
         direction LR
-        v0: Multisig ID 0
-        sxc: Send XCM Call
+        v0: 多签ID 0
+        sxc: 发送XCM调用
         vacc: 0x123...
 
         state if_state <<choice>>
@@ -68,7 +68,7 @@ state Polkadot {
         if_state --> sxc
         if_state --> vacc
 
-        vacc --> [*]: Transact
+        vacc --> [*]: 交易
 
 
         sxc --> h0
@@ -79,37 +79,37 @@ state Polkadot {
     state HydraDX {
         direction LR
 
-        h0: Multisig ID 0
-        hmxs: **XCM Converters**
+        h0: 多签ID 0
+        hmxs: **XCM转换器**
         hacc: 0x123...
 
         h0 --> hmxs
         hmxs --> hacc
-        hacc --> [*]: Transact
+        hacc --> [*]: 交易
     }
 
     state Interlay {
         direction LR
 
-        i0: Multisig ID 0
-        imxs: **XCM Converters**
+        i0: 多签ID 0
+        imxs: **XCM转换器**
         iacc: 0x123...
 
         i0 --> imxs
         imxs --> iacc
-        iacc --> [*]: Transact
+        iacc --> [*]: 交易
     }
 
     state Bifrost {
         direction LR
 
-        b0: Multisig ID 0
-        bmxs: **XCM Converters**
+        b0: 多签ID 0
+        bmxs: **XCM转换器**
         bacc: 0x123...
 
         b0 --> bmxs
         bmxs --> bacc
-        bacc --> [*]: Transact
+        bacc --> [*]: 交易
     }
 
 }
@@ -117,9 +117,9 @@ state Polkadot {
 
 ---v
 
-### Message details
+### 消息详情
 
-To better understand how this all works, let's go over the messages being sent and their origins.
+为了更好地理解这一切是如何工作的，让我们来看看发送的消息及其来源。
 
 ```rust [0|1-13|15-33|35|37-53|55|57-75]
 let multisig: MultiLocation = MultiLocation {
@@ -178,17 +178,17 @@ let message = Xcm(vec![
 
 pallet_xcm::Pallet::<T>::send_xcm(multisig_interior, destination, message)?;
 
-// Pallet XCM will then add a DescendOrigin instruction to index 0 of the message.
+// Pallet XCM将在消息的索引0处添加一个DescendOrigin指令。
 Instruction::DescendOrigin(multisig_interior)
 
-// Which mutates the initial Origin
+// 这会改变初始的Origin
 MultiLocation {
   parents: 1,
   interior: Junctions::X1(
     Junction::Parachain(<T as pallet::Config>::ParaId::get()),
   ),
 }
-// Becomes
+// 变为
 MultiLocation {
   parents: 1,
   interior: Junctions::X3(
@@ -201,17 +201,17 @@ MultiLocation {
 
 ---v
 
-### XCM Converters
+### XCM转换器
 
-Now that we understand the origin and message structure, let's take a look at those _XCM Converters_!
+现在我们了解了消息的来源和结构，让我们来看看那些“XCM转换器”！
 
 <diagram class="mermaid">
 stateDiagram-v2
   direction LR
 
-    para: Parachain 2125
-    pal: Pallet 51
-    m: Mulisig ID 0
+    para: 平行链2125
+    pal: 模块51
+    m: 多签ID 0
     acc: 0x123...
 
     para --> if
@@ -219,13 +219,13 @@ stateDiagram-v2
     m --> hash
 
       state Checks {
-        if: Parachain == 2125 && Pallet == 51
-        if --> [*]: No Match
-        if --> Hasher: Match
+        if: 平行链 == 2125 && 模块 == 51
+        if --> [*]: 不匹配
+        if --> Hasher: 匹配
       }
 
       state Hasher {
-        cs: Constant Salt
+        cs: 常量盐
 
         cs --> hash
       }
@@ -236,55 +236,55 @@ stateDiagram-v2
 
 Notes:
 
-The reason for the custom hasher is to replicate the account generation in the origin chain.
-The combination of these checks and the hasher makes up the converters that return AccountIds and native Origins for our MultiLocation.
+自定义哈希器的作用是复制源链中的账户生成过程。这些检查和哈希器的组合构成了转换器，用于为我们的MultiLocation返回AccountIds和原生Origin。
 
 ---v
 
-### What happens if we map AccountId origins to the exact accounts within?
+### 如果我们将AccountId来源映射到其中的确切账户会发生什么？
 
-## Account Impersonation!
+## 账户冒充！
 
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-Hey Chain B, I'm sending you a balance transfer request from one of my users, their address is "Chain B's treasury" ;)
+嘿，链B，我正在向你发送一个来自我的一个用户的余额转移请求，他们的地址是“链B的国库” ;)
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-# TRUST!
+# 信任！
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-Emphatically explain this!
+一定要强调这一点！
 
 ---
 
-## XCM Universal Interface
+## XCM通用接口
 
-XCM can be used as a general API abstraction on top of multiple blockchains.
-With some clever usage, we can build chains that can be integrated by dApps in a generic manner, and also dApps that easily integrate multiple chains without any custom logic.
+XCM可以用作多个区块链之上的通用API抽象层。
 
----v
-
-## Concept
-
-###### XCM Powered Multichain NFT Marketplace
-
-Imagine an NFT marketplace where not only multiple chains are supported, but also any standards these chains choose to implement!
+通过一些巧妙的用法，我们可以构建能够以通用方式被dApp集成的链，也可以构建能够轻松集成多个链而无需任何自定义逻辑的dApp。
 
 ---v
 
-### How?
+## 概念
+
+###### 由XCM驱动的多链NFT市场
+
+想象一个NFT市场，不仅支持多个链，还支持这些链选择实现的任何标准！
+
+---v
+
+### 如何实现？
 
 <diagram class="mermaid">
 stateDiagram-v2
   direction TB
 
-    ui: UI
+    ui: 用户界面
     xcm: XCM API
-    indexer: Indexer
+    indexer: 索引器
 
     ui --> xcm
 
@@ -295,25 +295,25 @@ stateDiagram-v2
     xcm --> cxti
 
     state Asset_Hub {
-      axti: XCM AssetExchanger
-      apu: Pallet Uniques
-      apn: Pallet NFTs
+      axti: XCM资产交换器
+      apu: 模块Uniques
+      apn: 模块NFTs
 
       axti --> apu
       axti --> apn
     }
 
     state Moonbeam {
-      mxti: XCM AssetExchanger
-      mpe: Pallet EVM
+      mxti: XCM资产交换器
+      mpe: 模块EVM
 
       mxti --> mpe
     }
 
     state Chain_C {
-      cxti: XCM AssetExchanger
-      cpu: Pallet Uniques
-      cpc: Pallet Contracts
+      cxti: XCM资产交换器
+      cpu: 模块Uniques
+      cpc: 模块Contracts
 
       cxti --> cpu
       cxti --> cpc
@@ -323,28 +323,28 @@ stateDiagram-v2
 
 ---v
 
-### Matching NFTs
+### 匹配NFT
 
 ```rust [0|4-15|18-21]
 MultiAsset {
-  // Where to find the NFT (contract or collection in an NFT pallet)
+  // 在哪里可以找到NFT（NFT模块中的合约或集合）
   id: AssetId::Concrete (
     Multilocation {
       parents: 0,
       interior: Junctions::X3(
-        // Parachain ID just so we can pre-check if this message was intended for this chain
+        // 平行链ID，以便我们可以预先检查此消息是否是针对此链的
         Junction::Parachain (para_id),
-        // Pallet ID so we know which pallet we should be using to look up the NFT
+        // 模块ID，以便我们知道应该使用哪个模块来查找NFT
         Junction::PalletInstance(pallet_id),
-        // General Index to select a specific collection by integer id
-        // Or GeneralKev to select a specific collection bv it's contract id
+        // 通用索引，通过整数ID选择特定的集合
+        // 或通用键，通过合约ID选择特定的集合
         Junction::GeneralIndex(collection_id) or Junction::GeneralKey(contract_address),
       )
     }
   ),
-  // The NFT itself
+  // NFT本身
   fun: Fungibility::NonFungible(
-    // Specific NFT instance inside the collection selected by it's id
+    // 集合中特定NFT实例，通过其ID选择
     AssetInstance::Instance(nft_id)
   )
 }
@@ -352,22 +352,18 @@ MultiAsset {
 
 ---v
 
-### Implementing AssetExchanger
+### 实现资产交换器
 
 ```rust [1-20|22-38|40-48]
 pub trait AssetExchange {
-	/// Handler for exchanging an asset.
+	/// 资产交换的处理程序。
 	///
-	/// - `origin`: The location attempting the exchange; this should generally not matter.
-	/// - `give`: The assets which have been removed from the caller.
-	/// - `want`: The minimum amount of assets which should be given to the caller in case any
-	///   exchange happens. If more assets are provided, then they should generally be of the
-	///   same asset class if at all possible.
-	/// - `maximal`: If `true`, then as much as possible should be exchanged.
+	/// - `origin`：尝试进行交换的位置；这通常无关紧要。
+	/// - `give`：已从调用者处移除的资产。
+	/// - `want`：如果发生任何交换，应给予调用者的最小资产数量。如果提供了更多资产，则它们通常应属于相同的资产类别（如果可能的话）。
+	/// - `maximal`：如果为`true`，则应尽可能多地进行交换。
 	///
-	/// `Ok` is returned along with the new set of assets which have been exchanged for `give`. At
-	/// least want must be in the set. Some assets originally in `give` may also be in this set. In
-	/// the case of returning an `Err`, then `give` is returned.
+	/// 返回`Ok`以及已与`give`交换的新资产集。至少应包含`want`。`give`中的某些资产也可能在这个集合中。在返回`Err`的情况下，将返回`give`。
 	fn exchange_asset(
 		origin: Option<&MultiLocation>,
 		give: Assets,
@@ -407,15 +403,15 @@ impl xcm_executor::Config for XcmConfig {
 
 ---
 
-## General XCM Tips
+## 通用XCM技巧
 
-In this section we will go over some general tips on how to build with XCM.
+在本节中，我们将介绍一些使用XCM进行开发的通用技巧。
 
 ---v
 
-### MultiLocations & MultiAssets
+### MultiLocations和MultiAssets
 
-Deciding how to map MultiLocations to entities in your runtime is very important, as these MultiLocations will end up being used across other XCM-connected chains.
+决定如何将MultiLocations映射到运行时中的实体非常重要，因为这些MultiLocations最终将在其他XCM连接的链中使用。
 
 ```rust [1-4|6-8|10-11|13-14|16-17|19-24|26-32]
 // Main runtime token
@@ -454,69 +450,69 @@ MultiAsset {
 
 ---v
 
-### Message Instructions
+### 消息指令
 
 ```rust [1-23|25-45]
-// Pay for execution fees and refund surplus
+// 支付执行费用并退还剩余费用
 Xcm(vec![
-  // Withdraw asset to use within this message, places the amount in the holding register.
+  // 提取在此消息中使用的资产，将金额存入持有寄存器。
   Instruction::WithdrawAsset(fee_multiasset.into()),
-  // Pay for execution fees during this message.
+  // 为此消息的执行支付费用。
   Instruction::BuyExecution {
-    // The asset and amount we withdrew in the first instruction.
+    // 我们在第一条指令中提取的资产和金额。
     fees: fee_multiasset,
-    // Max amount of weight we are willing to buy.
+    // 我们愿意购买的最大权重数量。
     weight_limit: WeightLimit::Unlimited,
   },
-  // An instruction or set of instructions that will require payment of execution fees.
-  <Instruction that pays execution fee>,
-  // Refund unused purchased weight back to the holding register.
+  // 需要支付执行费用的一条或一组指令。
+  <支付执行费用的指令>,
+  // 将未使用的已购买权重退还到持有寄存器。
   Instruction::RefundSurplus,
-  // Deposit assets from the holding register back into the balance of an account.
+  // 将持有寄存器中的资产存入一个账户的余额中。
   Instruction::DepositAsset {
-    // Match total amount of all assets in the holding register.
+    // 匹配持有寄存器中所有资产的总量。
     assets: MultiAssetFilter::Wild(WildMultiAsset::All),
-    // The receiver of the refunded fees, usually the origin that paid for the fees in the first place.
+    // 退还费用的接收者，通常是最初支付费用的来源。
     beneficiary: account_id_multilocation,
   },
 ]);
 
-// XCM assertions
+// XCM断言
 
-// Errors is described pallet does not exist in the runtime.
+// 如果运行时中不存在所描述的模块，则出错。
 ExpectPallet {
-  // Pallet index.
+  // 模块索引。
   index: 21,
-  // Pallet name.
+  // 模块名称。
   name: "Referenda".as_bytes().to_vec(),
-  // Name of the module.
+  // 模块的名称。
   module_name: "pallet_referenda".as_bytes().to_vec(),
-  // Major version of the crate.
+  // 库的主版本。
   crate_major: 4,
-  // Minimum minor version acceptable.
+  // 可接受的最小次版本。
   min_crate_minor: 0,
 }
 
-// Errors if described asset and amount are not present in the holding register.
+// 如果所描述的资产和数量未出现在持有寄存器中，则出错。
 ExpectAsset(MultiAsset {
-	id: AssetId::Concrete(asset_multilocation),
+  id: AssetId::Concrete(asset_multilocation),
   fun: Fungibility::Fungible(1_000_000_000_000u128),
 })
 ```
 
 ---
 
-## Conclusion
+## 结论
 
-During this presentation we went through a couple real world XCM use cases and some general tips for working with the message standard, the goal here is to leave you with some inspiration and some ideas, so that you can start tinkering with XCM to power your own ideas and supercharge blockchain applications!
+在本次展示中，我们介绍了几个现实世界中的XCM用例以及使用消息标准的一些通用技巧，这里的目标是给你一些启发和想法，以便你可以开始摆弄XCM，为你自己的想法提供动力并增强区块链应用程序的能力！
 
 ---
 
-## References
+## 参考资料
 
-- [XCM source code](https://github.com/paritytech/polkadot-sdk/tree/master/polkadot/xcm) - The source code for the main XCM implementation in the paritytech/polkadot repository.
+- [XCM源代码](https://github.com/paritytech/polkadot-sdk/tree/master/polkadot/xcm) - paritytech/polkadot 存储库中主要XCM实现的源代码。
 
-<!-- FIXME new repo expected soon for XCM outside SDK -->
+<!-- 预计很快会为 SDK 之外的 XCM 建立新的存储库 -->
 
-- [XCM Documentation](https://paritytech.github.io/xcm-docs/) - The official documentation for XCM: Cross-Consensus Messaging.
-- [InvArch's Pallet Rings](https://github.com/InvArch/InvArch-Frames/tree/main/pallet-rings) - Reference implementation of an XCM abstraction pallet for XCMultisigs.
+- [XCM文档](https://paritytech.github.io/xcm-docs/) - XCM（跨共识消息）的官方文档。
+- [InvArch 的 Pallet Rings](https://github.com/InvArch/InvArch-Frames/tree/main/pallet-rings) - XCMultisigs 的 XCM 抽象模块的参考实现。

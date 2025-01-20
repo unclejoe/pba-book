@@ -4,83 +4,79 @@ description: XCM in the Polkadot Context for web3 builders
 duration: 1 hour
 ---
 
-# XCM in Polkadot
+# Polkadot中的XCM
 
 ---
 
-## _At the end of this lecture, you will be able to:_
+## _在本次讲座结束时，你将能够：_
 
 <pba-flex center>
 
-- Understand the configuration of the Rococo chain
-- Send real-world messages between parachain A <-> Rococo
-- Identify potential errors on XCM messages
+- 理解Rococo链的配置
+- 在平行链A和Rococo之间发送真实的消息
+- 识别XCM消息中的潜在错误
 
 ---
 
-## 🤔 Considerations
+## 🤔 注意事项
 
-- There should be no trust assumption between chains unless explicitly requested.
-- We cannot assume chains will not act maliciously
-- Spamming XCM messages creates a DoS problem
+- 除非有明确要求，否则不应假设链之间存在信任关系。
+- 我们不能假设链不会进行恶意操作。
+- 发送大量XCM消息会造成拒绝服务（DoS）问题。
 
 ---
 
-## 🛠️ Rococo Configuration
+## 🛠️ Rococo配置
 
-- Barriers
-- Teleport filtering
-- Trusted reserves
-- Asset transactors
-- Fee payment
-- Proper XCM Instruction Weighting
-- Location to Account/FRAME Origin conversions
+- 障碍（Barriers）
+- 传送过滤（Teleport filtering）
+- 可信储备（Trusted reserves）
+- 资产交易员（Asset transactors）
+- 费用支付（Fee payment）
+- 正确的XCM指令权重（Proper XCM Instruction Weighting）
+- 位置到账户/FRAME起源转换（Location to Account/FRAME Origin conversions）
 
 Notes:
 
-From now on, we will use the Rococo runtime as a reference.
-Rococo is a testnet for
-Polkadot and Kusama that we will use in to test our XCM messages.
-Most of the Rococo configuration
-is identical to that in Polkadot.
+从现在开始，我们将以Rococo运行时作为参考。Rococo是Polkadot和Kusama的测试网，我们将使用它来测试我们的XCM消息。Rococo的大多数配置与Polkadot中的配置相同。
 
 ---
 
-## 🚧 XCM `Barrier` in Rococo
+## 🚧 Rococo中的XCM `Barrier`
 
 ```rust
-/// The barriers one of which must be passed for an XCM message to be executed.
+/// 对于一个XCM消息要被执行，必须通过其中一个障碍。
 pub type Barrier = (
-  // Weight that is paid for may be consumed.
+  // 支付的权重可以被消耗。
   TakeWeightCredit,
-  // If the message is one that immediately attempts to pay for execution, then allow it.
+  // 如果消息是立即尝试支付执行费用的消息，则允许执行。
   AllowTopLevelPaidExecutionFrom<Everything>,
-  // Messages coming from system parachains need not pay for execution.
+  // 来自系统平行链的消息无需支付执行费用。
   AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
-  // Expected responses are OK.
+  // 预期的响应是可以的。
   AllowKnownQueryResponses<XcmPallet>,
-  // Subscriptions for version tracking are OK.
+  // 用于版本跟踪的订阅是可以的。
   AllowSubscriptionsFrom<Everything>,
 );
 ```
 
 ---v
 
-## 🚧 XCM `Barrier` in Rococo
+## 🚧 Rococo中的XCM `Barrier`
 
-- `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
-- `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
-- `AllowKnownQueryResponses` and `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
+- `TakeWeightCredit` 和 `AllowTopLevelPaidExecutionFrom` 用于防止本地/远程XCM执行时的垃圾消息攻击。
+- `AllowUnpaidExecutionFrom` 允许系统平行链在中继链中免费执行。
+- `AllowKnownQueryResponses` 和 `AllowSubscriptionsFrom` ，正如我们已经知道的，主要用于版本控制。
 
 Notes:
 
-- Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000.
-  They are allocated by Polkadot governance and get free execution.
-- `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected. -`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
+- 子系统平行链是包含核心Polkadot功能的平行链，它们的ParaId将小于1000。它们由Polkadot治理分配，并可免费执行。
+- `AllowKnownQueryResponses` 将检查pallet-xcm存储以确定响应是否是预期的。
+- `AllowSubscriptionsFrom` 确定任何来源都能够订阅版本更改。
 
 ---
 
-## 🤝 Trusted teleporters in Rococo
+## 🤝 Rococo中的可信传送器（Trusted teleporters）
 
 ```rust [0|2|6-8|18-22]
 parameter_types! {
@@ -109,11 +105,11 @@ pub type TrustedTeleporters = (
 
 ---v
 
-## 🤝 Trusted teleporters in Rococo
+## 🤝 Rococo中的可信传送器（Trusted teleporters）
 
-- Teleporting involves trust between chains.
-- 1000 (Asset Hub) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here**
-- **Here** represents the relay token
+- 传送涉及链之间的信任。
+- 1000（资产中心）、1001（合约）和1002（Encointer）被允许传送由 **Here** 表示的代币。
+- **Here** 表示中继链代币。
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -125,15 +121,15 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Asset Hub, Rococo and Encointer are able to teleport the relay chain token
-- Any other chain sending a `ReceiveTeleportedAsset` or any other token being teleported will be rejected with `UntrustedTeleportLocation`.
+- 资产中心、Rococo和Encointer能够传送中继链代币。
+- 任何其他链发送 `ReceiveTeleportedAsset` 或传送任何其他代币都将被拒绝，并返回 `UntrustedTeleportLocation` 错误。
 
 ---
 
-## 💱Trusted reserves in Rococo
+## 💱 Rococo中的可信储备（Trusted reserves）
 
-- Rococo does not recognize any chain as reserve
-- Rococo prevents reception of any **ReserveAssetDeposited** message
+- Rococo不认可任何链作为储备。
+- Rococo阻止接收任何 **ReserveAssetDeposited** 消息。
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -145,53 +141,48 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Trusting other parachains (e.g., common good parachains) to be reserves of the relay native token would cause rare situations with the total issuance.
-  For instance, users could drain reserves of the sovereign account with teleported funds.
+- 信任其他平行链（例如，公共利益平行链）作为中继链原生代币的储备会导致总发行量出现罕见情况。例如，用户可以用传送的资金耗尽主权账户的储备。
 
 ---
 
-## 📁 `LocationToAccountId` in Rococo
+## 📁 Rococo中的 `LocationToAccountId`
 
-- Conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue `Transact` operations.
-- Parachain origins will be converted to their corresponding sovereign account.
-- Local 32 byte origins will be converted to a 32 byte defined AccountId.
+- 从多位置（multilocation）到账户ID（AccountId）的转换是提取/存入资产和发出 `Transact` 操作的关键组件。
+- 平行链起源将被转换为其对应的主权账户。
+- 本地32字节起源将被转换为定义的32字节账户ID。
 
 ```rust
 pub type LocationConverter = (
-  // We can convert a child parachain using the standard `AccountId` conversion.
+  // 我们可以使用标准的 `AccountId` 转换来转换子平行链。
   ChildParachainConvertsVia<ParaId, AccountId>,
-  // We can directly alias an `AccountId32` into a local account.
+  // 我们可以直接将 `AccountId32` 别名为本地账户。
   AccountId32Aliases<RococoNetwork, AccountId>,
 );
 ```
 
 Notes:
 
-- Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.
-- Question class what happens if a message coming from a parachain starts with `DescendOrigin`?
-  XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_** expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_** or **_ClaimAsset_** - XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
+- 任何不是平行链起源或本地32字节账户起源的其他起源都无法转换为账户ID。
+- 问题：如果来自平行链的消息以 `DescendOrigin` 开头会发生什么？
+  XcmV2将在障碍级别拒绝它（因为 **_AllowTopLevelPaidExecutionFrom_** 期望第一条指令是 **_ReceiveTeleportedAsset_** 、 **_WithdrawAsset_** 、 **_ReserveAssetDeposited_** 或 **_ClaimAsset_** 之一），XcmV3将通过障碍，因为 **_AllowTopLevelPaidExecutionFrom_** 在 **_WithComputedOrigin_** 内部。
 
 ---
 
-## 🪙 Asset Transactors in Rococo
+## 🪙 Rococo中的资产交易员（Asset Transactors）
 
 <div style="font-size: smaller">
 
 ```rust
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
-  // Use this currency:
+  // 使用此货币：
   Balances,
-  // Use this currency when it is a fungible asset
-  // matching the given location or name:
+  // 当它是与给定位置或名称匹配的可替代资产时，使用此货币：
   IsConcrete<RocLocation>,
-  // We can convert the MultiLocations
-  // with our converter above:
+  // 我们可以使用上面的转换器转换多位置：
   LocationConverter,
-  // Our chain's account ID type
-  // (we can't get away without mentioning it explicitly):
+  // 我们链的账户ID类型（我们不能不明确提及它）：
   AccountId,
-  // It's a native asset so we keep track of the teleports
-  // to maintain total issuance.
+  // 它是原生资产，因此我们跟踪传送以维持总发行量。
   CheckAccount,
 >;
 
@@ -206,31 +197,29 @@ impl xcm_executor::Config for XcmConfig {
 
 ---v
 
-## 🪙 `asset-transactors` in Rococo
+## 🪙 Rococo中的 `asset-transactors`
 
-- Single asset-transactor in Rococo
-- Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **_pallet-balances_**
-- Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
+- Rococo中只有一个资产交易员。
+- 资产交易员将 **Here** 多位置ID与 **Balances** 中定义的货币相匹配，**Balances** 指的是 **_pallet-balances_** 。
+- 本质上，这是在配置XCM，使得原生代币（DOT）与多位置 **Here** 相关联。
 
 Notes:
 
-- Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**.
-  This aims at maintaining the total issuance even if assets have been teleported to another chain.
+- Rococo在 **CheckAccount** 中跟踪传送，**CheckAccount** 在 **palletXcm** 中定义。这旨在即使资产已传送到另一个链，也能维持总发行量。
 
 ---
 
-## 📍`origin-converter` in Rococo
+## 📍 Rococo中的 `origin-converter`
 
 ```rust
 type LocalOriginConverter = (
-  // Converts to a signed origin with "LocationConverter"
+  // 使用 `LocationConverter` 转换为签名起源
   SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>,
-  // Converts a child parachain multilocation to a parachain origin
+  // 将子平行链多位置转换为平行链起源
   ChildParachainAsNative<parachains_origin::Origin, RuntimeOrigin>,
-  // Converts a local 32 byte multilocation to a signed
-  // origin
+  // 将本地32字节多位置转换为签名起源
   SignedAccountId32AsNative<WestendNetwork, RuntimeOrigin>,
-  // Converts system parachain origins into root origin
+  // 将系统平行链起源转换为根起源
   ChildSystemParachainAsSuperuser<ParaId, RuntimeOrigin>,
 );
 ```
@@ -245,25 +234,24 @@ impl xcm_executor::Config for XcmConfig {
 
 ---v
 
-## 📍`origin-converter` in Rococo
+## 📍 Rococo中的 `origin-converter`
 
-- Defines ways in which we can convert a multilocation to a dispatch origin, typically used by the `Transact` instruction:
-- Child parachain origins are converted to signed origins through **_LocationConverter_** (`OriginKind == Sovereign`).
-- Child parachains can also be converted to native parachain origins (`OriginKind == Native`).
-- Local 32 byte origins are converted to signed 32 byte origins (`OriginKind == Native`).
+- 定义了我们可以将多位置转换为调度起源的方式，通常由 `Transact` 指令使用：
+- 子平行链起源通过 **_LocationConverter_** （`OriginKind == Sovereign`）转换为签名起源。
+- 子平行链也可以转换为原生平行链起源（`OriginKind == Native`）。
+- 本地32字节起源转换为签名32字节起源（`OriginKind == Native`）。
 
 Notes:
 
-- There exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain).
-  This gets checked with the _ensure_parachain!_ macro.
-- System parachains are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
+- 存在“平行链调度起源”的概念，它用于非常特定的功能（例如，与另一个链打开通道）。这通过 _ensure_parachain!_ 宏进行检查。
+- 系统平行链能够以根起源进行调度，因为它们可以被视为Rococo运行时本身的扩展。
 
 ---
 
-### 🏋️ `Weigher` in Rococo
+### 🏋️ Rococo中的 `Weigher`
 
-- Uses `WeightInfoBounds` with benchmarked values with `pallet-xcm-benchmarks`
-- Full list of weights can be seen [here](https://github.com/paritytech/polkadot-sdk/tree/cc9f812/polkadot/runtime/rococo/src/weights/xcm)
+- 使用带有 `pallet-xcm-benchmarks` 基准值的 `WeightInfoBounds` 。
+- 权重的完整列表可以在[这里](https://github.com/paritytech/polkadot-sdk/tree/cc9f812/polkadot/runtime/rococo/src/weights/xcm)查看。
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -279,12 +267,11 @@ type Weigher = WeightInfoBounds<
 
 ---
 
-## 🔧 `WeightTrader` in Rococo
+## 🔧 Rococo中的 `WeightTrader`
 
-- Weight is converted to fee with the **_WeightToFee_** type.
-- The asset in which we charge for fee is **_RocLocation_**.
-  This means we can only pay for xcm execution in the **native currency**
-- Fees will go to the block author thanks to **_ToAuthor_**
+- 权重通过 **_WeightToFee_** 类型转换为费用。
+- 我们收取费用的资产是 **_RocLocation_** 。这意味着我们只能使用原生货币支付XCM执行费用。
+- 费用将通过 **_ToAuthor_** 支付给区块作者。
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -301,13 +288,12 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Trying to buyExecution with any other token that does not match the specified AssetId (in this case, `RocLocation`, which represents the native token) **will fail**.
-
-- **_WeightToFee_** contains an associated function that will be used to convert the required amount of weight into an amount of tokens used for execution payment.
+- 尝试使用与指定的AssetId（在这种情况下，`RocLocation` 表示原生代币）不匹配的任何其他代币进行 `buyExecution` **将失败**。
+- **_WeightToFee_** 包含一个关联函数，该函数将用于将所需的权重数量转换为用于执行支付的代币数量。
 
 ---
 
-## 🎨 `XcmPallet` in Rococo
+## 🎨 Rococo中的 `XcmPallet`
 
 ```rust
 impl pallet_xcm::Config for Runtime {
@@ -315,16 +301,14 @@ impl pallet_xcm::Config for Runtime {
   type XcmRouter = XcmRouter;
   type SendXcmOrigin =
     xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-  // Anyone can execute XCM messages locally.
+  // 任何人都可以在本地执行XCM消息。
   type ExecuteXcmOrigin =
     xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
   type XcmExecuteFilter = Everything;
   type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
-  // Anyone is able to use teleportation
-  // regardless of who they are and what they want to teleport.
+  // 任何人都可以使用传送功能，无论他们是谁以及他们想要传送什么。
   type XcmTeleportFilter = Everything;
-  // Anyone is able to use reserve transfers
-  // regardless of who they are and what they want to transfer.
+  // 任何人都可以使用储备转移功能，无论他们是谁以及他们想要转移什么。
   type XcmReserveTransferFilter = Everything;
   /* snip */
 }
@@ -332,30 +316,26 @@ impl pallet_xcm::Config for Runtime {
 
 ---v
 
-## 🎨 XcmPallet in Rococo
+## 🎨 Rococo中的XcmPallet
 
-- No filter on messages for Execution, Teleporting or Reserve transferring.
-- Only origins defined by **_LocalOriginToLocation_** are allowed to send/execute arbitrary messages.
-- **_LocalOriginToLocation_** defined to allow council and regular account 32 byte signed origin calls
+- 对执行、传送或储备转移的消息没有过滤。
+- 只有由 **_LocalOriginToLocation_** 定义的起源才允许发送/执行任意消息。
+- **_LocalOriginToLocation_** 定义为允许理事会和常规的32字节账户签名起源调用。
 
 ```rust
 pub type LocalOriginToLocation = (
-  // We allow an origin from the Collective pallet to be used in XCM
-  // as a corresponding Plurality of the `Unit` body.
+  // 我们允许来自Collective pallet的起源在XCM中用作相应的 `Unit` 主体的多数派。
   CouncilToPlurality,
-  // And a usual Signed origin to be used in XCM as a corresponding AccountId32
+  // 并且通常的签名起源可以在XCM中用作相应的AccountId32。
   SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
 );
 ```
 
 Notes:
 
-- **_LocalOrigin_** allows to go from a frame dispatch origin to a multilocation.
-  This is necessary because **we enter the xcm-executor with xcm origins, not with frame dispatch origins**.
-  Note that this is an extrinsic in a frame pallet, and thus, **we call it with frame origins**.
-
-- Council decisions are converted to `Plurality` junction multilocations.
-
-- Signed origins are converted to `AccountId32` junction multilocations.
+- **_LocalOrigin_** 允许从FRAME调度起源转换为多位置。这是必要的，因为 **我们使用XCM起源进入xcm-executor，而不是使用FRAME调度起源** 。请注意，这是FRAME pallet中的一个外在调用，因此 **我们使用FRAME起源调用它** 。
+- 理事会决策被转换为 `Plurality` 连接多位置。
+- 签名起源被转换为 `AccountId32` 连接多位置。
 
 ---
+```

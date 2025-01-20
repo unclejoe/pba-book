@@ -1,4 +1,4 @@
-# Introduction to Cross Consensus Messaging (XCM)
+# 跨共识消息传递（XCM）简介
 
 <!-- markdown-link-check-disable -->
 <center>

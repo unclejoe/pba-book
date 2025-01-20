@@ -4,229 +4,230 @@ description: Leverage HRMP to remote compound on Substrate-based DEX
 duration: 2 hours
 ---
 
-# XCM in Use
+# XCM的实际应用
 
-### Build dApps with XCM leveraging polkadot.js.org/apps and node.js
+### 使用XCM构建去中心化应用（dApps），借助polkadot.js.org/apps和node.js
 
 Notes:
 
-As we learned in Chapter 3, the XCM pallet serves as a bridge between the XCVM subsystem and the FRAME subsystem.
-It enables us to send and execute XCM and interact with the XCM executor.
-In this chapter, I, as the founder of OAK Network and a parachain developer, will demonstrate how to build products using XCM and dispatch them from both polkadot.js apps and Javascript code.
+正如我们在第三章中所学，XCM模块（pallet）充当XCVM子系统和FRAME子系统之间的桥梁。
+它使我们能够发送和执行XCM，并与XCM执行器进行交互。
+在本章中，我作为OAK Network的创始人兼平行链开发者，将演示如何使用XCM构建产品，并从polkadot.js应用程序和Javascript代码中进行调度。
 
 ---
 
-### _At the end of this lecture, you will be able to:_
+### _在本次讲座结束时，你将能够：_
 
 <pba-flex center>
 
-1. Configure XCM for parachain HRMP messages.
-1. Understand the construction and execution of XCM messages.
-1. Perform HRMP transactions between parachains using templates.
-1. Develop proficiency in debugging XCM using xcm-tools.
+1. 为平行链HRMP消息配置XCM。
+1. 理解XCM消息的构建和执行。
+1. 使用模板在平行链之间执行HRMP交易。
+1. 熟练使用xcm-tools调试XCM。
 
 </pba-flex>
 
 ---
 
-# Overview
+# 概述
 
 <pba-flex center>
 
-1. Define the product
-1. Preparation
-1. Compose XCM message
-1. Build client code
-1. Debug live
+1. 定义产品
+1. 准备工作
+1. 编写XCM消息
+1. 构建客户端代码
+1. 实时调试
 
 </pba-flex>
 
 Notes:
 
-In this session, I will guide you through the process of building a real use case of XCM, specifically from the perspective of a parachain developer.
-Our main focus will be on developing for a parachain, not a relay chain like Polkadot.
-Consequently, we will primarily concentrate on HRMP messages, enabling horizontal communication between two parachains.
+在本次会议中，我将引导你完成构建XCM实际用例的过程，具体是从平行链开发者的角度出发。
+我们的主要重点将是为平行链进行开发，而不是像Polkadot这样的中继链。
+因此，我们将主要关注HRMP消息，实现两个平行链之间的横向通信。
 
-1. Define Your Product: We'll start by defining the product or application we want to build, clarifying its objectives and functionalities.
-1. Prepare Chain Config: Next, we'll prepare the necessary chain configurations, ensuring that our application is well-integrated with the target blockchain environment.
-1. Compose XCM Message: We'll dive into composing XCM messages, which are crucial for communication and interactions between different components of our application.
-1. Build Client Code: This step will involve the actual development of the client code for our application, implementing the logic and functionality we designed earlier.
-1. Debug Live: Finally, we'll explore how to debug our application in a live environment, ensuring that it functions correctly and efficiently.
+1. 定义你的产品：我们将从定义我们想要构建的产品或应用程序开始，明确其目标和功能。
+1. 准备链配置：接下来，我们将准备必要的链配置，确保我们的应用程序与目标区块链环境良好集成。
+1. 编写XCM消息：我们将深入编写XCM消息，这对于我们应用程序的不同组件之间的通信和交互至关重要。
+1. 构建客户端代码：这一步将涉及为我们的应用程序实际开发客户端代码，实现我们之前设计的逻辑和功能。
+1. 实时调试：最后，我们将探索如何在实时环境中调试我们的应用程序，确保它正确且高效地运行。
 
-By the end of this presentation, you'll have a comprehensive understanding of the XCM framework and be well-equipped to build your own applications effectively.
+在本次演示结束时，你将对XCM框架有全面的了解，并具备有效构建自己的应用程序的能力。
 
-Let's get started!
+让我们开始吧！
 
 ---
 
-# Define the product
+# 定义产品
 
-Objective: establish a seamless monthly recurring payment of MOVR on the Moonriver parachain.
+目标：在Moonriver平行链上建立无缝的MOVR月度定期支付。
 
 Notes:
 
-In this demo, our main objective is to establish a seamless monthly recurring payment of MOVR on the Moonriver parachain.
-To accomplish this, we will utilize a powerful extrinsic call, `automationTime.scheduleXcmpTask`, executed remotely on the Turing Network.
-This will trigger a payment at the end of each month, ensuring a smooth and automated payment process.
+在本次演示中，我们的主要目标是在Moonriver平行链上建立无缝的MOVR月度定期支付。
+为了实现这一目标，我们将利用一个强大的外部调用 `automationTime.scheduleXcmpTask`，该调用将在Turing Network上远程执行。
+这将在每个月末触发一次支付，确保支付过程顺利且自动化。
 
 ---v
 
-## What we need to do
+## 我们需要做什么
 
-We need to perform one essential operation, which is to remotely execute automationTime.scheduleXcmpTask on the Turing Network.
+我们需要执行一项基本操作，即在Turing Network上远程执行 `automationTime.scheduleXcmpTask`。
 
-To execute this operation, we will interact with the following components:
+为了执行此操作，我们将与以下组件进行交互：
 
-- Source Chain: Moonriver
-- Source XCM Version: V3
-- Source Extrinsic: `xcmTransactor.transactThroughSigned`
+- 源链：Moonriver
+- 源XCM版本：V3
+- 源外部调用：`xcmTransactor.transactThroughSigned`
 
-<br />Consequently, it will initiate the remote execution of the following call:
+<br /> 因此，它将启动以下调用的远程执行：
 
-- Target Chain: Turing Network
-- Target XCM Version: V3
-- Target Extrinsic: `automationTime.scheduleXcmpTask`
+- 目标链：Turing Network
+- 目标XCM版本：V3
+- 目标外部调用：`automationTime.scheduleXcmpTask`
 
 ---v
 
-Upon successful XCM execution, a TaskScheduled event will fire on the Turing Network, indicating that the remote call has been executed successfully, thereby creating an automation task.
+在XCM成功执行后，Turing Network上将触发一个 `TaskScheduled` 事件，表明远程调用已成功执行，从而创建了一个自动化任务。
 
 <figure>
   <img rounded style="width: 900px;" src="./img/high-level-product-flow.jpg" />
-  <figcaption>High-level product flow between Moonriver and Turing Network</figcaption>
+  <figcaption>Moonriver和Turing Network之间的高级产品流程</figcaption>
 </figure>
 
 Notes:
 
-explanation - The XCM call sets up a recurring task, that will auto-transfer of MOVR at the end of every month.
-Turing Network is responsible for triggering the action when its condition is met.
-The overall flow of the entire product is shown in the diagram below.
+解释 - XCM调用设置了一个定期任务，该任务将在每个月末自动转移MOVR。
+Turing Network负责在满足条件时触发该操作。
+整个产品的整体流程如下图所示。
 
 ---
 
-# Preparation
+# 准备工作
 
-To kickstart our journey, we will begin by interacting with Moonriver's `xcmTransactor` pallet, which is similar to Polkadot/Kusama's `xcmPallet`.
-Before diving into the actual XCM message, it is essential to ensure that we meet certain prerequisites:
+为了开启我们的旅程，我们将首先与Moonriver的 `xcmTransactor` 模块进行交互，该模块类似于Polkadot/Kusama的 `xcmPallet`。
+在深入研究实际的XCM消息之前，确保我们满足某些先决条件至关重要：
 
 Notes:
 
-For this demo, we are using the existing xcmPallet built in Polkadot and Kusama.
-This pallet provides common extrinsic interfaces that developers can use to easily compose an XCM message.
-Moonriver has further encapsulated the function to make their own xcmTransactor.
+对于本次演示，我们使用的是Polkadot和Kusama中内置的现有 `xcmPallet`。
+该模块提供了通用的外部接口，开发人员可以使用这些接口轻松编写XCM消息。
+Moonriver进一步封装了该功能，创建了自己的 `xcmTransactor`。
 
 ---v
 
-1. Ensure Barriers on the recipient chain.<br />
-   In this case, an Allow Barrier\*\* `WithComputedOrigin<Everything>`, needs to be configured in the XCM config of Turing Network.
-   This Barrier will allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.
-1. Configure user’s remote wallet on the recipient chainThe remote wallet, or proxy wallet acts as an account abstraction, allowing the blockchain to execute specific code on behalf of the user.
+1. 确保接收链上的屏障（Barriers）配置正确。<br />
+   在这种情况下，需要在Turing Network的XCM配置中配置一个允许屏障 `WithComputedOrigin<Everything>`。
+   此屏障将允许XCM中的 `DescendOrigin` 指令，该指令将把Turing Network上的交易发起方从Moonriver的主权账户重新分配给用户的代理账户。
+1. 在接收链上配置用户的远程钱包。远程钱包或代理钱包充当账户抽象，允许区块链代表用户执行特定代码。
 
 Notes:
 
-1. We covered the Barrier topic in the previous chapter.
-   Barriers are responsible for creating Allow or Deny rules for incoming messages.
-   By adding this Barrier, we allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.
-1. This remote wallet acts as an account abstraction, empowering the blockchain to execute specific code on behalf of the user.
-   By utilizing a user's sub-wallet for a specific extrinsic call, we create granular control, allowing the user's wallet to perform the necessary actions efficiently and securely.
+1. 我们在上一章中介绍了屏障主题。
+   屏障负责为传入的消息创建允许或拒绝规则。
+   通过添加此屏障，我们允许XCM中的 `DescendOrigin` 指令，该指令将把Turing Network上的交易发起方从Moonriver的主权账户重新分配给用户的代理账户。
+1. 此远程钱包充当账户抽象，使区块链能够代表用户执行特定代码。
+   通过使用用户的子钱包进行特定的外部调用，我们创建了细粒度的控制，允许用户的钱包高效且安全地执行必要的操作。
 
 ---
 
-# Compose XCM message
+# 编写XCM消息
 
-In this section, we will initiate the execution by calling the `xcmTransactor.transactThroughSigned` extrinsic on Moonriver.
-
-Notes:
-
-This extrinsic serves as the gateway to composing the XCM message, incorporating all the necessary instructions for the desired cross-chain message.
-
----v
-
-## XCM configs
-
-The following are the parameters you need to decide before sending an XCM message:<br /><br />
-
-1. **Version number**: Check the XCM version on both recipient (Turing Network) and source (Moonriver) chains.
-   Ensure their XCM versions are compatible.
-1. **Weight**: Each chain defines a different weight for XCM instructions, impacting computation, storage, and gas fees.
-1. **Fee per Second**: If using an asset other than the recipient chain's native token (TUR) to pay fees, establish the MOVR-to-TUR conversion rate.
+在本节中，我们将通过调用Moonriver上的 `xcmTransactor.transactThroughSigned` 外部调用来启动执行。
 
 Notes:
 
-In section #4 of the Chain Config in XCM document, we have reviewed various chain configurations.
-In this section, we will illustrate their usage through our demo.
-Although there are several variables to be decided, once you become familiar with them and establish a few templates, you can continue to use them.
-
-1. For example, V3 is backward compatible with V2 but the its config requires safeXcmVersion set.
-1. The weight of an XCM instruction is defined with a different value on each chain.
-   It specifies how much computational power as well as storage (PoV size), are required for the execution of each instruction and determines the gas, or fee, for the XCM execution.
-1. In addition to the weight, if we use an asset other than the native token of the recipient chain, TUR in this case, to pay for the fee, the value of the asset must be converted in relation to the recipient chain's native token.
-   The Fee per Second defines the conversion rate between MOVR and TUR, assuming we want to use MOVR to pay for all the fees in this transaction.
-
-With these parameters decided, proceed to construct the instruction sequence for the XCM message.
+此外部调用是编写XCM消息的入口，包含了所需跨链消息的所有必要指令。
 
 ---v
 
-## Message elements
+## XCM配置
 
-To construct the XCM message, we utilize Moonriver's `xcmTransactor.transactThroughSigned` extrinsic.
-It requires the following parameters:
+在发送XCM消息之前，你需要确定以下参数：<br /><br />
 
-**Destination**: It specifies the target chain, or for our case, the Turing Network, identified by {Relay, 2114} on Kusama.
+1. **版本号**：检查接收方（Turing Network）和源方（Moonriver）链上的XCM版本。
+   确保它们的XCM版本兼容。
+1. **权重**：每个链为XCM指令定义了不同的权重，这会影响计算、存储和gas费用。
+1. **每秒费用**：如果使用接收链的原生代币（TUR）以外的资产支付费用，请确定MOVR到TUR的转换率。
+
+Notes:
+
+在XCM文档的链配置第4节中，我们回顾了各种链配置。
+在本节中，我们将通过演示来说明它们的用法。
+虽然有几个变量需要确定，但一旦你熟悉了它们并建立了一些模板，就可以继续使用它们。
+
+1. 例如，V3向后兼容V2，但它的配置需要设置 `safeXcmVersion`。
+1. XCM指令的权重在每个链上定义的值不同。
+   它指定了执行每个指令所需的计算能力以及存储（PoV大小），并确定了XCM执行的gas费用。
+1. 除了权重之外，如果我们使用接收链的原生代币以外的资产（在本例中为TUR）来支付费用，则该资产的价值必须相对于接收链的原生代币进行转换。
+   `Fee per Second` 定义了MOVR和TUR之间的转换率，假设我们希望在本次交易中使用MOVR支付所有费用。
+
+确定这些参数后，继续构建XCM消息的指令序列。
+
+---v
+
+## 消息元素
+
+为了构建XCM消息，我们使用Moonriver的 `xcmTransactor.transactThroughSigned` 外部调用。
+它需要以下参数：
+
+**目标地址（Destination）**：它指定了目标链，在我们的例子中是Turing Network，在Kusama上通过 `{Relay, 2114}` 标识。
 
 <br />
 
 <figure>
   <img rounded style="width: 900px;" src="./img/xcm-transactor-extrinsic.png" />
-  <figcaption>The parameters in the `transactThroughDerivative()` extrinsic</figcaption>
+  <figcaption>`transactThroughDerivative()` 外部调用中的参数</figcaption>
 </figure>
 
 ---v
 
-**InnerCall**
+**内部调用（InnerCall）**
 
-This represents the encoded call hash of the transaction on the destination chain.
-This value will be passed on to the Transact XCM instruction.
+这表示目标链上交易的编码调用哈希。
+该值将传递给 `Transact` XCM指令。
 
-**Fees**
+**费用（Fees）**
 
-`transactRequiredWeightAtMost` restricts the gas fee of the innerCall, preventing excessive fee token costs.
-Likewise, `overallWeight` sets an upper limit on XCM execution, including the Transact hash.
+`transactRequiredWeightAtMost` 限制了内部调用的gas费用，防止费用代币成本过高。
+同样，`overallWeight` 为XCM执行设置了上限，包括 `Transact` 哈希。
 
 ---v
 
-## Initiating the XCM Message
+## 发起XCM消息
 
 ---v
 
 <img rounded style="width: 770px;" src="./img/xcm-send-1.png"/>
 
-Once all the parameters are set, we can proceed by submitting and signing the transaction.
-The XCM message can be conveniently triggered directly from the extrinsic tab of [polkadot.js apps](https://polkadot.js.org/apps/).
+一旦设置了所有参数，我们就可以继续提交并签署交易。
+XCM消息可以直接从 [polkadot.js应用程序](https://polkadot.js.org/apps/) 的外部调用选项卡中方便地触发。
 
 ---v
 
 <img rounded style="width: 770px;" src="./img/xcm-send-2.png"/>
 
-`DescendOrigin(descend_location)`: The first instruction in the XCM array is DescendOrigin, transferring authority to the user's proxy account on the destination chain.
+`DescendOrigin(descend_location)`：XCM数组中的第一条指令是 `DescendOrigin`，它将权限转移到目标链上用户的代理账户。
 
 ---v
 
 <img rounded style="width: 770px;" src="./img/xcm-send-3.png"/>
 
-`WithdrawAsset` and `BuyExecution`: These two instructions work together to deduct XCM fees from the user's proxy wallet and reserve them for execution.
+`WithdrawAsset` 和 `BuyExecution`：这两条指令协同工作，从用户的代理钱包中扣除XCM费用并预留用于执行。
 
 ---v
 
 <img rounded style="width: 770px;" src="./img/xcm-send-4.png"/>
 
-XCM message - Buy Execution
+XCM消息 - 购买执行
+
 ---v
 
 <img rounded style="width: 770px;" src="./img/xcm-send-5.png"/>
 
-`Transact(origin_type, require_weight_at_most, call)`: The Transact instruction executes the encoded innerCall on the target chain.
-We ensured that the gas cost does not exceed the specified limit by setting requireWeightAtMost during the call.
+`Transact(origin_type, require_weight_at_most, call)`：`Transact` 指令在目标链上执行编码的内部调用。
+我们通过在调用期间设置 `requireWeightAtMost` 来确保gas成本不超过指定的限制。
 
 ---v
 
@@ -234,19 +235,19 @@ We ensured that the gas cost does not exceed the specified limit by setting requ
 
 <div style="font-size: 0.82em;">
 
-`RefundSurplus` and `DepositAsset`: In case there is any remaining fee token after Transact execution, these instructions ensure that they are refunded and transferred to the specified location, typically the user's wallet.
+`RefundSurplus` 和 `DepositAsset`：如果在 `Transact` 执行后还有剩余的费用代币，这些指令将确保它们被退还并转移到指定的位置，通常是用户的钱包。
 
-After successfully firing the message, XCM events from both the sender and recipient parachains should appear in the Polkadot.js app Network tab.
+成功发送消息后，发送方和接收方平行链的XCM事件应显示在Polkadot.js应用程序的网络选项卡中。
 
 </div>
 
 ---v
 
-## Inspection of the message
+## 消息检查
 
-Once the transaction above is submitted and finalized on the chain, we can use the xcm-tools built by the Moonbeam team to inspect the XCM message.
-The code and scripts for the tool are listed in [this Github repo](https://github.com/Moonsong-Labs/xcm-tools).
-An example of the script is shown below:
+上述交易在链上提交并最终确定后，我们可以使用Moonbeam团队构建的xcm-tools来检查XCM消息。
+该工具的代码和脚本列在 [此Github仓库](https://github.com/Moonsong-Labs/xcm-tools) 中。
+脚本示例如下：
 
 `yarn xcm-decode-para --w wss://wss.api.moonbeam.network --b 1649282 --channel hrmp --p 2000`
 
@@ -254,7 +255,7 @@ An example of the script is shown below:
 
 <pba-flex center>
 
-The output of the script reflects the sequence of instructions we constructed for the XCM message earlier.
+脚本的输出反映了我们之前为XCM消息构建的指令序列。
 
 1. `DescendOrigin`
 1. `WithdrawAsset`
@@ -267,14 +268,14 @@ The output of the script reflects the sequence of instructions we constructed fo
 
 ---
 
-# Client code (node.js)
+# 客户端代码（node.js）
 
-After proving that the XCM message above executes correctly, we can replicate the procedure from the client of a dApp.
-Below is a node.js code snippet we created for this particular demo.
+在证明上述XCM消息正确执行后，我们可以从去中心化应用（dApp）的客户端复制该过程。
+以下是我们为本次演示创建的node.js代码片段。
 
-👉 [xcm-demo Github Repo](https://github.com/OAK-Foundation/xcm-demo/blob/master/src/moonbeam/moonbase-alpha.js) 👈
+👉 [xcm-demo Github仓库](https://github.com/OAK-Foundation/xcm-demo/blob/master/src/moonbeam/moonbase-alpha.js) 👈
 
-To run the program, clone it using git and execute the following command:
+要运行该程序，请使用git克隆它并执行以下命令：
 
 ```sh
 PASS_PHRASE=<PASS_PHRASE> PASS_PHRASE_ETH=<PASS_PHRASE_ETH> npm run moonbase-alpha
@@ -282,7 +283,7 @@ PASS_PHRASE=<PASS_PHRASE> PASS_PHRASE_ETH=<PASS_PHRASE_ETH> npm run moonbase-alp
 
 ---v
 
-### Example
+### 示例
 
 <div style="font-size: 0.7em;">
 
@@ -320,66 +321,32 @@ const tx = parachainHelper.api.tx.xcmTransactor.transactThroughSigned(
 
 Notes:
 
-As you can see from the code, there are several preparation steps leading up to the main code block, which constructs the XCM message.
-With the help of the following code, we can easily dispatch the message repeatedly and test out different input values.
+从代码中可以看出，在构建XCM消息的主要代码块之前有几个准备步骤。
+借助以下代码，我们可以轻松地重复发送消息并测试不同的输入值。
 
 ---
 
-## Debugging Live
-
-When working with XCM messages, potential issues can arise in two areas: during message construction and during transaction execution on the target chain.
-
+## 实时调试
+在处理XCM消息时，可能会在两个方面出现潜在问题：消息构建过程以及在目标链上执行交易的过程。
 ---v
-
-**Message Formatting Issues**: If the XCM message is malformed, the recipient chain may not process it correctly.
-To interpret XCM messages on-chain, we can use the xcm-tool covered in Chapter 5.
-Some common problems and solutions include:
-
-- Incorrect Fee and Weight Inputs: Ensure that the maximum weight specified in the XCM call is accurate.
-  If the actual weight slightly exceeds the limit, the recipient chain might deny the call.
-  In this case, increase the maximum weight parameter and retry.
-- Version Mismatch: A VersionMismatch error occurs when the recipient chain does not accept the Multi-location version specified in Destination or FeeAsset.
-  Check the recipient XCM version and adjust the multi-location version to V2 or V3 accordingly.
-
+**消息格式问题**：如果XCM消息格式错误，接收链可能无法正确处理它。要在链上解读XCM消息，我们可以使用第5章介绍的xcm - tool工具。一些常见问题及解决方案如下：
+ - **费用和权重输入错误**：确保XCM调用中指定的最大权重准确无误。如果实际权重略超过限制，接收链可能会拒绝该调用。在这种情况下，增大最大权重参数并重新尝试。
+ - **版本不匹配**：当接收链不接受目标地址（Destination）或费用资产（FeeAsset）中指定的多位置（Multi - location）版本时，会出现版本不匹配错误。检查接收链的XCM版本，并相应地将多位置版本调整为V2或V3。
 ---v
-
-**Transact Encoded Call Issues**: To examine encoded call hash in the Transact instruction, locate the specific transaction on the recipient chain, which will be an event occurring after `XcmMessageQueue.success`.
-Unfortunately, there is no automated tool to directly correlate `XcmMessageQueue.success` with the event of the encoded call.
-However, we can manually analyze it by matching the message hash with the source chain.
-
+**执行编码调用问题**：要检查“执行”（Transact）指令中的编码调用哈希，需在接收链上定位特定交易，该交易是在“XcmMessageQueue.success”事件之后发生的。遗憾的是，没有自动化工具可以直接将“XcmMessageQueue.success”与编码调用事件关联起来。不过，我们可以通过将消息哈希与源链进行匹配来手动分析。
 Notes:
-
-does anybody have a great tool to correlate the XcmMessageQueue.success with the Transact hash?
-
+有没有人知道有什么好工具可以将“XcmMessageQueue.success”与“执行”哈希关联起来？
 ---
-
-## Summary
-
-In this section, we explained the backbone of a recurring payment dApp leveraging XCM.
-
+## 总结
+在本节中，我们讲解了利用XCM实现定期支付的去中心化应用（dApp）的核心要点。
 ---v
-
-### Lesson Recap
-
-To create a successful XCM message between chains, ensure you have the following elements prepared:
-
-- Type: Identify whether it's VRP (Vertical Relay Process) or HRMP (Horizontal Relay Process), representing the two parties involved in the communication.
-
-- Goal: Determine the specific extrinsic to call or what actions will be included in the transaction.
-
-- Details: Adjust the chain configurations as needed.
-  Decide on DescendOrigin, choosing between descending to the user's remote wallet or using a parachain’s sovereign account.
-  Also, specify the Sequence, outlining the instructions to be included in the message.
-
+### 课程回顾
+要在链之间成功创建XCM消息，请确保准备好以下要素：
+ - **类型**：确定是垂直中继过程（VRP，Vertical Relay Process）还是水平中继过程（HRMP，Horizontal Relay Process），这代表了通信涉及的双方。
+ - **目标**：确定要调用的具体外部函数，或者交易中要包含哪些操作。
+ - **细节**：根据需要调整链配置。确定“DescendOrigin”的设置，即选择将权限下放到用户的远程钱包，还是使用平行链的主权账户。另外，指定消息中包含的指令序列。
 ---v
-
-After preparing these elements, assemble them to form the XCM message and carefully troubleshoot it.
-Once you establish a reliable template, consider automating the construction process using the polkadot.js JavaScript library.
-
-Alternatively, you can write a wrapper in the parachain's Rust code, such as the commonly used `xTokens.transferMultiasset` or Moonriver’s `xcmTransactor.transactThroughSigned`.
-
+准备好这些要素后，将它们组合起来形成XCM消息，并仔细排查问题。一旦建立了可靠的模板，可以考虑使用polkadot.js JavaScript库实现构建过程的自动化。或者，你也可以在平行链的Rust代码中编写一个包装器，比如常用的“xTokens.transferMultiasset”，或者Moonriver的“xcmTransactor.transactThroughSigned”。
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 提问环节 

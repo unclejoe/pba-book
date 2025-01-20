@@ -4,349 +4,348 @@ description: This is about how securely deploy your web3 infrastructure.
 duration: 50 minutes
 ---
 
-# Web3 Infrastructure Security
+# Web3 基础设施安全
 
 Notes:
 
-I'm going to speak about how securely deploy your web3 infrastructure.
-But, instead of talking about very common information topics like best practices, strong authentication and others well discussed like firewalling, I’m going to talk about some often overlooked problems that significantly affects web3 infrastructure protection and about how they should be handled.
+我将谈论如何安全地部署你的 Web3 基础设施。
+但我不会谈论那些非常常见的信息主题，比如最佳实践、强认证以及其他像防火墙这样被广泛讨论的话题，我将谈论一些经常被忽视的问题，这些问题会显著影响 Web3 基础设施的保护，以及应该如何应对这些问题。
 
-But if you want to ask me about firewalling, welcome to the Q&A section!
+但如果你想向我询问关于防火墙的问题，欢迎来到问答环节！
 
 ---
 
-## Overview
+## 概述
 
 <pba-flex left>
 
-- Concentration and deplatforming risks
-  - Digging into the Solana case (end of 2022)
-  - Selection of providers
-  - Mitigation of the risks
-- Supply chain attacks
-  - Where it can happen and how to prevent
-- Two uncommon attacks against infrastructure
-- Tips about key and password management
+- 集中化和停用风险
+  - 深入研究 Solana 案例（2022 年底）
+  - 服务提供商的选择
+  - 风险的缓解措施
+- 供应链攻击
+  - 可能发生的地点以及如何预防
+- 两种针对基础设施的不常见攻击
+- 关于密钥和密码管理的提示
 
 </pba-flex>
 
 ---
 
-## Deplatforming risk
+## 停用风险
 
 <pba-flex center>
 
-- Deplatforming happens when some resource is removed from service by a provider.
-- Web3 is supposed to be decentralized, but it may rely on the centralized infrastructure behind it, with some legal and technical rules.
-  Therefore, this risk should not be overlooked.
+- 当某个资源被服务提供商停止服务时，就会发生停用。
+- Web3 应该是去中心化的，但它可能依赖于其背后的中心化基础设施，并且受到一些法律和技术规则的约束。
+因此，这种风险不容忽视。
 
 </pba-flex>
 
 Notes:
 
-The first overlooked risk is the deplatforming risk.
-Deplatforming is, briefly speaking, when someone or something, suddenly goes offline without a wish to do it.
-It can happen on any layer of the technological stack, with everyone/everything, with proper legal ground or not.
-Today web3 and cryptoassets are receiving a lot of attention from different regulators.
-If some platform decides that your web3 stuff is unwanted, they can just suspend the accounts and delete the data.
-From this perspective, web3 infrastructure, which is running on top of centralized infrastructure, is still unfortunately partly centralized.
+第一个被忽视的风险是停用风险。
+简而言之，停用是指某人或某物在没有意愿的情况下突然离线。
+它可能发生在技术栈的任何层面，涉及到任何人或任何事物，无论是否有合法依据。
+如今，Web3 和加密资产受到了不同监管机构的大量关注。
+如果某个平台认为你的 Web3 相关内容不受欢迎，他们可以直接暂停你的账户并删除你的数据。
+从这个角度来看，运行在中心化基础设施之上的 Web3 基础设施仍然不幸地部分中心化。
 
 ---
 
-### Solana case (Nov. 22)
+### Solana 案例（2022 年 11 月）
 
 <img rounded style="width: 1000px" src="./img/solana.png" />
 
-[Web source: 1000 solana validators go offline by TheBlock](https://www.theblock.co/post/182283/1000-solana-validators-go-offline-as-hetzner-blocks-server-access)
+[网络来源：《1000 个 Solana 验证节点下线》，TheBlock 报道](https://www.theblock.co/post/182283/1000-solana-validators-go-offline-as-hetzner-blocks-server-access)
 
 Notes:
 
-At the beginning of November 2022, the nodes of Solana in Hetzner, were removed at one moment.
-A big pain for the node operators, a major reputational risk for the network.
-Solana tokens became cheaper the next few days (to be honest, I can’t say that there is a straight connection between the event and the token price, but anyway).
+2022 年 11 月初，Hetzner 中的 Solana 节点突然被移除。
+这给节点运营商带来了巨大的痛苦，也给网络带来了重大的声誉风险。
+在接下来的几天里，Solana 代币的价格下跌了（说实话，我不能说这个事件和代币价格之间有直接的联系，但不管怎样）。
 
 ---
 
-### Solana case. Going deeper
+### Solana 案例：深入剖析
 
-_What’s Hetzner in a nutshell? Why did many people go to it?_
+_简而言之，Hetzner 是什么？为什么这么多人选择它？_
 
-- A German Hosting Provider
-- Gives people extremely cheap bare metal servers
-- Price per CPU/RAM is very low
-- True power of raw non-virtualized hardware
-- Control over the CPU/RAM for people who want to control the environment.
+- 一家德国的主机服务提供商
+- 为用户提供极其便宜的裸金属服务器
+- 每个 CPU/内存的价格非常低
+- 真正的非虚拟化硬件的强大性能
+- 对于那些想要控制环境的人来说，可以对 CPU/内存进行控制。
 
 Notes:
 
-Sounds good, isn’t it? But, Germany has high electricity prices, human work is expensive, and the hosting is still so cheap, why?
+听起来不错，不是吗？但是，德国的电价很高，人工成本也很高，而主机服务却仍然如此便宜，这是为什么呢？
 
 ---
 
-### Solana case. Going deeper
+### Solana 案例：深入剖析
 
-_Why is Hetzner so cheap?_
+_为什么 Hetzner 这么便宜？_
 
-- Mostly consumer-level hardware, not “robust enterprise servers” in terms of Service Level Agreement.
-  It can be seen if you see the available configurations.
-- _Covert expectations of low resource load from the customers_
+- 大多是消费级硬件，从服务级别协议的角度来看，不是“坚固的企业级服务器”。
+如果你查看可用的配置，就可以看出这一点。
+- _对客户的低资源负载有潜在期望_
 
 Notes:
 
-The first is almost clear.
-Now lets explain what the second means.
+第一个原因几乎是显而易见的。
+现在让我们来解释一下第二个原因的含义。
 
 ---
 
-### ToS/ToU/EULA that people don’t read
+### 那些没人会去阅读的服务条款/使用条款/最终用户许可协议
 
-_A small cool story first_
+_先讲一个小趣事_
 
 <img rounded style="width: 1400px" src="./img/eula.png" />
 
-[Web source: PCMatic](https://www.pcmatic.com/blog/it-pays-to-read-license-agreements-7-years-later/)
+[网络来源：PCMatic](https://www.pcmatic.com/blog/it-pays-to-read-license-agreements-7-years-later/)
 
 Notes:
 
-There is a small joke, which is actually not a joke, about the fact that people just skip over the reading of license agreements.
-Some company offered a prize for reading ToS till the end, by placing an easter egg in the text of ToS.
+有一个小笑话，其实并不是笑话，那就是人们总是跳过阅读许可协议。
+有一家公司在服务条款的文本中放置了一个彩蛋，为那些从头到尾阅读服务条款的人提供奖品。
 
 ---
 
-### Hetzner strikes back
+### Hetzner 的反击
 
 <img rounded style="width: 1400px" src="./img/hetzner.png" />
 
-[Web source: Reddit](https://www.reddit.com/r/hetzner/comments/wucxs4/comment/ilfoj8u/)
+[网络来源：Reddit](https://www.reddit.com/r/hetzner/comments/wucxs4/comment/ilfoj8u/)
 
 Notes:
 
-Literally Hetzner said: we don’t care about your consensus (PoW vs PoS), we just call everything “mining”, please remove your software or we do it by ourselves.
+Hetzner 实际上是这么说的：我们不在乎你的共识（工作量证明 vs 权益证明），我们把所有的活动都称为“挖矿”，请你自行移除你的软件，否则我们会帮你移除。
 
 ---
 
-### But… Why and how?
+### 但是……为什么以及如何做到的？
 
-Q: **Why** do providers act against blockchain, and **how** do they detect it?
+问题：**为什么**服务提供商会针对区块链采取行动，以及**如何**检测到区块链活动？
 
-- A1: Business model: _covert expectations of low resource load from the customers:_
-  - Nominal link speed is probably not fully guaranteed, but shared.
-  - Crypto databases tear the ordinary disks.
-    They die 10x faster.
-  - The nodes are attacked 24x7.
-    Headache for network engineers.
-  - Server consumes not “average” power, but more close to the limit.
-- A2: More direct reasons: regulations/sanctions/other paper blockers.
+- 答案 1：商业模式：_对客户的低资源负载有潜在期望_：
+  - 名义链接速度可能无法完全保证，而是共享的。
+  - 加密数据库会对普通磁盘造成损害。
+它们的损坏速度会快 10 倍。
+  - 节点会受到 24 小时不间断的攻击。
+这让网络工程师头疼不已。
+  - 服务器消耗的不是“平均”功率，而是更接近功率极限。
+- 答案 2：更直接的原因：法规/制裁/其他文件限制。
 
 Notes:
 
-In short, the hardware resources are shared where possible, the hardware is low-level, and the business model is similar to insurance companies or banks from a far perspective.
-If all of the users demand their resources at one time, the company just doesn’t have them available.
+简而言之，硬件资源在可能的情况下是共享的，硬件水平较低，从长远来看，商业模式类似于保险公司或银行。
+如果所有用户同时需要他们的资源，公司可能无法提供。
 
 ---
 
-### How do ISPs detect blockchain?
+### 互联网服务提供商（ISP）是如何检测到区块链的？
 
-- Q: And why a Blockchain node wasn't banned immediately?
-- A: It has not been detected on time, probably.
-  Or the size of a particular setup is not worth the deplatforming efforts.
+- 问题：为什么区块链节点没有立即被封禁？
+- 答案：可能是没有及时检测到，或者特定设置的规模不值得进行停用处理。
 
-Let’s talk about the detection.
+让我们来谈谈检测的方法。
 
 ---
 
-### How do ISPs detect blockchain?
+### 互联网服务提供商（ISP）是如何检测到区块链的？
 
-Joke: how does a provider see your node:
+笑话：服务提供商是如何看到你的节点的：
 
 <img rounded style="width: 600px" src="./img/rack.png" />
 
 Notes:
 
-It is a joke of course, but how the provider engineer can see your web3 server.
+这当然是个笑话，但服务提供商的工程师是如何看到你的 Web3 服务器的呢？
 
 ---
 
-### How do ISPs detect blockchain?
+### 互联网服务提供商（ISP）是如何检测到区块链的？
 
-- Known “bad” DNS names resolution and contact with specific IP addresses
-- Memory (RAM) Scanning for virtual machines:
-- Example, Google Cloud case for [their VMs](https://cloud.google.com/security-command-center/cryptomining-protection-program#section-4).
+- 已知的“不良”DNS 名称解析以及与特定 IP 地址的联系
+- 虚拟机的内存（RAM）扫描：
+- 例如，谷歌云针对[其虚拟机](https://cloud.google.com/security-command-center/cryptomining-protection-program#section-4)的案例。
 
 Notes:
 
-In short, it is very hard to hide the node.
-Tricks like VPN, obfuscation give a lot of performance penalty.
+简而言之，很难隐藏节点。
+像使用虚拟专用网络（VPN）、混淆等技巧会带来很大的性能损失。
 
 ---
 
-### Okay, and how to mitigate that?
+### 好吧，那该如何缓解这种风险呢？
 
-Moving to platform independency:
+转向平台独立性：
 
-- Decomposition of the solution layers from the beginning is the best friend (opposite to the classical monolithic configuration, which is target-dependent)
-- Modern DevOps and CI/CD
-- Partial “landing” of the infrastructure from the clouds
-- Client-side only websites (no backend)
+- 从一开始就对解决方案的各个层进行分解是最好的方法（与经典的单体配置相反，单体配置是针对特定目标的）
+- 现代 DevOps 和持续集成/持续交付（CI/CD）
+- 部分将基础设施从云端“落地”
+- 仅客户端的网站（无后端）
 
 Notes:
 
-It is impossible to mitigate this risk in full.
+不可能完全消除这种风险。
 
 ---
 
-## Deplatforming risk mitigation
+## 停用风险的缓解措施
 
-Idea #1. Decomposition of the solution
+想法 #1：解决方案的分解
 
 <img rounded style="width: 1000px" src="./img/stack.png" />
 
 Notes:
 
-Instead of having all-in-one solution (example: manually go to the server and compile/configure from scratch, or use a specific toolkit for a single provider like AWS), we can have the following independent components, even for a couple of servers.
+我们不采用一体化的解决方案（例如：手动登录服务器并从头开始编译/配置，或者使用针对单个服务提供商（如 AWS）的特定工具包），而是可以拥有以下独立的组件，即使对于几台服务器也是如此。
 
-- Build services - produce clean, ready to use, tested images (containers, virtual machines). Key target: readiness (achievable by regular testing).
-- Provider-agnostic provisioning of the infrastructure - makes a “landscape” to fill it with the services. Key target: minimal dependencies from a particular vendor.
-- Automatic server configuration and delivery of the services: Key target: no manual intervention, clear feedback about actions.
-- Monitoring. It gives the health metrics/feedback in the long run.
+- 构建服务 - 生成干净、可直接使用、经过测试的镜像（容器、虚拟机）。关键目标：准备就绪（通过定期测试实现）。
+- 与服务提供商无关的基础设施配置 - 构建一个“环境”来填充服务。关键目标：尽量减少对特定供应商的依赖。
+- 自动服务器配置和服务交付：关键目标：无需人工干预，对操作有清晰的反馈。
+- 监控。从长远来看，它提供健康指标/反馈。
 
-It is not a full set of blocks, but the major parts.
-
----
-
-### Modern DevOps and CI/CD
-
-Idea #2. _One of the solutions_ - IaC:
-
-- Infrastructure as a code (IaC) approach. Clear, declarative, history trackable configuration storage
-- IaC can utilize regular CI/CD processes to control provision and configuration for servers.
-- Separation of provision (example - Terraform) and configuration (example - Ansible) makes the solution close to be provider-agnostic.
-- Only really unique data is backup-ed or synchronized - quick move & restore procedures.
+这不是完整的组件集，但却是主要部分。
 
 ---
 
-### Partial “landing” of the external dependencies
+### 现代 DevOps 和持续集成/持续交付（CI/CD）
 
-Idea #3. Working with dependencies.
+想法 #2：_一种解决方案_ - 基础设施即代码（IaC）：
 
-- Instead of having just one ecosystem, be adaptive to another one. Example: Github <-> Gitlab (caveat: up to 100% of additional work).
-- Use configuration bastion approach (example: your own Gitlab server).
-- Have multiple service image registries and other storages
-- Fork 3rd party local source code to your repos (to prevent abandoning of dependencies and supply chain attacks caused by abandoning).
-- Use centralized facilities? Typical: a single RPC server? Run your own or use light clients.
-
----
-
-### Deplatforming risk mitigation
-
-**Final objective**: to find a proper balance between duplication of efforts and the time to recover if a resource disappears.
+- 基础设施即代码（IaC）方法。清晰、声明式、可跟踪历史的配置存储
+- IaC 可以利用常规的 CI/CD 流程来控制服务器的配置和供应。
+- 将供应（例如 - Terraform）和配置（例如 - Ansible）分离，使解决方案几乎与服务提供商无关。
+- 只对真正独特的数据进行备份或同步 - 快速迁移和恢复流程。
 
 ---
 
-### Concentration risk
+### 外部依赖的部分“落地”
 
-One picture that says everything (on Polkadot - the whole ecosystem):
+想法 #3：处理依赖关系。
+
+- 不要只依赖一个生态系统，要适应另一个生态系统。例如：Github <-> Gitlab（注意：可能需要额外 100% 的工作量）。
+- 使用配置堡垒方法（例如：你自己的 Gitlab 服务器）。
+- 拥有多个服务镜像注册表和其他存储
+- 将第三方本地源代码分叉到你的代码仓库（以防止依赖项被放弃以及由此导致的供应链攻击）。
+- 使用集中式设施？典型的如：单个 RPC 服务器？运行你自己的服务器或使用轻客户端。
+
+---
+
+### 停用风险的缓解措施
+
+**最终目标**：在重复工作和资源消失时的恢复时间之间找到适当的平衡。
+
+---
+
+### 中心化风险
+
+一张图说明了一切（关于 Polkadot - 整个生态系统）：
 
 <img rounded style="width: 1200px" src="./img/concentration.png" />
 
-[Web Source: Polkawatch](https://polkadot.polkawatch.app/network/)
+[网络来源：Polkawatch](https://polkadot.polkawatch.app/network/)
 
 ---
 
-### Concentration risk
+### 集中化风险
 
-- It is a consequence of decentralization. People are free to do this.
-- About 17% of DOT rewards are coming to nodes in Hetzner (July 2023).
-- Four of the major providers take 50% of the rewards (July 2023).
+- 这是去中心化的一个后果。人们可以自由地这样做。
+- 约 17% 的 DOT 奖励流向了 Hetzner 中的节点（2023 年 7 月）。
+- 四大主要服务提供商获得了 50% 的奖励（2023 年 7 月）。
 
 Notes:
 
-This is a concentration risk in one picture. Since the web3 world is decentralized, there is no proper handle to prevent this. However, node operators should realize that their individual actions affect the whole ecosystem.
+这张图展示了集中化风险。由于 Web3 世界是去中心化的，没有合适的方法来防止这种情况。然而，节点运营商应该意识到，他们的个人行为会影响整个生态系统。
 
 ---
 
-## Caveats of the supply chain management
+## 供应链管理的注意事项
 
-- Let’s assume that we have deplatforming-resistance infrastructure and some well known preventions in place. Your password is not your name plus your birthday.
+- 假设我们有抗停用的基础设施，并且已经采取了一些众所周知的预防措施。你的密码不是你的名字加上你的生日。
 
-What’s next?
+接下来呢？
 
-- Now let’s talk about the modern issues of supply chain management in the infrastructure.
-- Supply chain attack: when someone compromises only a small component of a product and gets access to the whole product.
-- The same can be applied to any part on a random entity (orgs, dev libs, people relations)
-
----
-
-## Supply chain protection basics
-
-Like dependencies in the regular code, all of the infrastructure components can be compromised by supply chain attacks as well. The most risky components are ... (spoiler - almost all).
+- 现在让我们来谈谈基础设施中供应链管理的现代问题。
+- 供应链攻击：当有人入侵产品的一个小组件，从而获得对整个产品的访问权限。
+- 同样的情况也可能发生在任何随机实体（组织、开发库、人际关系）的任何部分。
 
 ---
 
-### Where to expect the attack
+## 供应链保护的基础知识
 
-- Integrations that can’t be restricted by scope to a specific need. Example: [GitHub OAuth token leak'22](https://github.blog/2022-04-15-security-alert-stolen-oauth-user-tokens/)
-- Yet another small component that solves once again a well known problem. Usage of it increases the attack surface.
-- Components that don’t have proper support. Can be abandoned and squatted one day.
-- Suddenly, most popular products, but for another reason: be careful with the names and scopes to avoid [typosquatters](https://en.wikipedia.org/wiki/Typosquatting).
+就像常规代码中的依赖项一样，所有的基础设施组件也可能受到供应链攻击的影响。最危险的组件是……（剧透 - 几乎所有组件）。
 
 ---
 
-### Basic prevention of the supply chain attacks
+### 可能会受到攻击的地方
 
-- Prevention of replacing the content of dependency (80% result by 20% of efforts):
-  - Scoping dependencies. For some ecosystems (ex. - Docker, NPM) - the same thing can be looked up in different locations. Specific lookup locations (repos) are highly recommended.
-  - Pinning dependency to a specific commit (e.g. lib@aaabbbccc…). Pinning to a tag (lib@tagname) is not efficient. Commit is a hash, tag is human-defined.
-  - Forking and re-targeting the dependency to the new controllable fork.
-
----
-
-### Basic prevention of the supply chain attacks
-
-- Increasing the dependency quality (20% of result by 80% efforts):
-  - For advanced usage: tracking the vulnerabilities related to the component (update or downgrade the version)
-  - self reviewing the code of the component
-  - extracting the direct functionality from the dependency.
+- 无法将集成范围限制在特定需求的集成。例如：[2022 年 GitHub OAuth 令牌泄露事件](https://github.blog/2022-04-15-security-alert-stolen-oauth-user-tokens/)
+- 另一个解决常见问题的小组件。使用它会增加攻击面。
+- 没有适当支持的组件。可能有一天会被放弃并被他人占用。
+- 突然，最受欢迎的产品，但原因不同：小心名称和范围，以避免[域名仿冒](https://en.wikipedia.org/wiki/Typosquatting)。
 
 ---
 
-## Uncommon infrastructure attacks
+### 供应链攻击的基本预防措施
 
-Some examples.
-
-Simple, but very efficient.
-
----
-
-### Abusing of CI/CD misconfigurations
-
-- Abusing CI/CD by triggering the pipeline with modified code, which makes malicious actions - steal your repo secrets or break your CI/CD.
-- Mitigation: understand the triggering event, restrict who can trigger the CI and set the scopes for the CI/CD:
-  - Runners
-  - Secrets
-  - Other components
+- 防止依赖项内容被替换（80% 的效果来自 20% 的努力）：
+  - 限定依赖项的范围。对于某些生态系统（例如 - Docker、NPM） - 相同的内容可以在不同的位置查找。强烈建议使用特定的查找位置（代码仓库）。
+  - 将依赖项固定到特定的提交（例如 lib@aaabbbccc…）。固定到标签（lib@tagname）效率不高。提交是哈希值，标签是人为定义的。
+  - 分叉并将依赖项重新指向新的可控制的分叉。
 
 ---
 
-### Social engineering: forging the GIT commits
+### 供应链攻击的基本预防措施
 
-**We can commit on behalf of someone else!** But there is a small detail…
-
----
-
-### Git doesn’t have authentication
-
-How does it work:
-
-GIT itself is not responsible for authentication. Everyone can set random username and email in the commit metadata, and to push the branch or create a pull request.
-
-It is the nature of git. A great field for social engineering!
+- 提高依赖项的质量（20% 的效果来自 80% 的努力）：
+  - 对于高级用法：跟踪与组件相关的漏洞（更新或降级版本）
+  - 自行审查组件的代码
+  - 从依赖项中提取直接功能。
 
 ---
 
-### Exploiting git
+## 不常见的基础设施攻击
 
-Get a target repo, find a "victim" - a popular person,<br />uses mixed verified and unverified commits:
+一些例子。
+
+简单但非常有效。
+
+---
+
+### 滥用持续集成/持续交付（CI/CD）的错误配置
+
+- 通过触发包含修改后代码的管道来滥用 CI/CD，从而进行恶意操作 - 窃取你的代码仓库密钥或破坏你的 CI/CD。
+- 缓解措施：了解触发事件，限制谁可以触发 CI，并设置 CI/CD 的范围：
+  - 运行器
+  - 密钥
+  - 其他组件
+
+---
+
+### 社会工程：伪造 GIT 提交
+
+**我们可以代表别人进行提交！** 但这里有一个小细节……
+
+---
+
+### Git 没有身份验证
+
+它是如何工作的：
+
+GIT 本身不负责身份验证。任何人都可以在提交元数据中设置随机的用户名和电子邮件，然后推送分支或创建拉取请求。
+
+这是 Git 的特性。这是社会工程的一个绝佳领域！
+
+---
+
+### 利用 Git
+
+获取目标代码仓库，找到一个“受害者” - 一个受欢迎的人，<br />该人使用了混合的已验证和未验证的提交：
 
 <img rounded style="width: 1000px" src="./img/commit-forgery1.png" />
 
@@ -355,106 +354,71 @@ Get a target repo, find a "victim" - a popular person,<br />uses mixed verified 
 
 ---
 
-### Exploiting git
-
-Clone the repo and find the victim’s git metadata
+### 利用Git进行攻击
+克隆代码仓库并找到受害者的Git元数据
 
 `git show --quiet 6355f3a`
 
 <img style="width: 800px" src="./img/commit-forgery2.png" />
-
 ---
-
-### Exploiting git
-
-Change the local git settings.
-
+### 利用Git进行攻击
+更改本地Git设置。
 ```sh
 git config commit.gpgSign false
 git config user.email v@buterin.com
 git config user.name "Vitalik Buterin"
 ```
-
 ---
-
-### Exploiting git
-
-Make a definitely trustworthy commit:
-
+### 利用Git进行攻击
+进行一个看似绝对可信的提交：
 ```sh
 echo "I'm Vitalik Buterin, trust me, send all the ethers on ..." > message.txt
 git add message.txt
 git commit -a -m "wallet update"
 git push origin master
 ```
-
-**What stops the app-ocalypse**: an attacker needs write permissions to push, which is defined by credentials from the code storage.
-
-But the attacker still can play around Pull Requests, mix forged/non-forged commits, etc.
-
+**阻止这场“应用灾难”的因素**：攻击者需要推送的写入权限，而这是由代码存储库中的凭证来定义的。但攻击者仍然可以在拉取请求（Pull Requests）上做手脚，混淆伪造和未伪造的提交等。
 ---
-
-### Exploiting git
-
-See the result (a fork was created to have write access):
+### 利用Git进行攻击
+查看结果（为了获得写入权限创建了一个分支）：
 
 <https://github.com/pavelsupr/research/commit/99cb1cbe3b729cfada10aa53d531b5f2bcb5aa7f>
 
 <img rounded style="width: 1000px" src="./img/commit-forgery3.png" />
-
 ---
-
-### Mitigation from commit forgery
-
-- Commit signing + Vigilant mode, protection of the branches, reviewing the pull request about what’s going on - and reviewing them one more time!
-
-- Dismiss a pull request when new commits arrived
-- Caveat: impossible to properly revoke the signing key - all the previous commits will be considered as “unverified” in the Vigilant mode.
-
-- Solution: use hardware keys, which is very hard to compromise + destroy all the software keys, but don’t remove the public key fingerprint from the repo storage.
-
+### 防范提交伪造的措施
+- 提交签名 + 严格模式，保护分支，审查拉取请求的内容，并且还要再次审查！
+- 当有新提交到达时，驳回拉取请求
+- 注意事项：无法妥善撤销签名密钥——在严格模式下，之前所有的提交都会被视为“未验证”。
+- 解决方案：使用硬件密钥，硬件密钥很难被破解，同时销毁所有软件密钥，但不要从代码仓库存储中删除公钥指纹。
 ---
-
-## Secure key management on the nodes
-
-Polkadot-specific.
-
+## 节点上的安全密钥管理
+针对波卡（Polkadot）的相关内容。
 ---
-
-### Basics
-
-- A separated browser profile or/and OS account for web3 operations
-- Lock this profile with a password to prevent stealing the data
-- No 3rd-party operations and browser extensions on the “secured” profile
-  - Or, replacing all the above: A separated device as an ideal paranoid mode option
-- All significant accounts only on a cold wallet + paper seed backup (ref: Banana Split)
-- Client disk encryption and other device health checks
-
+### 基础要点
+- 为Web3操作使用单独的浏览器配置文件或/和操作系统账户
+- 用密码锁定此配置文件以防止数据被盗取
+- 在“安全”配置文件上不进行第三方操作且不安装浏览器扩展程序
+  - 或者，作为一种极端安全的选择，使用单独的设备来替代上述所有措施
+- 所有重要账户仅存储在冷钱包中，并进行纸质助记词备份（参考：Banana Split）
+- 进行客户端磁盘加密和其他设备健康检查
 ---
-
-### Node running
-
-- Node accounts: proper combination of Stash and Staking proxy (prev. Controller) accounts
-  - Stash - use cold wallet
-  - Controller != Stash
-- Remember that a node process has to store some keys on the disk (session keys). Keep the node isolated
-- Apply all the well known measures: firewalling, strong passwords, 2FA, disk encryption, etc.
-- Containers are NOT protecting your node from the OS/kernel
-
+### 节点运行
+- 节点账户：正确组合Stash账户和质押代理（之前称为Controller）账户
+  - Stash账户 - 使用冷钱包
+  - Controller账户不等于Stash账户
+- 记住，节点进程必须在磁盘上存储一些密钥（会话密钥）。保持节点的隔离
+- 采用所有常见的安全措施：设置防火墙、使用强密码、开启双因素认证、进行磁盘加密等。
+- 容器并不能保护你的节点免受操作系统/内核层面的攻击
 ---
-
-### Password management for the infrastructure
-
-- Use keys instead of passwords where possible
-- SSH and GPG keys on hardware keys (one primary key and backup)
-- 2FA everywhere, hardware based when possible
-- Use password manager (preferable with API), don't re-use passwords
-- NEVER place any secrets in the code or files, even for testing, use environment variables instead
-- Advanced: connect your code with the API of your password manager
-- (life hack only for Bash users) one space before `export VAR=SECRET_VALUE` command will not place this command in the Bash history
-
+### 基础设施的密码管理
+- 尽可能使用密钥代替密码
+- 将SSH和GPG密钥存储在硬件密钥上（一个主密钥和一个备份密钥）
+- 尽可能在各处使用双因素认证，优先选择基于硬件的认证方式
+- 使用密码管理器（最好带有API），不要重复使用密码
+- 永远不要在代码或文件中放置任何机密信息，即使是用于测试，应使用环境变量代替
+- 进阶操作：将你的代码与密码管理器的API进行连接
+- （仅适用于Bash用户的实用技巧）在`export VAR=SECRET_VALUE`命令前加一个空格，这样该命令就不会被记录到Bash历史记录中
 ---
-
 <!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+# 提问环节

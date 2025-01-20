@@ -1,4 +1,4 @@
-# Parachain XCM Configuration
+# 平行链 XCM 配置
 
 <!-- markdown-link-check-disable -->
 <center>

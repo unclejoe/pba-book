@@ -1,3 +1,3 @@
 # 💱 XCM
 
-The cross consensus messaging format covered from first principals to use in protocols.
+作为协议中以第一性原理使用的跨共识消息传递格式。

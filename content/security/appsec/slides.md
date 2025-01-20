@@ -4,401 +4,401 @@ description: Application Security session slides
 duration: 60 min
 ---
 
-Security is a matter of balance, not too much, not less. Only **adequate security**.
+# 应用程序安全
+
+---
+
+安全是一个平衡的问题，不多也不少。只有**适当的安全**。
 
 <img rounded style="height: 600px" src="./img/adequate-security.jpg" />
 
 ---
 
-Security is about your **residual risks**, not what you have prevented.
+安全关乎你的**残余风险**，而不是你已经防范了什么。
 
 <img rounded style="height: 600px" src="./img/residual-risk.jpg" />
 
 ---
 
-# Application Security
-
----
-
-## Overview
+## 概述
 
 <pba-flex center>
 
-1. [Securing SDLC](#securing-sdlc)
-1. [Appsec Design Principles](#appsec-design-principles)
-1. [Components of AppSec](#components-of-appsec)
-1. [Known Attack Surfaces and Vectors](#known-attack-surfaces-and-vectors)
+1. [保障软件开发生命周期（SDLC）的安全](#securing-sdlc)
+1. [应用程序安全设计原则](#appsec-design-principles)
+1. [应用程序安全的组成部分](#components-of-appsec)
+1. [已知的攻击面和攻击向量](#known-attack-surfaces-and-vectors)
 
 </pba-flex>
 
 ---
 
-# Securing SDLC
+# 保障软件开发生命周期（SDLC）的安全
 
 ---
 
-## The Big Picture of AppSec
+## 应用程序安全的全局视角
 
 <img rounded style="height: 600px" src="./img/ssdlc.png" />
 
-We will visit this picture multiple times.
+我们将多次回顾这张图。
 
 ---
 
-## Security Enforced Through Controls
+## 通过控制措施实施安全
 
-Controls must be:
+控制措施必须：
 
 <pba-flex center>
 
-- Designed
-- Developed
-- Implemented
-- Configured
-- Operated
-- Monitored
-- Improved
+- 设计
+- 开发
+- 实施
+- 配置
+- 运行
+- 监控
+- 改进
 
 </pba-flex>
 
 ---
 
-## How do we decide on Controls?
+## 我们如何确定控制措施？
 
-The likelihood of a threat exploiting a vulnerability and thereby causing damage to an asset.
+威胁利用漏洞从而对资产造成损害的可能性。
 
 <img rounded style="height: 600px" src="./img/risk-risk-everywhere.jpg" />
 
 ---
 
-## ICYMI: The CIA Triad
+## 如果你错过了：CIA 三元组
 
 <img rounded style="height: 600px" src="./img/cia-triad.png" />
 
 ---
 
-## Things to Ensure
+## 需要确保的事项
 
-- **Confidentiality:** Ensure that only authorized people can access their authorized entities.
-- **Integrity:** Ensure that only authorized changes are made by authorized entities.
-- **Availability:** Ensure that the data will always be available when it is required.
-
----
-
-## The AAA + NR
-
-- **Authentication:** Who you are
-- **Authorization:** What you allowed to do
-- **Accountability:** Who is responsible
-- **Non-Repudiation:** Can't deny your involvement
+- **保密性**：确保只有授权人员能够访问其被授权的实体。
+- **完整性**：确保只有授权实体进行授权的更改。
+- **可用性**：确保在需要时数据始终可用。
 
 ---
 
-# Appsec Design Principles
+## AAA + NR
 
-_In Brief_
+- **身份验证**：你是谁
+- **授权**：你被允许做什么
+- **问责制**：谁负责
+- **不可否认性**：不能否认你的参与
 
 ---
 
-## Good Enough Security
+# 应用程序安全设计原则
 
-Don’t spend $10.000 on a safe to protect a $20 bill
+_简要介绍_
+
+---
+
+## 足够好的安全
+
+不要花 10000 美元买一个保险箱来保护一张 20 美元的钞票。
 
 <img rounded style="height: 600px" src="./img/good-enough-security.png" />
 
 ---
 
-## Least Privilege
+## 最小权限原则
 
-Don't give your safe's key to everybody, give only what they need
+不要把你保险箱的钥匙给每个人，只给他们需要的。
 
 <img rounded style="height: 600px" src="./img/least-privilege.jpg" />
 
 ---
 
-## Separation of Duties
+## 职责分离
 
-Don't give the power of creating invoices, approving invoices and sending money to one person
+不要把创建发票、批准发票和汇款的权力交给一个人。
 
 <img rounded style="height: 600px" src="./img/separation-of-duties.png" />
 
 ---
 
-## Defense in Depth
+## 纵深防御
 
-A castle has a moat, thick walls, restricted access points, high points for defense, multiple checkpoints inside etc.; what do you have?
+一座城堡有护城河、厚厚的城墙、受限的入口、防御制高点、内部的多个检查站等；你有什么？
 
 <img rounded style="height: 600px" src="./img/defense-in-depth.png" />
 
 ---
 
-## Fail-Safe
+## 故障安全
 
-Any function that is not specifically authorized is denied by default
+任何未被明确授权的功能默认被拒绝。
 
 <img rounded style="height: 600px" src="./img/fail-safe.jpg" />
 
 ---
 
-## Economy of Mechanism
+## 机制经济性
 
-Security is already a complex topic, don’t make it more complicated (KISS)
+安全本身就是一个复杂的话题，不要让它变得更复杂（保持简单）。
 
 <img rounded style="height: 600px" src="./img/economy-of-mechanism.png" />
 
 ---
 
-## Complete Mediation
+## 完全仲裁
 
-Every critical operation must have verification at every time.
+每一个关键操作在任何时候都必须进行验证。
 
 <img rounded style="height: 600px" src="./img/complete-mediation.png" />
 
 ---
 
-## Open Design
+## 开放设计
 
-Don't even try: Security over obscurity
+别白费力气了：安全不能依赖于保密性。
 
 <img rounded style="height: 600px" src="./img/open-design.png" />
 
 ---
 
-## Least Common Mechanism
+## 最少公共机制
 
-Is like the rarest key that opens specific locks, not used often but still can cause significant damage when it does.
+就像最稀有的钥匙，只能打开特定的锁，不常用，但一旦使用可能会造成重大损害。
 
 <img rounded style="height: 600px" src="./img/least-common-mechanism.png" />
 
 ---
 
-## Psychological Acceptability
+## 心理可接受性
 
-There is no point if users cannot use your security controls seamlessly.
+如果用户不能无缝地使用你的安全控制措施，那就没有意义了。
 
 <img rounded style="height: 600px" src="./img/psychological-acceptability.png" />
 
 ---
 
-## Weakest Link
+## 最薄弱环节
 
-A chain is only as strong as its weakest link
+链条的强度取决于其最薄弱的环节。
 
 <img rounded style="height: 600px" src="./img/weakest-link.png" />
 
 ---
 
-## Leverage Existing Components
+## 利用现有组件
 
-Fewer components, fewer attack surface, but more;
+组件越少，攻击面越小，而且……
 
 <img rounded style="height: 600px" src="./img/leverage-existing-components.png" />
 
 ---
 
-## Single Point of Failure
+## 单点故障
 
-If SPoF fails, means the entire system fails
+如果单点故障出现问题，意味着整个系统都会失败。
 
 <img rounded style="height: 600px" src="./img/spof.png" />
 
 ---
 
-## Securing Software is Very Simple(!?)
+## 保障软件安全其实很简单（！？）
 
 ---
 
 <pba-flex center>
 
-- **Identify Attack Surfaces**
-  What potential surfaces do you have?
-- **Identify Attack Vectors**
-  What potential vectors do you have?
-- **Allocate Security Controls**
-  Risk based approach + Security Controls
+- **识别攻击面**
+  你有哪些潜在的攻击面？
+- **识别攻击向量**
+  你有哪些潜在的攻击向量？
+- **分配安全控制措施**
+  基于风险的方法 + 安全控制措施
 
 </pba-flex>
 
 ---
 
-## Security Controls are Easy(!?)
+## 安全控制措施很简单（！？）
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Directive (Safeguard \[Proactive\] - means before the incident)** \* The policy is an example. This is what you are allowed to do, or you are not allowed to do
+- **指令性（防护措施 [主动型] - 即在事件发生之前）** * 政策就是一个例子。这规定了你可以做什么，不可以做什么。
 
 <img rounded style="height: 600px" src="./img/directive.png" />
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Deterrent (Safeguard \[Proactive\] - means before the incident)**
-  - Discourage somebody from doing something wrong. For ex. watching people with a security camera. Once they know they are under observation, they will hesitate.
+- **威慑性（防护措施 [主动型] - 即在事件发生之前）**
+  - 劝阻某人不要做坏事。例如，用监控摄像头监视人们。一旦他们知道自己被监视，就会有所顾忌。
 
 ---
 
-### Deterrent
+### 威慑性
 
 <img rounded style="height: 600px" src="./img/deterrent.png" />
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Preventive (Safeguard \[Proactive\] - means before the incident)** \* Try to stop a person from doing something wrong. For ex. Password is a preventive control.
+- **预防性（防护措施 [主动型] - 即在事件发生之前）** * 试图阻止某人做坏事。例如，密码就是一种预防性控制措施。
 
 <img rounded style="height: 600px" src="./img/prevention.png" />
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Detective (Countermeasures \[Reactive\] - means in the incident moment or afterwards)** \* Trying to detect an incident. For ex. logs
+- **检测性（应对措施 [反应型] - 即在事件发生时或之后）** * 试图检测事件。例如，日志。
 
 <img rounded style="height: 600px" src="./img/reading-toilet.png" />
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Corrective (Countermeasures \[Reactive\] - means afterwards)** \* Tries to reestablish control after an incident and correct the immediate problem.
+- **纠正性（应对措施 [反应型] - 即在事件发生之后）** * 试图在事件发生后重新建立控制并纠正即时问题。
 
 <img rounded style="height: 600px" src="./img/corrective.png" />
 
 ---
 
-## Security controls can be;
+## 安全控制措施可以是：
 
-- **Restoration/Recovery (Countermeasures \[Reactive\] - means afterwards)** \* Try to rebuild and get back to normal.
+- **恢复/复原性（应对措施 [反应型] - 即在事件发生之后）** * 试图重建并恢复正常。
 
 <img rounded style="height: 600px" src="./img/restoration.png" />
 
 ---
 
-## Implementation is tough, sorry
+## 实施起来很困难，抱歉
 
 <pba-flex center>
 
-- Secure coding practices
-- Separation of environments
-- Proper testing
-- Validation and discovery
-- Mitigation
-- Root cause analysis
-- Documentation in every steps
+- 安全编码实践
+- 环境分离
+- 适当的测试
+- 验证和发现
+- 缓解措施
+- 根本原因分析
+- 每个步骤都要有文档记录
 
 </pba-flex>
 
 ---
 
-# Components of AppSec
+# 应用程序安全的组成部分
 
 ---
 
 <pba-flex center>
 
-- **Threat Modelling:** Manuel or Automated
-- **Security Testing:** SAST, DAST, IAST, SCA, RASP
-- **Vuln. Collection & Prioritization:** Jira, Asana
+- **威胁建模**：手动或自动化
+- **安全测试**：静态应用程序安全测试（SAST）、动态应用程序安全测试（DAST）、交互式应用程序安全测试（IAST）、软件成分分析（SCA）、运行时应用程序自我保护（RASP）
+- **漏洞收集与优先级排序**：Jira、Asana
 
 </pba-flex>
 
 ---
 
-There will be blood (**risk**), you need to manage the blood. But how?
+会有麻烦（**风险**），你需要应对这些麻烦。但该怎么做呢？
 
 <img rounded style="height: 600px" src="./img/there-will-be-blood.png" />
 
 ---
 
-## Risk Management but how?
+## 风险管理，但该怎么做呢？
 
-- **Risk Avoidance:** This approach mitigates risk by refraining from activities that could negatively impact the organization.
-
----
-
-## Risk Management but how?
-
-- **Risk Reduction:** This risk management method aims to limit the losses rather than completely eradicate them. It accepts the risk but works to contain potential losses and prevent their spread.
+- **风险规避**：这种方法通过避免可能对组织产生负面影响的活动来减轻风险。
 
 ---
 
-## Risk Management but how?
+## 风险管理，但该怎么做呢？
 
-- **Risk Sharing:** In this case, the risk of potential loss is distributed among a group instead of being borne by an individual.
-
----
-
-## Risk Management but how?
-
-- **Transferring Risk:** This involves contractually shifting risk to a third party. For instance, insuring against property damage or injury transfers the associated risks from the property owner to the insurance company.
+- **风险降低**：这种风险管理方法旨在限制损失，而不是完全消除损失。它接受风险，但努力控制潜在损失并防止其扩散。
 
 ---
 
-## Risk Management but how?
+## 风险管理，但该怎么做呢？
 
-- **Risk Acceptance and Retention:** After applying risk sharing, risk transfer, and risk reduction measures, some risk inevitably remains, as it's virtually impossible to eliminate all risks. This remaining risk is known as residual risk.
-
----
-
-## Vulnerability Disclosure Program vs Bug Bounty
+- **风险分担**：在这种情况下，潜在损失的风险由一组人分担，而不是由个人承担。
 
 ---
 
-## Shifting Left vs Right
+## 风险管理，但该怎么做呢？
+
+- **风险转移**：这涉及通过合同将风险转移给第三方。例如，为财产损坏或伤害投保将相关风险从财产所有者转移到保险公司。
+
+---
+
+## 风险管理，但该怎么做呢？
+
+- **风险接受与保留**：在应用风险分担、风险转移和风险降低措施后，不可避免地仍会存在一些风险，因为几乎不可能消除所有风险。这种剩余的风险被称为残余风险。
+
+---
+
+## 漏洞披露计划与漏洞赏金计划
+
+---
+
+## 左移与右移
 
 <img rounded style="height: 600px" src="./img/left-vs-right.png" />
 
 ---
 
-# Known Attack Surfaces and Vectors
+# 已知的攻击面和攻击向量
 
 ---
 
-## Known Rust Vulnerabilities
+## 已知的 Rust 漏洞
 
 <pba-flex center>
 
-1. Rust-specific issues
-1. Unsafe code
-1. Cryptographic errors
+1. Rust 特定问题
+2. 不安全代码
+3. 加密错误
 
 </pba-flex>
 
 ---
 
-## Known Substrate Vulnerabilities
+## 已知的 Substrate 漏洞
 
 <pba-flex center>
 
-1. Insufficient testing
-1. Centralization vulnerabilities
-1. Pallet-specific vulnerabilities
+1. 测试不充分
+2. 中心化漏洞
+3. 特定模块漏洞
 
 </pba-flex>
 
 ---
 
-## Known ink! Vulnerabilities
+## 已知的 ink! 漏洞
 
 <pba-flex center>
 
-1. Incorrect access control
-1. Denial-of-Service (DoS)
-1. Timestamp dependence
-1. Outdated version
+1. 访问控制不正确
+2. 拒绝服务（DoS）
+3. 时间戳依赖
+4. 版本过时
 
 </pba-flex>
 
 ---
 
-**Summary:** Do the damn input validation, good to go!
+**总结**：做好该死的输入验证，就没问题了！
 
 <img rounded style="height: 600px" src="./img/input-validation.png" />
 
 ---
 
-**Question:** How would you defend a castle if there is no castle to defend?
+**问题**：如果没有城堡要保卫，你该如何保卫城堡？
