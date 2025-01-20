@@ -1,34 +1,34 @@
-# Course Materials Book
+# PBA课程资料手册
 
-This book is the home of the majority of materials used within the Core Developer Track of the [Polkadot Blockchain Academy](https://dot.li/pba-github).
+本书是 IUR_Dao 译制的 [Polkadot区块链学院](https://dot.li/pba-github) 核心开发者课程所使用的课程资料。
 
-## Read the Book
+## 阅读本书
 
-We suggest the [online](#hosted-online) version for general use, but cloning, installing, and building this book [offline](#build-offline) is a great option on-the-go.
+我们建议一般情况下使用 [在线](#hosted-online) 版本，但在移动场景中，克隆、安装并离线 [构建](#build-offline) 本书也是一个不错的选择。
 
-### Hosted Online
+### 在线托管
 
-The latest version is hosted at: <a target="_blank" href="https://polkadot-blockchain-academy.github.io/pba-book/">https://polkadot-blockchain-academy.github.io/pba-book/</a>
+最新版本托管于： <a target="_blank" href="https://polkadot-blockchain-academy.github.io/pba-book/">https://polkadot-blockchain-academy.github.io/pba-book/</a>
 
-### Build Offline
+### 离线构建
 
-The Core Developer Track of the Academy is Rust _heavy_ and as such, you need to [install rust](https://www.rust-lang.org/tools/install) before you can continue.
+学院的核心开发者课程大量使用 Rust 语言，因此，你需要先 [安装 Rust](https://www.rust-lang.org/tools/install) 才能继续后续操作。
 
-In order to `make` your life easy 😉, there is a set of tasks that use [`cargo make`](https://sagiegurari.github.io/cargo-make/#overview).
+为了让你的操作更轻松 😉，这里有一组使用 [`cargo make`](https://sagiegurari.github.io/cargo-make/#overview) 的任务清单。
 
-With [`cargo make`](https://sagiegurari.github.io/cargo-make/#installation) installed, you can list all tasks included to facilitate further installation, building, serving, formatting, and more with:
+安装好 [`cargo make`](https://sagiegurari.github.io/cargo-make/#installation) 后，你可以列出所有包含的任务，以便进一步进行安装、构建、启动服务、格式化等操作：
 
 ```sh
-# Run from the top-level working dir of this repo
+# 从本仓库的顶级工作目录运行
 makers --list-all-steps
 ```
 
-The tasks should be self-explanatory, if they are not - please file an issue to help us make them better.
+这些任务一目了然，如果有错误或改进 - 请提交issue，帮助我们改进。
 
-## License and Use Policies
+## 许可和使用政策
 
-All materials found within this repository are licensed under Mozilla Public License Version 2.0 - See the [License](./LICENSE.md) for details.
+本仓库中的所有资料均根据 Mozilla 公共许可证 2.0 版进行许可 - 详见 [许可证](./LICENSE.md)。
 
-In addition to the license, we ask you read and respect the Academy's [Code of Conduct](./CODE-OF-CONDUCT.md) and help us foster a healthy and scholarly community of high academic integrity.
+除了许可证之外，我们希望你阅读并遵守学院的 [行为准则](./CODE-OF-CONDUCT.md)，帮助我们营造一个健康、学术氛围浓厚且具有高度学术诚信的社区。
 
-<h3 align="center"><a href="https://dot.li/pba-github">Learn more about and apply for the next Academy today!</a></h3>
+<h3 align="center"><a href="https://dot.li/pba-github">了解更多信息并申请下一期学院课程！</a></h3>

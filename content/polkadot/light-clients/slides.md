@@ -293,7 +293,7 @@ Notes:
 ### 真实案例
 <video controls width="100%">
     <source src="./img/LightClients.mp4" type="video/mp4">
-    抱歉，您的浏览器不支持嵌入视频。
+    抱歉，你的浏览器不支持嵌入视频。
 </video>
 
 Notes:
@@ -314,7 +314,7 @@ Notes:
 </pba-cols>
 
 Notes:
-您可能已经了解到，链规范是一个配置文件，用于定义区块链网络的参数和初始设置。它是启动和运行新区块链节点的蓝图，为搭建网络提供必要信息；我们的Substrate节点可以生成所谓的链规范，Smoldot随后会基于该链规范启动一个轻客户端节点；（在屏幕上展示链规范）
+你可能已经了解到，链规范是一个配置文件，用于定义区块链网络的参数和初始设置。它是启动和运行新区块链节点的蓝图，为搭建网络提供必要信息；我们的Substrate节点可以生成所谓的链规范，Smoldot随后会基于该链规范启动一个轻客户端节点；（在屏幕上展示链规范）
 
 ---v
 ### 轻客户端如何知道该信任什么/谁？
@@ -377,7 +377,7 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-现在，让我们深入了解波卡针对所有Substrate链的轻客户端解决方案。随着我们浏览这些幻灯片，您可能已经遇到或听说过与轻客户端相关的各种术语和概念。此时，明确区分这些概念至关重要；让我们更有针对性地详细探索波卡生态系统中的轻客户端。
+现在，让我们深入了解波卡针对所有Substrate链的轻客户端解决方案。随着我们浏览这些幻灯片，你可能已经遇到或听说过与轻客户端相关的各种术语和概念。此时，明确区分这些概念至关重要；让我们更有针对性地详细探索波卡生态系统中的轻客户端。
 
 ---v
 <h1>Smoldot</h1>
@@ -463,13 +463,13 @@ Notes:
 
 ---v
 ## 那么需要做什么
-- 找到一个您信任的第三方节点（JSON - RPC节点）的WebSocket URL；
+- 找到一个你信任的第三方节点（JSON - RPC节点）的WebSocket URL；
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - 将其添加到代码中并使用；
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---v
-## 在您的去中心化应用程序中
+## 在你的去中心化应用程序中
 ```javascript[0|1|3-5|7-9]
 import { ApiPromise, WsProvider } from "@polkadot/api";
 // 可能还有一些其他代码在这里施展魔法

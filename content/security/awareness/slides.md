@@ -4,7 +4,7 @@ description: A sentence for what these slides are about.
 duration: 45 minutes
 ---
 
-# web3 中的安全意识
+# Web3 中的安全意识
 
 ---
 
@@ -335,7 +335,7 @@ Notes:
 
 ### 肩窥
 
-<img rounded style="width: 350px" src="./img/com-truise.jpg" />
+<img rounded style="width: 350px" src="./img/com-truise.png" />
 
 Notes:
 

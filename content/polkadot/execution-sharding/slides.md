@@ -34,7 +34,7 @@ duration: 45 minutes
 Notes:
 
 [ Polkadotv1.0：分片和经济安全](https://www.polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/) 是对这里内容的更详细的全面阐述。
-如果您想全面了解 Polkadot的工作原理，请在课程结束后阅读。
+如果你想全面了解 Polkadot的工作原理，请在课程结束后阅读。
 
 ---
 
