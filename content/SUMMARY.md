@@ -141,9 +141,9 @@
 
   - [网络安全概览](./security/overview/page.md)
   - [Web3 中的安全意识](./security/awareness/page.md)
-  - [用户为中心](./security/user-centric/page.md)
-  - [基础设施](./security/infrastucutre/page.md)
-  - [应用程序](./security/appsec/page.md)
+  - [以用户为中心的安全性](./security/user-centric/page.md)
+  - [基础设施安全](./security/infrastucutre/page.md)
+  - [应用程序安全](./security/appsec/page.md)
   - [Polkadot SDK 开发中的常见安全风险](./security/risks/page.md)
 
 - [𝞨 Rust形式化方法入门](./formal-methods/intro/page.md)
