@@ -4,57 +4,62 @@ description: How to use reveal.js
 duration: 5 minuets
 ---
 
-# How-to use Reveal.js Slides
+---
+title: 如何使用Reveal.js幻灯片
+description: 如何使用reveal.js
+duration: 5分钟
+---
 
-These slides are built with [reveal.js](https://revealjs.com/).
+# 如何使用Reveal.js幻灯片
 
-These slides serve as a feature demo of reveal for you! 🎉
+这些幻灯片是使用[reveal.js](https://revealjs.com/)构建的。
+
+这些幻灯片为你展示reveal的功能！🎉
 
 ---
 
-## What are we going to see:
+## 我们将看到什么：
 
-- How to use Reveal.js Features
+- 如何使用Reveal.js的功能
 
-  - Useful `reveal.js` tips
-  - Speaker Notes
+  - 有用的`reveal.js`技巧
+  - 演讲者备注
 
 ---
 
-## How to use Reveal.js Features
+## 如何使用Reveal.js的功能
 
-_Press the `down/up` keys to navigate \_vertical_ slides\_
+_按下`向下/向上`键来浏览_垂直_幻灯片_
 
-Try doing down a slide.
+试着向下切换幻灯片。
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### Use the keybindings!
+### 使用快捷键！
 
-- **Overview mode**: “O” to see a birds-eye view of your presentation, “ESC” to return to the highlighted slide (you can quickly navigate with arrows)
+- **概览模式**：按“O”键可以看到演示文稿的鸟瞰图，按“ESC”键返回突出显示的幻灯片（你可以使用箭头键快速导航）
 
-- **Full-screen**: “F”, “ESC” to exit full-screen mode
+- **全屏模式**：按“F”键，按“ESC”键退出全屏模式
 
-- **Speaker mode**: “S” it synchronizes 2 windows: one with the presentation, and another with a timer and all speaker notes!
+- **演讲者模式**：按“S”键，它会同步两个窗口：一个显示演示文稿，另一个显示计时器和所有演讲者备注！
 
-- **Zoom-in**: ALT+click make the view zoom at the position of your mouse’s pointer; very useful to look closely at a picture or chart surrounded by too much bullet points.
+- **放大**：按住ALT键并点击鼠标，可在鼠标指针位置放大视图；在图片或图表周围有太多项目符号时，这对于仔细查看图片或图表非常有用。
 
 ---v
 
-## Speaker Notes & Viewer
+## 演讲者备注与查看器
 
-_Press the `s` key to bring up a popup window with speaker view_
+_按下`s`键弹出带有演讲者视图的窗口_
 
-**You need to unblock popups to have the window open**
+**你需要解除弹出窗口的阻止才能打开该窗口**
 
-Notes:
-This is a note just for you. Set under a line in your slide starting with "`Note`:" all
-subsequent lines are just seen in speaker view.
+备注：
+这是专属于你的备注。在幻灯片中以“`Note`：”开头的一行下面设置的所有后续行仅在演讲者视图中可见。
 
 ---
 
-# Enjoy!
+# 尽情享受课程吧！
 
 ## 😎

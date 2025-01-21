@@ -1,61 +1,58 @@
-# 📒 Book Overview
+# 📒 书籍概述
 
-This book contains a set of course materials covering both the conceptual underpinnings and hands-on experience in developing blockchain and web3 technologies.
-Students will be introduced to core concepts in economic, cryptographic, and computer science fields that lay the foundation for approaching web3 development, as well as hands-on experience developing web3 systems in Rust, primarily utilizing the ecosystem of tooling provided by Polkadot and Substrate.
+本书包含一系列课程资料，涵盖了区块链和Web3技术的概念基础以及实践经验。
+学生将接触到经济学、密码学和计算机科学领域的核心概念，这些概念为Web3开发奠定了基础，同时还将获得使用Rust进行Web3系统开发的实践经验，主要利用Polkadot和Substrate提供的工具生态系统。
 
-> 🙋 This book is designed specifically for use in an **_in-person course_**.
-> This provides _far more value_ from these materials than an online only, self-guided experience could provide.
+> 🙋 本书是专门为**面授课程**设计的。
+> 这些资料在面授课程中的价值远远超过仅在线自学所能获得的价值。
 >
-> ✅ The Academy encourages everyone to [apply to the program](https://dot.li/pba-github)
-> Our program is facilitated a few times a year at prestigious places around the world, with on the order of ~50-100 students per cohort.
+> ✅ 学院鼓励大家[申请该项目](https://dot.li/pba-github)
+> 我们的项目每年会在世界各地的知名地点举办几次，每批学员人数约为50 - 100人。
 
-## 👨‍🎓 Learning Outcomes
+## 👨‍🎓 学习成果
 
-By the end of the Polkadot Blockchain Academy, students will be able to:
+在完成Polkadot区块链学院的课程后，学生将能够：
 
-- Apply economic, cryptographic, and computer science concepts to web3 application design
-- Robustly design and evaluate security of web3, both at the protocol and user application level
-- Write a smart contract using one of a number of languages and deploy it to a blockchain
-- Implement a Substrate based blockchain
-- Deploy a parachain utilizing Substrate, Cumulus, and Polkadot
-- Employ FRAME to accelerate blockchain and parachain development
-- Configure XCM for cross-consensus messaging between parachains
+- 将经济学、密码学和计算机科学概念应用于Web3应用程序设计
+- 稳健地设计和评估Web3的安全性，包括协议层面和用户应用层面
+- 使用多种语言之一编写智能合约，并将其部署到区块链上
+- 实现基于Substrate的区块链
+- 使用Substrate、Cumulus和Polkadot部署平行链
+- 运用FRAME加速区块链和平行链的开发
+- 配置XCM以实现平行链之间的跨共识消息传递
 
-## 🖋️ Nomenclature
+## 🖋️ 术语
 
-The academy uses _explicit terms_ to describe materials use within as _content categories_ defined here:
+学院使用**明确的术语**来描述本书中使用的资料，这些术语被定义为**内容类别**：
 
-- **Lesson**: a segment of content (1-2 hours) that is one of:
-  - **Lecture**: An oral presentation that consists _primarily_ of slide based content.
-    _Most_ content in this book is of this type.
-    - **Exercise**: a short (5-10 minutes) exercise for to be **completed** during a lecture (code snippets, mini-demos, etc.).
-  - **Workshop**: these are step-by-step, longer (0.5-3 hours) **guided** in-class material (live-coding, competitions, games, etc.).
-    Workshops are instructor lead, and hand-held to get everyone to the same result.
-  - **Activity**: these are **self-directed** activities for individuals and/or small groups.
-    Activities are _not_ guided or "hand-held" by the instructor like workshops are.
-- **Assignment**: a **_graded_** piece of work, typically one per week is assigned.
-  - **Assignments are _not_ public** - these are only accessible by Academy Faculty, Staff, and (in a derivative form) Students.
+- **课程**：一段时长为1 - 2小时的内容，具体包括以下几种类型：
+  - **讲座**：主要以幻灯片为基础的口头演讲。本书中的大部分内容都属于这种类型。
+    - **练习**：在讲座期间需要完成的简短（5 - 10分钟）练习（代码片段、小型演示等）。
+  - **工作坊**：这些是逐步进行的、时长较长（0.5 - 3小时）的**有指导的**课堂资料（现场编码、竞赛、游戏等）。工作坊由讲师带领，并给予指导，以确保每个人都能达到相同的结果。
+  - **活动**：这些是针对个人和/或小组的**自主进行的**活动。与工作坊不同，活动没有讲师的指导或“手把手”帮助。
+- **作业**：一项**评分**的作业，通常每周布置一次。
+  - **作业是不公开的** - 只有学院的教师、工作人员以及（以衍生形式）学生可以访问。
 
-## 🪜 Course Sequence
+## 🪜 课程顺序
 
-The course is segmented into **modules**, with the granular **lessons** intended to be completed in the sequence provided in the left-side navigation bar.
+本课程分为**模块**，具体的**课程**应按照左侧导航栏中提供的顺序完成。
 
 <!-- prettier-ignore-start -->
 
-| Module                                                        | Topic                                                                                                                |
+| 模块                                                        | 主题                                                                                                                |
 | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| [🔐 Cryptography](./cryptography/)                            | _Applied_ cryptography concepts and introduction to many common tools of the trade for web3 builders.                |
-| [🪙 Economics and Game Theory](./economics/)                  | _Applied_ economics and game theory fundamental to the architecture and operation of web3 applications.              |
-| [⛓️ Blockchains and Smart Contracts](./blockchain-contracts/) | Blockchain and applications built on them covered in depth conceptually and hands-on operation and construction.     |
-| [🧬 Substrate](./substrate/)                                  | The blockchain framework canonical to Polkadot and Parachains covered in depth, at a lower level.                    |
-| [🧱 FRAME](./frame/)                                          | The primary Substrate runtime framework used for parachain development.                                              |
-| [🟣 Polkadot](./polkadot/)                                    | The Polkadot blockchain covered in depth, focus on high-level design and practically how to utilize its blockspace. |
-| [💱 XCM](./xcm/)                                              | The cross consensus messaging format covered from first principals to use in protocols.                              |
+| [🔐 密码学](./cryptography/)                            | 应用密码学概念，并介绍Web3开发者常用的许多工具。                |
+| [🪙 经济学和博弈论](./economics/)                  | 应用于Web3应用程序架构和运行的基础经济学和博弈论。              |
+| [⛓️ 区块链和智能合约](./blockchain-contracts/) | 深入讲解区块链以及基于区块链构建的应用程序的概念、实践操作和构建方法。     |
+| [🧬 Substrate](./substrate/)                                  | 深入讲解Polkadot和平行链的规范区块链框架，从较低层次进行讲解。                    |
+| [🧱 FRAME](./frame/)                                          | 用于平行链开发的主要Substrate运行时框架。                                              |
+| [🟣 Polkadot](./polkadot/)                                    | 深入讲解Polkadot区块链，重点关注高级设计以及如何实际利用其区块空间。 |
+| [💱 XCM](./xcm/)                                              | 从基本原理到协议应用，讲解跨共识消息传递格式。                              |
 
 <!-- prettier-ignore-end -->
 
-The lessons include materials used, with links and instructions to required external materials as needed.[^except]
+课程包括所使用的资料，并根据需要提供指向所需外部资料的链接和说明。[^except]
 
-[^except]: _Notably, the graded assignments for the Academy and some solutions to public activities and exercises remain closed source, and links are intentionally left out of this book. These materials may be shared as needed with students in person during the Academy._
+[^except]: 值得注意的是，学院的评分作业以及一些公开活动和练习的解决方案仍然是闭源的，本书中有意省略了相关链接。这些资料可能会在学院面授期间根据需要与学生分享。
 
-<!-- FIXME once https://github.com/rust-lang/mdBook/issues/2169#issue-1856015876 is fixed upstream, update to get right behavior for footers! -->
+<!-- FIXME 一旦https://github.com/rust-lang/mdBook/issues/2169#issue-1856015876在上游修复，更新以获得页脚的正确行为！ -->
