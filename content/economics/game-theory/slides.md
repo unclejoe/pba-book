@@ -744,7 +744,7 @@ Notes:
 
 <!--.slide: data-background-color="#4A2439" -->
 
-# 工作坊：游戏
+# 专题指导会：游戏
 
 ### Notes:
 

@@ -220,7 +220,7 @@ wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"s
 
 ---v
 
-### PJS: 工作坊 🧑‍💻
+### PJS: 专题指导会 🧑‍💻
 
 Notes:
 

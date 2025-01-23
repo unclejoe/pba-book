@@ -4,12 +4,6 @@ description: How to use reveal.js
 duration: 5 minuets
 ---
 
----
-title: 如何使用Reveal.js幻灯片
-description: 如何使用reveal.js
-duration: 5分钟
----
-
 # 如何使用Reveal.js幻灯片
 
 这些幻灯片是使用[reveal.js](https://revealjs.com/)构建的。
@@ -20,7 +14,7 @@ duration: 5分钟
 
 ## 我们将看到什么：
 
-- 如何使用Reveal.js的功能
+- 如何使用reveal.js的功能
 
   - 有用的`reveal.js`技巧
   - 演讲者备注
@@ -29,7 +23,7 @@ duration: 5分钟
 
 ## 如何使用Reveal.js的功能
 
-_按下`向下/向上`键来浏览_垂直_幻灯片_
+按下`向下/向上`键来浏览 _垂直_ 幻灯片
 
 试着向下切换幻灯片。
 
@@ -56,7 +50,8 @@ _按下`s`键弹出带有演讲者视图的窗口_
 **你需要解除弹出窗口的阻止才能打开该窗口**
 
 备注：
-这是专属于你的备注。在幻灯片中以“`Note`：”开头的一行下面设置的所有后续行仅在演讲者视图中可见。
+这是专属于你的备注。
+<p>在幻灯片中以“`Note`：”开头的一行下面所有后续行仅在演讲者视图中可见。</p>
 
 ---
 

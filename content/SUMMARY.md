@@ -1,8 +1,8 @@
 # Summary
 
 [🏠 起点](README.md)
-[🪄 如何使用本教程](./contribute/how-to/page.md)
-[📒 教程概览](overview.md)
+[🪄 如何使用本书](./contribute/how-to/page.md)
+[📒 本书概览](overview.md)
 
 # 🧰 完整内容
 

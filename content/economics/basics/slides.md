@@ -105,7 +105,7 @@ Notes:
     <li class="fragment">行为偏差：人类决策可能与传统经济理论预测不同的地方。</li>
     </ul>
 </li>
-<li class="fragment"><strong>讨论与工作坊</strong>
+<li class="fragment"><strong>讨论与专题指导会</strong>
     <ul>
     <li class="fragment">讨论以促进和应用我们所学的概念。</li>
     <li class="fragment">实践应用。</li>

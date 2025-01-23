@@ -14,7 +14,7 @@
 
 学院的核心开发者课程大量使用 Rust 语言，因此，你需要先 [安装 Rust](https://www.rust-lang.org/tools/install) 才能继续后续操作。
 
-为了让你的操作更轻松 😉，这里有一组使用 [`cargo make`](https://sagiegurari.github.io/cargo-make/#overview) 的任务清单。
+为了让你的操作更轻松 😉，这里有如何使用 [`cargo make`](https://sagiegurari.github.io/cargo-make/#overview) 的参考资料。
 
 安装好 [`cargo make`](https://sagiegurari.github.io/cargo-make/#installation) 后，你可以列出所有包含的任务，以便进一步进行安装、构建、启动服务、格式化等操作：
 
@@ -23,7 +23,7 @@
 makers --list-all-steps
 ```
 
-这些任务一目了然，如果有错误或改进 - 请提交issue，帮助我们改进。
+这些任务一目了然，如果发现错误或建议 - 请提交issue，帮助我们改进。
 
 ## 许可和使用政策
 
