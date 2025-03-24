@@ -487,8 +487,10 @@ Notes:
 ---
 
 ## 钱包
-得益于 Polkadot 财政部和社区，生态系统中开发出了许多不同的钱包。
+得益于 Polkadot 国库和社区，生态系统中开发出了许多不同的钱包。
+
 <div class="text-small">
+
 | 钱包名称 | 支持平台 | 质押和提名池 | NFT支持 | 众贷支持 | Ledger硬件钱包支持 | 治理支持 |
 | :-------------: | :-----------------------------------------: | :--------------------------: | :--: | :--------: | :------------: | :--------: |
 | Enkrypt | Brave、Chrome、Edge、Firefox、Opera、Safari | 否，否 | 是 | 否 | 是 | 否 |
@@ -498,6 +500,7 @@ Notes:
 | Fearless Wallet | Brave、Chrome、iOS、Android | 是，是 | 否 | 否 | 否 | 否 |
 | Nova Wallet | iOS、Android | 是，是 | 是 | 是 | 是 | 是 |
 | Polkawallet | iOS、Android | 是，是 | 否 | 是 | 否 | 是 |
+
 </div>
 <!-- FIXME TODO确保信息更新！考虑使用图标或其他图片让表格更好看 -->
 Notes:
